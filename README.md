@@ -14,8 +14,8 @@ If you want to use the functionality of the explore package for reproducable dat
 * describe - if you want to describe a dataset or an attribute (number of na, unique values, ...)
 
 ```r
-# load package dplyr
-library(dplyr)
+# load package magrittr (to use the pipe operator %>%)
+library(magrittr)
 
 # explore Species
 iris %>% explore(Species)
