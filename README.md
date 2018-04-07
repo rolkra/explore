@@ -1,5 +1,4 @@
 # explore
-R package for simple, elegant and fast data exploration
 
 Using the explore packate to explore data is as simple as "explore(data)".
 This launches an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes or create a fully automated report of all attributes.
