@@ -1,7 +1,7 @@
 # explore
 
 Using the explore packate to explore data is as simple as "explore(data)".
-This launches an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes or create a fully automated report of all attributes.
+This launches an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
 
 ```r
 # explore iris dataset (interactive)
