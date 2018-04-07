@@ -1,0 +1,22 @@
+Package: explore
+Type: Package
+Title: Simplifies exploratory data analysis
+Version: 0.2.4
+Author: Roland Krasser
+Maintainer: Roland Krasser <roland.krasser@gmail.com>
+Description: Introduces two main verbs for data analysis:
+    describe: to describe a variable or table
+    explore: to grafically explore a variable or table
+License: CC-BY-SA-4.0
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr, 
+         DT, 
+         ggplot2, 
+         gridExtra,
+         magrittr, 
+         rlang, 
+         RODBC, 
+         shiny,
+	 rmarkdown 
+RoxygenNote: 6.0.1
