@@ -1,0 +1,25 @@
+---
+title: "Explore"
+output: 
+  html_document
+---
+
+## Describe Data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+describe_tbl(data)
+d <- describe(data)
+knitr::kable(d)
+```
+
+## Explore Attributes
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+total_col = 2
+total_x = 5 * total_col
+total_y = 3 * get_nrow(names(data), ncol = total_col, exclude = 0) 
+```
+
+```{r echo=FALSE, fig.height=total_y, fig.width=total_x, message=FALSE, warning=FALSE}
+data %>% explore_all(ncol = total_col)
+```
