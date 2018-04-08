@@ -6,7 +6,7 @@ R package that makes basic data exploration radically simple. There are basicall
 
 Launch an interactive shiny-app to explore data. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
 
-**Functions for reducible data science**
+**Functions for reproducible data science**
 
 There are basically two "verbs" to remember:
 * explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
@@ -40,7 +40,7 @@ explore(iris)
 
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
 
-## Functions for reducible data science
+## Functions for reproducible data science
 
 Example how to use the functions of the explore package to explore the iris dataset
 
