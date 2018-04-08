@@ -1,20 +1,44 @@
 # explore
 
-Using the explore packate to explore data is as simple as "explore(data)".
+There are basically two ways to use the eplore package:
+
+**Interactive data exploration**
+
 This launches an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
 
+**Functions for reducible data science**
+
+There are basically two "verbs" to remember:
+* explore - if you want to explore an attribute or the relationship between an attribute and a binary target
+* describe - if you want to describe a dataset or an attribute (number of na, unique values, ...)
+The output of these functions is a plot or a text.
+
+## Installation
+
 ```r
-# explore iris dataset (interactive)
+# install from github
+if (!require(remotes)) install.packages("remotes")
+remotes::install_github("rolkra/explore")
+```
+
+## Interactive data exploration
+
+Example how to use the explore package to explore the iris dataset
+
+```r
+# explore interactive
+library(explore)
 explore(iris)
 ```
 
-If you want to use the functionality of the explore package for reproducable data science, there are basically two "verbs" to remember:
-* explore - if you want to explore an attribute or the relationship between an attribute and a binary target
-* describe - if you want to describe a dataset or an attribute (number of na, unique values, ...)
+## Functions for reducible data science
+
+Example how to use the functions of the explore package to explore the iris dataset
 
 ```r
-# load package magrittr (to use the pipe operator %>%)
-library(magrittr)
+# load packages
+library(explore)
+library(magrittr)  # to use the pipe operator %>%
 
 # explore Species
 iris %>% explore(Species)
