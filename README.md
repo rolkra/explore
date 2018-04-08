@@ -1,6 +1,6 @@
 # explore
 
-There are basically two ways to use the eplore package:
+R package that makes basic data exploration radically simple. There are basically two ways to use the eplore package:
 
 **Interactive data exploration**
 
