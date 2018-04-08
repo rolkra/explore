@@ -26,8 +26,16 @@ remotes::install_github("rolkra/explore")
 Example how to use the explore package to explore the iris dataset
 
 ```r
-# explore interactive
+# load package
 library(explore)
+
+# explore interactive
+explore(iris)
+
+# define a target (is Species setosa?)
+iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
+
+# explore interactive
 explore(iris)
 ```
 
@@ -46,8 +54,8 @@ iris %>% explore(Species)
 # explore Sepal.Length
 iris %>% explore(Sepal.Length)
 
-# define a target (is Species versicolor?)
-iris$target_01 <- ifelse(iris$Species == "versicolor", 1, 0)
+# define a target (is Species setosa?)
+iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 
 # explore relationship between Sepal.Length and the target
 iris %>% explore(Sepal.Length, target = target_01)
