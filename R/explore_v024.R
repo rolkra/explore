@@ -80,7 +80,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' con <- dwh_connect(dns = "DWH1", user = "u12345")
 #' @export
 
-dwh_connect <- function(dns = "DWH1", user = NA, pwd = NA, pwd_crypt = FALSE)  {
+dwh_connect <- function(dns, user = NA, pwd = NA, pwd_crypt = FALSE)  {
 
   if (is.na(user))  {
     # use single sign on
