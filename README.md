@@ -4,14 +4,13 @@ R package that makes basic data exploration radically simple. There are basicall
 
 **Interactive data exploration**
 
-Launch an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
+Launch an interactive shiny-app to explore data. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
 
 **Functions for reducible data science**
 
 There are basically two "verbs" to remember:
-* explore - if you want to explore an attribute or the relationship between an attribute and a binary target
-* describe - if you want to describe a dataset or an attribute (number of na, unique values, ...)
-The output of these functions is a plot or a text.
+* explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
+* describe - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
 
 ## Installation
 
