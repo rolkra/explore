@@ -4,7 +4,7 @@ There are basically two ways to use the eplore package:
 
 **Interactive data exploration**
 
-This launches an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
+Launch an interactive shiny-app that makes basic data exploration radically simple. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
 
 **Functions for reducible data science**
 
@@ -60,7 +60,7 @@ iris %>% explore(Sepal.Length)
 iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 
 # explore relationship between Sepal.Length and the target
-iris %>% explore(Sepal.Length, target = target_01)
+iris %>% explore(Sepal.Length, target = is_setosa)
 
 # describe dataset
 describe(iris)
