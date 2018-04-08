@@ -293,7 +293,7 @@ target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val
 
   # define colors
   #bar_col <- c("#d8eab2", "#add35e","#7dba00","olivedrab")
-  bar_col <- c("grey90", "grey70", "grey50", "grey30")
+  bar_col <- c("grey90", "lightblue", "lightblue3", "lightblue4")
   names(bar_col) <- c("00-05%", "06-20%", "21-40%", "41+%")
 
 
