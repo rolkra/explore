@@ -39,6 +39,8 @@ iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 explore(iris)
 ```
 
+<img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
+
 ## Functions for reducible data science
 
 Example how to use the functions of the explore package to explore the iris dataset
