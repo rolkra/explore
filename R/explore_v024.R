@@ -6,6 +6,8 @@
 # + describe and explore with warning if guess_cat_num = "oth"
 # + add get_type function
 # + non cat/num attribute display as <hide>
+# + change default color for explore_target to blue/gray
+# - delete default DNS
 #
 # dwh_connect, dwh_disconnect, dwh_read_table, dwh_read_data
 # explore, explore_all, explore_density, explore_shiny
