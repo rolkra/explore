@@ -1,14 +1,14 @@
 # explore
 
-R package that makes basic data exploration radically simple. There are basically two ways to use the eplore package:
+R package that makes basic data exploration radically simple. There are two ways to use the eplore package:
 
 **Interactive data exploration**
 
-Launch an interactive shiny-app to explore data. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes.
+Launch an interactive shiny-app to explore data. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes with a few "mouseclicks".
 
 **Functions for reproducible data science**
 
-There are basically two "verbs" to remember:
+Use the functions behind the shiny app. There are basically two "verbs" to remember:
 * explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
 * describe - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
 
