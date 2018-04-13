@@ -28,9 +28,6 @@ Example how to use the explore package to explore the iris dataset
 # load package
 library(explore)
 
-# explore interactive
-explore(iris)
-
 # define a target (is Species setosa?)
 iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 
