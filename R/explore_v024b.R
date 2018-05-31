@@ -7,6 +7,7 @@
 # + add get_type function
 # + non cat/num attribute display as <hide>
 # + change default color for explore_target to blue/gray
+# + change default color for explore_density to blue/grey
 # - delete default DNS
 #
 # dwh_connect, dwh_disconnect, dwh_read_table, dwh_read_data
@@ -600,8 +601,8 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "#7f7f7f", auto_scale = TRUE, ...)   {
-
+explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "darkblue", auto_scale = TRUE, ...)   {
+  
   # parameter var
   if(!missing(var))  {
     var_quo <- enquo(var)
@@ -609,7 +610,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   } else {
     var_txt = NA
   }
-
+  
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -617,36 +618,36 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   } else {
     target_txt = NA
   }
-
+  
   # rename variables, to use it (lazy evaluation)
   data <- data %>%
     rename(var_ = !!var_quo)
-
+  
   if (!is.na(target_txt))  {
     data <- data %>%
       rename(target_ = !!target_quo)
   }
-
+  
   # autoscale (if mni_val and max_val not used)
   if (auto_scale == TRUE & is.na(min_val) & is.na(max_val))  {
     r <- quantile(data[["var_"]], c(0.02, 0.98), na.rm = TRUE)
     min_val = r[1]
     max_val = r[2]
   }
-
+  
   # trim min, max
   if (!is.na(min_val)) data <- data %>% filter(var_ >= min_val)
   if (!is.na(max_val)) data <- data %>% filter(var_ <= max_val)
-
+  
   # count NA
   na_check <- data %>%
     mutate(na_ind = ifelse(is.na(var_),1,0)) %>%
     summarize(na_cnt = sum(na_ind), na_pct = sum(na_ind)/n())
   na_cnt <- na_check[1,1]
   na_pct <- na_check[1,2]
-
+  
   if (is.na(target_txt))  {
-
+    
     # plot denisity var, no target
     data %>%
       ggplot(aes(var_)) +
@@ -660,10 +661,10 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
       geom_density(alpha = 0.3) +
       ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
-      scale_fill_manual(values = c("#7f7f7f","#7dba00"), name = "target") +
+      scale_fill_manual(values = c("lightgrey", color), name = "target") +
       theme_light()
   } # if
-
+  
 } # explore_density
 
 #============================================================================
