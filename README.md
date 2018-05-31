@@ -1,4 +1,4 @@
-# tidyeda
+# explore
 
 R package that makes basic data exploration radically simple. There are two ways to use the eplore package:
 
