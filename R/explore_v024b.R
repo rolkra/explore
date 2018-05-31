@@ -589,7 +589,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' @param var_target name of target variable (0/1 or FALSE/TRUE)
 #' @param min_val all values < min_val are converted to min_val
 #' @param max_val all values > max_val are converted to max_val
-#' @param color color of plot
+#' @param color color vector for plot (color no target, color with target)
 #' @param autoscale use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @return plot object (density plot)
 #' @importFrom magrittr "%>%"
@@ -601,7 +601,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "darkblue", auto_scale = TRUE, ...)   {
+explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = c("grey", "darkblue"), auto_scale = TRUE, ...)   {
   
   # parameter var
   if(!missing(var))  {
@@ -651,7 +651,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
     # plot denisity var, no target
     data %>%
       ggplot(aes(var_)) +
-      geom_density(fill = color, alpha = 0.3) +
+      geom_density(fill = color[1], alpha = 0.3) +
       ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
       theme_light()
@@ -661,7 +661,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
       geom_density(alpha = 0.3) +
       ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
-      scale_fill_manual(values = c("lightgrey", color), name = "target") +
+      scale_fill_manual(values = color, name = "target") +
       theme_light()
   } # if
   
