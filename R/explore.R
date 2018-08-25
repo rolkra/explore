@@ -1,7 +1,7 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.2.4
+# Version 0.2.4b
 # + guess_cat_num with vector as parameter instead of data + var
 # + describe and explore with warning if guess_cat_num = "oth"
 # + add get_type function
@@ -9,6 +9,7 @@
 # + change default color for explore_target to blue/gray
 # + change default color for explore_density to blue/grey
 # - delete default DNS
+# + change max_cat from 30 to 25
 #
 # dwh_connect, dwh_disconnect, dwh_read_table, dwh_read_data
 # explore, explore_all, explore_density, explore_shiny
@@ -256,7 +257,7 @@ format_target <- function(target)   {
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' target_explore_cat(iris, "Species", "is_virginica")
 
-target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, max_cat = 30, legend_position = "bottom") {
+target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, max_cat = 25, legend_position = "bottom") {
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -470,7 +471,7 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
 #' @examples
 #' explore_cat(iris, "Species")
 
-explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cccccc", auto_scale = TRUE, max_cat = 30)  {
+explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cccccc", auto_scale = TRUE, max_cat = 25)  {
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
