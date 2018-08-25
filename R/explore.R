@@ -9,7 +9,7 @@
 # + change default color for explore_target to blue/gray
 # + change default color for explore_density to blue/grey
 # - delete default DNS
-# + change max_cat from 30 to 25
+# + change default max_cat from 30 to 25 (explore_cat, target_explore_cat)
 #
 # dwh_connect, dwh_disconnect, dwh_read_table, dwh_read_data
 # explore, explore_all, explore_density, explore_shiny
