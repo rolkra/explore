@@ -37,8 +37,10 @@ iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 explore(iris)
 ```
 
+### Explore attributes
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
 
+### Explain target
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
 ## Functions for reproducible data science
