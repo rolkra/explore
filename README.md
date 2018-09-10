@@ -64,6 +64,9 @@ iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 # explore relationship between Sepal.Length and the target
 iris %>% explore(Sepal.Length, target = is_setosa)
 
+# explain target using a decision tree
+iris %>% explain_tree(target = is_versicolor)
+
 # describe dataset
 describe(iris)
 
