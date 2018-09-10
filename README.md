@@ -18,7 +18,7 @@ The explore package automatically checks if an attribute is categorial or numeri
 
 ```r
 # install from github
-if (!require(remotes)) install.packages("remotes")
+if (!require(devtools)) install.packages("devtools")
 remotes::install_github("rolkra/explore")
 ```
 
@@ -38,6 +38,8 @@ explore(iris)
 ```
 
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
+
+<img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
 ## Functions for reproducible data science
 
