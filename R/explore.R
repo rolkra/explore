@@ -1,19 +1,27 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.2.4b
+# Version 0.2.4
 # + guess_cat_num with vector as parameter instead of data + var
 # + describe and explore with warning if guess_cat_num = "oth"
 # + add get_type function
 # + non cat/num attribute display as <hide>
 # + change default color for explore_target to blue/gray
-# + change default color for explore_density to blue/grey
 # - delete default DNS
-# + change default max_cat from 30 to 25 (explore_cat, target_explore_cat)
 #
-# dwh_connect, dwh_disconnect, dwh_read_table, dwh_read_data
+# Version 0.3.0
+# + change default max_cat from 30 to 25 (explore_cat, target_explore_cat)
+# + explain_tree, explain_logreg
+# + text-size % in plot 3.5 instead 3
+# + text_plot
+# + explore_shiny target must be 0/1, FALSE/TRUE, binary factor
+#
+# dwh_connect, dwh_disconnect,
+# dwh_read_table, dwh_read_data, dwh_write_table
 # explore, explore_all, explore_density, explore_shiny
-# get_type, guess_cat_num, replace_na_with, format_num, format_target, get_nrow
+# explain_tree, explain_logreg
+# get_type, guess_cat_num, replace_na_with, format_num, format_target
+# get_nrow, plot_text
 # explore_cat, explore_num
 # target_explore_cat, target_explore_num
 ################################################################################
@@ -30,6 +38,10 @@
 # library(shiny)         # interactive explore
 # library(DT)            # render data tables
 # library(rmarkdown)     # rendering markdown documents
+# library(rpart)         # decision tree
+# library(rpart.plot)    # plotting decision tree
+# library(MASS)          # stepwise logistic regression
+# library(broom)         # logreg output as dataframe
 
 #============================================================================
 #  Function: Encrypt (Passwort)
@@ -180,6 +192,54 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 }
 
 #============================================================================
+#  function: dwh_write_table
+#============================================================================
+#' write data to a DWH table
+#'
+#' write data to a DWH table using a ODBC connection
+#'
+#' @param data dataframe
+#' @param connection DWH connection
+#' @param table table name (character string)
+#' @param append append to existing table? (default = FALSE)
+#' @return status
+#' @examples
+#' dwh_read_table(con, "database.table_test")
+#' @export
+
+dwh_write_table <- function(data, connection, table, append=FALSE, rownames=FALSE, ...)  {
+
+  # write data to dwh
+  result <- RODBC::sqlSave(channel=connection,
+                           dat=data,
+                           tablename=table,
+                           append=append, ...)
+
+  return(result)
+}
+
+
+#============================================================================
+#  plot_text
+#============================================================================
+#' plot a text
+#'
+#' plots a text (base plot) and let you choose text-size and color
+#'
+#' @param text text as string
+#' @param size text-size
+#' @param color text-color
+#' @return plot
+#' @examples
+#' plot_text("hello", size = 2, color = "red")
+#' @export
+
+plot_text <- function(text="hello world", size=1.6, color="black")  {
+  plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
+  text(x = 0.5, y = 0.5, text, cex = size, col = color)
+}
+
+#============================================================================
 #  format_num
 #============================================================================
 #' format number
@@ -257,7 +317,7 @@ format_target <- function(target)   {
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' target_explore_cat(iris, "Species", "is_virginica")
 
-target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, max_cat = 25, legend_position = "bottom") {
+target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, max_cat = 30, legend_position = "bottom") {
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -321,7 +381,7 @@ target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val
     geom_text(aes(x=cat, y=target_pct, label = round(target_pct,1)),
               hjust = ifelse(flip,"top","center"),
               vjust = ifelse(flip,"center","top"),
-              size = 3, color = "#525252")
+              size = 3.5, color = "#525252")
 
   # flip plot?
   if(flip) plot_bar <- plot_bar + coord_flip()
@@ -471,7 +531,7 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
 #' @examples
 #' explore_cat(iris, "Species")
 
-explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cccccc", auto_scale = TRUE, max_cat = 25)  {
+explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cccccc", auto_scale = TRUE, max_cat = 30)  {
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -504,7 +564,7 @@ explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cc
       geom_text(aes(x=cat, y=n_pct, label = round(n_pct,1)),
                 hjust = ifelse(flip,"top","center"),
                 vjust = ifelse(flip,"center","top"),
-                size = 3, color = "#525252")
+                size = 3.5, color = "#525252")
 
   } else {
 
@@ -590,7 +650,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' @param var_target name of target variable (0/1 or FALSE/TRUE)
 #' @param min_val all values < min_val are converted to min_val
 #' @param max_val all values > max_val are converted to max_val
-#' @param color color vector for plot (color no target, color with target)
+#' @param color color of plot
 #' @param autoscale use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @return plot object (density plot)
 #' @importFrom magrittr "%>%"
@@ -602,8 +662,8 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = c("grey", "darkblue"), auto_scale = TRUE, ...)   {
-  
+explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "#CFD8DC", auto_scale = TRUE, ...)   {
+
   # parameter var
   if(!missing(var))  {
     var_quo <- enquo(var)
@@ -611,7 +671,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   } else {
     var_txt = NA
   }
-  
+
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -619,53 +679,54 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   } else {
     target_txt = NA
   }
-  
+
   # rename variables, to use it (lazy evaluation)
   data <- data %>%
     rename(var_ = !!var_quo)
-  
+
   if (!is.na(target_txt))  {
     data <- data %>%
       rename(target_ = !!target_quo)
   }
-  
+
   # autoscale (if mni_val and max_val not used)
   if (auto_scale == TRUE & is.na(min_val) & is.na(max_val))  {
     r <- quantile(data[["var_"]], c(0.02, 0.98), na.rm = TRUE)
     min_val = r[1]
     max_val = r[2]
   }
-  
+
   # trim min, max
   if (!is.na(min_val)) data <- data %>% filter(var_ >= min_val)
   if (!is.na(max_val)) data <- data %>% filter(var_ <= max_val)
-  
+
   # count NA
   na_check <- data %>%
     mutate(na_ind = ifelse(is.na(var_),1,0)) %>%
     summarize(na_cnt = sum(na_ind), na_pct = sum(na_ind)/n())
   na_cnt <- na_check[1,1]
   na_pct <- na_check[1,2]
-  
+
   if (is.na(target_txt))  {
-    
+
     # plot denisity var, no target
     data %>%
       ggplot(aes(var_)) +
-      geom_density(fill = color[1], alpha = 0.3) +
+      geom_density(fill = color, alpha = 0.7) +
       ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
       theme_light()
   } else {
     data %>%
       ggplot(aes(var_, fill = factor(target_, levels = c(0,1), ordered = TRUE))) +
-      geom_density(alpha = 0.3) +
-      ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
+      geom_density(alpha = 0.7) +
+#     ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
+      ggtitle(paste0("propensity by", var_txt)) +
       labs(x = "", y = "") +
-      scale_fill_manual(values = color, name = "target") +
+      scale_fill_manual(values = c("#CFD8DC","#90A4AE"), name = "target") +
       theme_light()
   } # if
-  
+
 } # explore_density
 
 #============================================================================
@@ -1295,6 +1356,125 @@ explore_all <- function(data, target, ncol = 2, density = TRUE, legend_position 
 } # explore_all
 
 #============================================================================
+#  explain_tree
+#============================================================================
+
+#' explain a target using a simple decision tree (classification or regression)
+#'
+#' @param data a dataset
+#' @param target target variable
+#' @param maxdepth maximal depth of the tree
+#' @param minsplit he minimum number of observations that must exist in a node in order for a split to be attempted
+#' @param cp complexity parameter
+#' @param size textsize of plot
+#' @return plot
+#' @examples
+#' data <- iris
+#' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+#' data$Species <- NULL
+#' explain_tree(data, target = is_versicolor)
+#' @export
+
+explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, ...)  {
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+  } else {
+    target_txt = NA
+    return(NULL)
+  }
+
+  # convert target into formula
+  formula_txt <- as.formula(paste(target_txt, "~ ."))
+
+  if(guess_cat_num(data[target_txt]) == "cat")  {
+
+    # create tree cat
+    mod <- rpart::rpart(formula_txt,
+                        data = data,
+                        method = "class",
+                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+  } else {
+    # create tree num
+    mod <- rpart::rpart(formula_txt,
+                        data = data,
+                        method = "anova",  #"class",
+                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+  } # if
+
+  # check if tree was created. If not just plot info-text
+  if(nrow(mod$frame) > 1)  {
+
+      # plot tree
+      rpart.plot::rpart.plot(mod,
+                     prefix="target = ",       # prefix text in first line in node
+                     type=2,                   # 2: split variable name under box, 5: split variable name in the interior nodes
+                     yesno=2,                  # show yes/no at each node
+                     #extra=107,                # 106 = % observations + target
+                     branch=0,                 # 0 = V shaped, 1 = squared
+                     branch.type=5,            # 5 = proportional width
+                     box.palette = 'Blues',    # colors for nodes
+                     shadow.col = 0,           # color of shadow, 0 = none
+                     cex = size,
+                     ...)
+  } else {
+
+    plot_text("can't grow decision tree")
+  } # if tree exists
+
+} # explain_tree
+
+
+#============================================================================
+#  explain_logreg
+#============================================================================
+
+#' explain a binary target using logistic regression
+#'
+#' @param data a dataset
+#' @param target target variable (binary)
+#' @return dataset with results (term, estimate, std.error, z.value, p.value)
+#' @examples
+#' data <- iris
+#' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+#' data$Species <- NULL
+#' explain_logreg(data, target = is_versicolor)
+#' @export
+
+explain_logreg <- function(data, target, ...)  {
+
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+  } else {
+    target_txt = NA
+  }
+
+  if(sum(complete.cases(data)) < nrow(data))  {
+    warning("can't calculate logreg, drop rows with NA first")
+    return()
+  }
+
+  if(length(unique(data[[target_txt]])) != 2)  {
+    warning("target must be binary (e.g. 0/1, TRUE/FALSE, 'yes'/'no')")
+    return()
+  }
+
+  # convert target into formula
+  formula_txt <- as.formula(paste(target_txt, "~ ."))
+
+  mod <- suppressWarnings(glm(formula_txt, data = data, family = "binomial"))
+  mod_stepwise <- suppressWarnings(MASS::stepAIC(mod, trace = FALSE))
+
+  #summary(mod)
+
+  broom::tidy(mod_stepwise)
+
+} # explain_logreg
+
+#============================================================================
 #  explore_shiny
 #============================================================================
 #' explore dataset interactive
@@ -1327,17 +1507,18 @@ explore_shiny <- function(data, target)  {
   # get attribute types
   tbl_guesstarget <- describe(data) %>%
     filter(unique <= 2) %>%
-    filter((type %in% c("log","int","dou","num") & ((min == 0 | min == FALSE))) |
-           (type == "fct") |
-           (type == "chr")) %>%
+    filter((type %in% c("log","int","dou","num") &
+              (min == 0 | min == FALSE) &
+              (max == 1 | max == TRUE)) |
+              (type == "fct") ) %>%
     select(variable)
   guesstarget <- as.character(tbl_guesstarget[[1]])
 
   # check all attributes if usable
   for (i in names(data))  {
-      if (get_type(data[[i]]) == "other")  {
-        data[[i]] <- "<hide>"
-      }
+    if (get_type(data[[i]]) == "other")  {
+      data[[i]] <- "<hide>"
+    }
   }
 
   # define ui
@@ -1368,6 +1549,8 @@ explore_shiny <- function(data, target)  {
                           shiny::verbatimTextOutput("text")
           ),
           #textOutput("text")
+          shiny::tabPanel("explain",
+                          shiny::plotOutput("graph_explain")),
           shiny::tabPanel("overview", shiny::br(),
                           shiny::verbatimTextOutput("describe_tbl"),
                           DT::dataTableOutput("describe_all"))
@@ -1424,6 +1607,12 @@ explore_shiny <- function(data, target)  {
       }
     }) # renderPlot graph_target
 
+    output$graph_explain <- shiny::renderPlot({
+      if(input$target != "<no target>") {
+        data %>% explain_tree(!!input$target, size=0.9)
+      }
+    }) # renderPlot graph_explain
+
     output$graph <- shiny::renderPlot({
       data %>% explore(!!input$var, auto_scale = input$auto_scale)
     }) # renderPlot graph
@@ -1457,6 +1646,7 @@ explore_shiny <- function(data, target)  {
   shiny::shinyApp(ui = ui, server = server)
 
 } # explore_shiny
+
 
 #============================================================================
 #  explore
@@ -1592,3 +1782,4 @@ explore <- function(data, var, target, density, out = "single", ...)  {
   }
 
 } # explore
+
