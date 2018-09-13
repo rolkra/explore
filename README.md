@@ -19,7 +19,7 @@ The explore package automatically checks if an attribute is categorial or numeri
 ```r
 # install from github
 if (!require(devtools)) install.packages("devtools")
-remotes::install_github("rolkra/explore")
+devtools::install_github("rolkra/explore")
 ```
 
 ## Interactive data exploration
