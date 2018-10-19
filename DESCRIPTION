@@ -1,7 +1,7 @@
 Package: explore
 Type: Package
 Title: Simplifies exploratory data analysis
-Version: 0.3.0
+Version: 0.3.1
 Author: Roland Krasser
 Maintainer: Roland Krasser <roland.krasser@gmail.com>
 Description: Introduces three main verbs for data analysis:
@@ -13,11 +13,13 @@ Encoding: UTF-8
 LazyData: true
 Imports: broom,
          dplyr, 
+         DBI,
          DT, 
          ggplot2, 
          gridExtra,
          magrittr, 
          MASS,
+         odbc,
          rlang, 
          RODBC, 
          rpart,
