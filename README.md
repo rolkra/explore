@@ -52,6 +52,9 @@ Example how to use the functions of the explore package to explore the iris data
 library(explore)
 library(magrittr)  # to use the pipe operator %>%
 
+# use iris dataset
+data(iris)
+
 # explore Species
 iris %>% explore(Species)
 
@@ -59,17 +62,24 @@ iris %>% explore(Species)
 iris %>% explore(Sepal.Length)
 
 # define a target (is Species setosa?)
-iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 
 # explore relationship between Sepal.Length and the target
-iris %>% explore(Sepal.Length, target = is_setosa)
+iris %>% explore(Sepal.Length, target = is_versicolor)
 
-# explain target using a decision tree
-iris %>% explain_tree(target = is_versicolor)
+# explore correlation between Sepal.Length and Sepal.Width
+iris %>% explore(Sepal.Length, Sepal.Width)
+
+# explore correlation between Sepal.Length, Sepal.Width and a target
+iris %>% explore(Sepal.Length, Sepal.Width, target = is_versicolor)
 
 # describe dataset
 describe(iris)
 
 # describe Species
 iris %>% describe(Species)
+
+# explain target using a decision tree
+iris$Species <- NULL
+iris %>% explain_tree(target = is_versicolor)
 ```
