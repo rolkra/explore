@@ -67,11 +67,11 @@ iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 # explore relationship between Sepal.Length and the target
 iris %>% explore(Sepal.Length, target = is_versicolor)
 
-# explore correlation between Sepal.Length and Sepal.Width
-iris %>% explore(Sepal.Length, Sepal.Width)
+# explore correlation between Sepal.Length and Petal.Length
+iris %>% explore(Sepal.Length, Petal.Length)
 
-# explore correlation between Sepal.Length, Sepal.Width and a target
-iris %>% explore(Sepal.Length, Sepal.Width, target = is_versicolor)
+# explore correlation between Sepal.Length, Petal.Length and a target
+iris %>% explore(Sepal.Length, Petal.Length, target = is_versicolor)
 
 # describe dataset
 describe(iris)
