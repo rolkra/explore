@@ -16,9 +16,14 @@
 # + text_plot
 # + explore_shiny target must be 0/1, FALSE/TRUE, binary factor
 #
+# Version 0.3.1
+# + explore_cor
+# + dwh_fastload()
+# + report
+#
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_write_table
-# explore, explore_all, explore_density, explore_shiny
+# explore, explore_all, explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
 # get_type, guess_cat_num, replace_na_with, format_num, format_target
 # get_nrow, plot_text
@@ -217,6 +222,47 @@ dwh_write_table <- function(data, connection, table, append=FALSE, rownames=FALS
 
   return(result)
 }
+
+#============================================================================
+#  function: dwh_fastload
+#============================================================================
+#' write data to a DWH table faster than dwh_write_table
+#'
+#' write data fast to a DWH table using a ODBC connection
+#' Function uses packages DBI/odbc to write data faster than dwh_write_table
+#'
+#' @param data dataframe
+#' @param dsn DSN string
+#' @param table table name (character string)
+#' @return status
+#' @examples
+#' dwh_fastload(data, "DWH", database.table_test")
+#' @export
+
+dwh_fastload <- function(data, dsn, table)  {
+
+  # check table (must be 'database.table')
+  # split string at '.'
+  table_split <- strsplit(table, split="[.]")
+  database_name <- table_split[[1]][1]
+  table_name <- table_split[[1]][2]
+
+  # valid database_name and table_name?
+  if ( is.na(database_name) | is.na(table_name) )   {
+    stop("table must be in the format 'database.table'")
+  }
+  stopifnot (nchar(database_name) > 0, nchar(table_name) > 0)
+
+  # connect
+  con <- DBI::dbConnect(odbc::odbc(), dsn=dsn, database=database_name)
+
+  # write data
+  odbc::dbWriteTable(con, name=table_name, value=data)
+
+  # disconnect
+  odbc::dbDisconnect(con)
+
+} # dwh_fastload
 
 
 #============================================================================
@@ -662,7 +708,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "#CFD8DC", auto_scale = TRUE, ...)   {
+explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, ...)   {
 
   # parameter var
   if(!missing(var))  {
@@ -1429,7 +1475,6 @@ explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, 
 #============================================================================
 #  explain_logreg
 #============================================================================
-
 #' explain a binary target using logistic regression
 #'
 #' @param data a dataset
@@ -1473,6 +1518,173 @@ explain_logreg <- function(data, target, ...)  {
   broom::tidy(mod_stepwise)
 
 } # explain_logreg
+
+#============================================================================
+#  explore_cor
+#============================================================================
+#' explore the correlation between two attributes
+#'
+#' @param data a dataset
+#' @param x attribute on x axis
+#' @param y attribute on y axis
+#' @param target target variable (binary)
+#' @return plot
+#' @examples
+#' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
+#' @export
+
+explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, color = "grey", ...)  {
+
+  # parameter x
+  if(!missing(x))  {
+    x_quo <- enquo(x)
+    x_txt <- quo_name(x_quo)[[1]]
+  } else {
+    x_txt = NA
+    return(NULL)
+  }
+
+  # parameter y
+  if(!missing(y))  {
+    y_quo <- enquo(y)
+    y_txt <- quo_name(y_quo)[[1]]
+  } else {
+    y_txt = NA
+    return(NULL)
+  }
+
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+  } else {
+    target_txt = NA
+  }
+
+  x_type = guess_cat_num(data[[x_txt]])
+  y_type = guess_cat_num(data[[y_txt]])
+  target_type = guess_cat_num(data[[target_txt]])
+
+  if(x_type == "num")  {
+
+    # autoscale (if mni_val and max_val not used)
+    if (auto_scale == TRUE & is.na(min_val) & is.na(max_val))  {
+      r <- quantile(data[[x_txt]], c(0.02, 0.98), na.rm = TRUE)
+      min_val = r[1]
+      max_val = r[2]
+    }
+
+    # trim min, max
+    if (!is.na(min_val)) data <- data %>% filter(!!x_quo >= min_val)
+    if (!is.na(max_val)) data <- data %>% filter(!!x_quo <= max_val)
+
+  } # if num
+
+  if(x_type == "num" & y_type == "num")  {
+
+    # boxplot (x = num, y = num)
+    p <- data %>%
+      ggplot(aes(x = !!x_quo, y = !!y_quo)) +
+      geom_boxplot(aes(group = cut_number(!!x_quo, bins)), fill = color) +
+      theme_light()
+
+  }
+  else if(x_type == "cat" & y_type == "num") {
+
+    # boxplot (x = cat)
+    p <- data %>%
+      ggplot(aes(x = !!x_quo, y = !!y_quo)) +
+      geom_boxplot(aes(group = !!x_quo), fill = color) +
+      theme_light()
+  }
+
+  else if(x_type == "num" & y_type == "cat") {
+
+    # boxplot (x = cat)
+    p <- data %>%
+      ggplot(aes(x = !!y_quo, y = !!x_quo)) +
+      geom_boxplot(aes(group = !!y_quo), fill = color) +
+      theme_light() +
+      coord_flip()
+  }
+
+  else if(x_type == "cat" & y_type == "cat") {
+    p <- data %>%
+      ggplot(aes(x = !!x_quo, fill = !!y_quo)) +
+      geom_bar(position = "fill") +
+      theme_light()
+  }
+
+  if(!is.na(target_txt) & (target_type == "cat")) {
+    p <- p + facet_grid(vars(!!target_quo))
+  }
+
+  # plot grafic
+  p
+
+} # explore_cor
+
+
+#============================================================================
+#  report
+#============================================================================
+#' generate a report of all attributes
+#'
+#' generate a report of all attributes
+#' if targed is defined, the relation to the target is reported
+#'
+#' @param data a dataset
+#' @param target target variable (0/1 or FALSE/TRUE)
+#' @param density use density?
+#' @param output_file path/filename.html
+#' @import rmarkdown
+#' @examples
+#' report(iris)
+#' @export
+
+report <- function(data, target, density = FALSE, output_file)  {
+
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_text <- quo_name(target_quo)[[1]]
+  } else {
+    target_quo = NA
+    target_text = NA
+  }
+
+  # parameter density (set default value, based on target)
+  if (missing(density))  {
+    if (is.na(target_text)) {
+      density = TRUE
+    }
+    else {
+      density = FALSE
+    }
+  }
+
+# report only attributes
+if(is.na(target_text))  {
+  input_file <- system.file("extdata", "template_report_attribute.Rmd", package="explore")
+  if (missing(output_file)) {output_file = "C:/R/report_attributes.html"}
+  rmarkdown::render(input = input_file, output_file = output_file)
+
+  # report target with density
+} else if(density == TRUE)  {
+  input_file <- system.file("extdata", "template_report_target_den.Rmd", package="explore")
+  if (missing(output_file)) {output_file = "C:/R/report_target_density.html"}
+  var_name_target <- target_text  # needed in report template
+  rmarkdown::render(input = input_file, output_file = output_file)
+
+  # report target with percent
+} else {
+  input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
+  if (missing(output_file)) {output_file = "C:/R/report_target.html"}
+  var_name_target <- target_text # needed in report template
+  rmarkdown::render(input = input_file, output_file = output_file)
+} # if
+} # report
+
 
 #============================================================================
 #  explore_shiny
@@ -1603,13 +1815,13 @@ explore_shiny <- function(data, target)  {
 
     output$graph_target <- shiny::renderPlot({
       if(input$target != "<no target>" & input$var != input$target)  {
-        data %>% explore(!!input$var, !!input$target, auto_scale = input$auto_scale, density = input$target_density)
+        data %>% explore(!!input$var, target = !!input$target, auto_scale = input$auto_scale, density = input$target_density)
       }
     }) # renderPlot graph_target
 
     output$graph_explain <- shiny::renderPlot({
       if(input$target != "<no target>") {
-        data %>% explain_tree(!!input$target, size=0.9)
+        data %>% explain_tree(target = !!input$target, size=0.9)
       }
     }) # renderPlot graph_explain
 
@@ -1674,7 +1886,7 @@ explore_shiny <- function(data, target)  {
 #' explore(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore <- function(data, var, target, density, out = "single", ...)  {
+explore <- function(data, var, var2, target, density, out = "single", ...)  {
 
   # parameter var
   if (!missing(var)) {
@@ -1683,6 +1895,15 @@ explore <- function(data, var, target, density, out = "single", ...)  {
   } else {
     var_quo <- NA
     var_text <- NA
+  }
+
+  # parameter var2
+  if (!missing(var2)) {
+    var2_quo <- enquo(var2)
+    var2_text <- quo_name(var2_quo)[[1]]
+  } else {
+    var2_quo <- NA
+    var2_text <- NA
   }
 
   # parameter target
@@ -1716,6 +1937,15 @@ explore <- function(data, var, target, density, out = "single", ...)  {
   # interactive (shiny)
   if (is.na(var_text))  {
     explore_shiny(data)
+
+    # var + var2 -> correlation
+  } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {
+    explore_cor(data[c(var_text, var2_text)], x = !!var_quo, y = !!var2_quo, ...)
+
+    # var + var2 + target -> correlation
+  } else if (!is.na(var_text) & !is.na(var2_text) & !is.na(target_text))  {
+    #explore_cor(data[c(var_text, var2_text, target_text)], !!var_quo, !!var2_quo, !!target_quo, ...)
+    explore_cor(data[c(var_text, var2_text, target_text)], x = !!var_quo, y = !!var2_quo, target = !!target_quo, ...)
 
     # var_type oth
   } else if (!is.na(var_text) & var_type == "oth")  {
