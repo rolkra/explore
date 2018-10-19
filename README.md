@@ -61,7 +61,7 @@ iris %>% explore(Species)
 # explore Sepal.Length
 iris %>% explore(Sepal.Length)
 
-# define a target (is Species setosa?)
+# define a target (is Species versicolor?)
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 
 # explore relationship between Sepal.Length and the target
