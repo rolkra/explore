@@ -8,19 +8,5 @@ Description: Introduces three main verbs for data analysis. describe (to describ
 License: CC-BY-SA-4.0
 Encoding: UTF-8
 LazyData: true
-Imports: broom,
-         dplyr, 
-         DBI,
-         DT, 
-         ggplot2, 
-         gridExtra,
-         magrittr, 
-         MASS,
-         odbc,
-         rlang, 
-         RODBC, 
-         rpart,
-         rpart.plot,
-         shiny,
-         rmarkdown 
+Imports: broom, dplyr, DBI, DT, ggplot2, gridExtra, magrittr, MASS, odbc, rlang, RODBC, rpart, rpart.plot, shiny, rmarkdown 
 RoxygenNote: 6.0.1
