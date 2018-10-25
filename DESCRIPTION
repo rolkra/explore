@@ -22,5 +22,5 @@ Imports: broom,
          rpart,
          rpart.plot,
          shiny,
-	 rmarkdown 
+         rmarkdown 
 RoxygenNote: 6.0.1
