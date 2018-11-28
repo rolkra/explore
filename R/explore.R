@@ -548,7 +548,7 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
                                num2char = FALSE,
                                legend_position = legend_position,
                                title = ifelse(is.na(title),
-                                              paste0("propensity by ", var_num),
+                                              paste0(var_num),
                                               title)
   )
 
