@@ -1196,7 +1196,17 @@ describe_tbl <- function(data, target, out = "text")  {
 
   # sum of target=1 (if defined)
   if (!missing(target))  {
-    describe_target1_cnt <- sum(data[[target_txt]])
+
+    # min value is representing target = 0, rest target = 1
+    table_cnt  <- data %>%
+      dplyr::pull(!!target) %>%
+      table()
+    target0_val <- min(names(table_cnt))
+    target0_cnt <- table_cnt[target0_val]
+    target1_cnt <- sum(table_cnt) - target0_cnt
+    names(target0_cnt) <- "0"
+    names(target1_cnt) <- "1"
+    describe_target1_cnt <- target1_cnt
   } else {
     describe_target1_cnt = 0
   }
