@@ -22,7 +22,7 @@ The explore package automatically checks if an attribute is categorial or numeri
 if (!require(devtools)) install.packages("devtools")
 devtools::install_github("rolkra/explore")
 ```
-### local file
+### local
 
 Download and unzip the explore package.
 Then install it with devtools::install_local
