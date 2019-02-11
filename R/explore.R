@@ -1594,9 +1594,11 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
     # boxplot (x = num, y = num)
     p <- data %>%
+      # cut only when more then 1 different value in data
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-      geom_boxplot(aes(group = cut_number(!!x_quo, bins)), fill = color) +
+      geom_boxplot(aes(group = cut(!!x_quo, bins)), fill = color) +
       theme_light()
+
 
   }
   else if(x_type == "cat" & y_type == "num") {
