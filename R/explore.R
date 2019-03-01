@@ -1,29 +1,6 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.2.4
-# + guess_cat_num with vector as parameter instead of data + var
-# + describe and explore with warning if guess_cat_num = "oth"
-# + add get_type function
-# + non cat/num attribute display as <hide>
-# + change default color for explore_target to blue/gray
-# - delete default DNS
-#
-# Version 0.3.0
-# + change default max_cat from 30 to 25 (explore_cat, target_explore_cat)
-# + explain_tree, explain_logreg
-# + text-size % in plot 3.5 instead 3
-# + text_plot
-# + explore_shiny target must be 0/1, FALSE/TRUE, binary factor
-#
-# Version 0.3.1
-# + explore_cor
-# + dwh_fastload()
-# + report
-#
-## Version 0.3.2
-#   Bugfixes
-#
 # Version 0.3.3
 #   describe_tbl for factor-target
 #   explore_cor improve cut for num-variables
@@ -272,7 +249,66 @@ dwh_fastload <- function(data, dsn, table)  {
 
 } # dwh_fastload
 
+#============================================================================
+#  clean_var
+#============================================================================
+#' clean variable
+#'
+#' clean variable (replace NA values, set min_val and max_val)
+#'
+#' @param data a dataset
+#' @param var name of variable
+#' @param na value that replaces NA
+#' @param min_val all values < min_val are converted to min_val (var numeric or character)
+#' @param max_val all values > max_val are converted to max_val (var numeric or character)
+#' @return dataset
+#' @importFrom magrittr "%>%"
+#' @import rlang
+#' @import dplyr
+#' @examples
+#' library(magrittr)
+#' iris %>% clean_var(Sepal.Width, max_val = 3.5)
 
+clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
+
+  # check if var is missing
+  if (missing(var)){
+    warning("no variable defined, call function with variable that you want to clean!")
+    return(data)
+  }
+  
+  # tidy evaluation
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
+  
+  # check if var exists
+    if (sum(colnames(data) == var_txt) == 0){
+    warning("can't find variable " ,var_txt, " in data, check variable name!")
+    return(data)
+  }
+  
+  # replace NA
+  if (!is.na(na))  {
+    na_pos <- is.na(data[[var_txt]])
+    data[na_pos, var_txt] <- na
+  }
+
+  # set min value
+  if (!is.na(min_val) & !is.factor(data[[var_txt]]))  {
+    col <- data[ ,var_txt]
+    data[ ,var_txt] <- ifelse(col < min_val, min_val, col)
+  }
+
+  # set max value
+  if (!is.na(max_val)& !is.factor(data[[var_txt]]))  {
+    col <- data[ ,var_txt]
+    data[ ,var_txt] <- ifelse(col > max_val, max_val, col)
+  }
+  
+  # return data
+  data
+} # clean_var
+                                  
 #============================================================================
 #  plot_text
 #============================================================================
