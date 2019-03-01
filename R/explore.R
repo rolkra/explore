@@ -6,6 +6,10 @@
 #   explore_cor improve cut for num-variables
 #   Bugfixes
 #
+# Version 0.3.4
+#   clean_var
+#   Bugfixes
+#
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_write_table
 # explore, explore_all, explore_density, explore_shiny, explore_cor
