@@ -274,7 +274,7 @@ dwh_fastload <- function(data, dsn, table)  {
 #' iris %>% clean_var(Sepal.Width, max_val = 3.5)
 
 clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
-
+  
   # check if var is missing
   if (missing(var)){
     warning("no variable defined, call function with variable that you want to clean!")
@@ -286,7 +286,7 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
   var_txt <- quo_name(var_quo)[[1]]
   
   # check if var exists
-    if (sum(colnames(data) == var_txt) == 0){
+  if (sum(colnames(data) == var_txt) == 0){
     warning("can't find variable " ,var_txt, " in data, check variable name!")
     return(data)
   }
@@ -296,17 +296,19 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
     na_pos <- is.na(data[[var_txt]])
     data[na_pos, var_txt] <- na
   }
-
+  
   # set min value
   if (!is.na(min_val) & !is.factor(data[[var_txt]]))  {
     col <- data[ ,var_txt]
-    data[ ,var_txt] <- ifelse(col < min_val, min_val, col)
+    col[col < min_val] <- min_val
+    data[ ,var_txt] <- col
   }
-
+  
   # set max value
-  if (!is.na(max_val)& !is.factor(data[[var_txt]]))  {
+  if (!is.na(max_val) & !is.factor(data[[var_txt]]))  {
     col <- data[ ,var_txt]
-    data[ ,var_txt] <- ifelse(col > max_val, max_val, col)
+    col[col > max_val] <- max_val
+    data[ ,var_txt] <- col
   }
   
   # return data
