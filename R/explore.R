@@ -12,6 +12,7 @@
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_write_table
+# clean_var
 # explore, explore_all, explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
 # get_type, guess_cat_num, replace_na_with, format_num, format_target
@@ -274,47 +275,47 @@ dwh_fastload <- function(data, dsn, table)  {
 #' iris %>% clean_var(Sepal.Width, max_val = 3.5)
 
 clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
-  
+
   # check if var is missing
   if (missing(var)){
     warning("no variable defined, call function with variable that you want to clean!")
     return(data)
   }
-  
+
   # tidy evaluation
   var_quo <- enquo(var)
   var_txt <- quo_name(var_quo)[[1]]
-  
+
   # check if var exists
   if (sum(colnames(data) == var_txt) == 0){
     warning("can't find variable " ,var_txt, " in data, check variable name!")
     return(data)
   }
-  
+
   # replace NA
   if (!is.na(na))  {
     na_pos <- is.na(data[[var_txt]])
     data[na_pos, var_txt] <- na
   }
-  
+
   # set min value
   if (!is.na(min_val) & !is.factor(data[[var_txt]]))  {
     col <- data[ ,var_txt]
     col[col < min_val] <- min_val
     data[ ,var_txt] <- col
   }
-  
+
   # set max value
   if (!is.na(max_val) & !is.factor(data[[var_txt]]))  {
     col <- data[ ,var_txt]
     col[col > max_val] <- max_val
     data[ ,var_txt] <- col
   }
-  
+
   # return data
   data
 } # clean_var
-                                  
+
 #============================================================================
 #  plot_text
 #============================================================================
@@ -402,7 +403,7 @@ format_target <- function(target)   {
 #' @param flip should plot be flipped? (change of x and y)
 #' @param num2char if TRUE, numeric values in variable are converted into character
 #' @param title title of plot
-#' @param autoscale not used, just for compatibility
+#' @param auto_scale not used, just for compatibility
 #' @param max_cat maximum numbers of categories to be plotted
 #' @param legend_position position of legend ("right"|"bottom"|"non")
 #' @return plot object
@@ -529,7 +530,7 @@ replace_na_with <- function(data, var_name, with)  {
 #' @param max_val all values > max_val are converted to max_val
 #' @param flip should plot be flipped? (change of x and y)
 #' @param title title of plot
-#' @param autoscale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @param na value to replace NA
 #' @param legend_position position of legend ("right"|"bottom"|"non")
 #' @return plot object
@@ -618,7 +619,7 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
 #' @param flip should plot be flipped? (change of x and y)
 #' @param percent plot values as percentage (instead of absolute numbers)
 #' @param color color of plot
-#' @param autoscale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @param max_cat maximum number of categories to be plotted
 #' @return plot object (bar chart)
 #' @importFrom magrittr "%>%"
@@ -691,7 +692,7 @@ explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cc
 #' @param flip should plot be flipped? (change of x and y)
 #' @param color color of plot
 #' @param bins number of bins used for histogram
-#' @param autoscale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @return plot object (histogram)
 #' @importFrom magrittr "%>%"
 #' @import dplyr
@@ -742,12 +743,12 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' create a density plot to explore numerical variable
 #'
 #' @param data a dataset
-#' @param var_num name of numerical variable
-#' @param var_target name of target variable (0/1 or FALSE/TRUE)
+#' @param var variable
+#' @param target target variable (0/1 or FALSE/TRUE)
 #' @param min_val all values < min_val are converted to min_val
 #' @param max_val all values > max_val are converted to max_val
 #' @param color color of plot
-#' @param autoscale use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param auto_scale use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @return plot object (density plot)
 #' @importFrom magrittr "%>%"
 #' @import rlang
@@ -1653,6 +1654,8 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
   }
   else if(x_type == "cat" & y_type == "num") {
 
+    data[[x_txt]] <- as.factor(data[[x_txt]])
+
     # boxplot (x = cat)
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
@@ -1661,6 +1664,8 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
   }
 
   else if(x_type == "num" & y_type == "cat") {
+
+    data[[y_txt]] <- as.factor(data[[y_txt]])
 
     # boxplot (x = cat)
     p <- data %>%
@@ -1671,6 +1676,10 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
   }
 
   else if(x_type == "cat" & y_type == "cat") {
+
+    data[[x_txt]] <- as.factor(data[[x_txt]])
+    data[[y_txt]] <- as.factor(data[[y_txt]])
+
     p <- data %>%
       ggplot(aes(x = !!x_quo, fill = !!y_quo)) +
       geom_bar(position = "fill") +
@@ -1685,7 +1694,6 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
   p
 
 } # explore_cor
-
 
 #============================================================================
 #  report
@@ -1934,7 +1942,7 @@ explore_shiny <- function(data, target)  {
 #' @param out plot layout ("single"|"double"|"all")
 #' @param min_val all values < min_val are converted to min_val
 #' @param max_val all values > max_val are converted to max_val
-#' @param autoscale use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param auto_scale use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @param na value to replace NA
 #' @return plot object
 #' @import rlang
