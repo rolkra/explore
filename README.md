@@ -56,10 +56,10 @@ explore(iris)
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
 ### Report of attributes
-<img src="https://github.com/rolkra/explore/blob/master/report_attributes.png" alt="example report attributes" width="800">
+<img src="https://github.com/rolkra/explore/blob/master/report_attributes.png" alt="example report attributes" width="400">
 
 ### Report of correlations with target
-<img src="https://github.com/rolkra/explore/blob/master/report_target.png" alt="example report attributes" width="800">
+<img src="https://github.com/rolkra/explore/blob/master/report_target.png" alt="example report attributes" width="400">
 
 ## Functions for reproducible data science
 
