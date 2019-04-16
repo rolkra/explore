@@ -55,6 +55,12 @@ explore(iris)
 ### Explain target
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
+### Report of attributes
+<img src="https://github.com/rolkra/explore/blob/master/report_attributes.png" alt="example report attributes" width="800">
+
+### Report of correlations with target
+<img src="https://github.com/rolkra/explore/blob/master/report_target.png" alt="example report attributes" width="800">
+
 ## Functions for reproducible data science
 
 Example how to use the functions of the explore package to explore the iris dataset
