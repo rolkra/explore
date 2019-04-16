@@ -1,6 +1,6 @@
 # explore
 
-R package that makes basic data exploration radically simple. There are two ways to use the eplore package:
+Simplifies Exploratory Data Analysis. There are two ways to use the eplore package:
 
 **Interactive data exploration**
 
@@ -8,9 +8,10 @@ Launch an interactive shiny-app to explore data. You can inspect individual attr
 
 **Functions for reproducible data science**
 
-Use the functions behind the shiny app for "tidy EDA". There are basically two "verbs" to remember:
+Use the functions behind the shiny app for "tidy EDA". There are basically three "verbs" to remember:
 * explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
 * describe - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
+* explain - to create a simple model that explains a target
 
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
@@ -22,17 +23,16 @@ The explore package automatically checks if an attribute is categorial or numeri
 if (!require(devtools)) install.packages("devtools")
 devtools::install_github("rolkra/explore")
 ```
-### local
+if you are behind a firewall, you may want to:
 
-Download and unzip the explore package.
-Then install it with devtools::install_local
+* Download and unzip the explore package
+* Then install it with devtools::install_local
 
 ```r
 # install local
 if (!require(devtools)) install.packages("devtools")
 devtools::install_local(path = <path of local package>, force = TRUE)
 ```
-
 
 ## Interactive data exploration
 
