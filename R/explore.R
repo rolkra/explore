@@ -1419,10 +1419,18 @@ describe <- function(data, var, target, out = "text", ...)  {
 #' description <- data.frame(
 #'                  variable = c("Species"),
 #'                  description = c("Species of Iris flower"))
-#' data_dict_md(iris, "iris flower data set", description)
+#' data_dict_md(iris,
+#'              "iris flower data set",
+#'              description,
+#'              output_dir = tempdir())
 #' @export
 
-data_dict_md <- function(data, title = "", description = NA, output_file = "data_dict.md", output_dir = tempdir())  {
+data_dict_md <- function(data, title = "", description = NA, output_file = "data_dict.md", output_dir)  {
+
+  # output_dir must be defined
+  if(missing(output_dir)) {
+    stop("output_dir must be defined")
+  }
 
   # describe data
   d <- data %>% describe()
@@ -1824,10 +1832,15 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' @param output_dir Directory where to save the html report
 #' @import rmarkdown
 #' @examples
-#' report(iris)
+#' report(iris, output_dir = tempdir())
 #' @export
 
-report <- function(data, target, density = FALSE, output_file, output_dir = tempdir())  {
+report <- function(data, target, density = FALSE, output_file, output_dir)  {
+
+  # output_dir must be defined
+  if(missing(output_dir)) {
+    stop("output_dir must be defined")
+  }
 
   # parameter target
   if(!missing(target))  {
@@ -1878,7 +1891,6 @@ if(is.na(target_text))  {
                     )
 } # if
 } # report
-
 
 #============================================================================
 #  explore_shiny
