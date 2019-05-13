@@ -5,7 +5,7 @@
 \title{Create a data dictionary Markdown file}
 \usage{
 data_dict_md(data, title = "", description = NA,
-  output_file = "data_dict.md", output_dir = tempdir())
+  output_file = "data_dict.md", output_dir)
 }
 \arguments{
 \item{data}{A dataframe (data dictionary for all variables)}
@@ -32,5 +32,8 @@ data_dict_md(iris, "iris flower data set")
 description <- data.frame(
                  variable = c("Species"),
                  description = c("Species of Iris flower"))
-data_dict_md(iris, "iris flower data set", description)
+data_dict_md(iris,
+             "iris flower data set",
+             description,
+             output_dir = tempdir())
 }

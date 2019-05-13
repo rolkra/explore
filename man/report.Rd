@@ -4,8 +4,7 @@
 \alias{report}
 \title{Generate a report of all attributes}
 \usage{
-report(data, target, density = FALSE, output_file,
-  output_dir = tempdir())
+report(data, target, density = FALSE, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}
@@ -23,5 +22,5 @@ Generate a report of all attributes
 If target is defined, the relation to the target is reported
 }
 \examples{
-report(iris)
+report(iris, output_dir = tempdir())
 }
