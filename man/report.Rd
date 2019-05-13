@@ -2,22 +2,25 @@
 % Please edit documentation in R/explore.R
 \name{report}
 \alias{report}
-\title{generate a report of all attributes}
+\title{Generate a report of all attributes}
 \usage{
-report(data, target, density = FALSE, output_file)
+report(data, target, density = FALSE, output_file,
+  output_dir = tempdir())
 }
 \arguments{
-\item{data}{a dataset}
+\item{data}{A dataset}
 
-\item{target}{target variable (0/1 or FALSE/TRUE)}
+\item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{density}{use density?}
+\item{density}{Use density? (TRUE/FALSE)}
 
-\item{output_file}{path/filename.html}
+\item{output_file}{Filename of the html report}
+
+\item{output_dir}{Directory where to save the html report}
 }
 \description{
-generate a report of all attributes
-if targed is defined, the relation to the target is reported
+Generate a report of all attributes
+If target is defined, the relation to the target is reported
 }
 \examples{
 report(iris)

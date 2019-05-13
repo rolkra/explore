@@ -1,18 +1,23 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.3.3
-#   describe_tbl for factor-target
-#   explore_cor improve cut for num-variables
-#   Bugfixes
-#
 # Version 0.3.4
 #   clean_var
 #   Bugfixes
 #
+# Version 0.4.0
+#   prepare for CRAN
+#   fix na parameter for target_explore_cat
+#   add data_dict_md function
+#   improve documentation
+#   use tempdir() in examples
+#   switch from RODBC to DBI/odbc
+#   drop dwh_write_table
+#
 # dwh_connect, dwh_disconnect,
-# dwh_read_table, dwh_read_data, dwh_write_table
+# dwh_read_table, dwh_read_data, dwh_fastload
 # clean_var
+# describe, describe_all, describe_cat, describe_num
 # explore, explore_all, explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
 # get_type, guess_cat_num, replace_na_with, format_num, format_target
@@ -22,31 +27,14 @@
 ################################################################################
 
 #============================================================================
-#  Settings & Init
-#============================================================================
-# load packages
-
-# library(RODBC)         # ODBC-Verbindung
-# library(dplyr)         # data manipulation and %>%
-# library(ggplot2)       # plots
-# library(gridExtra)     # plots next to each other
-# library(shiny)         # interactive explore
-# library(DT)            # render data tables
-# library(rmarkdown)     # rendering markdown documents
-# library(rpart)         # decision tree
-# library(rpart.plot)    # plotting decision tree
-# library(MASS)          # stepwise logistic regression
-# library(broom)         # logreg output as dataframe
-
-#============================================================================
 #  Function: Encrypt (Passwort)
 #============================================================================
 #' encrypt text
 #'
-#' @param text a text (character)
-#' @param codeletters a string of letters that are used for encryption
-#' @param shift number of elements shifted
-#' @return encrypted text
+#' @param text A text (character)
+#' @param codeletters A string of letters that are used for encryption
+#' @param shift Number of elements shifted
+#' @return Encrypted text
 #' @examples
 #' encrypt("hello world")
 #' @export
@@ -62,12 +50,13 @@ encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #============================================================================
 #' decrypt text
 #'
-#' @param text a text (character)
-#' @param codeletters a string of letters that are used for decryption
-#' @param shift number of elements shifted
-#' @return decrypted text
+#' @param text A text (character)
+#' @param codeletters A string of letters that are used for decryption
+#' @param shift Number of elements shifted
+#' @return Decrypted text
 #' @examples
 #' decrypt("zw336 E693v")
+#' @export
 
 decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
   old=paste(codeletters,collapse="")
@@ -82,26 +71,28 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #'
 #' connect to datawarehouse (DWH) using ODBC
 #'
-#' @param dns DNS string
+#' @param dsn DSN string
 #' @param user user name
 #' @param pwd password of user
 #' @param pwd_crypt is password encryption used?
 #' @return connection
 #' @examples
-#' con <- dwh_connect(dns = "DWH1", user = "u12345")
+#' \dontrun{
+#' con <- dwh_connect(dsn = "DWH1", user = "u12345")
+#' }
 #' @export
 
-dwh_connect <- function(dns, user = NA, pwd = NA, pwd_crypt = FALSE)  {
+dwh_connect <- function(dsn, user = NA, pwd = NA, pwd_crypt = FALSE)  {
 
   if (is.na(user))  {
     # use single sign on
-    channel <- RODBC::odbcConnect(dns)
+    channel <- DBI::dbConnect(odbc::odbc(), dsn)
 
   } else {
     # use user & passwort
-    channel <- RODBC::odbcConnect(dns,
-                                  uid=user,
-                                  pwd=if (pwd_crypt == TRUE) decrypt(pwd) else pwd
+    channel <- DBI::dbConnect(odbc::odbc(), dsn,
+                              user = user,
+                              password = if (pwd_crypt == TRUE) decrypt(pwd) else pwd
     )
   } # if
   return(channel)
@@ -116,11 +107,13 @@ dwh_connect <- function(dns, user = NA, pwd = NA, pwd_crypt = FALSE)  {
 #'
 #' @param connection channel (ODBC connection)
 #' @examples
+#' \dontrun{
 #' dwh_disconnect(con)
+#' }
 #' @export
 
 dwh_disconnect <- function(connection)  {
-  RODBC::odbcClose(connection)
+  DBI::dbDisconnect(connection)
 }
 
 #============================================================================
@@ -135,7 +128,9 @@ dwh_disconnect <- function(connection)  {
 #' @param names_lower convert field names to lower (default = TRUE)
 #' @return dataframe containing table data
 #' @examples
+#' \dontrun{
 #' dwh_read_table(con, "database.table_test")
+#' }
 #' @export
 
 dwh_read_table <- function(connection, table, names_lower = TRUE)  {
@@ -144,10 +139,7 @@ dwh_read_table <- function(connection, table, names_lower = TRUE)  {
   sql <- paste0("select * from ", table)
 
   # read data from dwh
-  data <- RODBC::sqlQuery(connection, sql,
-                          stringsAsFactors = FALSE,
-                          dec = ",",
-                          na.strings = "?")
+  data <- DBI::dbGetQuery(connection, sql)
 
   # convert names to lower case
   if (names_lower) {
@@ -169,16 +161,15 @@ dwh_read_table <- function(connection, table, names_lower = TRUE)  {
 #' @param names_lower convert field names to lower (default = TRUE)
 #' @return dataframe containing table data
 #' @examples
+#' \dontrun{
 #' dwh_read_data(con, "select * from database.table_test")
+#' }
 #' @export
 
 dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 
   # read data from dwh
-  data <- RODBC::sqlQuery(connection, sql,
-                          stringsAsFactors = FALSE,
-                          dec = ",",
-                          na.strings = "?")
+  data <- DBI::dbGetQuery(connection, sql)
 
   # convert names to lower case
   if (names_lower) names(data) <- tolower(names(data))
@@ -187,46 +178,19 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 }
 
 #============================================================================
-#  function: dwh_write_table
+#  function: dwh_fastload
 #============================================================================
 #' write data to a DWH table
 #'
-#' write data to a DWH table using a ODBC connection
-#'
-#' @param data dataframe
-#' @param connection DWH connection
-#' @param table table name (character string)
-#' @param append append to existing table? (default = FALSE)
-#' @return status
-#' @examples
-#' dwh_read_table(con, "database.table_test")
-#' @export
-
-dwh_write_table <- function(data, connection, table, append=FALSE, rownames=FALSE, ...)  {
-
-  # write data to dwh
-  result <- RODBC::sqlSave(channel=connection,
-                           dat=data,
-                           tablename=table,
-                           append=append, ...)
-
-  return(result)
-}
-
-#============================================================================
-#  function: dwh_fastload
-#============================================================================
-#' write data to a DWH table faster than dwh_write_table
-#'
 #' write data fast to a DWH table using a ODBC connection
-#' Function uses packages DBI/odbc to write data faster than dwh_write_table
+#' Function uses packages DBI/odbc to write data faster than RODBC
 #'
 #' @param data dataframe
 #' @param dsn DSN string
 #' @param table table name (character string)
 #' @return status
 #' @examples
-#' dwh_fastload(data, "DWH", database.table_test")
+#' dwh_fastload(data, "DWH", "database.table_test")
 #' @export
 
 dwh_fastload <- function(data, dsn, table)  {
@@ -247,34 +211,34 @@ dwh_fastload <- function(data, dsn, table)  {
   con <- DBI::dbConnect(odbc::odbc(), dsn=dsn, database=database_name)
 
   # write data
-  odbc::dbWriteTable(con, name=table_name, value=data)
+  DBI::dbWriteTable(con, name=table_name, value=data)
 
   # disconnect
-  odbc::dbDisconnect(con)
+  DBI::dbDisconnect(con)
 
 } # dwh_fastload
 
 #============================================================================
 #  clean_var
 #============================================================================
-#' clean variable
+#' Clean variable
 #'
-#' clean variable (replace NA values, set min_val and max_val)
+#' Clean variable (replace NA values, set min_val and max_val)
 #'
-#' @param data a dataset
-#' @param var name of variable
-#' @param na value that replaces NA
-#' @param min_val all values < min_val are converted to min_val (var numeric or character)
-#' @param max_val all values > max_val are converted to max_val (var numeric or character)
-#' @return dataset
-#' @importFrom magrittr "%>%"
+#' @param data A dataset
+#' @param var Name of variable
+#' @param na Value that replaces NA
+#' @param min_val All values < min_val are converted to min_val (var numeric or character)
+#' @param max_val All values > max_val are converted to max_val (var numeric or character)
+#' @param name New name of variable (as string)
+#' @return Dataset
 #' @import rlang
 #' @import dplyr
 #' @examples
-#' library(magrittr)
-#' iris %>% clean_var(Sepal.Width, max_val = 3.5)
+#' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
+#' @export
 
-clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
+clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, name = NA)  {
 
   # check if var is missing
   if (missing(var)){
@@ -312,6 +276,16 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
     data[ ,var_txt] <- col
   }
 
+  # rename variable
+  if (!is.na(name))  {
+    var_names <- colnames(data)
+    if (name %in% var_names & name != var_txt)  {
+      warning("variable ", name, " already exists in data. Did not rename, select other name!")
+    } else {
+    colnames(data)[colnames(data) == var_txt] <- name
+    }
+  }
+
   # return data
   data
 } # clean_var
@@ -319,14 +293,15 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA)  {
 #============================================================================
 #  plot_text
 #============================================================================
-#' plot a text
+#' Plot a text
 #'
-#' plots a text (base plot) and let you choose text-size and color
+#' Plots a text (base plot) and let you choose text-size and color
 #'
-#' @param text text as string
-#' @param size text-size
-#' @param color text-color
-#' @return plot
+#' @param text Text as string
+#' @param size Text-size
+#' @param color Text-color
+#' @return Plot
+#' @importFrom graphics plot text
 #' @examples
 #' plot_text("hello", size = 2, color = "red")
 #' @export
@@ -339,13 +314,13 @@ plot_text <- function(text="hello world", size=1.6, color="black")  {
 #============================================================================
 #  format_num
 #============================================================================
-#' format number
+#' Format number
 #'
-#' formats a big number as k (1000) or M (100000)
+#' Formats a big number as k (1000) or M (100000)
 #'
-#' @param number a number (integer or real)
-#' @param digits number of digits
-#' @return formated number as text
+#' @param number A number (integer or real)
+#' @param digits Number of digits
+#' @return Formated number as text
 #' @examples
 #' format_num(5500, digits = 2)
 #' @export
@@ -366,14 +341,17 @@ format_num <- function(number = 0, digits = 1)   {
 #============================================================================
 #  format_target
 #============================================================================
-#' format target
+#' Format target
 #'
-#' formats a target as a 0/1 attribute
+#' Formats a target as a 0/1 attribute
 #'
-#' @param target attribute as vector
-#' @return formated target
+#' @param target Attribute as vector
+#' @return Formated target
 #' @examples
-#' data$target <- format_target(data$target)
+#' iris$is_virginica <- ifelse(iris$Species == "virginica", "yes", "no")
+#' iris$target <- format_target(iris$is_virginica)
+#' table(iris$target)
+#' @export
 
 format_target <- function(target)   {
 
@@ -391,35 +369,46 @@ format_target <- function(target)   {
 #============================================================================
 #  Function: target_explore_cat
 #============================================================================
-#' explore categorial variable + target
+#' Explore categorial variable + target
 #'
-#' create a plot to explore relation between categorial variable and a binary target
+#' Create a plot to explore relation between categorial variable and a binary target
 #'
-#' @param data a dataset
-#' @param var_cat name of categorial variable
-#' @param var_target name of target variable (0/1 or FALSE/TRUE)
-#' @param min_val all values < min_val are converted to min_val
-#' @param max_val all values > max_val are converted to max_val
-#' @param flip should plot be flipped? (change of x and y)
-#' @param num2char if TRUE, numeric values in variable are converted into character
-#' @param title title of plot
-#' @param auto_scale not used, just for compatibility
-#' @param max_cat maximum numbers of categories to be plotted
-#' @param legend_position position of legend ("right"|"bottom"|"non")
-#' @return plot object
+#' @param data A dataset
+#' @param var_cat Name of categorial variable
+#' @param var_target Name of target variable (0/1 or FALSE/TRUE)
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param flip Should plot be flipped? (change of x and y)
+#' @param num2char If TRUE, numeric values in variable are converted into character
+#' @param title Title of plot
+#' @param auto_scale Not used, just for compatibility
+#' @param na Value to replace NA
+#' @param max_cat Maximum numbers of categories to be plotted
+#' @param legend_position Position of legend ("right"|"bottom"|"non")
+#' @return Plot object
 #' @importFrom magrittr "%>%"
 #' @import dplyr
 #' @import ggplot2
-#' @examples
-#' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-#' target_explore_cat(iris, "Species", "is_virginica")
 
-target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, max_cat = 30, legend_position = "bottom") {
+target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, legend_position = "bottom") {
+
+  # definitions for CRAN package check
+  target <- NULL
+  n_target <- NULL
+  n_pct <- NULL
+  weight <- NULL
+  target_pct <- NULL
+  num <- NULL
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
     rename_(target = var_target) %>%
     rename_(cat = var_cat)
+
+  # replace na value
+  if (!is.na(na))  {
+    data_bar <- data_bar %>% replace_na_with("cat", na)
+  }
 
   # format target as 0/1
   data_bar$target <- format_target(data_bar$target)
@@ -494,14 +483,14 @@ target_explore_cat <- function(data, var_cat, var_target = "target_ind", min_val
 #============================================================================
 #  Function: replace_na_with
 #============================================================================
-#' replace NA
+#' Replace NA
 #'
-#' replace NA values of an attribute in a dataframe
+#' Replace NA values of an attribute in a dataframe
 #'
-#' @param data a dataframe
-#' @param var_name name of variable where NAs are replaced
-#' @param with value instead of NA
-#' @return updated dataframe
+#' @param data A dataframe
+#' @param var_name Name of variable where NAs are replaced
+#' @param with Value instead of NA
+#' @return Updated dataframe
 #' @examples
 #' data <- data.frame(nr = c(1,2,3,NA,NA))
 #' replace_na_with(data, "nr", 0)
@@ -519,29 +508,30 @@ replace_na_with <- function(data, var_name, with)  {
 #============================================================================
 #  Function: target_explore_num
 #============================================================================
-#' explore categorial variable + target
+#' Explore categorial variable + target
 #'
-#' create a plot to explore relation between numerical variable and a binary target
+#' Create a plot to explore relation between numerical variable and a binary target
 #'
-#' @param data a dataset
-#' @param var_cat name of numerical variable
-#' @param var_target name of target variable (0/1 or FALSE/TRUE)
-#' @param min_val all values < min_val are converted to min_val
-#' @param max_val all values > max_val are converted to max_val
-#' @param flip should plot be flipped? (change of x and y)
-#' @param title title of plot
-#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @param na value to replace NA
-#' @param legend_position position of legend ("right"|"bottom"|"non")
-#' @return plot object
+#' @param data A dataset
+#' @param var_num Name of numerical variable
+#' @param var_target Name of target variable (0/1 or FALSE/TRUE)
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param flip Should plot be flipped? (change of x and y)
+#' @param title Title of plot
+#' @param auto_scale Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param na Value to replace NA
+#' @param legend_position Position of legend ("right"|"bottom"|"non")
+#' @return Plot object
 #' @importFrom magrittr "%>%"
 #' @import dplyr
 #' @import ggplot2
-#' @examples
-#' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-#' target_explore_num(iris, "Sepal.Length", "is_virginica")
 
 target_explore_num <- function(data, var_num, var_target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, legend_position = "bottom") {
+
+  # define variables for CRAN package check
+  target <- NULL
+  num <- NULL
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -610,25 +600,28 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
 #============================================================================
 #  explore_cat
 #============================================================================
-#' explore categorial variable
+#' Explore categorial variable
 #'
-#' create a plot to explore categorial variable
+#' Create a plot to explore categorial variable
 #'
-#' @param data a dataset
-#' @param var_cat name of numerical variable
-#' @param flip should plot be flipped? (change of x and y)
-#' @param percent plot values as percentage (instead of absolute numbers)
-#' @param color color of plot
-#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @param max_cat maximum number of categories to be plotted
-#' @return plot object (bar chart)
+#' @param data A dataset
+#' @param var_cat Name of numerical variable
+#' @param flip Should plot be flipped? (change of x and y)
+#' @param percent Plot values as percentage (instead of absolute numbers)
+#' @param color Color of plot
+#' @param auto_scale Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param max_cat Maximum number of categories to be plotted
+#' @return Plot object (bar chart)
 #' @importFrom magrittr "%>%"
+#' @importFrom utils head
 #' @import dplyr
 #' @import ggplot2
-#' @examples
-#' explore_cat(iris, "Species")
 
 explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cccccc", auto_scale = TRUE, max_cat = 30)  {
+
+  # define variables for CRAN-package check
+  cat <- NULL
+  na_ind <- NULL
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -642,6 +635,8 @@ explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cc
 
   # plot as percentact or absolut numbers?
   if (percent)  {
+
+    n_pct <- NULL   # for CRAN package build
 
     data_pct <- data_bar %>%
       count(cat) %>%
@@ -681,26 +676,28 @@ explore_cat <- function(data, var_cat, flip = TRUE, percent = TRUE, color = "#cc
 #============================================================================
 #  explore_num
 #============================================================================
-#' explore numerical variable
+#' Explore numerical variable
 #'
-#' create a plot to explore numerical variable
+#' Create a plot to explore numerical variable
 #'
-#' @param data a dataset
-#' @param var_num name of numerical variable
-#' @param min_val all values < min_val are converted to min_val
-#' @param max_val all values > max_val are converted to max_val
-#' @param flip should plot be flipped? (change of x and y)
-#' @param color color of plot
-#' @param bins number of bins used for histogram
-#' @param auto_scale use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @return plot object (histogram)
+#' @param data A dataset
+#' @param var_num Name of numerical variable
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param flip Should plot be flipped? (change of x and y)
+#' @param color Color of plot
+#' @param bins Number of bins used for histogram
+#' @param auto_scale Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @return Plot object (histogram)
 #' @importFrom magrittr "%>%"
 #' @import dplyr
 #' @import ggplot2
-#' @examples
-#' explore_num(iris, "Sepal.Length")
 
 explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE, color = "#cccccc", bins = 15, auto_scale = TRUE)  {
+
+  # define variables for CRAN-package check
+  num <- NULL
+  na_ind <- NULL
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
@@ -738,18 +735,19 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #============================================================================
 #  explore_density
 #============================================================================
-#' explore density of variable
+#' Explore density of variable
 #'
-#' create a density plot to explore numerical variable
+#' Create a density plot to explore numerical variable
 #'
-#' @param data a dataset
-#' @param var variable
-#' @param target target variable (0/1 or FALSE/TRUE)
-#' @param min_val all values < min_val are converted to min_val
-#' @param max_val all values > max_val are converted to max_val
-#' @param color color of plot
-#' @param auto_scale use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @return plot object (density plot)
+#' @param data A dataset
+#' @param var Variable
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param color Color of plot
+#' @param auto_scale Use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param ... Further arguments
+#' @return Plot object (density plot)
 #' @importFrom magrittr "%>%"
 #' @import rlang
 #' @import dplyr
@@ -758,6 +756,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' explore_density(iris, "Sepal.Length")
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
+#' @export
 
 explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, ...)   {
 
@@ -776,6 +775,11 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   } else {
     target_txt = NA
   }
+
+  # define variables for CRAN-package check
+  var_ <- NULL
+  na_ind <- NULL
+  target_ <- NULL
 
   # rename variables, to use it (lazy evaluation)
   data <- data %>%
@@ -829,12 +833,12 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
 #============================================================================
 #  format_type
 #============================================================================
-#' format type description
+#' Format type description
 #'
-#' format type description of varable to 3 letters (int|dou|log|chr)
+#' Format type description of varable to 3 letters (int|dou|log|chr|dat)
 #'
-#' @param type type description ("integer", "double", "logical", character")
-#' @return formated type description (int|dou|log|chr)
+#' @param type Type description ("integer", "double", "logical", character", "date")
+#' @return Formated type description (int|dou|log|chr|dat)
 #' @examples
 #' format_type(typeof(iris$Species))
 #' @export
@@ -850,6 +854,8 @@ format_type <- function(type) {
     return("log")
   } else if (type == "character")  {
     return("chr")
+  } else if (type == "date")  {
+    return("dat")
   }
 
   return("oth")
@@ -858,12 +864,12 @@ format_type <- function(type) {
 #============================================================================
 #  get_type
 #============================================================================
-#' return type of variable
+#' Return type of variable
 #'
-#' return value of typeof, except if variable contains <hide>, then return "other"
+#' Return value of typeof, except if variable contains <hide>, then return "other"
 #'
-#' @param var a vector (dataframe column)
-#' @return value of typeof or "other"
+#' @param var A vector (dataframe column)
+#' @return Value of typeof or "other"
 #' @examples
 #' get_type(iris$Species)
 #' @export
@@ -888,6 +894,10 @@ get_type <- function(var)  {
     }
   }
 
+  if (var_class == "Date")  {
+    return("date")
+  }
+
   return("other")
 
 } # get_type
@@ -896,11 +906,11 @@ get_type <- function(var)  {
 #============================================================================
 #  guess_cat_num
 #============================================================================
-#' return if variable is categorial or nomerical
+#' Return if variable is categorial or nomerical
 #'
-#' guess if variable is categorial or numerical based on name, type and values of variable
+#' Guess if variable is categorial or numerical based on name, type and values of variable
 #'
-#' @param var a vector (dataframe column)
+#' @param var A vector (dataframe column)
 #' @return "cat" (categorial), "num" (numerical) or "oth" (other)
 #' @examples
 #' guess_cat_num(iris$Species)
@@ -942,11 +952,12 @@ guess_cat_num <- function(var)  {
 #============================================================================
 #  get_nrow
 #============================================================================
-#' get number of rows for a grid plot
+#' Get number of rows for a grid plot
 #'
-#' @param varnames list of variables to be plotted
-#' @param exclude number of variables that will be excluded from plot
-#' @return number of rows
+#' @param varnames List of variables to be plotted
+#' @param exclude Number of variables that will be excluded from plot
+#' @param ncol Number of columns (default = 2)
+#' @return Number of rows
 #' @examples
 #' get_nrow(names(iris), ncol = 2)
 #' @export
@@ -960,14 +971,15 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #============================================================================
 #  describe_num (out = text | list)
 #============================================================================
-#' describe numerical variable
+#' Describe numerical variable
 #'
-#' @param data a dataset
-#' @param var variable or variable name
-#' @param out output format ("text"|"list")
-#' @param margin left margin for text output (number of spaces)
-#' @return description as text or list
+#' @param data A dataset
+#' @param var Variable or variable name
+#' @param out Output format ("text"|"list")
+#' @param margin Left margin for text output (number of spaces)
+#' @return Description as text or list
 #' @import rlang
+#' @importFrom stats median quantile
 #' @examples
 #' describe_num(iris, Sepal.Length)
 #' @export
@@ -1041,14 +1053,14 @@ describe_num <- function(data, var, out = "text", margin = 0) {
 #============================================================================
 #  describe_cat (out = text | list)
 #============================================================================
-#' describe categorial variable
+#' Describe categorial variable
 #'
-#' @param data a dataset
-#' @param var variable or variable name
-#' @param max_cat maximum number of categories displayed
-#' @param out output format ("text"|"list")
-#' @param margin left margin for text output (number of spaces)
-#' @return description as text or list
+#' @param data A dataset
+#' @param var Variable or variable name
+#' @param max_cat Maximum number of categories displayed
+#' @param out Output format ("text"|"list")
+#' @param margin Left margin for text output (number of spaces)
+#' @return Description as text or list
 #' @importFrom magrittr "%>%"
 #' @import rlang
 #' @import dplyr
@@ -1077,6 +1089,9 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   var_na_pct = var_na / var_obs * 100
 
   var_unique = length(unique(data[[var_name]]))
+
+  # define variable for cran check
+  grp <- NULL
 
   # group categorial variable and calulate frequency
   var_frequency <- data %>%
@@ -1130,20 +1145,31 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   }
 } # describe_cat
 
+
 #============================================================================
 #  describe_all
 #============================================================================
-#' describe all variables of a dataset
+#' Describe all variables of a dataset
 #'
-#' @param data a dataset
-#' @param out output format ("small"|"large")
-#' @return dataset
+#' @param data A dataset
+#' @param out Output format ("small"|"large")
+#' @return Dataset
 #' @import dplyr
 #' @examples
 #' describe_all(iris)
 #' @export
 
 describe_all <- function(data = NA, out = "large") {
+
+  # define variables for package check
+  variable <- NULL
+  type <- NULL
+  na <- NULL
+  na_pct <- NULL
+  unique <- NULL
+  min <- NULL
+  mean <- NULL
+  max <- NULL
 
   # define result data.frame
   result <- data.frame(variable = character(),
@@ -1216,14 +1242,14 @@ describe_all <- function(data = NA, out = "large") {
 #============================================================================
 #  describe_tbl, out = text | vector
 #============================================================================
-#' describe table
+#' Describe table
 #'
-#' describe table (e.g. number of rows and columns of dataset)
+#' Describe table (e.g. number of rows and columns of dataset)
 #'
-#' @param data a dataset
-#' @param target target variable
-#' @param out output format ("text"|"list")
-#' @return description as text or list
+#' @param data A dataset
+#' @param target Target variable
+#' @param out Output format ("text"|"vector")
+#' @return Description as text or vector
 #' @import rlang
 #' @examples
 #' describe_tbl(iris)
@@ -1249,14 +1275,17 @@ describe_tbl <- function(data, target, out = "text")  {
   if (!missing(target))  {
 
     # min value is representing target = 0, rest target = 1
-    table_cnt  <- data %>%
-      dplyr::pull(!!target) %>%
-      table()
+    v <- data %>% dplyr::pull(!!target)
+
+    table_cnt  <- v %>% table()
     target0_val <- min(names(table_cnt))
-    target0_cnt <- table_cnt[target0_val]
-    target1_cnt <- sum(table_cnt) - target0_cnt
-    names(target0_cnt) <- "0"
-    names(target1_cnt) <- "1"
+
+    # if all 1, guess there is no 0
+    if (target0_val == 1)  {
+      target0_val <- 0
+    }
+    target0_cnt <- sum(ifelse(data[[target_txt]] == target0_val, 1, 0))
+    target1_cnt <- nrow(data) - target0_cnt
     describe_target1_cnt <- target1_cnt
   } else {
     describe_target1_cnt = 0
@@ -1305,23 +1334,27 @@ describe_tbl <- function(data, target, out = "text")  {
 #============================================================================
 #  describe
 #============================================================================
-#' describe a dataset, variable or table
+#' Describe a dataset or variable
 #'
-#' describe a dataset, variable or table (depending on input parameters)
+#' Describe a dataset or variable (depending on input parameters)
 #'
-#' @param data a dataset
-#' @param var a variable of the dataset
-#' @param target target variable (0/1 or FALSE/TRUE)
-#' @param out output format ("text"|"list")
-#' @return description as table, text or list
+#' @param data A dataset
+#' @param var A variable of the dataset
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param out Output format ("text"|"list") of variable description
+#' @param ... Further arguments
+#' @return Description as table, text or list
 #' @import rlang
 #' @examples
-#' describe(iris)
-#' describe(iris, Species)
-#' describe(iris, Sepal.Length)
+#' # Load package
+#' library(magrittr)
 #'
-#' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-#' describe(iris, target = is_virginica)
+#' # Describe a dataset
+#' iris %>% describe()
+#'
+#' # Describe a variable
+#' iris %>% describe(Species)
+#' iris %>% describe(Sepal.Length)
 #' @export
 
 describe <- function(data, var, target, out = "text", ...)  {
@@ -1366,20 +1399,90 @@ describe <- function(data, var, target, out = "text", ...)  {
 } # describe
 
 #============================================================================
+#  Function: data_dict_md
+#============================================================================
+#' Create a data dictionary Markdown file
+#'
+#' @param data A dataframe (data dictionary for all variables)
+#' @param title Title of the data dictionary
+#' @param description Detailed description of variables in data (dataframe with columns 'variable' and 'description')
+#' @param output_file Output filename for Markdown file
+#' @param output_dir  Directory where the Markdown file is saved
+#' @return Create Markdown file
+#' @examples
+#' # Data dictionary of a dataframe
+#' data_dict_md(iris, "iris flower data set")
+#'
+#' # Data dictionary of a dataframe with additional description of variables
+#' description <- data.frame(
+#'                  variable = c("Species"),
+#'                  description = c("Species of Iris flower"))
+#' data_dict_md(iris, "iris flower data set", description)
+#' @export
+
+data_dict_md <- function(data, title = "", description = NA, output_file = "data_dict.md", output_dir = tempdir())  {
+
+  # describe data
+  d <- data %>% describe()
+  d$variable <- as.character(d$variable)   # prevent factor
+
+  # join detailed description
+  if (!missing(description)) {
+    description$variable <- as.character(description$variable)
+    description$description <- as.character(description$description)
+    d <- d %>% left_join(description, by = "variable")
+
+    # replace NA with blanks
+    d <- d %>% clean_var(description, na = "")
+  } else {
+    d$description <- ""
+  }
+
+  # markdown title
+  txt <- ""
+  txt <- paste0(txt, "# Data Dictionary","\n")
+
+  if (!missing(title))  {
+    txt <- paste0(txt, "**", title, "**", "\n")
+  }
+
+  txt <- paste0(txt, "\n")
+
+  # markdown table header
+  txt <- paste0(txt, "| variable | type  | na   | %na | unique | description |\n")
+  txt <- paste0(txt, "| -------- | ----  | ---: | -----: | -----: | ----------- |\n")
+
+  # markdown table content
+  for (i in seq_along(d$variable))  {
+    txt <- paste0(txt, " | ", d[i, "variable"],
+                  " | ", d[i, "type"],
+                  " | ", d[i, "na"],
+                  " | ", d[i, "na_pct"],
+                  " | ", d[i, "unique"],
+                  " | ", d[i, "description"], " | "
+    )
+    txt <- paste0(txt, "\n")
+  }
+
+  file_name = path.expand(file.path(output_dir, output_file))
+  writeLines(txt, file_name)
+} # data_dict_md
+
+#============================================================================
 #  explore_all
 #============================================================================
-#' explore all variables
+#' Explore all variables
 #'
-#' explore all variables of a dataset (create plots)
+#' Explore all variables of a dataset (create plots)
 #'
-#' @param data a dataset
-#' @param target target variable (0/1 or FALSE/TRUE)
-#' @param ncol layout of plots (number of columns)
-#' @param density use density for histogramms
-#' @param legend_position position of legend ("right"|"bottom"|"non")
-#' @return description as table, text or list
+#' @param data A dataset
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param ncol Layout of plots (number of columns)
+#' @param density Use density for histogramms
+#' @param legend_position Position of legend ("right"|"bottom"|"non")
+#' @return Plot
 #' @import rlang
-#' @import gridExtra
+#' @importFrom gridExtra grid.arrange
 #' @examples
 #' explore_all(iris)
 #'
@@ -1466,15 +1569,16 @@ explore_all <- function(data, target, ncol = 2, density = TRUE, legend_position 
 #  explain_tree
 #============================================================================
 
-#' explain a target using a simple decision tree (classification or regression)
+#' Explain a target using a simple decision tree (classification or regression)
 #'
-#' @param data a dataset
-#' @param target target variable
-#' @param maxdepth maximal depth of the tree
-#' @param minsplit he minimum number of observations that must exist in a node in order for a split to be attempted
-#' @param cp complexity parameter
-#' @param size textsize of plot
-#' @return plot
+#' @param data A dataset
+#' @param target Target variable
+#' @param maxdepth Maximal depth of the tree
+#' @param minsplit The minimum number of observations that must exist in a node in order for a split to be attempted
+#' @param cp Complexity parameter
+#' @param size Textsize of plot
+#' @param ... Further arguments
+#' @return Plot
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -1536,11 +1640,13 @@ explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, 
 #============================================================================
 #  explain_logreg
 #============================================================================
-#' explain a binary target using logistic regression
+#' Explain a binary target using logistic regression
 #'
-#' @param data a dataset
-#' @param target target variable (binary)
-#' @return dataset with results (term, estimate, std.error, z.value, p.value)
+#' @param data A dataset
+#' @param target Target variable (binary)
+#' @param ... Further arguments
+#' @return Dataset with results (term, estimate, std.error, z.value, p.value)
+#' @importFrom stats complete.cases as.formula glm
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -1583,13 +1689,19 @@ explain_logreg <- function(data, target, ...)  {
 #============================================================================
 #  explore_cor
 #============================================================================
-#' explore the correlation between two attributes
+#' Explore the correlation between two attributes
 #'
-#' @param data a dataset
-#' @param x attribute on x axis
-#' @param y attribute on y axis
-#' @param target target variable (binary)
-#' @return plot
+#' @param data A dataset
+#' @param x Attribute on x axis
+#' @param y Attribute on y axis
+#' @param target Target variable (binary)
+#' @param bins Number of bins
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param color Color of the plot
+#' @param ... Further arguments
+#' @return Plot
 #' @examples
 #' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
 #' @export
@@ -1698,21 +1810,22 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #============================================================================
 #  report
 #============================================================================
-#' generate a report of all attributes
+#' Generate a report of all attributes
 #'
-#' generate a report of all attributes
-#' if targed is defined, the relation to the target is reported
+#' Generate a report of all attributes
+#' If target is defined, the relation to the target is reported
 #'
-#' @param data a dataset
-#' @param target target variable (0/1 or FALSE/TRUE)
-#' @param density use density?
-#' @param output_file path/filename.html
+#' @param data A dataset
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param density Use density? (TRUE/FALSE)
+#' @param output_file Filename of the html report
+#' @param output_dir Directory where to save the html report
 #' @import rmarkdown
 #' @examples
 #' report(iris)
 #' @export
 
-report <- function(data, target, density = FALSE, output_file)  {
+report <- function(data, target, density = FALSE, output_file, output_dir = tempdir())  {
 
   # parameter target
   if(!missing(target))  {
@@ -1736,22 +1849,31 @@ report <- function(data, target, density = FALSE, output_file)  {
 # report only attributes
 if(is.na(target_text))  {
   input_file <- system.file("extdata", "template_report_attribute.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "C:/R/report_attributes.html"}
-  rmarkdown::render(input = input_file, output_file = output_file)
+  if (missing(output_file)) {output_file = "report_attributes.html"}
+  rmarkdown::render(input = input_file,
+                    output_file = output_file,
+                    output_dir = output_dir
+                    )
 
   # report target with density
 } else if(density == TRUE)  {
   input_file <- system.file("extdata", "template_report_target_den.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "C:/R/report_target_density.html"}
+  if (missing(output_file)) {output_file = "report_target_density.html"}
   var_name_target <- target_text  # needed in report template
-  rmarkdown::render(input = input_file, output_file = output_file)
+  rmarkdown::render(input = input_file,
+                    output_file = output_file,
+                    output_dir = output_dir
+                    )
 
   # report target with percent
 } else {
   input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "C:/R/report_target.html"}
+  if (missing(output_file)) {output_file = "report_target.html"}
   var_name_target <- target_text # needed in report template
-  rmarkdown::render(input = input_file, output_file = output_file)
+  rmarkdown::render(input = input_file,
+                    output_file = output_file,
+                    output_dir = output_dir
+                    )
 } # if
 } # report
 
@@ -1759,23 +1881,30 @@ if(is.na(target_text))  {
 #============================================================================
 #  explore_shiny
 #============================================================================
-#' explore dataset interactive
+#' Explore dataset interactive
 #'
-#' launches a shiny app to explore a dataset
+#' Launches a shiny app to explore a dataset
 #'
-#' @param data a dataset
-#' @param target target variable (0/1 or FALSE/TRUE)
+#' @param data A dataset
+#' @param target Target variable (0/1 or FALSE/TRUE)
 #' @importFrom magrittr "%>%"
 #' @import rlang
 #' @import dplyr
 #' @import shiny
-#' @import DT
+#' @importFrom DT DTOutput renderDT
+#' @importFrom utils browseURL
 #' @import rmarkdown
 #' @examples
-#' explore_shiny(iris)
+#' # Only run examples in interactive R sessions
+#' if (interactive())  {
+#'    explore_shiny(iris)
+#' }
 #' @export
 
 explore_shiny <- function(data, target)  {
+
+  # check if interactive session
+  if (!interactive()) stop("This function can only be used in an interactive R session")
 
   # parameter target
   if(!missing(target))  {
@@ -1785,6 +1914,10 @@ explore_shiny <- function(data, target)  {
     target_quo = NA
     target_text = NA
   }
+
+  # define variables for CRAN-package check
+  type <- NULL
+  variable <- NULL
 
   # get attribute types
   tbl_guesstarget <- describe(data) %>%
@@ -1835,9 +1968,9 @@ explore_shiny <- function(data, target)  {
                           shiny::plotOutput("graph_explain")),
           shiny::tabPanel("overview", shiny::br(),
                           shiny::verbatimTextOutput("describe_tbl"),
-                          DT::dataTableOutput("describe_all"))
+                          DT::DTOutput("describe_all"))
           ,shiny::tabPanel("data", shiny::br(),
-                           DT::dataTableOutput("view"))
+                           DT::DTOutput("view"))
         ) # tabsetPanel
         , width = 9) # mainPanel
     ) # sidebarLayout
@@ -1907,7 +2040,7 @@ explore_shiny <- function(data, target)  {
       data %>% describe_tbl(out = "text")
     }) # renderText
 
-    output$describe_all <- DT::renderDataTable({
+    output$describe_all <- DT::renderDT({
       DT::datatable(data = data %>% describe(out = "text"),
                     rownames = FALSE,
                     selection = 'none',
@@ -1915,7 +2048,7 @@ explore_shiny <- function(data, target)  {
     }) # renderDataTable
 
 
-    output$view <- DT::renderDataTable({
+    output$view <- DT::renderDT({
       DT::datatable(data = data,
                     rownames = FALSE,
                     selection = 'none',
@@ -1933,30 +2066,52 @@ explore_shiny <- function(data, target)  {
 #============================================================================
 #  explore
 #============================================================================
-#' explore a dataset or variable
+#' Explore a dataset or variable
 #'
-#' @param data a dataset
-#' @param var a variable
-#' @param target target variable (0/1 or FALSE/TRUE)
-#' @param density using density for histograms
-#' @param out plot layout ("single"|"double"|"all")
-#' @param min_val all values < min_val are converted to min_val
-#' @param max_val all values > max_val are converted to max_val
-#' @param auto_scale use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @param na value to replace NA
-#' @return plot object
+#' @param data A dataset
+#' @param var A variable
+#' @param var2 A variable for checking correlation
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param density Using density for histograms
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param na Value to replace NA
+#' @param ... Further arguments
+#' @return Plot object
 #' @import rlang
 #' @examples
-#' explore(iris, Species)
-#' explore(iris, Sepal.Length)
-#' explore(iris, Sepal.Length, density = FALSE)
+#' ## Launch Shiny app (in interactive R sessions)
+#' if (interactive())  {
+#'    explore(iris)
+#' }
 #'
+#' ## Explore grafically
+#'
+#' # Load library
+#' library(magrittr)
+#'
+#' # Explore a variable
+#' iris %>% explore(Species)
+#' iris %>% explore(Sepal.Length)
+#' iris %>% explore(Sepal.Length, min_val = 4, max_val = 7)
+#' iris %>% explore(Sepal.Length, density = FALSE)
+#'
+#' # Explore a variable with a target
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-#' explore(iris, Species, target = is_virginica)
-#' explore(iris, Sepal.Length, target = is_virginica)
+#' iris %>% explore(Species, target = is_virginica)
+#' iris %>% explore(Sepal.Length, target = is_virginica)
+#'
+#' # Explore correlation between two variables
+#' iris %>% explore(Species, Petal.Length)
+#' iris %>% explore(Sepal.Length, Petal.Length)
+#'
+#' # Explore correlation between two variables and split by target
+#' iris %>% explore(Sepal.Length, Petal.Length, target = is_virginica)
+#'
 #' @export
 
-explore <- function(data, var, var2, target, density, out = "single", ...)  {
+explore <- function(data, var, var2, target, density, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
   # parameter var
   if (!missing(var)) {
@@ -2010,74 +2165,55 @@ explore <- function(data, var, var2, target, density, out = "single", ...)  {
 
     # var + var2 -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {
-    explore_cor(data[c(var_text, var2_text)], x = !!var_quo, y = !!var2_quo, ...)
+    explore_cor(data[c(var_text, var2_text)],
+                x = !!var_quo, y = !!var2_quo,
+                min_val = min_val, max_val = max_val, na = na, ...)
 
     # var + var2 + target -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & !is.na(target_text))  {
     #explore_cor(data[c(var_text, var2_text, target_text)], !!var_quo, !!var2_quo, !!target_quo, ...)
-    explore_cor(data[c(var_text, var2_text, target_text)], x = !!var_quo, y = !!var2_quo, target = !!target_quo, ...)
+    explore_cor(data[c(var_text, var2_text, target_text)],
+                x = !!var_quo, y = !!var2_quo, target = !!target_quo,
+                min_val = min_val, max_val = max_val, na = na, ...)
 
     # var_type oth
   } else if (!is.na(var_text) & var_type == "oth")  {
     warning("please use a numeric or character attribute to explore")
 
-    # single, no target, num, density
-  } else if (is.na(target_text) & (var_type == "num") & (out == "single") & (density == TRUE))  {
-    explore_density(data[var_text], !!var_quo, ...)
+    # no target, num, density
+  } else if (is.na(target_text) & (var_type == "num") & (density == TRUE))  {
+    explore_density(data[var_text],
+                    !!var_quo,
+                    min_val = min_val, max_val = max_val, na = na, ...)
 
-    # single, no target, num
-  } else if (is.na(target_text) & (var_type == "num") & (out == "single") & (density == FALSE))  {
-    explore_num(data[var_text], var_text, ...)
+    # no target, num
+  } else if (is.na(target_text) & (var_type == "num") & (density == FALSE))  {
+    explore_num(data[var_text],
+                var_text,
+                min_val = min_val, max_val = max_val, ...)
 
-    # single, no target, cat
-  } else if (is.na(target_text) & (var_type == "cat") & (out == "single")) {
-    explore_cat(data[var_text], var_text, ...)
+    # no target, cat
+  } else if (is.na(target_text) & (var_type == "cat")) {
+    explore_cat(data[var_text],
+                var_text, ...)
 
-    # single, target, num, density
-  } else if (!is.na(target_text) & (var_type == "num") & (out == "single") & (density == TRUE)) {
-    explore_density(data[c(var_text, target_text)], var = !!var_quo, target = !!target_quo, ...)
+    # target, num, density
+  } else if (!is.na(target_text) & (var_type == "num") & (density == TRUE)) {
+    explore_density(data[c(var_text, target_text)],
+                    var = !!var_quo, target = !!target_quo,
+                    min_val = min_val, max_val = max_val, na = na, ...)
 
-    # single, target, num
-  } else if (!is.na(target_text) & (var_type == "num") & (out == "single")) {
-    target_explore_num(data[c(var_text, target_text)], var_text, var_target = target_text, ...)
+    # target, num
+  } else if (!is.na(target_text) & (var_type == "num")) {
+    target_explore_num(data[c(var_text, target_text)],
+                       var_text, var_target = target_text,
+                       min_val = min_val, max_val = max_val, na = na, ...)
 
-    # single, target, cat
-  } else if (!is.na(target_text) & (var_type == "cat") & (out == "single")) {
-    target_explore_cat(data[c(var_text, target_text)], var_text, var_target = target_text, ...)
-
-    # double, target, num, density
-  } else if (!is.na(target_text) & (var_type == "num") & (density == TRUE) & (out == "double")) {
-    p1 <- explore_density(data[c(var_text, target_text)], !!var_quo, ...)
-    p2 <- target_explore_num(data[c(var_text, target_text)], var_text, var_target = target_text, ...)
-    grid.arrange(p1, p2, ncol = 2)
-
-    # double, target, num
-  } else if (!is.na(target_text) & (var_type == "num") & (density == FALSE) & (out == "double")) {
-    p1 <- explore_num(data[c(var_text, target_text)], var_text, ...)
-    p2 <- target_explore_num(data[c(var_text, target_text)], var_text, var_target = target_text, ...)
-    grid.arrange(p1, p2, ncol = 2)
-
-    # double, target, cat
-  } else if (!is.na(target_text) & (var_type == "cat") & (out == "double")) {
-    p1 <- explore_cat(data[c(var_text, target_text)], var_text, ...)
-    p2 <- target_explore_cat(data[c(var_text, target_text)], var_text, var_target = target_text, ...)
-    grid.arrange(p1, p2, ncol = 2)
-
-    # all, target, density
-  } else if (!is.na(target_text) & (density == TRUE) & (out == "all")) {
-    explore_all(data, target = !!target_quo, density = TRUE, ...)
-
-    # all, target
-  } else if (!is.na(target_text) & (density == FALSE) & (out == "all")) {
-    explore_all(data, target = !!target_quo, ...)
-
-    # all, no target, density
-  } else if (is.na(target_text) & (density == TRUE) & (out == "all")) {
-    explore_all(data, density = TRUE, ...)
-
-    # all, no target
-  } else if (is.na(target_text) & (density == FALSE) & (out == "all")) {
-    explore_all(data, ...)
+    # target, cat
+  } else if (!is.na(target_text) & (var_type == "cat")) {
+    target_explore_cat(data[c(var_text, target_text)],
+                       var_text, var_target = target_text,
+                       min_val = min_val, max_val = max_val, na = na, ...)
 
   }
 

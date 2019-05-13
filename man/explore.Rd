@@ -2,41 +2,65 @@
 % Please edit documentation in R/explore.R
 \name{explore}
 \alias{explore}
-\title{explore a dataset or variable}
+\title{Explore a dataset or variable}
 \usage{
-explore(data, var, target, density, out = "single", ...)
+explore(data, var, var2, target, density, min_val = NA, max_val = NA,
+  auto_scale = TRUE, na = NA, ...)
 }
 \arguments{
-\item{data}{a dataset}
+\item{data}{A dataset}
 
-\item{var}{a variable}
+\item{var}{A variable}
 
-\item{target}{target variable (0/1 or FALSE/TRUE)}
+\item{var2}{A variable for checking correlation}
 
-\item{density}{using density for histograms}
+\item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{out}{plot layout ("single"|"double"|"all")}
+\item{density}{Using density for histograms}
 
-\item{min_val}{all values < min_val are converted to min_val}
+\item{min_val}{All values < min_val are converted to min_val}
 
-\item{max_val}{all values > max_val are converted to max_val}
+\item{max_val}{All values > max_val are converted to max_val}
 
-\item{autoscale}{use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
+\item{auto_scale}{Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
 
-\item{na}{value to replace NA}
+\item{na}{Value to replace NA}
+
+\item{...}{Further arguments}
 }
 \value{
-plot object
+Plot object
 }
 \description{
-explore a dataset or variable
+Explore a dataset or variable
 }
 \examples{
-explore(iris, Species)
-explore(iris, Sepal.Length)
-explore(iris, Sepal.Length, density = FALSE)
+## Launch Shiny app (in interactive R sessions)
+if (interactive())  {
+   explore(iris)
+}
 
+## Explore grafically
+
+# Load library
+library(magrittr)
+
+# Explore a variable
+iris \%>\% explore(Species)
+iris \%>\% explore(Sepal.Length)
+iris \%>\% explore(Sepal.Length, min_val = 4, max_val = 7)
+iris \%>\% explore(Sepal.Length, density = FALSE)
+
+# Explore a variable with a target
 iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-explore(iris, Species, target = is_virginica)
-explore(iris, Sepal.Length, target = is_virginica)
+iris \%>\% explore(Species, target = is_virginica)
+iris \%>\% explore(Sepal.Length, target = is_virginica)
+
+# Explore correlation between two variables
+iris \%>\% explore(Species, Petal.Length)
+iris \%>\% explore(Sepal.Length, Petal.Length)
+
+# Explore correlation between two variables and split by target
+iris \%>\% explore(Sepal.Length, Petal.Length, target = is_virginica)
+
 }

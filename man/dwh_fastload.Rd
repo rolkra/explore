@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{dwh_fastload}
 \alias{dwh_fastload}
-\title{write data to a DWH table faster than dwh_write_table}
+\title{write data to a DWH table}
 \usage{
 dwh_fastload(data, dsn, table)
 }
@@ -18,5 +18,8 @@ status
 }
 \description{
 write data fast to a DWH table using a ODBC connection
-Function uses packages DBI/odbc to write data faster than dwh_write_table
+Function uses packages DBI/odbc to write data faster than RODBC
+}
+\examples{
+dwh_fastload(data, "DWH", "database.table_test")
 }

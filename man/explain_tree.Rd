@@ -2,29 +2,31 @@
 % Please edit documentation in R/explore.R
 \name{explain_tree}
 \alias{explain_tree}
-\title{explain a target using a simple decision tree (classification or regression)}
+\title{Explain a target using a simple decision tree (classification or regression)}
 \usage{
 explain_tree(data, target, maxdepth = 3, minsplit = 20, cp = 0,
   size = 0.7, ...)
 }
 \arguments{
-\item{data}{a dataset}
+\item{data}{A dataset}
 
-\item{target}{target variable}
+\item{target}{Target variable}
 
-\item{maxdepth}{maximal depth of the tree}
+\item{maxdepth}{Maximal depth of the tree}
 
-\item{minsplit}{he minimum number of observations that must exist in a node in order for a split to be attempted}
+\item{minsplit}{The minimum number of observations that must exist in a node in order for a split to be attempted}
 
-\item{cp}{complexity parameter}
+\item{cp}{Complexity parameter}
 
-\item{size}{textsize of plot}
+\item{size}{Textsize of plot}
+
+\item{...}{Further arguments}
 }
 \value{
-plot
+Plot
 }
 \description{
-explain a target using a simple decision tree (classification or regression)
+Explain a target using a simple decision tree (classification or regression)
 }
 \examples{
 data <- iris

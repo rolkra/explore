@@ -2,20 +2,22 @@
 % Please edit documentation in R/explore.R
 \name{explain_logreg}
 \alias{explain_logreg}
-\title{explain a binary target using logistic regression}
+\title{Explain a binary target using logistic regression}
 \usage{
 explain_logreg(data, target, ...)
 }
 \arguments{
-\item{data}{a dataset}
+\item{data}{A dataset}
 
-\item{target}{target variable (binary)}
+\item{target}{Target variable (binary)}
+
+\item{...}{Further arguments}
 }
 \value{
-dataset with results (term, estimate, std.error, z.value, p.value)
+Dataset with results (term, estimate, std.error, z.value, p.value)
 }
 \description{
-explain a binary target using logistic regression
+Explain a binary target using logistic regression
 }
 \examples{
 data <- iris

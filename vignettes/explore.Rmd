@@ -1,0 +1,249 @@
+---
+title: "explore"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{explore}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Interactive data exploration with one line of code or use a easy to remember set of tidy functions. Introduces two main verbs for data analysis. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
+
+explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
+
+As the explore-funcitons fits well into the tidyverse, we load the dplyr-package as well.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+```
+
+### Interactive data exploration
+
+Explore your dataset (in this case the iris dataset) in one line of code:
+
+```{R eval=FALSE, echo=TRUE}
+explore(iris)
+```
+
+A shiny app is launched, you can inspect individual attributes, explore their relation to a binary target, grow a decision tree or create a fully automated report of all attributes with a few "mouseclicks".
+ 
+You can choose each variable containng 0/1, FALSE/TRUE or "no"/"yes" as a target. As the iris dataset doesn't contain a binary target, we create one:
+
+```{R eval=FALSE, echo=TRUE}
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+iris %>% explore(target = is_versicolor)
+```
+
+### Report variables
+
+Create a rich HTML report of all variables with one line of code:
+
+```{R eval=FALSE, echo=TRUE}
+# report of all variables
+iris %>% report(output_file = "report.html")
+```
+
+Or you can simply add a target and create the report:
+
+```{R eval=FALSE, echo=TRUE}
+# report of all variables and their relationship with a binary target
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+iris %>% report(output_file = "report.html", target = is_versicolor)
+
+```
+
+### Grow a decision tree
+
+Grow a decision tree with one line of code:
+
+```{r fig.height=3, fig.width=6, message=FALSE, warning=FALSE, include=FALSE}
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+```
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% select(-Species) %>% explain_tree(target = is_versicolor)
+```
+
+You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
+
+### Explore variables
+
+Explore a variable with one line of code. You don't have to care if a variable is numerical or categorical.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Species)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length)
+```
+
+### Explore variables with a target
+
+Explore a variable and its relationship with a binary target with one line of code. You don't have to care if a variable is numerical or categorical.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Species, target = is_versicolor)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, target = is_versicolor)
+```
+
+### Explore multiple variables
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  select(Sepal.Length, Sepal.Width) %>% 
+  explore_all()
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
+  explore_all(target = is_versicolor)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
+  explore_all(target = is_versicolor, density = FALSE)
+```
+
+### Explore correlation between two variables
+
+Explore correlation between two variables with one line of code:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, Petal.Length)
+```
+
+You can add a target too:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, Petal.Length, target = is_versicolor)
+```
+
+### Other options
+
+If you use explore to explore a variable and want to set lower and upper limits for values, you can use the `min_val` and `max_val` parameters. All values below min_val will be set to min_val. All values above max_val will be set to max_val.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, min_val = 4.5, max_val = 7)
+```
+
+
+`explore` uses auto-scale by default. To deactivate it use the parameter `auto_scale = FALSE`
+
+You can force the explore-function to use bars with the parameter `density = FALSE`
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, density = FALSE, auto_scale = FALSE)
+```
+
+### Describing data
+
+Describe your data in one line of code:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% describe()
+```
+
+The result is a data-frame, where each row is a variable of your data. You can use `filter` from dplyr for quick checks:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+# show all variables that contain less than 5 unique values
+iris %>% describe() %>% filter(unique < 5)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+# show all variables contain NA values
+iris %>% describe() %>% filter(na > 0)
+```
+
+You can use `describe` for describing variables too. You don't need to care if a variale is numerical or categorical. The output is a text.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+# describe a numerical variable
+iris %>% describe(Species)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+# describe a categorical variable
+iris %>% describe(Sepal.Length)
+```
+
+### Data Dictionary
+
+Create a Data Dictionary of a dataset (Markdown File data_dict.md)
+
+```{R eval=FALSE, echo=TRUE}
+iris %>% data_dict_md()
+```
+
+Add titel, detailed descriptions and change default filename
+
+```{R eval=FALSE, echo=TRUE}
+description <- data.frame(
+                  variable = c("Species"), 
+                  description = c("Species of Iris flower")))
+data_dict_md(iris, 
+             title = "iris flower data set", 
+             description =  description, 
+             output_file = "data_dict_iris.md")
+```
+
+### Basic data cleaning
+
+To clean a variable you can use `clean_var`. With one line of code you can rename a variable, replace NA-values and set a minimum and maximum for the value.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  clean_var(Sepal.Length, 
+            min_val = 4.5, 
+            max_val = 7.0, 
+            na = 5.8, 
+            name = "sepal_length") %>% 
+  describe()
+```
+
+### Connecting to a datawarehouse
+
+The explore package comes with a set easy to remember function to connect, read and write from/to a datawarehouse (dwh) using odbc.
+
+```{R eval=FALSE, echo=TRUE}
+# connect to a dwh(odbc DSN must be defined)
+dwh <- dwh_connect("DWH_DSN", user = "myuser")
+
+# if you need to enter a password
+dwh <- dwh_connect("DWH_DSN", 
+                    user = "myuser",
+                    pwd = rstudioapi::askForPassword()
+                  )
+
+# read table from a dwh
+data <- dwh_read_table(dwh, "db.tablename")
+
+# read data from a dwh using sql
+data <- dwh_read_data(dwh, sql = "select * from db.tablename")
+
+# disconnect from dwh
+dwh_disconnect(dwh)
+
+```
+
+To write large data to a dwh you can use `dwh_fastload()`. It connects to a dwh, writes the data and disconnects.
+
+```{R eval=FALSE, echo=TRUE}
+# connect to a dwh(odbc DSN must be defined)
+data  %>% dwh_fastload("DWH_DSN", "db.tablename")
+```
