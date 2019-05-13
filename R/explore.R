@@ -1413,15 +1413,17 @@ describe <- function(data, var, target, out = "text", ...)  {
 #' @return Create Markdown file
 #' @examples
 #' # Data dictionary of a dataframe
-#' data_dict_md(iris, "iris flower data set")
+#' data_dict_md(iris,
+#'              title = "iris flower data set",
+#'              output_dir = tempdir())
 #'
 #' # Data dictionary of a dataframe with additional description of variables
 #' description <- data.frame(
 #'                  variable = c("Species"),
 #'                  description = c("Species of Iris flower"))
 #' data_dict_md(iris,
-#'              "iris flower data set",
-#'              description,
+#'              title = "iris flower data set",
+#'              description = description,
 #'              output_dir = tempdir())
 #' @export
 
