@@ -190,7 +190,9 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 #' @param table table name (character string)
 #' @return status
 #' @examples
+#' \dontrun{
 #' dwh_fastload(data, "DWH", "database.table_test")
+#' }
 #' @export
 
 dwh_fastload <- function(data, dsn, table)  {
