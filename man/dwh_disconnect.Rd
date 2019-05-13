@@ -13,5 +13,7 @@ dwh_disconnect(connection)
 disconnect from datawarehouse (DWH) using a ODBC connection
 }
 \examples{
+\dontrun{
 dwh_disconnect(con)
+}
 }

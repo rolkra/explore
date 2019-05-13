@@ -20,5 +20,7 @@ dataframe containing table data
 read data from DWH using a ODBC connection
 }
 \examples{
+\dontrun{
 dwh_read_data(con, "select * from database.table_test")
+}
 }

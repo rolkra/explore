@@ -21,5 +21,7 @@ write data fast to a DWH table using a ODBC connection
 Function uses packages DBI/odbc to write data faster than RODBC
 }
 \examples{
+\dontrun{
 dwh_fastload(data, "DWH", "database.table_test")
+}
 }

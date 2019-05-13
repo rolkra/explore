@@ -22,5 +22,7 @@ connection
 connect to datawarehouse (DWH) using ODBC
 }
 \examples{
+\dontrun{
 con <- dwh_connect(dsn = "DWH1", user = "u12345")
+}
 }
