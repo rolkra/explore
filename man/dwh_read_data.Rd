@@ -4,7 +4,7 @@
 \alias{dwh_read_data}
 \title{read data from DWH}
 \usage{
-dwh_read_data(connection, sql, names_lower = TRUE)
+dwh_read_data(connection, sql, names_lower = TRUE, ...)
 }
 \arguments{
 \item{connection}{DWH connection}
@@ -12,6 +12,8 @@ dwh_read_data(connection, sql, names_lower = TRUE)
 \item{sql}{sql (character string)}
 
 \item{names_lower}{convert field names to lower (default = TRUE)}
+
+\item{...}{Further arguments to be passed to DBI::dbGetQuery()}
 }
 \value{
 dataframe containing table data

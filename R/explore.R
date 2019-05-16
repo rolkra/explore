@@ -75,6 +75,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' @param user user name
 #' @param pwd password of user
 #' @param pwd_crypt is password encryption used?
+#' @param ... Further arguments to be passed to DBI::dbConnect()
 #' @return connection
 #' @examples
 #' \dontrun{
@@ -82,17 +83,18 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' }
 #' @export
 
-dwh_connect <- function(dsn, user = NA, pwd = NA, pwd_crypt = FALSE)  {
+dwh_connect <- function(dsn, user = NA, pwd = NA, pwd_crypt = FALSE, ...)  {
 
   if (is.na(user))  {
     # use single sign on
-    channel <- DBI::dbConnect(odbc::odbc(), dsn)
+    channel <- DBI::dbConnect(odbc::odbc(), dsn, ...)
 
   } else {
     # use user & passwort
     channel <- DBI::dbConnect(odbc::odbc(), dsn,
                               user = user,
-                              password = if (pwd_crypt == TRUE) decrypt(pwd) else pwd
+                              password = if (pwd_crypt == TRUE) decrypt(pwd) else pwd,
+                              ...
     )
   } # if
   return(channel)
@@ -106,14 +108,15 @@ dwh_connect <- function(dsn, user = NA, pwd = NA, pwd_crypt = FALSE)  {
 #' disconnect from datawarehouse (DWH) using a ODBC connection
 #'
 #' @param connection channel (ODBC connection)
+#' @param ... Further arguments to be passed to DBI::dbDisconnect()
 #' @examples
 #' \dontrun{
 #' dwh_disconnect(con)
 #' }
 #' @export
 
-dwh_disconnect <- function(connection)  {
-  DBI::dbDisconnect(connection)
+dwh_disconnect <- function(connection, ...)  {
+  DBI::dbDisconnect(connection, ...)
 }
 
 #============================================================================
@@ -126,6 +129,7 @@ dwh_disconnect <- function(connection)  {
 #' @param connection DWH connection
 #' @param table table name (character string)
 #' @param names_lower convert field names to lower (default = TRUE)
+#' @param ... Further arguments to be passed to DBI::dbGetQuery()
 #' @return dataframe containing table data
 #' @examples
 #' \dontrun{
@@ -133,18 +137,16 @@ dwh_disconnect <- function(connection)  {
 #' }
 #' @export
 
-dwh_read_table <- function(connection, table, names_lower = TRUE)  {
+dwh_read_table <- function(connection, table, names_lower = TRUE, ...)  {
 
   # define sql
   sql <- paste0("select * from ", table)
 
   # read data from dwh
-  data <- DBI::dbGetQuery(connection, sql)
+  data <- DBI::dbGetQuery(connection, sql, ...)
 
   # convert names to lower case
-  if (names_lower) {
-    names(data) <- tolower(names(data))
-  }
+  if (names_lower) names(data) <- tolower(names(data))
 
   return(data)
 }
@@ -159,6 +161,7 @@ dwh_read_table <- function(connection, table, names_lower = TRUE)  {
 #' @param connection DWH connection
 #' @param sql sql (character string)
 #' @param names_lower convert field names to lower (default = TRUE)
+#' @param ... Further arguments to be passed to DBI::dbGetQuery()
 #' @return dataframe containing table data
 #' @examples
 #' \dontrun{
@@ -166,10 +169,10 @@ dwh_read_table <- function(connection, table, names_lower = TRUE)  {
 #' }
 #' @export
 
-dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
+dwh_read_data <- function(connection, sql, names_lower = TRUE, ...)  {
 
   # read data from dwh
-  data <- DBI::dbGetQuery(connection, sql)
+  data <- DBI::dbGetQuery(connection, sql, ...)
 
   # convert names to lower case
   if (names_lower) names(data) <- tolower(names(data))
@@ -184,10 +187,12 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 #'
 #' write data fast to a DWH table using a ODBC connection
 #' Function uses packages DBI/odbc to write data faster than RODBC
+#' Connects, writes data and disconnects
 #'
 #' @param data dataframe
 #' @param dsn DSN string
 #' @param table table name (character string)
+#' @param ... Further arguments to be passed to DBI::dbConnect()
 #' @return status
 #' @examples
 #' \dontrun{
@@ -195,7 +200,7 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE)  {
 #' }
 #' @export
 
-dwh_fastload <- function(data, dsn, table)  {
+dwh_fastload <- function(data, dsn, table, ...)  {
 
   # check table (must be 'database.table')
   # split string at '.'
@@ -210,7 +215,7 @@ dwh_fastload <- function(data, dsn, table)  {
   stopifnot (nchar(database_name) > 0, nchar(table_name) > 0)
 
   # connect
-  con <- DBI::dbConnect(odbc::odbc(), dsn=dsn, database=database_name)
+  con <- DBI::dbConnect(odbc::odbc(), dsn=dsn, database=database_name, ...)
 
   # write data
   DBI::dbWriteTable(con, name=table_name, value=data)

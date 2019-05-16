@@ -4,10 +4,12 @@
 \alias{dwh_disconnect}
 \title{disconnect from DWH}
 \usage{
-dwh_disconnect(connection)
+dwh_disconnect(connection, ...)
 }
 \arguments{
 \item{connection}{channel (ODBC connection)}
+
+\item{...}{Further arguments to be passed to DBI::dbDisconnect()}
 }
 \description{
 disconnect from datawarehouse (DWH) using a ODBC connection

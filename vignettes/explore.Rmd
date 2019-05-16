@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Interactive data exploration with one line of code or use a easy to remember set of tidy functions. Introduces two main verbs for data analysis. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
+Interactive data exploration with one line of code or use a easy to remember set of tidy functions to explore your data. Introduces two main verbs for data analysis. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
@@ -50,7 +50,7 @@ Create a rich HTML report of all variables with one line of code:
 
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables
-iris %>% report(output_file = "report.html")
+iris %>% report(output_file = "report.html", output_dir = tempdir())
 ```
 
 Or you can simply add a target and create the report:
@@ -58,7 +58,10 @@ Or you can simply add a target and create the report:
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables and their relationship with a binary target
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris %>% report(output_file = "report.html", target = is_versicolor)
+iris %>% 
+  report(output_file = "report.html", 
+         output_dir = tempdir(),
+         target = is_versicolor)
 
 ```
 
@@ -187,10 +190,10 @@ iris %>% describe(Sepal.Length)
 Create a Data Dictionary of a dataset (Markdown File data_dict.md)
 
 ```{R eval=FALSE, echo=TRUE}
-iris %>% data_dict_md()
+iris %>% data_dict_md(output_dir = tempdir())
 ```
 
-Add titel, detailed descriptions and change default filename
+Add title, detailed descriptions and change default filename
 
 ```{R eval=FALSE, echo=TRUE}
 description <- data.frame(
@@ -199,7 +202,8 @@ description <- data.frame(
 data_dict_md(iris, 
              title = "iris flower data set", 
              description =  description, 
-             output_file = "data_dict_iris.md")
+             output_file = "data_dict_iris.md",
+             output_dir = tempdir())
 ```
 
 ### Basic data cleaning
@@ -222,9 +226,9 @@ The explore package comes with a set easy to remember function to connect, read 
 
 ```{R eval=FALSE, echo=TRUE}
 # connect to a dwh(odbc DSN must be defined)
-dwh <- dwh_connect("DWH_DSN", user = "myuser")
+dwh <- dwh_connect("DWH_DSN")
 
-# if you need to enter a password
+# if you need to pass user and password
 dwh <- dwh_connect("DWH_DSN", 
                     user = "myuser",
                     pwd = rstudioapi::askForPassword()

@@ -4,7 +4,7 @@
 \alias{dwh_connect}
 \title{connect to DWH}
 \usage{
-dwh_connect(dsn, user = NA, pwd = NA, pwd_crypt = FALSE)
+dwh_connect(dsn, user = NA, pwd = NA, pwd_crypt = FALSE, ...)
 }
 \arguments{
 \item{dsn}{DSN string}
@@ -14,6 +14,8 @@ dwh_connect(dsn, user = NA, pwd = NA, pwd_crypt = FALSE)
 \item{pwd}{password of user}
 
 \item{pwd_crypt}{is password encryption used?}
+
+\item{...}{Further arguments to be passed to DBI::dbConnect()}
 }
 \value{
 connection

@@ -4,7 +4,7 @@
 \alias{dwh_fastload}
 \title{write data to a DWH table}
 \usage{
-dwh_fastload(data, dsn, table)
+dwh_fastload(data, dsn, table, ...)
 }
 \arguments{
 \item{data}{dataframe}
@@ -12,6 +12,8 @@ dwh_fastload(data, dsn, table)
 \item{dsn}{DSN string}
 
 \item{table}{table name (character string)}
+
+\item{...}{Further arguments to be passed to DBI::dbConnect()}
 }
 \value{
 status
@@ -19,6 +21,7 @@ status
 \description{
 write data fast to a DWH table using a ODBC connection
 Function uses packages DBI/odbc to write data faster than RODBC
+Connects, writes data and disconnects
 }
 \examples{
 \dontrun{
