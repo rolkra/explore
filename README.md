@@ -19,6 +19,11 @@ The explore package automatically checks if an attribute is categorial or numeri
 
 ## Installation
 
+### CRAN
+```r
+install.packages("explore")
+```
+
 ### github
 ```r
 # install from github
