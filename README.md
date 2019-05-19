@@ -1,3 +1,5 @@
+[![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
+
 # explore
 
 Simplifies Exploratory Data Analysis. There are two ways to use the eplore package:
@@ -16,6 +18,11 @@ Use the functions behind the shiny app for "tidy EDA". There are basically three
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
 ## Installation
+
+### CRAN
+```r
+install.packages("explore")
+```
 
 ### github
 ```r
