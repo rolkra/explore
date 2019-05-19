@@ -1,5 +1,3 @@
-[![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
-
 # explore
 
 Simplifies Exploratory Data Analysis. There are two ways to use the eplore package:
