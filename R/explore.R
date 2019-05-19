@@ -1,7 +1,7 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.4.0
+# Version 0.4.1
 #   prepare for CRAN
 #   fix na parameter for target_explore_cat
 #   add data_dict_md function
