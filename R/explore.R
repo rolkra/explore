@@ -1,10 +1,6 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.3.4
-#   clean_var
-#   Bugfixes
-#
 # Version 0.4.0
 #   prepare for CRAN
 #   fix na parameter for target_explore_cat
@@ -13,6 +9,8 @@
 #   use tempdir() in examples
 #   switch from RODBC to DBI/odbc
 #   drop dwh_write_table
+#   define intermediates_dir as output_dir in render
+#   add clean = TRUE in render (already was the default value)
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -1874,7 +1872,9 @@ if(is.na(target_text))  {
   if (missing(output_file)) {output_file = "report_attributes.html"}
   rmarkdown::render(input = input_file,
                     output_file = output_file,
-                    output_dir = output_dir
+                    output_dir = output_dir,
+                    intermediates_dir = output_dir,
+                    clean = TRUE
                     )
 
   # report target with density
@@ -1884,7 +1884,9 @@ if(is.na(target_text))  {
   var_name_target <- target_text  # needed in report template
   rmarkdown::render(input = input_file,
                     output_file = output_file,
-                    output_dir = output_dir
+                    output_dir = output_dir,
+                    intermediates_dir = output_dir,
+                    clean = TRUE
                     )
 
   # report target with percent
@@ -1894,7 +1896,9 @@ if(is.na(target_text))  {
   var_name_target <- target_text # needed in report template
   rmarkdown::render(input = input_file,
                     output_file = output_file,
-                    output_dir = output_dir
+                    output_dir = output_dir,
+                    intermediates_dir = output_dir,
+                    clean = TRUE
                     )
 } # if
 } # report

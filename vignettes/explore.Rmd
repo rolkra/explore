@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-Interactive data exploration with one line of code or use a easy to remember set of tidy functions to explore your data. Introduces two main verbs for data analysis. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
+Interactive data exploration with one line of code or use a easy to remember set of tidy functions for exploratory data analysis. Introduces two main verbs. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
-As the explore-funcitons fits well into the tidyverse, we load the dplyr-package as well.
+As the explore-functions fits well into the tidyverse, we load the dplyr-package as well.
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -198,7 +198,7 @@ Add title, detailed descriptions and change default filename
 ```{R eval=FALSE, echo=TRUE}
 description <- data.frame(
                   variable = c("Species"), 
-                  description = c("Species of Iris flower")))
+                  description = c("Species of Iris flower"))
 data_dict_md(iris, 
              title = "iris flower data set", 
              description =  description, 
