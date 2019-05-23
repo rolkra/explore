@@ -1837,10 +1837,23 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' @param output_dir Directory where to save the html report
 #' @import rmarkdown
 #' @examples
-#' report(iris, output_dir = tempdir())
+#' if (rmarkdown::pandoc_available("1.12.3"))   {
+#'   report(iris, output_dir = tempdir())
+#' }
 #' @export
 
 report <- function(data, target, density = FALSE, output_file, output_dir)  {
+
+  # pandoc must be available to generate report
+  # if RStudio is used, pandoc should be available
+  if (!rmarkdown::pandoc_available())  {
+    stop("no report generated because pandoc is not available")
+  }
+
+  # pandoc version 1.12.3 or higher must be available
+  if (!rmarkdown::pandoc_version() >= "1.12.3")  {
+    stop("no report generated because pandoc version >= 1.12.3 needed")
+  }
 
   # output_dir must be defined
   if(missing(output_dir)) {

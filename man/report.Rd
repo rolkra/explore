@@ -22,5 +22,7 @@ Generate a report of all attributes
 If target is defined, the relation to the target is reported
 }
 \examples{
-report(iris, output_dir = tempdir())
+if (rmarkdown::pandoc_available("1.12.3"))   {
+  report(iris, output_dir = tempdir())
+}
 }
