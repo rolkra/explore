@@ -11,7 +11,6 @@
 #   drop dwh_write_table
 #   define intermediates_dir as output_dir in render
 #   add clean = TRUE in render (already was the default value)
-#   fix number of NA in explore (move code before auto_scale)
 #
 # Version 0.4.2 (CRAN)
 #   add rmarkdown::pandoc_available("1.12.3") in example
@@ -22,6 +21,7 @@
 #   add parameter min_val, max_val in explore_cat
 #   define min_val and max_val as filters in explore_num + explore_cat
 #   change "attribute" to "variable" (consistent)
+#   fix number of NA in explore (move code before auto_scale)
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
