@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{explore_cor}
 \alias{explore_cor}
-\title{Explore the correlation between two attributes}
+\title{Explore the correlation between two variables}
 \usage{
 explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
   auto_scale = TRUE, color = "grey", ...)
@@ -10,9 +10,9 @@ explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
 \arguments{
 \item{data}{A dataset}
 
-\item{x}{Attribute on x axis}
+\item{x}{Variable on x axis}
 
-\item{y}{Attribute on y axis}
+\item{y}{Variable on y axis}
 
 \item{target}{Target variable (binary)}
 
@@ -32,7 +32,7 @@ explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
 Plot
 }
 \description{
-Explore the correlation between two attributes
+Explore the correlation between two variables
 }
 \examples{
 explore_cor(iris, x = Sepal.Length, y = Sepal.Width)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{report}
 \alias{report}
-\title{Generate a report of all attributes}
+\title{Generate a report of all variables}
 \usage{
 report(data, target, density = FALSE, output_file, output_dir)
 }
@@ -18,7 +18,7 @@ report(data, target, density = FALSE, output_file, output_dir)
 \item{output_dir}{Directory where to save the html report}
 }
 \description{
-Generate a report of all attributes
+Generate a report of all variables
 If target is defined, the relation to the target is reported
 }
 \examples{

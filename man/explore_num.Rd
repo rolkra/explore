@@ -12,9 +12,9 @@ explore_num(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 
 \item{var_num}{Name of numerical variable}
 
-\item{min_val}{All values < min_val are converted to min_val}
+\item{min_val}{Filter values >= min_val}
 
-\item{max_val}{All values > max_val are converted to max_val}
+\item{max_val}{Filter values <= max_val}
 
 \item{flip}{Should plot be flipped? (change of x and y)}
 

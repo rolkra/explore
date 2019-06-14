@@ -7,13 +7,13 @@
 format_target(target)
 }
 \arguments{
-\item{target}{Attribute as vector}
+\item{target}{Variable as vector}
 }
 \value{
 Formated target
 }
 \description{
-Formats a target as a 0/1 attribute
+Formats a target as a 0/1 variable
 }
 \examples{
 iris$is_virginica <- ifelse(iris$Species == "virginica", "yes", "no")

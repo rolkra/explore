@@ -1,10 +1,10 @@
 Package: explore
 Type: Package
 Title: Simplifies Exploratory Data Analysis
-Version: 0.4.1
+Version: 0.4.3
 Author: Roland Krasser
 Maintainer: Roland Krasser <roland.krasser@gmail.com>
-Description: Interactive data exploration with one line of code or use a easy to remember set of tidy functions for exploratory data analysis. Introduces two main verbs. describe() to describe a variable or table, explore() to graphically explore a variable or table.
+Description: Interactive data exploration with one line of code or use an easy to remember set of tidy functions for exploratory data analysis. Introduces two main verbs. describe() to describe a variable or table, explore() to graphically explore a variable or table.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

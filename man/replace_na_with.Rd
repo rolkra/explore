@@ -17,7 +17,7 @@ replace_na_with(data, var_name, with)
 Updated dataframe
 }
 \description{
-Replace NA values of an attribute in a dataframe
+Replace NA values of a variable in a dataframe
 }
 \examples{
 data <- data.frame(nr = c(1,2,3,NA,NA))

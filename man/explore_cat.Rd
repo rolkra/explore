@@ -4,13 +4,18 @@
 \alias{explore_cat}
 \title{Explore categorial variable}
 \usage{
-explore_cat(data, var_cat, flip = TRUE, percent = TRUE,
-  color = "#cccccc", auto_scale = TRUE, max_cat = 30)
+explore_cat(data, var_cat, min_val = NA, max_val = NA, flip = TRUE,
+  percent = TRUE, color = "#cccccc", auto_scale = TRUE,
+  max_cat = 30)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{var_cat}{Name of numerical variable}
+
+\item{min_val}{Filter values >= min_val}
+
+\item{max_val}{Filter values <= max_val}
 
 \item{flip}{Should plot be flipped? (change of x and y)}
 
@@ -18,7 +23,7 @@ explore_cat(data, var_cat, flip = TRUE, percent = TRUE,
 
 \item{color}{Color of plot}
 
-\item{auto_scale}{Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
+\item{auto_scale}{Not used at the moment}
 
 \item{max_cat}{Maximum number of categories to be plotted}
 }

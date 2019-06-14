@@ -35,13 +35,13 @@ Explore your dataset (in this case the iris dataset) in one line of code:
 explore(iris)
 ```
 
-A shiny app is launched, you can inspect individual attributes, explore their relation to a binary target, grow a decision tree or create a fully automated report of all attributes with a few "mouseclicks".
+A shiny app is launched, you can inspect individual variable, explore their relation to a binary target, grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
  
 You can choose each variable containng 0/1, FALSE/TRUE or "no"/"yes" as a target. As the iris dataset doesn't contain a binary target, we create one:
 
 ```{R eval=FALSE, echo=TRUE}
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris %>% explore(target = is_versicolor)
+iris %>% explore()
 ```
 
 ### Report variables
