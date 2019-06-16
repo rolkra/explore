@@ -16,7 +16,7 @@ knitr::kable(d)
 data %>% explore(!!var_name_target)
 ```
 
-## Explore Attributes
+## Explore Variables
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 total_col = 2

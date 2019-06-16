@@ -20,8 +20,10 @@
 #   fix parameter in explore: auto_scale, na
 #   add parameter min_val, max_val in explore_cat
 #   define min_val and max_val as filters in explore_num + explore_cat
-#   change "attribute" to "variable" (consistent)
 #   fix number of NA in explore (move code before auto_scale)
+#   explore_density with target: drop "propensity by"
+#   explore_shiny: use output_dir / tempdir()
+#   change "attribute" to "variable" (consistent)
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -849,7 +851,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
       ggplot(aes(var_, fill = factor(target_, levels = c(0,1), ordered = TRUE))) +
       geom_density(alpha = 0.7) +
 #     ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
-      ggtitle(paste0("propensity by", var_txt)) +
+      ggtitle(var_txt) +
       labs(x = "", y = "") +
       scale_fill_manual(values = c("#CFD8DC","#90A4AE"), name = "target") +
       theme_light()
@@ -1901,41 +1903,41 @@ report <- function(data, target, density = FALSE, output_file, output_dir)  {
     }
   }
 
-# report only variables (no korrelation with target)
-if(is.na(target_text))  {
-  input_file <- system.file("extdata", "template_report_attribute.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "report_variable.html"}
-  rmarkdown::render(input = input_file,
-                    output_file = output_file,
-                    output_dir = output_dir,
-                    intermediates_dir = output_dir,
-                    clean = TRUE
-                    )
+  # report only variables (no korrelation with target)
+  if(is.na(target_text))  {
+    input_file <- system.file("extdata", "template_report_variable.Rmd", package="explore")
+    if (missing(output_file)) {output_file = "report_variable.html"}
+    rmarkdown::render(input = input_file,
+                      output_file = output_file,
+                      output_dir = output_dir,
+                      intermediates_dir = output_dir,
+                      clean = TRUE
+    )
 
-  # report target with density
-} else if(density == TRUE)  {
-  input_file <- system.file("extdata", "template_report_target_den.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "report_target_density.html"}
-  var_name_target <- target_text  # needed in report template
-  rmarkdown::render(input = input_file,
-                    output_file = output_file,
-                    output_dir = output_dir,
-                    intermediates_dir = output_dir,
-                    clean = TRUE
-                    )
+    # report target with density
+  } else if(density == TRUE)  {
+    input_file <- system.file("extdata", "template_report_target_den.Rmd", package="explore")
+    if (missing(output_file)) {output_file = "report_target_density.html"}
+    var_name_target <- target_text  # needed in report template
+    rmarkdown::render(input = input_file,
+                      output_file = output_file,
+                      output_dir = output_dir,
+                      intermediates_dir = output_dir,
+                      clean = TRUE
+    )
 
-  # report target with percent
-} else {
-  input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
-  if (missing(output_file)) {output_file = "report_target.html"}
-  var_name_target <- target_text # needed in report template
-  rmarkdown::render(input = input_file,
-                    output_file = output_file,
-                    output_dir = output_dir,
-                    intermediates_dir = output_dir,
-                    clean = TRUE
-                    )
-} # if
+    # report target with percent
+  } else {
+    input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
+    if (missing(output_file)) {output_file = "report_target.html"}
+    var_name_target <- target_text # needed in report template
+    rmarkdown::render(input = input_file,
+                      output_file = output_file,
+                      output_dir = output_dir,
+                      intermediates_dir = output_dir,
+                      clean = TRUE
+    )
+  } # if
 } # report
 
 #============================================================================
@@ -2045,8 +2047,9 @@ explore_shiny <- function(data, target)  {
       # rmarkdown templates uses variables data and var_name_target
       # templates must be located in package or if code is only sourced in C:/R
       var_name_target = input$target
-      path <- getwd()
-      output_file <- paste0(path,"/report_explore.html")
+      #path <- getwd()
+      output_dir <- normalizePath(path.expand(tempdir()))
+      output_file <- "report_explore.html"
 
       # check if explore package is loaded
       run_explore_package <- ifelse(max(search() == "package:explore") == 1, TRUE, FALSE)
@@ -2054,26 +2057,26 @@ explore_shiny <- function(data, target)  {
       # report only variables
       if(input$target == "<no target>")  {
         input_file <- ifelse(run_explore_package,
-                             system.file("extdata", "template_report_attribute.Rmd", package="explore"),
+                             system.file("extdata", "template_report_variable.Rmd", package="explore"),
                              "C:/R/template_report_variable.Rmd")
-        rmarkdown::render(input = input_file, output_file = output_file)
+        rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with density
       } else if(input$target_density == TRUE)  {
         input_file <- ifelse(run_explore_package,
                              system.file("extdata", "template_report_target_den.Rmd", package="explore"),
                              "C:/R/template_report_target_den.Rmd")
-        rmarkdown::render(input = input_file, output_file = output_file)
+        rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with percent
       } else {
         input_file <- ifelse(run_explore_package,
                              system.file("extdata", "template_report_target_pct.Rmd", package="explore"),
                              "C:/R/template_report_target_pct.Rmd")
-        rmarkdown::render(input = input_file, output_file = output_file)
+        rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
       }
 
-      browseURL(paste0("file://", output_file))
+      browseURL(paste0("file://", path.expand(file.path(output_dir, output_file))))
     })
 
     output$graph_target <- shiny::renderPlot({
