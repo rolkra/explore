@@ -2076,7 +2076,7 @@ explore_shiny <- function(data, target)  {
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
       }
 
-      browseURL(paste0("file://", path.expand(file.path(output_dir, output_file))))
+      browseURL(paste0("file://", file.path(output_dir, output_file)))
     })
 
     output$graph_target <- shiny::renderPlot({
