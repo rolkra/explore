@@ -1,21 +1,10 @@
 ################################################################################
 # explore by Roland Krasser
-#
-# Version 0.4.1
-#   prepare for CRAN
-#   fix na parameter for target_explore_cat
-#   add data_dict_md function
-#   improve documentation
-#   use tempdir() in examples
-#   switch from RODBC to DBI/odbc
-#   drop dwh_write_table
-#   define intermediates_dir as output_dir in render
-#   add clean = TRUE in render (already was the default value)
-#
+##
 # Version 0.4.2 (CRAN)
 #   add rmarkdown::pandoc_available("1.12.3") in example
 #
-# Version 0.4.3
+# Version 0.4.3 (CRAN)
 #   Typo in DESCRIPTION (a easy -> an easy)
 #   fix parameter in explore: auto_scale, na
 #   add parameter min_val, max_val in explore_cat
@@ -24,6 +13,9 @@
 #   explore_density with target: drop "propensity by"
 #   explore_shiny: use output_dir / tempdir()
 #   change "attribute" to "variable" (consistent)
+#
+# Version 0.4.4 (DEV)
+#   add function explore_bar
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -614,6 +606,171 @@ target_explore_num <- function(data, var_num, var_target = "target_ind", min_val
   return(result)
 
 } # target_explore_num
+
+#============================================================================
+#  explore_bar
+#============================================================================
+#' Explore categorial variable using bar charts
+#'
+#' Create a barplot to explore a categorial variable.
+#' If a target is selected, the barplot is created for all levels of the target.
+#'
+#' @param data A dataset
+#' @param var variable
+#' @param target target (can have more than 2 levels)
+#' @param flip Should plot be flipped? (change of x and y)
+#' @param title Title of the plot (if empty var name)
+#' @param max_cat Maximum number of categories to be plotted
+#' @param legend_position Position of the legend ("bottom" | "top")
+#' @param label Show labels? (if empty, automatic)
+#' @param label_size Size of labels
+#' @return Plot object (bar chart)
+#' @importFrom magrittr "%>%"
+#' @import dplyr
+#' @import ggplot2
+#' @export
+
+explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, legend_position = "bottom", label, label_size = 2.5)  {
+
+  # define variables for CRAN-package check
+  na_ind <- NULL
+  target_n <- NULL
+  pct <- NULL
+
+  # parameter var
+  if(!missing(var))  {
+    var_quo <- enquo(var)
+    var_txt <- quo_name(var_quo)[[1]]
+  } else {
+    var_txt = NA
+  }
+
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+  } else {
+    target_txt = NA
+  }
+
+  # number of levels of target
+  if (missing(target))  {
+    n_target_cat = 1
+  } else {
+    n_target_cat <- length(unique(data[[target_txt]]))
+  }
+
+  # number of levels of var
+  var_cat <- data %>% count(!!var_quo) %>% pull(!!var_quo)
+  if (length(var_cat) > max_cat)  {
+    data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
+  }
+
+  # if no label parameter, decide on
+  # number of bars if labels are plotted
+  bars <- length(unique(data[[var_txt]])) * n_target_cat
+  if (missing(label)) {
+    if (bars <= 20)  {
+      label <- TRUE
+    } else {
+      label <- FALSE
+    }
+  }
+
+  # use a factor for experiment so that fill works
+  if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
+    data[[target_txt]] <- factor(data[[target_txt]])
+  }
+
+  # check NA
+  na_check <- data %>%
+    mutate(na_ind = ifelse(is.na(!!var_quo),1,0)) %>%
+    summarize(na_cnt = sum(na_ind), na_pct = sum(na_ind)/n())
+  na_cnt <- na_check[1,1]
+  na_pct <- na_check[1,2]
+
+  # prepare + plot (with target)
+
+  if (n_target_cat > 1)  {
+    data_target <- data %>%
+      group_by(!!target_quo) %>%
+      summarise(target_n = n())
+
+    data_var <- data %>%
+      group_by(!!target_quo, !!var_quo) %>%
+      summarise(n = n())
+
+    data_bar <- data_var %>%
+      inner_join(data_target, by = target_txt) %>%
+      mutate(pct = round(n / target_n * 100.0, 1))
+
+    # plot
+    p <- ggplot(data_bar, aes(x = !!var_quo)) +
+      geom_col(aes(y = pct, fill = !!target_quo), position = "dodge") +
+      theme_minimal() +
+      theme(legend.position = legend_position) +
+      labs(x = "", y = "%")
+
+  } else {
+
+    # prepare + plot (no target)
+
+    data_bar <- data %>%
+      group_by(!!var_quo) %>%
+      summarise(n = n()) %>%
+      mutate(pct = round(n / sum(n) * 100.0, 1))
+
+    # plot
+    p <- ggplot(data_bar, aes(x = !!var_quo)) +
+      geom_col(aes(y = pct),
+               position = "dodge",
+               fill = "lightgrey",
+               color = "lightgrey") +
+      theme_minimal() +
+      labs(x = "", y = "%")
+
+  }
+
+  # color manual
+  if (n_target_cat == 2)  {
+    p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
+  }
+
+  # plot labels?
+  if (label == TRUE & n_target_cat > 1)  {
+    p <- p + geom_text(aes(y = pct,
+                           label = pct,
+                           group = !!target_quo),
+                       position = position_dodge(width = 1),
+                       hjust = ifelse(flip,"top","center"),
+                       vjust = ifelse(flip,"center","top"),
+                       size = label_size)
+  }
+  if (label == TRUE & n_target_cat == 1) {
+    p <- p + geom_text(aes(y = pct, label = pct),
+                       position = position_dodge(width = 1),
+                       hjust = ifelse(flip,"top","center"),
+                       vjust = ifelse(flip,"center","top"),
+                       size = label_size)
+  }
+
+  # title
+  if (nchar(title) > 0)  {
+    p <- p + ggtitle(title)
+  } else {
+    p <- p + ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)"))
+  }
+
+  # flip plot
+  if (flip) {
+    p <- p + coord_flip()
+  }
+
+  # plot result
+  p
+
+} # explore_bar
+
 
 #============================================================================
 #  explore_cat
