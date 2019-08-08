@@ -12,7 +12,7 @@ explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
 
 \item{var}{variable}
 
-\item{target}{target}
+\item{target}{target (can have more than 2 levels)}
 
 \item{flip}{Should plot be flipped? (change of x and y)}
 

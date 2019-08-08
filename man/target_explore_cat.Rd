@@ -4,17 +4,17 @@
 \alias{target_explore_cat}
 \title{Explore categorial variable + target}
 \usage{
-target_explore_cat(data, var_cat, var_target = "target_ind",
-  min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE,
-  title = NA, auto_scale = TRUE, na = NA, max_cat = 30,
+target_explore_cat(data, var, target = "target_ind", min_val = NA,
+  max_val = NA, flip = TRUE, num2char = TRUE, title = NA,
+  auto_scale = TRUE, na = NA, max_cat = 30,
   legend_position = "bottom")
 }
 \arguments{
 \item{data}{A dataset}
 
-\item{var_cat}{Name of categorial variable}
+\item{var}{Categorial variable}
 
-\item{var_target}{Name of target variable (0/1 or FALSE/TRUE)}
+\item{target}{Target variable (0/1 or FALSE/TRUE)}
 
 \item{min_val}{All values < min_val are converted to min_val}
 

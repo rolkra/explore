@@ -4,16 +4,16 @@
 \alias{target_explore_num}
 \title{Explore categorial variable + target}
 \usage{
-target_explore_num(data, var_num, var_target = "target_ind",
-  min_val = NA, max_val = NA, flip = TRUE, title = NA,
-  auto_scale = TRUE, na = NA, legend_position = "bottom")
+target_explore_num(data, var, target = "target_ind", min_val = NA,
+  max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE,
+  na = NA, legend_position = "bottom")
 }
 \arguments{
 \item{data}{A dataset}
 
-\item{var_num}{Name of numerical variable}
+\item{var}{Numerical variable}
 
-\item{var_target}{Name of target variable (0/1 or FALSE/TRUE)}
+\item{target}{Target variable (0/1 or FALSE/TRUE)}
 
 \item{min_val}{All values < min_val are converted to min_val}
 
