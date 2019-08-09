@@ -19,6 +19,3 @@ Plot (ggplot)
 \description{
 Creates a ggplot with the variable-name as title and a text
 }
-\examples{
-plot_var_info(iris, Species, info = "don't pick me!")
-}

@@ -24,7 +24,7 @@
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
-# clean_var
+# clean_var, balance_target
 # describe, describe_all, describe_cat, describe_num
 # explore, explore_all, explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
@@ -306,6 +306,75 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, name = NA)
 } # clean_var
 
 #============================================================================
+#  balance_target
+#============================================================================
+#' Balance target variable
+#'
+#' Balances the target variable in your dataset.
+#' Target must be 0/1, FALSE/TRUE ore no/yes
+#'
+#' @param data Data
+#' @param target Target variable (0/1, TRUE/FALSE, yes/no)
+#' @param min_prop Minimum proportion of one of the target categories
+#' @return Data
+#' @import rlang
+#' @import dplyr
+#' @examples
+#' iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+#' balanced <- balance_target(iris, target = is_versicolor, min_prop = 0.5)
+#' describe(balanced, is_versicolor)
+#' @export
+
+balance_target <- function(data, target, min_prop = 0.1) {
+
+  # check if parameters are missing
+  if (missing(data))  {
+    stop("data is missing")
+  }
+
+  if (missing(target))  {
+    stop("target is missing")
+  }
+
+  # check if min_prop has a meaningful value
+  if (min_prop < 0 | min_prop > 1)  {
+    stop("min_prop must be a value between 0 and 1")
+  }
+
+  # tidy eval for target
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
+
+  # check levels of target
+  target_levels <- length(unique(data[[target_txt]]))
+  if (target_levels > 2)  {
+    stop(paste("target has", target_levels, "levels, expected 2"))
+  }
+
+  # balance
+  observed_prop   <- data %>%
+    dplyr::pull(!!target_quo) %>%
+    table()
+  minClass        <- min(observed_prop)
+  names(minClass) <- names(which(observed_prop == minClass))
+  maxClass        <- floor(minClass / min_prop - minClass)
+
+  if (max(observed_prop) < maxClass) {
+    return(data)
+
+  } else {
+    data_minClass <- data %>%
+      dplyr::filter(!!target_quo == names(minClass)) %>%
+      dplyr::sample_n(minClass)
+    data_maxClass <- data %>%
+      dplyr::filter(!!target_quo != names(minClass)) %>%
+      dplyr::sample_n(maxClass)
+
+    return(rbind(data_minClass, data_maxClass))
+  }
+} # balance_target
+
+#============================================================================
 #  plot_text
 #============================================================================
 #' Plot a text
@@ -337,11 +406,9 @@ plot_text <- function(text="hello world", size=1.6, color="black")  {
 #' @param var Variable
 #' @param info Text to plot
 #' @return Plot (ggplot)
-#' @importFrom graphics plot text
-#' @examples
-#' plot_var_info(iris, Species, info = "don't pick me!")
+#' @import rlang
+#' @import dplyr
 #' @import ggplot2
-#' @export
 
 plot_var_info <- function(data, var, info = "")  {
 
