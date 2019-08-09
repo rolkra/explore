@@ -339,7 +339,7 @@ plot_text <- function(text="hello world", size=1.6, color="black")  {
 #' @return Plot (ggplot)
 #' @importFrom graphics plot text
 #' @examples
-#' plot_var_info(iris, Species, label = "don't pick me!")
+#' plot_var_info(iris, Species, info = "don't pick me!")
 #' @import ggplot2
 #' @export
 
@@ -449,7 +449,6 @@ format_target <- function(target)   {
 target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, legend_position = "bottom") {
 
   # definitions for CRAN package check
-  #target <- NULL
   n_target <- NULL
   n_pct <- NULL
   weight <- NULL
@@ -600,6 +599,10 @@ replace_na_with <- function(data, var_name, with)  {
 #' @import ggplot2
 
 target_explore_num <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, legend_position = "bottom") {
+
+  # definitions for CRAN package check
+  num <- NULL
+  cat_label <- NULL
 
   # parameter var
   if(!missing(var))  {
@@ -1842,7 +1845,7 @@ explore_all <- function(data, target, ncol = 2, density = TRUE, legend_position 
       plots[[i]] <- target_explore_cat(data_tmp, !!var_name, target = !!target_quo, legend_position = legend_position)
 
     } else {
-      plots[[i]] <- plot_var_info(data_tmp, !!var_name, label = "\n(data type not supported)")
+      plots[[i]] <- plot_var_info(data_tmp, !!var_name, info = "\n(data type not supported)")
     } # if
   } # for
 
