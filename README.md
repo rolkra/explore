@@ -22,7 +22,15 @@ The explore package automatically checks if an attribute is categorial or numeri
 install.packages("explore")
 ```
 
-### github
+To install the explore package on Debian / Ubuntu, you may need to install some additional dependencies first:
+
+```
+sudo apt install unixodbc unixodbc-dev
+install.packages("odbc")
+install.packages("explore")
+```
+
+### DEV version (github)
 ```r
 # install from github
 if (!require(devtools)) install.packages("devtools")
