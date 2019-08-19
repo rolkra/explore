@@ -313,7 +313,7 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, name = NA)
 #' Balances the target variable in your dataset.
 #' Target must be 0/1, FALSE/TRUE ore no/yes
 #'
-#' @param data Data
+#' @param data A dataset
 #' @param target Target variable (0/1, TRUE/FALSE, yes/no)
 #' @param min_prop Minimum proportion of one of the target categories
 #' @return Data
@@ -765,6 +765,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @param flip Should plot be flipped? (change of x and y)
 #' @param title Title of the plot (if empty var name)
 #' @param max_cat Maximum number of categories to be plotted
+#' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param legend_position Position of the legend ("bottom" | "top")
 #' @param label Show labels? (if empty, automatic)
 #' @param label_size Size of labels
@@ -774,7 +775,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @import ggplot2
 #' @export
 
-explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, legend_position = "bottom", label, label_size = 2.5)  {
+explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, max_target_cat = 5, legend_position = "bottom", label, label_size = 2.5)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -810,6 +811,20 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
     data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
   }
 
+  # use a factor for experiment so that fill works
+  if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
+    data[[target_txt]] <- factor(data[[target_txt]])
+    data[[target_txt]] <- fct_explicit_na(data[[target_txt]], na_level = ".NA")
+
+    # keep max. different levels
+    if (n_target_cat > max_target_cat)  {
+      data[[target_txt]] <- fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+    }
+    # recalculate number of levels in target
+    n_target_cat <- length(levels(data[[target_txt]]))
+
+  }
+
   # if no label parameter, decide on
   # number of bars if labels are plotted
   bars <- length(unique(data[[var_txt]])) * n_target_cat
@@ -819,11 +834,6 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
     } else {
       label <- FALSE
     }
-  }
-
-  # use a factor for experiment so that fill works
-  if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
-    data[[target_txt]] <- factor(data[[target_txt]])
   }
 
   # check NA
@@ -1076,6 +1086,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' @param max_val All values > max_val are converted to max_val
 #' @param color Color of plot
 #' @param auto_scale Use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param max_target_cat Maximum number of levels of target shown in the plot (except NA).
 #' @param ... Further arguments
 #' @return Plot object (density plot)
 #' @importFrom magrittr "%>%"
@@ -1088,7 +1099,7 @@ explore_num <- function(data, var_num, min_val = NA, max_val = NA, flip = FALSE,
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, ...)   {
+explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # parameter var
   if(!missing(var))  {
@@ -1150,6 +1161,11 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
     # factorise target
     if (!is.factor(data[[target_txt]]))  {
       data[[target_txt]] <- factor(data[[target_txt]])
+      data[[target_txt]] <- fct_explicit_na(data[[target_txt]], na_level = ".NA")
+      # keep max. different levels
+      if (n_target_cat > max_target_cat)  {
+        data[[target_txt]] <- fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+      }
     }
 
     # create plot var + target
@@ -1281,7 +1297,7 @@ guess_cat_num <- function(var)  {
   var_unique <- length(unique(var))
   # return result
   if (var_type %in% c("integer", "double")) {
-    if (var_unique <= 8)  {
+    if (var_unique < 10)  {
       return("cat")
     } else {
       return("num")
