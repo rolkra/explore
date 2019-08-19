@@ -245,6 +245,7 @@ dwh_fastload <- function(data, dsn, table, ...)  {
 #' @param na Value that replaces NA
 #' @param min_val All values < min_val are converted to min_val (var numeric or character)
 #' @param max_val All values > max_val are converted to max_val (var numeric or character)
+#' @param max_cat Maximum number of different factor levels for categorical variable (if more, .OTHER is added)
 #' @param name New name of variable (as string)
 #' @return Dataset
 #' @import rlang
@@ -253,7 +254,7 @@ dwh_fastload <- function(data, dsn, table, ...)  {
 #' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
 #' @export
 
-clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, name = NA)  {
+clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, name = NA)  {
 
   # check if var is missing
   if (missing(var)){
@@ -290,6 +291,25 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, name = NA)
     col[col > max_val] <- max_val
     data[ ,var_txt] <- col
   }
+
+  # set levels based on max_cat
+  if (!is.na(max_cat) & max_cat > 0)  {
+    # factorise if necessary
+    if (!is.factor(data[[var_txt]])) {
+      data[[var_txt]] <- factor(data[[var_txt]])
+    }
+
+    # number of different levels of variable
+    n_var_cat <- length(levels(data[[var_txt]]))
+
+    # add level for NA (if in data)
+    data[[var_txt]] <- fct_explicit_na(data[[var_txt]], na_level = ".NA")
+
+    # keep max. different levels
+    if (n_var_cat > max_cat)  {
+        data[[var_txt]] <- fct_lump(data[[var_txt]],max_cat, other_level = ".OTHER")
+    }
+  } # if max_cat
 
   # rename variable
   if (!is.na(name))  {
@@ -390,7 +410,7 @@ balance_target <- function(data, target, min_prop = 0.1) {
 #' plot_text("hello", size = 2, color = "red")
 #' @export
 
-plot_text <- function(text="hello world", size=1.6, color="black")  {
+plot_text <- function(text="hello world", size=1.2, color="black")  {
   plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
   text(x = 0.5, y = 0.5, text, cex = size, col = color)
 }
@@ -1945,8 +1965,9 @@ explore_all <- function(data, target, ncol = 2, density = TRUE, legend_position 
 #'
 #' @param data A dataset
 #' @param target Target variable
-#' @param maxdepth Maximal depth of the tree
-#' @param minsplit The minimum number of observations that must exist in a node in order for a split to be attempted
+#' @param max_cat Drop categorical variables with higher number of levels
+#' @param max_depth Maximal depth of the tree
+#' @param min_split The minimum number of observations that must exist in a node in order for a split to be attempted
 #' @param cp Complexity parameter
 #' @param size Textsize of plot
 #' @param ... Further arguments
@@ -1958,7 +1979,7 @@ explore_all <- function(data, target, ncol = 2, density = TRUE, legend_position 
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, ...)  {
+explain_tree <- function(data, target, max_cat = 10, max_depth = 3, min_split = 20, cp = 0, size = 0.7, ...)  {
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -1966,6 +1987,20 @@ explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, 
   } else {
     target_txt = NA
     return(NULL)
+  }
+
+  # drop variables, that are not usable
+  d <- describe(data)
+  var_keep <- d %>%
+    filter(type %in% c("log", "int", "dou", "chr")) %>%
+    filter(type != "chr" | (type == "chr" & unique <= max_cat)) %>%
+    pull(variable)
+  data <- data %>% select(one_of(as.character(var_keep)))
+
+  # minimum 2 variables left?
+  if (ncol(data) < 2) {
+    p <- plot_text("can't grow decision tree")
+    return(invisible(p))
   }
 
   # convert target into formula
@@ -1977,13 +2012,13 @@ explain_tree <- function(data, target, maxdepth=3, minsplit=20, cp=0, size=0.7, 
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "class",
-                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+                        control = rpart::rpart.control(maxdepth=max_depth, minsplit=min_split, cp=cp))
   } else {
     # create tree num
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "anova",  #"class",
-                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+                        control = rpart::rpart.control(maxdepth=max_depth, minsplit=min_split, cp=cp))
   } # if
 
   # check if tree was created. If not just plot info-text
@@ -2617,8 +2652,7 @@ explore <- function(data, var, var2, target, density, min_val = NA, max_val = NA
     target_explore_cat(data[c(var_text, target_text)],
                        !!var_quo, target = !!target_quo,
                        min_val = min_val, max_val = max_val, na = na, ...)
-
-  }
+  } # if
 
 } # explore
 
