@@ -4,14 +4,14 @@
 \alias{report}
 \title{Generate a report of all variables}
 \usage{
-report(data, target, density = FALSE, output_file, output_dir)
+report(data, target, split = FALSE, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{density}{Use density? (TRUE/FALSE)}
+\item{split}{Split by target? (TRUE/FALSE)}
 
 \item{output_file}{Filename of the html report}
 

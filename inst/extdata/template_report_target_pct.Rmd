@@ -5,7 +5,7 @@ output: html_document
 
 ## Describe Data
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r fig.height=3, echo=FALSE, message=FALSE, warning=FALSE}
 data %>% explore_tbl()
 ```
 
@@ -18,7 +18,7 @@ knitr::kable(d)
 ## Describe Target
 
 ```{r echo=FALSE, fig.height=3, fig.width=5, message=FALSE, warning=FALSE}
-data %>% explore(!!var_name_target)
+data %>% explore(!!sym(var_name_target))
 ```
 
 ## Explore Variables
@@ -30,5 +30,5 @@ total_y = 3 * get_nrow(names(data), ncol = total_col, exclude = 0)
 ```
 
 ```{r echo=FALSE, fig.height=total_y, fig.width=total_x, message=FALSE, warning=FALSE}
-data %>% explore_all(ncol = total_col, target = !!var_name_target, density = FALSE)
+data %>% explore_all(ncol = total_col, target = !!sym(var_name_target), split = FALSE)
 ```

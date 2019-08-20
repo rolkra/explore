@@ -4,7 +4,7 @@
 \alias{explore}
 \title{Explore a dataset or variable}
 \usage{
-explore(data, var, var2, target, density, min_val = NA, max_val = NA,
+explore(data, var, var2, target, split, min_val = NA, max_val = NA,
   auto_scale = TRUE, na = NA, ...)
 }
 \arguments{
@@ -16,7 +16,7 @@ explore(data, var, var2, target, density, min_val = NA, max_val = NA,
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{density}{Using density for histograms}
+\item{split}{Split by target variable (FALSE/TRUE)}
 
 \item{min_val}{All values < min_val are converted to min_val}
 
@@ -49,7 +49,6 @@ library(magrittr)
 iris \%>\% explore(Species)
 iris \%>\% explore(Sepal.Length)
 iris \%>\% explore(Sepal.Length, min_val = 4, max_val = 7)
-iris \%>\% explore(Sepal.Length, density = FALSE)
 
 # Explore a variable with a target
 iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)

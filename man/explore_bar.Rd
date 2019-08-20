@@ -6,7 +6,7 @@
 \usage{
 explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
   max_target_cat = 5, legend_position = "bottom", label,
-  label_size = 2.5)
+  label_size = 2.7)
 }
 \arguments{
 \item{data}{A dataset}
@@ -23,11 +23,13 @@ explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
 
 \item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
 
-\item{legend_position}{Position of the legend ("bottom" | "top")}
+\item{legend_position}{Position of the legend ("bottom"|"top"|"none")}
 
 \item{label}{Show labels? (if empty, automatic)}
 
 \item{label_size}{Size of labels}
+
+\item{...}{Further arguments}
 }
 \value{
 Plot object (bar chart)

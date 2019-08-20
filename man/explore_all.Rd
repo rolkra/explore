@@ -4,8 +4,7 @@
 \alias{explore_all}
 \title{Explore all variables}
 \usage{
-explore_all(data, target, ncol = 2, density = TRUE,
-  legend_position = "non")
+explore_all(data, target, ncol = 2, split = FALSE)
 }
 \arguments{
 \item{data}{A dataset}
@@ -14,9 +13,7 @@ explore_all(data, target, ncol = 2, density = TRUE,
 
 \item{ncol}{Layout of plots (number of columns)}
 
-\item{density}{Use density for histogramms}
-
-\item{legend_position}{Position of legend ("right"|"bottom"|"non")}
+\item{split}{Split by target (TRUE|FALSE)}
 }
 \value{
 Plot

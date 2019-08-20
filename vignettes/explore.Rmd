@@ -78,6 +78,14 @@ iris %>% select(-Species) %>% explain_tree(target = is_versicolor)
 
 You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
 
+### Explore dataset
+
+Explore your table with one line of code to see which type of variables it contains.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore_tbl()
+```
+
 ### Explore variables
 
 Explore a variable with one line of code. You don't have to care if a variable is numerical or categorical.
@@ -119,7 +127,7 @@ iris %>%
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
-  explore_all(target = is_versicolor, density = FALSE)
+  explore_all(target = is_versicolor, split = TRUE)
 ```
 
 ### Explore correlation between two variables
@@ -147,10 +155,8 @@ iris %>% explore(Sepal.Length, min_val = 4.5, max_val = 7)
 
 `explore` uses auto-scale by default. To deactivate it use the parameter `auto_scale = FALSE`
 
-You can force the explore-function to use bars with the parameter `density = FALSE`
-
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris %>% explore(Sepal.Length, density = FALSE, auto_scale = FALSE)
+iris %>% explore(Sepal.Length, auto_scale = FALSE)
 ```
 
 ### Describing data
