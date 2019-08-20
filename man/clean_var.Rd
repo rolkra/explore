@@ -5,7 +5,7 @@
 \title{Clean variable}
 \usage{
 clean_var(data, var, na = NA, min_val = NA, max_val = NA,
-  name = NA)
+  max_cat = NA, name = NA)
 }
 \arguments{
 \item{data}{A dataset}
@@ -17,6 +17,8 @@ clean_var(data, var, na = NA, min_val = NA, max_val = NA,
 \item{min_val}{All values < min_val are converted to min_val (var numeric or character)}
 
 \item{max_val}{All values > max_val are converted to max_val (var numeric or character)}
+
+\item{max_cat}{Maximum number of different factor levels for categorical variable (if more, .OTHER is added)}
 
 \item{name}{New name of variable (as string)}
 }

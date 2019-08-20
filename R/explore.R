@@ -21,12 +21,15 @@
 #   target_explore_num full tidy eval
 #   add plot_var_info - function (ggplot obj.)
 #   plot_var_info explore/explore_all if <oth>
+#   add max_cat in explore_bar, explore_density and explain_tree
+#   add explore_tbl
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
 # clean_var, balance_target
 # describe, describe_all, describe_cat, describe_num
-# explore, explore_all, explore_density, explore_shiny, explore_cor
+# explore, explore_all, explore_tbl
+# explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
 # get_type, guess_cat_num, replace_na_with, format_num, format_target
 # get_nrow, plot_text, plot_var_info
@@ -303,11 +306,11 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
     n_var_cat <- length(levels(data[[var_txt]]))
 
     # add level for NA (if in data)
-    data[[var_txt]] <- fct_explicit_na(data[[var_txt]], na_level = ".NA")
+    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
 
     # keep max. different levels
     if (n_var_cat > max_cat)  {
-        data[[var_txt]] <- fct_lump(data[[var_txt]],max_cat, other_level = ".OTHER")
+        data[[var_txt]] <- forcats::fct_lump(data[[var_txt]],max_cat, other_level = ".OTHER")
     }
   } # if max_cat
 
@@ -834,11 +837,11 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   # use a factor for experiment so that fill works
   if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
     data[[target_txt]] <- factor(data[[target_txt]])
-    data[[target_txt]] <- fct_explicit_na(data[[target_txt]], na_level = ".NA")
+    data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
 
     # keep max. different levels
     if (n_target_cat > max_target_cat)  {
-      data[[target_txt]] <- fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
     }
     # recalculate number of levels in target
     n_target_cat <- length(levels(data[[target_txt]]))
@@ -1181,10 +1184,10 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
     # factorise target
     if (!is.factor(data[[target_txt]]))  {
       data[[target_txt]] <- factor(data[[target_txt]])
-      data[[target_txt]] <- fct_explicit_na(data[[target_txt]], na_level = ".NA")
+      data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
       # keep max. different levels
       if (n_target_cat > max_target_cat)  {
-        data[[target_txt]] <- fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+        data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
       }
     }
 
@@ -1214,10 +1217,10 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
 #============================================================================
 #' Format type description
 #'
-#' Format type description of varable to 3 letters (int|dou|log|chr|dat)
+#' Format type description of varable to 3 letters (int|dbl|lgl|chr|dat)
 #'
 #' @param type Type description ("integer", "double", "logical", character", "date")
-#' @return Formated type description (int|dou|log|chr|dat)
+#' @return Formated type description (int|dbl|lgl|chr|dat)
 #' @examples
 #' format_type(typeof(iris$Species))
 #' @export
@@ -1228,9 +1231,9 @@ format_type <- function(type) {
   } else if (type == "integer")  {
     return("int")
   } else if (type == "double")  {
-    return("dou")
+    return("dbl")
   } else if (type == "logical")  {
-    return("log")
+    return("lgl")
   } else if (type == "character")  {
     return("chr")
   } else if (type == "date")  {
@@ -1650,6 +1653,10 @@ describe_tbl <- function(data, target, out = "text")  {
   describe_nrow <- nrow(data)
   describe_ncol <- ncol(data)
 
+  d <- data %>% describe_all()
+  describe_with_na <- sum(ifelse(d$na > 0, 1, 0))
+  describe_no_variance <- sum(ifelse(d$unique == 1, 1, 0))
+
   # sum of target=1 (if defined)
   if (!missing(target))  {
 
@@ -1672,8 +1679,10 @@ describe_tbl <- function(data, target, out = "text")  {
 
   # result as a vector (text)
 
-  result_vector <- c(cases = format_num(describe_nrow),
+  result_vector <- c(observations = format_num(describe_nrow),
                      variables = format_num(describe_ncol),
+                     with_na = format_num(describe_with_na),
+                     no_variance = format_num(describe_no_variance),
                      targets = format_num(describe_target1_cnt),
                      targets_pct = format_num(describe_target1_cnt / describe_nrow, digits = 2))
 
@@ -1701,6 +1710,13 @@ describe_tbl <- function(data, target, out = "text")  {
                           format_num(describe_ncol),
                           " variables")
   } # if
+
+  # add with_na and no_variance
+  result_text <- paste0(result_text,
+                        "\n",
+                        format_num(describe_with_na), " variables containing missings (NA)",
+                        "\n",
+                        format_num(describe_no_variance), " variables with no variance")
 
   # return output
   if (out == "vector")  {
@@ -1992,7 +2008,7 @@ explain_tree <- function(data, target, max_cat = 10, max_depth = 3, min_split = 
   # drop variables, that are not usable
   d <- describe(data)
   var_keep <- d %>%
-    filter(type %in% c("log", "int", "dou", "chr")) %>%
+    filter(type %in% c("lgl", "int", "dbl", "chr")) %>%
     filter(type != "chr" | (type == "chr" & unique <= max_cat)) %>%
     pull(variable)
   data <- data %>% select(one_of(as.character(var_keep)))
@@ -2309,6 +2325,88 @@ report <- function(data, target, density = FALSE, output_file, output_dir)  {
 } # report
 
 #============================================================================
+#  explore_tbl
+#============================================================================
+#' Explore table
+#'
+#' Explore a table. Plots variable types, variables with no variance and variables with NA
+#'
+#' @param data A dataset
+#' @importFrom magrittr "%>%"
+#' @import dplyr
+#' @examples
+#' explore_tbl(iris)
+#' @export
+
+explore_tbl <- function(data)  {
+
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # describe data
+  d <- describe_all(data)
+
+  # number of variables in data
+  n_var <- nrow(d)
+
+  # prepare "all variables"
+  bar1 <- d %>% count(type)
+  bar1$measure <- "all"
+  bar1$n_pct <- bar1$n / n_var * 100
+
+  # prepare "no variance"
+  suppressWarnings(
+    bar2 <- d %>%
+      filter(type != "oth") %>%
+      filter(unique == 1) %>%
+      count(type)
+  )
+  bar2$measure <- "no variance"
+  bar2$n_pct <- bar2$n / n_var * 100
+
+  # prepare "with NA"
+  suppressWarnings(
+    bar3 <- d %>%
+      filter(na > 0) %>%
+      count(type)
+  )
+  bar3$measure <- "with NA"
+  bar3$n_pct <- bar3$n / n_var * 100
+
+  # prepare plot
+  bar <- bind_rows(bar1, bar2, bar3)
+  type_default <- min(as.character(bar$type), na.rm = TRUE)
+  bar <- bar %>% clean_var(type, na = type_default)
+  bar$type <- factor(bar$type, levels = c("lgl","int","dbl","fct","chr","dat","oth"))
+
+  # define colors
+  color_mapping <- c("lgl" = "blue",
+                     "int" = "cornflowerblue",
+                     "dbl" = "cyan",
+                     "fct" = "yellow",
+                     "chr" = "orange",
+                     "dat" = "brown",
+                     "oth" = "red")
+  # plot
+  bar %>%
+    ggplot(aes(measure, n, fill = type)) +
+    geom_col() +
+    scale_fill_manual(values = color_mapping) +
+    #geom_text(aes(measure, n, group = type, label = as.character(n)), size = 2.5) +
+    geom_text(aes(label = n),
+              position = "stack",
+              hjust = 1) +
+    labs(title = paste(ncol(data), "variables"),
+         subtitle = paste("with", format_num(nrow(data)), "observations"),
+         y = "variables",
+         x = "") +
+    coord_flip() +
+    theme_minimal()
+} # explore_tbl
+
+#============================================================================
 #  explore_shiny
 #============================================================================
 #' Explore dataset interactive
@@ -2352,7 +2450,7 @@ explore_shiny <- function(data, target)  {
   # get variable types
   tbl_guesstarget <- describe(data) %>%
     filter(unique <= 2) %>%
-    filter((type %in% c("log","int","dou","num") &
+    filter((type %in% c("lgl","int","dbl","num") &
               (min == 0 | min == FALSE) &
               (max == 1 | max == TRUE)) |
               (type == "fct") ) %>%

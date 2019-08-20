@@ -5,7 +5,7 @@
 \title{Explore density of variable}
 \usage{
 explore_density(data, var, target, min_val = NA, max_val = NA,
-  color = "grey", auto_scale = TRUE, ...)
+  color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)
 }
 \arguments{
 \item{data}{A dataset}
@@ -21,6 +21,8 @@ explore_density(data, var, target, min_val = NA, max_val = NA,
 \item{color}{Color of plot}
 
 \item{auto_scale}{Use 0.02 and 0.98 percent quantile for min_val and max_val (if min_val and max_val are not defined)}
+
+\item{max_target_cat}{Maximum number of levels of target shown in the plot (except NA).}
 
 \item{...}{Further arguments}
 }

@@ -6,12 +6,17 @@ output: html_document
 ## Describe Data
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% explore_tbl()
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 describe_tbl(data)
 d <- describe(data)
 knitr::kable(d)
 ```
 
 ## Describe Target
+
 ```{r echo=FALSE, fig.height=3, fig.width=5, message=FALSE, warning=FALSE}
 data %>% explore(!!var_name_target)
 ```

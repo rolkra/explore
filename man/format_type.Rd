@@ -10,10 +10,10 @@ format_type(type)
 \item{type}{Type description ("integer", "double", "logical", character", "date")}
 }
 \value{
-Formated type description (int|dou|log|chr|dat)
+Formated type description (int|dbl|lgl|chr|dat)
 }
 \description{
-Format type description of varable to 3 letters (int|dou|log|chr|dat)
+Format type description of varable to 3 letters (int|dbl|lgl|chr|dat)
 }
 \examples{
 format_type(typeof(iris$Species))

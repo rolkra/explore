@@ -7,6 +7,10 @@ output:
 ## Describe Data
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% explore_tbl()
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 describe_tbl(data)
 d <- describe(data)
 knitr::kable(d)

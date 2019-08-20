@@ -7,7 +7,7 @@
 balance_target(data, target, min_prop = 0.1)
 }
 \arguments{
-\item{data}{Data}
+\item{data}{A dataset}
 
 \item{target}{Target variable (0/1, TRUE/FALSE, yes/no)}
 

@@ -5,7 +5,8 @@
 \title{Explore categorial variable using bar charts}
 \usage{
 explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
-  legend_position = "bottom", label, label_size = 2.5)
+  max_target_cat = 5, legend_position = "bottom", label,
+  label_size = 2.5)
 }
 \arguments{
 \item{data}{A dataset}
@@ -19,6 +20,8 @@ explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
 \item{title}{Title of the plot (if empty var name)}
 
 \item{max_cat}{Maximum number of categories to be plotted}
+
+\item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
 
 \item{legend_position}{Position of the legend ("bottom" | "top")}
 

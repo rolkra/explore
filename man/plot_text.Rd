@@ -4,7 +4,7 @@
 \alias{plot_text}
 \title{Plot a text}
 \usage{
-plot_text(text = "hello world", size = 1.6, color = "black")
+plot_text(text = "hello world", size = 1.2, color = "black")
 }
 \arguments{
 \item{text}{Text as string}
