@@ -25,6 +25,7 @@
 #   add explore_tbl
 #   drop explore_cat & explore_num
 #   rename template_report_target_den > _split
+#   intelligent placing of labels in plots
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -449,13 +450,14 @@ plot_var_info <- function(data, var, info = "")  {
     geom_blank() +
     geom_text(aes(x = 0, y = 0, label = info)) +
     theme_minimal() +
-    labs(title = var_txt, x = "", y = "") +
+    labs(title = var_txt, x = "", y = " ") +
     theme(axis.title.x=element_blank(),
           axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
           axis.title.y=element_blank(),
           axis.text.y=element_blank(),
-          axis.ticks.y=element_blank())
+          axis.ticks.y=element_blank(),
+          plot.margin = unit(c(0.1,0.1,0.5,1), "cm")) #t,r,b,l
 } # plot_var_info
 
 #============================================================================
@@ -614,6 +616,9 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
     data_bar <- head(data_bar, max_cat)
   }
 
+  # maximum percent value to be displayed
+  max_pct <- max(data_bar$target_pct)
+
   # create plot
   plot_bar <- ggplot(data = data_bar) +
     geom_bar(aes(x=cat, y=target_pct, fill=weight), stat="identity") +
@@ -625,14 +630,32 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
     theme(legend.position = legend_position) +
     geom_hline(yintercept = target_mean,
                color = "#7f7f7f", alpha = 0.5,
-               linetype = "dashed", size = 1) +
-    geom_text(aes(x=cat, y=target_pct, label = round(target_pct,1)),
-              hjust = ifelse(flip,"top","center"),
-              vjust = ifelse(flip,"center","top"),
-              size = 3.5, color = "#525252")
+               linetype = "dashed", size = 1)
 
   # flip plot?
-  if(flip) plot_bar <- plot_bar + coord_flip()
+  if(flip)  {
+
+      plot_bar <- plot_bar +
+        geom_text(aes(x=cat, y=target_pct,
+                      label = round(target_pct,1),
+                      hjust = ifelse(target_pct < max_pct/10, -0.1, 1)),
+                  position = position_dodge(width = 1),
+                  vjust = 0.5,
+                  size = 3.0,
+                  color = "#525252") +
+        coord_flip()
+
+  } else {
+
+    plot_bar <- plot_bar +
+      geom_text(aes(x=cat, y=target_pct,
+                    label = round(target_pct,1),
+                    vjust = ifelse(target_pct < max_pct/10, -0.2, 1)),
+                position = position_dodge(width = 1),
+                hjust = 0.5,
+                size = 3.0,
+                color = "#525252")
+  } # if flip
 
   # save result
   # result <- list(data_bar, plot_bar)
@@ -885,6 +908,8 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
       inner_join(data_target, by = target_txt) %>%
       mutate(pct = round(n / target_n * 100.0, 1))
 
+    max_pct = max(data_bar$pct)
+
     # plot
     p <- ggplot(data_bar, aes(x = !!var_quo)) +
       geom_col(aes(y = pct, fill = !!target_quo), position = "dodge") +
@@ -900,6 +925,8 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
       group_by(!!var_quo) %>%
       summarise(n = n()) %>%
       mutate(pct = round(n / sum(n) * 100.0, 1))
+
+    max_pct = max(data_bar$pct)
 
     # plot
     p <- ggplot(data_bar, aes(x = !!var_quo)) +
@@ -918,20 +945,46 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   }
 
   # plot labels?
-  if (label == TRUE & n_target_cat > 1)  {
+
+  # >1 cat, FLIP == TRUE
+  if (label == TRUE & n_target_cat > 1 & flip == TRUE)  {
     p <- p + geom_text(aes(y = pct,
                            label = pct,
-                           group = !!target_quo),
+                           group = !!target_quo,
+                           hjust = ifelse(pct < max_pct/10, -0.1, 1)
+                       ),
                        position = position_dodge(width = 1),
-                       hjust = ifelse(flip,"top","center"),
-                       vjust = ifelse(flip,"center","top"),
+                       vjust = 0.5,
                        size = label_size)
   }
-  if (label == TRUE & n_target_cat == 1) {
-    p <- p + geom_text(aes(y = pct, label = pct),
+
+  # >1 cat, FLIP == FALSE
+  if (label == TRUE & n_target_cat > 1 & flip == FALSE)  {
+    p <- p + geom_text(aes(y = pct,
+                           label = pct,
+                           group = !!target_quo,
+                           vjust = ifelse(pct < max_pct/10, -0.3, 1)
+    ),
+    position = position_dodge(width = 1),
+    hjust = 0.5,
+    size = label_size)
+  }
+
+  # 1 cat, flip == TRUE
+  if (label == TRUE & n_target_cat == 1 & flip == TRUE) {
+    p <- p + geom_text(aes(y = pct, label = pct,
+                           hjust = ifelse(pct < max_pct/10, -0.1, 1)),
                        position = position_dodge(width = 1),
-                       hjust = ifelse(flip,"top","center"),
-                       vjust = ifelse(flip,"center","top"),
+                       vjust = 0.5,
+                       size = label_size)
+  }
+
+  # 1 cat, flip == FALSE
+  if (label == TRUE & n_target_cat == 1 & flip == FALSE) {
+    p <- p + geom_text(aes(y = pct, label = pct,
+                           vjust = ifelse(pct < max_pct/10, -0.5, 1)),
+                       position = position_dodge(width = 1),
+                       hjust = 0.5,
                        size = label_size)
   }
 
@@ -1820,7 +1873,7 @@ explore_all <- function(data, target, ncol = 2, split = FALSE)  {
       plots[[i]] <- explore_bar(data_tmp, !!sym(var_name), target = !!target_quo)
 
     } else {
-      plots[[i]] <- plot_var_info(data_tmp, !!var_name, info = "\n(data type not supported)")
+      plots[[i]] <- plot_var_info(data_tmp, !!var_name, info = "can't explore\n(data type not supported)")
     } # if
   } # for
 
@@ -2256,7 +2309,7 @@ explore_tbl <- function(data)  {
     geom_col() +
     scale_fill_manual(values = color_mapping) +
     #geom_text(aes(measure, n, group = type, label = as.character(n)), size = 2.5) +
-    geom_text(aes(label = n, hjust = ifelse(n == 0, -0.5, 1)),
+    geom_text(aes(label = n, hjust = ifelse(n == 0, 0, 1)),
               position = "stack"
               ) +
     labs(title = paste(ncol(data), "variables"),
@@ -2506,6 +2559,9 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   if (!missing(var)) {
     var_quo <- enquo(var)
     var_text <- quo_name(var_quo)[[1]]
+    if (!var_text %in% names(data))  {
+      stop(paste0("variable '", var_text, "' not found"))
+    }
   } else {
     var_quo <- NA
     var_text <- NA
@@ -2515,6 +2571,10 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   if (!missing(var2)) {
     var2_quo <- enquo(var2)
     var2_text <- quo_name(var2_quo)[[1]]
+    if (!var2_text %in% names(data))  {
+      stop(paste0("variable '", var2_text, "' not found"))
+    }
+
   } else {
     var2_quo <- NA
     var2_text <- NA
@@ -2524,6 +2584,9 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   if(!missing(target))  {
     target_quo <- enquo(target)
     target_text <- quo_name(target_quo)[[1]]
+    if (!target_text %in% names(data))  {
+      stop(paste0("target variable '", target_text, "' not found"))
+    }
   } else {
     target_quo = NA
     target_text = NA
@@ -2565,7 +2628,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     # var_type oth
   } else if (!is.na(var_text) & var_type == "oth")  {
     warning("please use a numeric or character variable to explore")
-    plot_var_info(data, !!var_quo, info = "\n(data type not supported)")
+    plot_var_info(data, !!var_quo, info = "can't explore\n(data type not supported)")
 
     # no target, num
   } else if (is.na(target_text) & (var_type == "num"))  {
