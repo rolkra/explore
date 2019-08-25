@@ -26,6 +26,9 @@
 #   drop explore_cat & explore_num
 #   rename template_report_target_den > _split
 #   intelligent placing of labels in plots
+#   info window "generating report ..." in explore_shiny
+#   format_num -> format_num_kMB, format_num_space
+#   format_target -> if numeric split 0/1 by mean
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -461,22 +464,46 @@ plot_var_info <- function(data, var, info = "")  {
 } # plot_var_info
 
 #============================================================================
-#  format_num
+#  format_num_spcace
 #============================================================================
 #' Format number
 #'
-#' Formats a big number as k (1000) or M (100000)
+#' Formats a big number using space as big.mark (1000 = 1 000)
 #'
 #' @param number A number (integer or real)
 #' @param digits Number of digits
 #' @return Formated number as text
 #' @examples
-#' format_num(5500, digits = 2)
+#' format_num_space(5500, digits = 2)
 #' @export
 
-format_num <- function(number = 0, digits = 1)   {
+format_num_space <- function(number = 0, digits = 1)   {
 
-  if (abs(number) >= 1000000) {
+  number <- format(round(number, digits),
+                  big.mark = " ",
+                  scientific = FALSE)
+
+} # format_num_space
+
+#============================================================================
+#  format_num_kMB
+#============================================================================
+#' Format number
+#'
+#' Formats a big number as k (1 000), M (1 000 000) or B (1 000 000 000)
+#'
+#' @param number A number (integer or real)
+#' @param digits Number of digits
+#' @return Formated number as text
+#' @examples
+#' format_num_kMB(5500, digits = 2)
+#' @export
+
+format_num_kMB <- function(number = 0, digits = 1)   {
+
+  if (abs(number) >= 1000000000) {
+    result = paste0(format(round(number / 1000000000, digits), digits = 15), "B")
+  } else if (abs(number) >= 1000000) {
     result = paste0(format(round(number / 1000000, digits), digits = 15), "M")
   } else if (abs(number) >= 1000) {
     result = paste0(format(round(number / 1000, digits), digits = 15), "k")
@@ -510,6 +537,8 @@ format_target <- function(target)   {
 
   if (is.factor(target))  {
     result <- ifelse(as.integer(target) == 1, 0, 1)
+  } else if (is.numeric(target))  {
+    result <- ifelse(target >= mean(target, na.rm = TRUE), 1, 0)
   } else {
     result <- target
   }
@@ -1330,13 +1359,13 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat("type     =", paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), var_type,"\n")
-    cat(paste0(spc, "na       ="), paste0(format_num(var_na)," of ",format_num(var_obs)," (",format_num(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num(var_unique),"\n"))
-    cat(paste0(spc, "min|max  ="), paste0(format_num(var_min), " | ", format_num(var_max), "\n"))
-    cat(paste0(spc, "q05|q95  ="), paste0(format_num(var_quantile["5%"]), " | ", format_num(var_quantile["95%"]), "\n"))
-    cat(paste0(spc, "q25|q75  ="), paste0(format_num(var_quantile["25%"]), " | ", format_num(var_quantile["75%"]), "\n"))
-    cat(paste0(spc, "median   ="), format_num(var_median), "\n")
-    cat(paste0(spc, "mean     ="), format_num(var_mean), "\n")
+    cat(paste0(spc, "na       ="), paste0(format_num_kMB(var_na)," of ",format_num_kMB(var_obs)," (",format_num_kMB(var_na_pct),"%)\n"))
+    cat(paste0(spc, "unique   ="), paste0(format_num_kMB(var_unique),"\n"))
+    cat(paste0(spc, "min|max  ="), paste0(format_num_kMB(var_min), " | ", format_num_kMB(var_max), "\n"))
+    cat(paste0(spc, "q05|q95  ="), paste0(format_num_kMB(var_quantile["5%"]), " | ", format_num_kMB(var_quantile["95%"]), "\n"))
+    cat(paste0(spc, "q25|q75  ="), paste0(format_num_kMB(var_quantile["25%"]), " | ", format_num_kMB(var_quantile["75%"]), "\n"))
+    cat(paste0(spc, "median   ="), format_num_kMB(var_median), "\n")
+    cat(paste0(spc, "mean     ="), format_num_kMB(var_mean), "\n")
   } else {
     result_num
   }
@@ -1417,15 +1446,15 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat(paste0(spc, "type     ="), paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), paste0(var_type,"\n"))
-    cat(paste0(spc, "na       ="), paste0(format_num(var_na)," of ",format_num(var_obs)," (",format_num(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num(var_unique),"\n"))
+    cat(paste0(spc, "na       ="), paste0(format_num_kMB(var_na)," of ",format_num_kMB(var_obs)," (",format_num_kMB(var_na_pct),"%)\n"))
+    cat(paste0(spc, "unique   ="), paste0(format_num_kMB(var_unique),"\n"))
 
     # show frequency for each category (maximum max_cat)
     for (i in seq(min(var_unique, max_cat)))  {
       var_name = format(var_frequency[[i, 1]], width = max_cat_len, justify = "left")
       cat(paste0(spc, " ", var_name,
-                 " = ", format_num(var_frequency[[i, 2]]), " (",
-                 format_num(var_frequency[[i,3]]),"%)\n" ))
+                 " = ", format_num_kMB(var_frequency[[i, 2]]), " (",
+                 format_num_kMB(var_frequency[[i,3]]),"%)\n" ))
     } # for
 
     # if more categories than displayed, show "..."
@@ -1589,44 +1618,44 @@ describe_tbl <- function(data, target, out = "text")  {
 
   # result as a vector (text)
 
-  result_vector <- c(observations = format_num(describe_nrow),
-                     variables = format_num(describe_ncol),
-                     with_na = format_num(describe_with_na),
-                     no_variance = format_num(describe_no_variance),
-                     targets = format_num(describe_target1_cnt),
-                     targets_pct = format_num(describe_target1_cnt / describe_nrow, digits = 2))
+  result_vector <- c(observations = format_num_kMB(describe_nrow),
+                     variables = format_num_kMB(describe_ncol),
+                     with_na = format_num_kMB(describe_with_na),
+                     no_variance = format_num_kMB(describe_no_variance),
+                     targets = format_num_kMB(describe_target1_cnt),
+                     targets_pct = format_num_kMB(describe_target1_cnt / describe_nrow, digits = 2))
 
   # result as text
   if (!is.na(target_txt))  {
 
-    result_text <- paste0(describe_nrow,
+    result_text <- paste0(format_num_space(describe_nrow),
                           ifelse(describe_nrow >= 1000,
-                                 paste0(" (",format_num(describe_nrow),")"),
+                                 paste0(" (",format_num_kMB(describe_nrow),")"),
                                  ""),
                           " observations with ",
-                          format_num(describe_ncol),
+                          format_num_space(describe_ncol),
                           " variables; ",
-                          format_num(describe_target1_cnt),
+                          format_num_space(describe_target1_cnt),
                           " targets (",
-                          format_num(describe_target1_cnt / describe_nrow * 100, digits = 1),
+                          format_num_space(describe_target1_cnt / describe_nrow * 100, digits = 1),
                           "%)")
   } else {
 
-    result_text <- paste0(describe_nrow,
+    result_text <- paste0(format_num_space(describe_nrow),
                           ifelse(describe_nrow >= 1000,
-                                 paste0(" (",format_num(describe_nrow),")"),
+                                 paste0(" (",format_num_kMB(describe_nrow),")"),
                                  ""),
                           " observations with ",
-                          format_num(describe_ncol),
+                          format_num_space(describe_ncol),
                           " variables")
   } # if
 
   # add with_na and no_variance
   result_text <- paste0(result_text,
                         "\n",
-                        format_num(describe_with_na), " variables containing missings (NA)",
+                        format_num_space(describe_with_na), " variables containing missings (NA)",
                         "\n",
-                        format_num(describe_no_variance), " variables with no variance")
+                        format_num_space(describe_no_variance), " variables with no variance")
 
   # return output
   if (out == "vector")  {
@@ -2313,7 +2342,7 @@ explore_tbl <- function(data)  {
               position = "stack"
               ) +
     labs(title = paste(ncol(data), "variables"),
-         subtitle = paste("with", format_num(nrow(data)), "observations"),
+         subtitle = paste("with", format_num_kMB(nrow(data)), "observations"),
          y = "variables",
          x = "") +
     coord_flip() +
@@ -2431,6 +2460,9 @@ explore_shiny <- function(data, target)  {
       output_dir <- normalizePath(path.expand(tempdir()))
       output_file <- "report_explore.html"
 
+      # show waiting-window
+      shiny::showModal(modalDialog("Generating report ... (this may take a while)", footer = NULL))
+
       # check if explore package is loaded
       run_explore_package <- ifelse(max(search() == "package:explore") == 1, TRUE, FALSE)
 
@@ -2456,6 +2488,10 @@ explore_shiny <- function(data, target)  {
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
       }
 
+      # ready
+      shiny::removeModal()
+
+      # show Report
       browseURL(paste0("file://", file.path(output_dir, output_file)))
     })
 
@@ -2467,8 +2503,18 @@ explore_shiny <- function(data, target)  {
 
     output$graph_explain <- shiny::renderPlot({
       if(input$target != "<no target>") {
-        data %>% explain_tree(target = !!sym(input$target), size=0.9)
-      }
+        if (ncol(data) > 20) {
+          # show waiting-window
+          shiny::showModal(modalDialog("Growing tree ... (this may take a while)", footer = NULL))
+          # grow decision tree
+          data %>% explain_tree(target = !!sym(input$target), size=0.9)
+          # ready
+          shiny::removeModal()
+        } else {
+          # grow decision tree
+          data %>% explain_tree(target = !!sym(input$target), size=0.9)
+        } # if ncol
+      } # if input$target
     }) # renderPlot graph_explain
 
     output$graph <- shiny::renderPlot({
