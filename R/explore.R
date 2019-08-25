@@ -892,7 +892,12 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
     data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
   }
 
-  # use a factor for experiment so that fill works
+  # use a factor for var if low number of cats
+  if (guess_cat_num(data[[var_txt]]) == "cat") {
+    data[[var_txt]] <- factor(data[[var_txt]])
+  }
+
+  # use a factor for target so that fill works
   if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
     data[[target_txt]] <- factor(data[[target_txt]])
     data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
@@ -996,25 +1001,27 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
                            group = !!target_quo,
                            vjust = ifelse(pct < max_pct/10, -0.3, 1)
     ),
-    position = position_dodge(width = 1),
+    position = position_dodge(width = 0.9),
     hjust = 0.5,
     size = label_size)
   }
 
   # 1 cat, flip == TRUE
   if (label == TRUE & n_target_cat == 1 & flip == TRUE) {
-    p <- p + geom_text(aes(y = pct, label = pct,
+    p <- p + geom_text(aes(y = pct,
+                           label = pct,
                            hjust = ifelse(pct < max_pct/10, -0.1, 1)),
-                       position = position_dodge(width = 1),
+                       position = position_dodge(width = 0.9),
                        vjust = 0.5,
                        size = label_size)
   }
 
   # 1 cat, flip == FALSE
   if (label == TRUE & n_target_cat == 1 & flip == FALSE) {
-    p <- p + geom_text(aes(y = pct, label = pct,
+    p <- p + geom_text(aes(y = pct,
+                           label = pct,
                            vjust = ifelse(pct < max_pct/10, -0.5, 1)),
-                       position = position_dodge(width = 1),
+                       position = position_dodge(width = 0.9),
                        hjust = 0.5,
                        size = label_size)
   }
