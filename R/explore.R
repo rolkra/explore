@@ -863,12 +863,20 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   target_n <- NULL
   pct <- NULL
 
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
+
   # parameter var
   if(!missing(var))  {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
+    if (!var_txt %in% names(data)) {
+      stop(paste0("variable '", var_txt, "' not found"))
+    }
   } else {
-    var_txt = NA
+    stop(paste0("variable missing"))
   }
 
   # parameter target
@@ -1074,12 +1082,20 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
 
 explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
 
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
+
   # parameter var
   if(!missing(var))  {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
+    if (!var_txt %in% names(data)) {
+      stop(paste0("variable '", var_txt, "' not found"))
+    }
   } else {
-    var_txt = NA
+    stop(paste0("variable missing"))
   }
 
   # parameter target
