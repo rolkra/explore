@@ -29,6 +29,7 @@
 #   info window "generating report ..." in explore_shiny
 #   format_num -> format_num_kMB, format_num_space
 #   format_target -> if numeric split 0/1 by mean
+#   report -> default .html file extension
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -519,7 +520,7 @@ format_num_kMB <- function(number = 0, digits = 1)   {
 #============================================================================
 #' Format target
 #'
-#' Formats a target as a 0/1 variable
+#' Formats a target as a 0/1 variable. If target is numeric, 1 = above average.
 #'
 #' @param target Variable as vector
 #' @return Formated target
@@ -538,7 +539,7 @@ format_target <- function(target)   {
   if (is.factor(target))  {
     result <- ifelse(as.integer(target) == 1, 0, 1)
   } else if (is.numeric(target))  {
-    result <- ifelse(target >= mean(target, na.rm = TRUE), 1, 0)
+    result <- ifelse(target > mean(target, na.rm = TRUE), 1, 0)
   } else {
     result <- target
   }
@@ -2224,6 +2225,15 @@ report <- function(data, target, split = FALSE, output_file, output_dir)  {
   if (missing(split))  {
     split = FALSE
   }
+
+  # check if output-file has .html extension
+  # if not, add it!
+  if (!missing(output_file)) {
+      len <- nchar(output_file)
+      if (tolower(substr(output_file, len-3, len)) != ".html")  {
+         output_file <- paste0(output_file, ".html")
+      }
+  } # if
 
   # report only variables (no korrelation with target)
   if(is.na(target_text))  {
