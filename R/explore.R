@@ -30,6 +30,7 @@
 #   format_num -> format_num_kMB, format_num_space
 #   format_target -> if numeric split 0/1 by mean
 #   report -> default .html file extension
+#   consistency showing NA info in explore
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -855,7 +856,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @import ggplot2
 #' @export
 
-explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, max_target_cat = 5, legend_position = "bottom", label, label_size = 2.7)  {
+explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -1021,8 +1022,10 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   # title
   if (!is.na(title) & nchar(title) > 0)  {
     p <- p + ggtitle(title)
-  } else {
+  } else if (n_target_cat == 1) {
     p <- p + ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)"))
+  } else {
+    p <- p + ggtitle(paste0(var_txt))
   }
 
   # flip plot
