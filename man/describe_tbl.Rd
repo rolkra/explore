@@ -9,12 +9,12 @@ describe_tbl(data, target, out = "text")
 \arguments{
 \item{data}{A dataset}
 
-\item{target}{Target variable}
+\item{target}{Target variable (binary)}
 
-\item{out}{Output format ("text"|"vector")}
+\item{out}{Output format ("text"|"list")}
 }
 \value{
-Description as text or vector
+Description as text or list
 }
 \description{
 Describe table (e.g. number of rows and columns of dataset)

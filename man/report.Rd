@@ -4,7 +4,7 @@
 \alias{report}
 \title{Generate a report of all variables}
 \usage{
-report(data, target, split = FALSE, output_file, output_dir)
+report(data, target, split = TRUE, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}

@@ -14,7 +14,7 @@ explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
 
 \item{y}{Variable on y axis}
 
-\item{target}{Target variable (binary)}
+\item{target}{Target variable (categorical)}
 
 \item{bins}{Number of bins}
 

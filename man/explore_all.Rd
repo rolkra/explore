@@ -4,7 +4,7 @@
 \alias{explore_all}
 \title{Explore all variables}
 \usage{
-explore_all(data, target, ncol = 2, split = FALSE)
+explore_all(data, target, ncol = 2, split = TRUE)
 }
 \arguments{
 \item{data}{A dataset}

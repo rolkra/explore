@@ -1,0 +1,132 @@
+---
+title: "explore mtcars"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{explore}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+```
+
+### Explore dataset
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+mtcars %>% explore_tbl()
+```
+
+```{r message=FALSE, warning=FALSE}
+mtcars %>% describe()
+```
+
+* mpg = Miles/(US) gallon
+* cyl = Number of cylinders
+* disp = Displacement (cu.in.)
+* hp = Gross horsepower
+* drat = Rear axle ratio
+* wt = Weight (lb/1000)
+* qsec = 1/4 mile time
+* vs = V/S
+* am = Transmission (0 = automatic, 1 = manual)
+* gear = Number of forward gears
+* carb Number of carburetors
+
+### Univariat
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  select(mpg, cyl, disp, hp) %>% 
+  explore_all()
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  select(drat, wt, qsec, vs) %>% 
+  explore_all()
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  select(am, gear, carb) %>% 
+  explore_all()
+```
+
+### Define target
+
+Let's define an interesting target: 
+Cars that have mpg (miles per gallon) > 25
+
+We copy the data and create a new target variable 
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+data <- mtcars %>% 
+  mutate(highmpg = if_else(mpg > 25, 1, 0, 0)) %>% 
+  select(-mpg)
+
+data %>% explore(highmpg)
+```
+
+So, about 19% of all cars have mpg > 25.
+What else is special about them?
+
+### Bivariat
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% 
+  select(highmpg, cyl, disp, hp) %>% 
+  explore_all(target = highmpg)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% 
+  select(highmpg, drat, wt, qsec, vs) %>% 
+  explore_all(target = highmpg)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% 
+  select(highmpg, am, gear, carb) %>% 
+  explore_all(target = highmpg)
+```
+
+There are some strong differences between cars with / without "high mpg".
+
+### Multivariat
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% 
+  explain_tree(target = highmpg)
+```
+
+Growing a decision tree, shows that there seems to be a very strong correlation between wt (weight) and "high mpg". Cars with a low weight are much more likely to have "high mpg".
+
+Let's take a closer look to wt:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explore(wt, target = highmpg)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explore(wt, target = highmpg, split = FALSE)
+```
+
+wt (weight) is a good predictor for high mpg.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% explore(wt, mpg)
+```
+
+There is a strong correlation between wt and mpg
+
