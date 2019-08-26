@@ -30,8 +30,9 @@
 #   format_num -> format_num_kMB, format_num_space
 #   format_target -> if numeric split 0/1 by mean
 #   report -> default .html file extension
-#   consistency showing NA info in explore
+#   consistency showing NA info in explore-title
 #   split default = FALSE
+#   target num in explore_all & report
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -884,6 +885,9 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   if(!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
+    if (!target_txt %in% names(data)) {
+      stop(paste0("target variable '", target_txt, "' not found"))
+    }
   } else {
     target_txt = NA
   }
@@ -1103,6 +1107,9 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
   if(!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
+    if (!target_txt %in% names(data)) {
+      stop(paste0("target variable '", target_txt, "' not found"))
+    }
   } else {
     target_txt = NA
   }
@@ -1867,6 +1874,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
   if(!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
+    guess_target <- guess_cat_num(data[[target_txt]])
   } else {
     target_txt = NA
   }
@@ -1912,6 +1920,14 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
       # no target, cat
     } else if ( (var_type == "cat") & is.na(var_name_target) ) {
       plots[[i]] <- explore_bar(data_tmp, !!sym(var_name))
+
+      # num target, num -> explore_cor
+    } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
+      plots[[i]] <- explore_cor(data_tmp, x = !!sym(var_name), y = !!target_quo)
+
+      # num target, cat -> explore_cor
+    } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
+      plots[[i]] <- explore_cor(data_tmp, y = !!sym(var_name), x = !!target_quo)
 
       # target, num
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE))  {
@@ -2088,7 +2104,7 @@ explain_logreg <- function(data, target, ...)  {
 #' @param data A dataset
 #' @param x Variable on x axis
 #' @param y Variable on y axis
-#' @param target Target variable (binary)
+#' @param target Target variable (categorical)
 #' @param bins Number of bins
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
@@ -2670,6 +2686,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     if (!target_text %in% names(data))  {
       stop(paste0("target variable '", target_text, "' not found"))
     }
+    guess_target <- guess_cat_num(data[[target_text]])
   } else {
     target_quo = NA
     target_text = NA
@@ -2705,6 +2722,20 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     #explore_cor(data[c(var_text, var2_text, target_text)], !!var_quo, !!var2_quo, !!target_quo, ...)
     explore_cor(data[c(var_text, var2_text, target_text)],
                 x = !!var_quo, y = !!var2_quo, target = !!target_quo,
+                min_val = min_val, max_val = max_val,
+                auto_scale = auto_scale, na = na, ...)
+
+    # var num + target num -> correlation
+  } else if (!is.na(var_text) & is.na(var2_text) & var_type == "num" & !is.na(target_text) & guess_target == "num")  {
+    explore_cor(data[c(var_text, target_text)],
+                x = !!var_quo, y = !!target_quo,
+                min_val = min_val, max_val = max_val,
+                auto_scale = auto_scale, na = na, ...)
+
+    # var cat + target num -> correlation
+  } else if (!is.na(var_text) & is.na(var2_text) & var_type == "cat" & !is.na(target_text) & guess_target == "num")  {
+    explore_cor(data[c(var_text, target_text)],
+                y = !!var_quo, x = !!target_quo,
                 min_val = min_val, max_val = max_val,
                 auto_scale = auto_scale, na = na, ...)
 
