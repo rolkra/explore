@@ -5,7 +5,7 @@
 \title{Explore categorial variable using bar charts}
 \usage{
 explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
-  max_target_cat = 5, legend_position = "bottom", label,
+  max_target_cat = 5, legend_position = "right", label,
   label_size = 2.7)
 }
 \arguments{

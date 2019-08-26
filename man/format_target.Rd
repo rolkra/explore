@@ -13,7 +13,7 @@ format_target(target)
 Formated target
 }
 \description{
-Formats a target as a 0/1 variable
+Formats a target as a 0/1 variable. If target is numeric, 1 = above average.
 }
 \examples{
 iris$is_virginica <- ifelse(iris$Species == "virginica", "yes", "no")

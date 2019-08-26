@@ -1947,9 +1947,9 @@ explore_all <- function(data, target, ncol = 2, split = FALSE)  {
 #' @param data A dataset
 #' @param target Target variable
 #' @param max_cat Drop categorical variables with higher number of levels
-#' @param max_depth Maximal depth of the tree (rpart-parameter maxdepth)
-#' @param min_split The minimum number of observations that must exist in a node in order for a split to be attempted (rpart-parameter minsplit)
-#' @param cp Complexity parameter (rpart-parameter cp)
+#' @param maxdepth Maximal depth of the tree (rpart-parameter)
+#' @param minsplit The minimum number of observations that must exist in a node in order for a split to be attempted (rpart-parameter)
+#' @param cp Complexity parameter (rpart-parameter)
 #' @param size Textsize of plot
 #' @param ... Further arguments
 #' @return Plot
@@ -1960,7 +1960,7 @@ explore_all <- function(data, target, ncol = 2, split = FALSE)  {
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, max_cat = 10, max_depth = 3, min_split = 20, cp = 0, size = 0.7, ...)  {
+explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20, cp = 0, size = 0.7, ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -1998,13 +1998,13 @@ explain_tree <- function(data, target, max_cat = 10, max_depth = 3, min_split = 
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "class",
-                        control = rpart::rpart.control(maxdepth=max_depth, minsplit=min_split, cp=cp))
+                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
   } else {
     # create tree num
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "anova",  #"class",
-                        control = rpart::rpart.control(maxdepth=max_depth, minsplit=min_split, cp=cp))
+                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
   } # if
 
   # check if tree was created. If not just plot info-text
