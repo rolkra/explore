@@ -31,6 +31,7 @@
 #   format_target -> if numeric split 0/1 by mean
 #   report -> default .html file extension
 #   consistency showing NA info in explore
+#   split default = FALSE
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -1860,7 +1861,7 @@ data_dict_md <- function(data, title = "", description = NA, output_file = "data
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, target, ncol = 2, split = FALSE)  {
+explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
   # parameter target
   if(!missing(target))  {
@@ -2220,7 +2221,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' }
 #' @export
 
-report <- function(data, target, split = FALSE, output_file, output_dir)  {
+report <- function(data, target, split = TRUE, output_file, output_dir)  {
 
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
@@ -2458,7 +2459,7 @@ explore_shiny <- function(data, target)  {
                            choices = names(data),
                            selected = "disp"),
         shiny::checkboxInput(inputId = "auto_scale", label="auto scale", value=TRUE),
-        shiny::checkboxInput(inputId = "split", label="split by target", value=FALSE),
+        shiny::checkboxInput(inputId = "split", label="split by target", value=TRUE),
         shiny::hr(),
         shiny::actionButton(inputId = "report", "report all")
         , width = 3),  #sidebarPanel
@@ -2676,7 +2677,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
   # parameter density (set default value)
   if (missing(split))  {
-      split = FALSE
+      split = TRUE
   }
 
   # intelligent guessing if num or cat
