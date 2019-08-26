@@ -12,10 +12,11 @@ Launch an interactive shiny-app to explore data. You can inspect individual attr
 
 **Functions for reproducible data science**
 
-Use the functions behind the shiny app for "tidy EDA". There are basically three "verbs" to remember:
+Use the functions behind the shiny app for "tidy EDA". There are basically four "verbs" to remember:
 * explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
 * describe - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
 * explain - to create a simple model that explains a target
+* report - to generate an automated report of all variables
 
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
