@@ -33,6 +33,8 @@
 #   consistency showing NA info in explore-title
 #   split default = FALSE
 #   target num in explore_all & report
+#   describe_tbl -> fix target not bin
+#   change out="vector" to out="list"
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
@@ -1596,16 +1598,16 @@ describe_all <- function(data = NA, out = "large") {
 } # function describe_all
 
 #============================================================================
-#  describe_tbl, out = text | vector
+#  describe_tbl, out = text | list
 #============================================================================
 #' Describe table
 #'
 #' Describe table (e.g. number of rows and columns of dataset)
 #'
 #' @param data A dataset
-#' @param target Target variable
-#' @param out Output format ("text"|"vector")
-#' @return Description as text or vector
+#' @param target Target variable (binary)
+#' @param out Output format ("text"|"list")
+#' @return Description as text or list
 #' @import rlang
 #' @examples
 #' describe_tbl(iris)
@@ -1619,6 +1621,9 @@ describe_tbl <- function(data, target, out = "text")  {
   if(!missing(target))  {
     target <- enquo(target)
     target_txt <- quo_name(target)[[1]]
+    if (!target_txt %in% names(data)) {
+      stop(paste0("target variable '", target_txt, "' not found"))
+    }
   } else {
     target_txt = NA
   }
@@ -1631,37 +1636,44 @@ describe_tbl <- function(data, target, out = "text")  {
   describe_with_na <- sum(ifelse(d$na > 0, 1, 0))
   describe_no_variance <- sum(ifelse(d$unique == 1, 1, 0))
 
-  # sum of target=1 (if defined)
-  if (!missing(target))  {
+  # check if target is binary
+  describe_target0_cnt <- 0
+  describe_target1_cnt <- 0
+  target_show <- FALSE
 
-    # min value is representing target = 0, rest target = 1
-    v <- data %>% dplyr::pull(!!target)
+  if (!missing(target)) {
+     descr_target <- describe(data, !!target, out = "list")
+     target_type <- descr_target$type
 
-    table_cnt  <- v %>% table()
-    target0_val <- min(names(table_cnt))
-
-    # if all 1, guess there is no 0
-    if (target0_val == 1)  {
-      target0_val <- 0
+    if (descr_target$unique == 2)  {
+       target_val <- data[[target_txt]]
+       target_val <- format_target(target_val)
+       describe_target0_cnt <- sum(ifelse(target_val == 0, 1, 0))
+       describe_target1_cnt <- length(target_val) - describe_target0_cnt
+       target_show <- TRUE
     }
-    target0_cnt <- sum(ifelse(data[[target_txt]] == target0_val, 1, 0))
-    target1_cnt <- nrow(data) - target0_cnt
-    describe_target1_cnt <- target1_cnt
-  } else {
-    describe_target1_cnt = 0
   }
 
-  # result as a vector (text)
-
-  result_vector <- c(observations = format_num_kMB(describe_nrow),
-                     variables = format_num_kMB(describe_ncol),
-                     with_na = format_num_kMB(describe_with_na),
-                     no_variance = format_num_kMB(describe_no_variance),
-                     targets = format_num_kMB(describe_target1_cnt),
-                     targets_pct = format_num_kMB(describe_target1_cnt / describe_nrow, digits = 2))
+  # result as a list (text)
+  result_list <- list(observations = describe_nrow,
+                     variables = describe_ncol,
+                     with_na = describe_with_na,
+                     no_variance = describe_no_variance,
+                     targets = describe_target1_cnt,
+                     targets_pct = describe_target1_cnt / describe_nrow * 100)
 
   # result as text
-  if (!is.na(target_txt))  {
+  if (!missing(target) & target_show == FALSE)  {
+
+    result_text <- paste0(format_num_space(describe_nrow),
+                          ifelse(describe_nrow >= 1000,
+                                 paste0(" (",format_num_kMB(describe_nrow),")"),
+                                 ""),
+                          " observations with ",
+                          format_num_space(describe_ncol),
+                          " variables; ",
+                          " target = not binary")
+  } else if (!missing(target) & target_show == TRUE) {
 
     result_text <- paste0(format_num_space(describe_nrow),
                           ifelse(describe_nrow >= 1000,
@@ -1674,8 +1686,8 @@ describe_tbl <- function(data, target, out = "text")  {
                           " targets (",
                           format_num_space(describe_target1_cnt / describe_nrow * 100, digits = 1),
                           "%)")
-  } else {
 
+  } else {
     result_text <- paste0(format_num_space(describe_nrow),
                           ifelse(describe_nrow >= 1000,
                                  paste0(" (",format_num_kMB(describe_nrow),")"),
@@ -1693,8 +1705,8 @@ describe_tbl <- function(data, target, out = "text")  {
                         format_num_space(describe_no_variance), " variables with no variance")
 
   # return output
-  if (out == "vector")  {
-    result_vector
+  if (out == "list")  {
+    result_list
   } else {
     cat(result_text)
   }
@@ -1877,6 +1889,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
     guess_target <- guess_cat_num(data[[target_txt]])
   } else {
     target_txt = NA
+    guess_target = "oth"
   }
 
   # varable name of target
@@ -2690,6 +2703,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   } else {
     target_quo = NA
     target_text = NA
+    guess_target = "oth"
   }
 
   # parameter density (set default value)

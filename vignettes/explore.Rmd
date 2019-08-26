@@ -16,7 +16,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-Interactive data exploration with one line of code or use a easy to remember set of tidy functions for exploratory data analysis. Introduces two main verbs. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
+
+There are three ways to use the package:
+
+* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
+
+* Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric. 
+
+* **Manual exploration** using a easy to remember set of tidy functions. Introduces two main verbs. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
@@ -53,7 +61,7 @@ Create a rich HTML report of all variables with one line of code:
 iris %>% report(output_file = "report.html", output_dir = tempdir())
 ```
 
-Or you can simply add a target and create the report:
+Or you can simply add a target and create the report. In this case we use a binary tharget, but a categorical or numerical target would work as well.
 
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables and their relationship with a binary target
@@ -64,6 +72,8 @@ iris %>%
          target = is_versicolor)
 
 ```
+
+If you use a binary tharget, the parameter ***split = FALSE*** will give you a different view on the data.
 
 ### Grow a decision tree
 
@@ -86,6 +96,12 @@ Explore your table with one line of code to see which type of variables it conta
 iris %>% explore_tbl()
 ```
 
+You can also use describe_tbl() if you just need the main facts without visualisation.
+
+```{r message=FALSE, warning=FALSE}
+iris %>% describe_tbl()
+```
+
 ### Explore variables
 
 Explore a variable with one line of code. You don't have to care if a variable is numerical or categorical.
@@ -103,11 +119,25 @@ iris %>% explore(Sepal.Length)
 Explore a variable and its relationship with a binary target with one line of code. You don't have to care if a variable is numerical or categorical.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris %>% explore(Species, target = is_versicolor)
+iris %>% explore(Sepal.Length, target = is_versicolor)
 ```
 
+Using split = FALSE will change the plot to %target:
+
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris %>% explore(Sepal.Length, target = is_versicolor)
+iris %>% explore(Sepal.Length, target = is_versicolor, split = FALSE)
+```
+
+The target can have more than two levels:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, target = Species)
+```
+
+Or the target can even be numeric:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explore(Sepal.Length, target = Petal.Length)
 ```
 
 ### Explore multiple variables
@@ -127,7 +157,19 @@ iris %>%
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
-  explore_all(target = is_versicolor, split = TRUE)
+  explore_all(target = is_versicolor, split = FALSE)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  select(Sepal.Length, Sepal.Width, Species) %>% 
+  explore_all(target = Species)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% 
+  select(Sepal.Length, Sepal.Width, Petal.Length) %>% 
+  explore_all(target = Petal.Length)
 ```
 
 ### Explore correlation between two variables
@@ -151,7 +193,6 @@ If you use explore to explore a variable and want to set lower and upper limits 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 iris %>% explore(Sepal.Length, min_val = 4.5, max_val = 7)
 ```
-
 
 `explore` uses auto-scale by default. To deactivate it use the parameter `auto_scale = FALSE`
 
