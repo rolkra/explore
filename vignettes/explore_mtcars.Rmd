@@ -128,5 +128,6 @@ wt (weight) is a good predictor for high mpg.
 mtcars %>% explore(wt, mpg)
 ```
 
-There is a strong correlation between wt and mpg
+There is a strong correlation between wt and mpg.
 
+If you want to have high miles per gallon (mpg), buy a car with low weight (wt)!
