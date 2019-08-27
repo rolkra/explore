@@ -16,16 +16,16 @@ Simplifies Exploratory Data Analysis.
 
 There are three ways to use the package:
 
-**Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
+* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
 
-Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
+* Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
 
-**Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
+* **Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
 
-* **explore** - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
-* **describe** - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
-* **explain** - to create a simple model that explains a target
-* **report** - to generate an automated report of all variables
+  * **explore** - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
+  * **describe** - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
+  * **explain** - to create a simple model that explains a target
+  * **report** - to generate an automated report of all variables
 
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
