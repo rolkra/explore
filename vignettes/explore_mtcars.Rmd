@@ -4,7 +4,7 @@ author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{explore}
+  %\VignetteIndexEntry{explore_mtcars}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -30,6 +30,8 @@ mtcars %>% explore_tbl()
 ```{r message=FALSE, warning=FALSE}
 mtcars %>% describe()
 ```
+
+The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
 
 * mpg = Miles/(US) gallon
 * cyl = Number of cylinders
@@ -63,7 +65,28 @@ mtcars %>%
   explore_all()
 ```
 
-### Define target
+### Number of gear
+
+Is there a difference between cars with 3,4 and 5 gears?
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  explore(gear)
+```
+
+Most of the cars in the dataset have 3 or 4 gears. 15.6% have 5 gears.
+
+Now check relation between some of the variables and gear:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  select(gear, mpg, hp, cyl, am) %>% 
+  explore_all(target = gear)
+```
+
+We see that 100% of cars with am = 0 (automatic) have 3 gears. All cars with am = 1 (manual) have 5 gears.
+
+### High miles per gallon
 
 Let's define an interesting target: 
 Cars that have mpg (miles per gallon) > 25
@@ -80,8 +103,6 @@ data %>% explore(highmpg)
 
 So, about 19% of all cars have mpg > 25.
 What else is special about them?
-
-### Bivariat
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 data %>% 
@@ -103,7 +124,7 @@ data %>%
 
 There are some strong differences between cars with / without "high mpg".
 
-### Multivariat
+Now let's grow a decision tree:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 data %>% 
@@ -131,3 +152,24 @@ mtcars %>% explore(wt, mpg)
 There is a strong correlation between wt and mpg.
 
 If you want to have high miles per gallon (mpg), buy a car with low weight (wt)!
+
+### Horsepower
+
+Is there a relation between horsepower and other variables like number of cylinder?
+
+Let's build a decision tree with horsepower as target:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  explain_tree(target = hp, minsplit=15)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+mtcars %>% 
+  select(hp, cyl, mpg) %>% 
+  explore_all(target = hp)
+```
+
+Cars with 8 cylinders have higher horsepower.
+
+Cars with low miles per gallon (mgp) have higher horsepower!
