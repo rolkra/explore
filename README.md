@@ -4,7 +4,7 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
 
-Simplifies Exploratory Data Analysis. There are two ways to use the eplore package:
+Simplifies Exploratory Data Analysis. There are two ways to use the explore package:
 
 **Interactive data exploration**
 
