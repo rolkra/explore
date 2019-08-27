@@ -16,6 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+## How to explore the mtcars dataset using the explore package.
+
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
+
+The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for mtcars, select, mutate and the %>% operator).
+
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(explore)
@@ -45,7 +51,7 @@ The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel
 * gear = Number of forward gears
 * carb Number of carburetors
 
-### Univariat
+### Explore variables
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 mtcars %>% 
@@ -65,7 +71,7 @@ mtcars %>%
   explore_all()
 ```
 
-### Number of gear
+### Number of gears?
 
 Is there a difference between cars with 3,4 and 5 gears?
 
@@ -86,7 +92,7 @@ mtcars %>%
 
 We see that 100% of cars with am = 0 (automatic) have 3 gears. All cars with am = 1 (manual) have 5 gears.
 
-### High miles per gallon
+### High miles per gallon?
 
 Let's define an interesting target: 
 Cars that have mpg (miles per gallon) > 25
@@ -153,7 +159,7 @@ There is a strong correlation between wt and mpg.
 
 If you want to have high miles per gallon (mpg), buy a car with low weight (wt)!
 
-### Horsepower
+### Horsepower?
 
 Is there a relation between horsepower and other variables like number of cylinder?
 
