@@ -76,7 +76,7 @@ iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 explore(iris)
 ```
 
-### Explore attributes
+### Explore variables
 
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
 
@@ -84,7 +84,7 @@ explore(iris)
 
 <img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
-### Report of attributes
+### Report of variables
 
 Create a report by clicking the "report all" button (if no target is defined)
 
