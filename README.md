@@ -4,19 +4,28 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
 [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
 
-Simplifies Exploratory Data Analysis. There are two ways to use the explore package:
+Simplifies Exploratory Data Analysis. 
 
-**Interactive data exploration**
+## Why this package?
 
-Launch an interactive shiny-app to explore data. You can inspect individual attributes, explore their relation to a binary target or create a fully automated report of all attributes with a few "mouseclicks".
+* **Fast success** for new R user. It is said that R has a steep learning curve, especially if you come from a GUI for your statistical analysis. Instead of learning a lot of R syntax before you can explore data, the explore package enables you to have instant success. You can start with just one function - explore()
 
-**Functions for reproducible data science**
+* **Faster insights with less code** for experienced R user. Exploring a fresh new dataset is exciting. Instead of searching for syntax at Stackoverflow, use all your attention searching for interesting patterns in your data using just a handful of easy to remember functions.
 
-Use the functions behind the shiny app for "tidy EDA". There are basically four "verbs" to remember:
-* explore - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
-* describe - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
-* explain - to create a simple model that explains a target
-* report - to generate an automated report of all variables
+## How to use it
+
+There are three ways to use the package:
+
+**Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
+
+Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
+
+**Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
+
+* **explore** - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
+* **describe** - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
+* **explain** - to create a simple model that explains a target
+* **report** - to generate an automated report of all variables
 
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
