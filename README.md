@@ -22,8 +22,8 @@ There are three ways to use the package:
 
 * **Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
 
-  * **explore** - if you want to explore an attribute or the relationship between an attribute and a binary target. The output of these functions is a plot.
-  * **describe** - if you want to describe a dataset or an attribute (number of na, unique values, ...) The output of these functions is a text.
+  * **explore** - if you want to explore a variable or the relationship between a variable and a binary target. The output of these functions is a plot.
+  * **describe** - if you want to describe a dataset or a variable (number of na, unique values, ...) The output of these functions is a text.
   * **explain** - to create a simple model that explains a target
   * **report** - to generate an automated report of all variables
 
