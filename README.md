@@ -81,22 +81,22 @@ explore(iris)
 
 ### Explore variables
 
-<img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris.png" alt="example interactive exploration" width="800">
+<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris.png" alt="example interactive exploration" width="800">
 
 ### Explain target
 
-<img src="https://github.com/rolkra/explore/blob/master/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
+<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
 ### Report of variables
 
 Create a report by clicking the "report all" button (if no target is defined)
 
-<img src="https://github.com/rolkra/explore/blob/master/report_attributes.png" alt="example report attributes" width="400">
+<img src="https://github.com/rolkra/explore/blob/master/man/figures/report_attributes.png" alt="example report attributes" width="400">
 
 ### Report of correlations with target
 Create a report by clicking the "report all" button (if target is defined)
 
-<img src="https://github.com/rolkra/explore/blob/master/report_target.png" alt="example report attributes" width="400">
+<img src="https://github.com/rolkra/explore/blob/master/man/figures/report_target.png" alt="example report attributes" width="400">
 
 ## Functions for reproducible data science
 
