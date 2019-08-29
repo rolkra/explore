@@ -16,13 +16,13 @@ Simplifies Exploratory Data Analysis.
 
 There are three ways to use the package:
 
-* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
+* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target. 
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
 
 * **Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
 
-  * **explore** - if you want to explore a variable or the relationship between a variable and a binary target. The output of these functions is a plot.
+  * **explore** - if you want to explore a table, a variable or the relationship between a variable and a target. The output of these functions is a plot.
 
   * **describe** - if you want to describe a dataset or a variable (number of na, unique values, ...) The output of these functions is a text.
 
