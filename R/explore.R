@@ -14,7 +14,7 @@
 #   explore_shiny: use output_dir / tempdir()
 #   change "attribute" to "variable" (consistent)
 #
-# Version 0.4.4 (DEV)
+# Version 0.4.4 (CRAN)
 #   add function explore_bar
 #   explore_density full tidy eval, target cat > 2 possible
 #   target_explore_cat full tidy eval
@@ -35,6 +35,8 @@
 #   target num in explore_all & report
 #   describe_tbl -> fix target not bin
 #   change out="vector" to out="list"
+#
+# Version 0.4.5 (DEV)
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
