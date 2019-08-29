@@ -22,13 +22,13 @@ There are three ways to use the package:
 
 * **Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
 
-  * **explore** - if you want to explore a table, a variable or the relationship between a variable and a target. The output of these functions is a plot.
+  * **explore** - if you want to explore a table, a variable or the relationship between a variable and a target (binary, categorical or numeric). The output of these functions is a plot.
 
   * **describe** - if you want to describe a dataset or a variable (number of na, unique values, ...) The output of these functions is a text.
 
-  * **explain** - to create a simple model that explains a target
+  * **explain** - to create a simple model that explains a target. explain_tree() for a decision tree, explain_logreg() for a logistic regression.
 
-  * **report** - to generate an automated report of all variables
+  * **report** - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)
 
 The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
 
