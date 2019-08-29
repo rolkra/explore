@@ -1,4 +1,4 @@
-# explore
+# explore  <img src="man/figures/logo.png" align="right" width="130" height="150"/>
 
 [![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
 [![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
