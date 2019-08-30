@@ -79,26 +79,29 @@ iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
 explore(iris)
 ```
 
-### Explore variables
+Explore variables
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris.png" alt="example interactive exploration" width="800">
 
-### Explain target
+Explain target
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
-### Report of variables
+## Automated Report
 
-Create a report by clicking the "report all" button (if no target is defined)
+Create a report by clicking the "report all" button or use the report() function.
+If no target is defined, the report shows all variables. If a target is defined, the report shows the relation between all variables and the target.
+
+Report of all variables
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/report_attributes.png" alt="example report attributes" width="400">
 
-### Report of correlations with target
-Create a report by clicking the "report all" button (if target is defined)
+Report with defined target (binary target, split = FALSE)
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/report_target.png" alt="example report attributes" width="400">
 
-## Functions for reproducible data science
+
+## Manual exploration
 
 Example how to use the functions of the explore package to explore the iris dataset
 
