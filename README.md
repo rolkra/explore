@@ -64,7 +64,9 @@ if (!require(devtools)) install.packages("devtools")
 devtools::install_local(path = <path of local package>, force = TRUE)
 ```
 
-## Interactive data exploration
+## Examples
+
+### Interactive data exploration
 
 Example how to use the explore package to explore the iris dataset
 
@@ -87,7 +89,7 @@ Explain target
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
-## Automated Report
+### Automated Report
 
 Create a report by clicking the "report all" button or use the report() function.
 If no target is defined, the report shows all variables. If a target is defined, the report shows the relation between all variables and the target.
@@ -101,7 +103,7 @@ Report with defined target (binary target, split = FALSE)
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/report_target.png" alt="example report attributes" width="400">
 
 
-## Manual exploration
+### Manual exploration
 
 Example how to use the functions of the explore package to explore the iris dataset
 
