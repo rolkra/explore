@@ -127,6 +127,9 @@ iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 # explore relationship between Sepal.Length and the target
 iris %>% explore(Sepal.Length, target = is_versicolor)
 
+# explore relationship between all variables and the target
+Iris %>% explore_all(target = is_versicolor)
+
 # explore correlation between Sepal.Length and Petal.Length
 iris %>% explore(Sepal.Length, Petal.Length)
 
