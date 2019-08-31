@@ -12,7 +12,7 @@ Simplifies Exploratory Data Analysis.
 
 * **Fast success** for new R users. It is said that R has a steep learning curve, especially if you come from a GUI for your statistical analysis. Instead of learning a lot of R syntax before you can explore data, the explore package enables you to have instant success. You can start with just one function - explore() - and learn other R syntax later step by step.
 
-# How to use it
+## How to use it
 
 There are three ways to use the package:
 
