@@ -6,7 +6,7 @@
 
 ## explore 0.4.4 (2019-08-30)
 
-add function explore_bar
+* add function explore_bar
 * explore_density now using correct tidy eval, target cat > 2 possible
 * target_explore_cat now using correct tidy eval
 * target_explore_num now using correct tidy eval
