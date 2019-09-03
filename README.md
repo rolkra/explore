@@ -75,7 +75,7 @@ Example how to use the explore package to explore the iris dataset
 library(explore)
 
 # define a target (is Species setosa?)
-iris$is_setosa <- ifelse(iris$Species == "setosa", 1, 0)
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 
 # explore interactive
 explore(iris)
@@ -104,7 +104,7 @@ iris %>% report(output_dir = tempdir())
 Report with defined target (binary target, split = FALSE)
 ```r
 iris %>% report(output_dir = tempdir(),
-                target = is_setosa,
+                target = is_versicolor,
                 split = FALSE)
 ```
 
