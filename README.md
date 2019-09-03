@@ -145,4 +145,7 @@ iris %>% describe(Species)
 # explain target using a decision tree
 iris$Species <- NULL
 iris %>% explain_tree(target = is_versicolor)
+
+# explain target using a logistic regression
+iris %>% explain_logreg(target = is_versicolor)
 ```
