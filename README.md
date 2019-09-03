@@ -95,10 +95,18 @@ Create a report by clicking the "report all" button or use the report() function
 If no target is defined, the report shows all variables. If a target is defined, the report shows the relation between all variables and the target.
 
 Report of all variables
+```r
+iris %>% report(output_dir = tempdir())
+```
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/report_attributes.png" alt="example report attributes" width="400">
 
 Report with defined target (binary target, split = FALSE)
+```r
+iris %>% report(output_dir = tempdir(),
+                target = is_setosa,
+                split = FALSE)
+```
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/report_target.png" alt="example report attributes" width="400">
 
