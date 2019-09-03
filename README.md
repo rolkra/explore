@@ -74,7 +74,7 @@ Example how to use the explore package to explore the iris dataset
 # load package
 library(explore)
 
-# define a target (is Species setosa?)
+# define a target (is Species versicolor?)
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 
 # explore interactive
