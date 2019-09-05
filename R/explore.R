@@ -2010,7 +2010,7 @@ explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20
   # drop variables, that are not usable
   d <- describe(data)
   var_keep <- d %>%
-    filter(type %in% c("lgl", "int", "dbl", "chr")) %>%
+    filter(type %in% c("lgl", "int", "dbl", "chr", "fct")) %>%
     filter(type != "chr" | (type == "chr" & unique <= max_cat)) %>%
     pull(variable)
   data <- data %>% select(one_of(as.character(var_keep)))
@@ -2024,19 +2024,22 @@ explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20
   # convert target into formula
   formula_txt <- as.formula(paste(target_txt, "~ ."))
 
-  if(guess_cat_num(data[target_txt]) == "cat")  {
+  if(guess_cat_num(data[[target_txt]]) == "cat")  {
 
     # create tree cat
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "class",
                         control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+
   } else {
+
     # create tree num
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "anova",  #"class",
                         control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+
   } # if
 
   # check if tree was created. If not just plot info-text
