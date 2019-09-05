@@ -3,6 +3,7 @@
 * update README.md
 * add NEWS.md
 * add hex sticker
+* explain_tree: target can be bin/num/cat
 
 ## explore 0.4.4 (2019-08-30)
 
