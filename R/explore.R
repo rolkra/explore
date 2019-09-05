@@ -36,7 +36,7 @@
 #   describe_tbl -> fix target not bin
 #   change out="vector" to out="list"
 #
-# Version 0.4.5 (DEV)
+# Version 0.5.0 (DEV)
 #
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
