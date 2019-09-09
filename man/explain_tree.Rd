@@ -4,8 +4,8 @@
 \alias{explain_tree}
 \title{Explain a target using a simple decision tree (classification or regression)}
 \usage{
-explain_tree(data, target, max_cat = 10, maxdepth = 3, minsplit = 20,
-  cp = 0, size = 0.7, ...)
+explain_tree(data, target, max_cat = 10, max_target_cat = 5,
+  maxdepth = 3, minsplit = 20, cp = 0, size = 0.7, ...)
 }
 \arguments{
 \item{data}{A dataset}
@@ -13,6 +13,8 @@ explain_tree(data, target, max_cat = 10, maxdepth = 3, minsplit = 20,
 \item{target}{Target variable}
 
 \item{max_cat}{Drop categorical variables with higher number of levels}
+
+\item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
 
 \item{maxdepth}{Maximal depth of the tree (rpart-parameter)}
 

@@ -1398,13 +1398,13 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat("type     =", paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), var_type,"\n")
-    cat(paste0(spc, "na       ="), paste0(format_num_kMB(var_na)," of ",format_num_kMB(var_obs)," (",format_num_kMB(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num_kMB(var_unique),"\n"))
-    cat(paste0(spc, "min|max  ="), paste0(format_num_kMB(var_min), " | ", format_num_kMB(var_max), "\n"))
-    cat(paste0(spc, "q05|q95  ="), paste0(format_num_kMB(var_quantile["5%"]), " | ", format_num_kMB(var_quantile["95%"]), "\n"))
-    cat(paste0(spc, "q25|q75  ="), paste0(format_num_kMB(var_quantile["25%"]), " | ", format_num_kMB(var_quantile["75%"]), "\n"))
-    cat(paste0(spc, "median   ="), format_num_kMB(var_median), "\n")
-    cat(paste0(spc, "mean     ="), format_num_kMB(var_mean), "\n")
+    cat(paste0(spc, "na       ="), paste0(format_num_space(var_na)," of ",format_num_space(var_obs)," (",format_num_space(var_na_pct),"%)\n"))
+    cat(paste0(spc, "unique   ="), paste0(format_num_space(var_unique),"\n"))
+    cat(paste0(spc, "min|max  ="), paste0(format_num_space(var_min), " | ", format_num_space(var_max), "\n"))
+    cat(paste0(spc, "q05|q95  ="), paste0(format_num_space(var_quantile["5%"]), " | ", format_num_space(var_quantile["95%"]), "\n"))
+    cat(paste0(spc, "q25|q75  ="), paste0(format_num_space(var_quantile["25%"]), " | ", format_num_space(var_quantile["75%"]), "\n"))
+    cat(paste0(spc, "median   ="), format_num_space(var_median), "\n")
+    cat(paste0(spc, "mean     ="), format_num_space(var_mean), "\n")
   } else {
     result_num
   }
@@ -1485,8 +1485,8 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat(paste0(spc, "type     ="), paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), paste0(var_type,"\n"))
-    cat(paste0(spc, "na       ="), paste0(format_num_kMB(var_na)," of ",format_num_kMB(var_obs)," (",format_num_kMB(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num_kMB(var_unique),"\n"))
+    cat(paste0(spc, "na       ="), paste0(format_num_space(var_na)," of ",format_num_space(var_obs)," (",format_num_space(var_na_pct),"%)\n"))
+    cat(paste0(spc, "unique   ="), paste0(format_num_space(var_unique),"\n"))
 
     # show frequency for each category (maximum max_cat)
     for (i in seq(min(var_unique, max_cat)))  {
@@ -1669,7 +1669,7 @@ describe_tbl <- function(data, target, out = "text")  {
 
     result_text <- paste0(format_num_space(describe_nrow),
                           ifelse(describe_nrow >= 1000,
-                                 paste0(" (",format_num_kMB(describe_nrow),")"),
+                                 paste0(" (",format_num_space(describe_nrow),")"),
                                  ""),
                           " observations with ",
                           format_num_space(describe_ncol),
@@ -1979,6 +1979,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 #' @param data A dataset
 #' @param target Target variable
 #' @param max_cat Drop categorical variables with higher number of levels
+#' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
 #' @param minsplit The minimum number of observations that must exist in a node in order for a split to be attempted (rpart-parameter)
 #' @param cp Complexity parameter (rpart-parameter)
@@ -1992,7 +1993,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20, cp = 0, size = 0.7, ...)  {
+explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = 20, cp = 0, size = 0.7, ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -2011,7 +2012,7 @@ explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20
   d <- describe(data)
   var_keep <- d %>%
     filter(type %in% c("lgl", "int", "dbl", "chr", "fct")) %>%
-    filter(type != "chr" | (type == "chr" & unique <= max_cat)) %>%
+    filter(type != "chr" | (type == "chr" & unique <= max_cat) | variable == target_txt) %>%
     pull(variable)
   data <- data %>% select(one_of(as.character(var_keep)))
 
@@ -2025,6 +2026,12 @@ explain_tree <- function(data, target, max_cat = 10, maxdepth = 3, minsplit = 20
   formula_txt <- as.formula(paste(target_txt, "~ ."))
 
   if(guess_cat_num(data[[target_txt]]) == "cat")  {
+
+    # convert target to factor if necessary
+    if (!is.factor(data[[target_txt]]))  {
+      data[[target_txt]] <- factor(data[[target_txt]])
+      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]], max_target_cat, other_level = ".OTHER")
+    }
 
     # create tree cat
     mod <- rpart::rpart(formula_txt,
@@ -2462,13 +2469,18 @@ explore_shiny <- function(data, target)  {
   variable <- NULL
 
   # get variable types
-  tbl_guesstarget <- describe(data) %>%
-    filter(unique <= 2) %>%
-    filter((type %in% c("lgl","int","dbl","num") &
-              (min == 0 | min == FALSE) &
-              (max == 1 | max == TRUE)) |
-              (type == "fct") ) %>%
-    select(variable)
+  # tbl_guesstarget <- describe(data) %>%
+  #   filter(unique <= 2) %>%
+  #   filter((type %in% c("lgl","int","dbl","num") &
+  #             (min == 0 | min == FALSE) &
+  #             (max == 1 | max == TRUE)) |
+  #             (type == "fct") ) %>%
+  #   select(variable)
+  # guesstarget <- as.character(tbl_guesstarget[[1]])
+
+   tbl_guesstarget <- describe(data) %>%
+     filter(type %in% c("lgl","int","dbl","num","fct","chr")) %>%
+     select(variable)
   guesstarget <- as.character(tbl_guesstarget[[1]])
 
   # check all variables if usable
