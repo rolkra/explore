@@ -1,9 +1,11 @@
 ## explore (development version)
 
+* explain_tree: target can be bin/num/cat
+* explain_tree: add parameter max_target_cat
+* explore_shiny: target can be bin/num/cat
 * update README.md
 * add NEWS.md
 * add hex sticker
-* explain_tree: target can be bin/num/cat
 
 ## explore 0.4.4 (2019-08-30)
 
