@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{format_num_space}
 \alias{format_num_space}
-\title{Format number}
+\title{Format number as character string (space as big.mark)}
 \usage{
 format_num_space(number = 0, digits = 1)
 }

@@ -474,7 +474,7 @@ plot_var_info <- function(data, var, info = "")  {
 #============================================================================
 #  format_num_spcace
 #============================================================================
-#' Format number
+#' Format number as character string (space as big.mark)
 #'
 #' Formats a big number using space as big.mark (1000 = 1 000)
 #'
@@ -491,12 +491,14 @@ format_num_space <- function(number = 0, digits = 1)   {
                   big.mark = " ",
                   scientific = FALSE)
 
+  number
+
 } # format_num_space
 
 #============================================================================
 #  format_num_kMB
 #============================================================================
-#' Format number
+#' Format number as character string (kMB)
 #'
 #' Formats a big number as k (1 000), M (1 000 000) or B (1 000 000 000)
 #'
@@ -519,8 +521,45 @@ format_num_kMB <- function(number = 0, digits = 1)   {
     result = paste0(format(round(number, digits), digits = 15))
   }
 
+  result
   #result = format(round(number, digits), big.mark = ".", decimal.mark = ",", digits = 15)
 }
+
+
+#============================================================================
+#  format_num_auto
+#============================================================================
+#' Format number as character string (auto)
+#'
+#' Formats a number depending on the value as number with space, scientific or
+#' big number as k (1 000), M (1 000 000) or B (1 000 000 000)
+#'
+#' @param number A number (integer or real)
+#' @param digits Number of digits
+#' @return Formated number as text
+#' @examples
+#' format_num_kMB(5500, digits = 2)
+#' @export
+
+format_num_auto <- function(number = 0, digits = 1)   {
+
+  # scientific
+  if (abs(number) >= 100000000000) {
+    return(as.character(format(number, scientific = TRUE)))
+  }
+
+  # space, no kMB
+  if (abs(number) < 1000) {
+    return(format_num_space(number, digits))
+  }
+
+  # space, with kMB
+  return(paste0(format_num_space(number, digits),
+                " (",
+                format_num_kMB(number, digits),
+                ")"))
+
+} # format_num_auto
 
 #============================================================================
 #  format_target
@@ -1398,13 +1437,13 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat("type     =", paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), var_type,"\n")
-    cat(paste0(spc, "na       ="), paste0(format_num_space(var_na)," of ",format_num_space(var_obs)," (",format_num_space(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num_space(var_unique),"\n"))
-    cat(paste0(spc, "min|max  ="), paste0(format_num_space(var_min), " | ", format_num_space(var_max), "\n"))
-    cat(paste0(spc, "q05|q95  ="), paste0(format_num_space(var_quantile["5%"]), " | ", format_num_space(var_quantile["95%"]), "\n"))
-    cat(paste0(spc, "q25|q75  ="), paste0(format_num_space(var_quantile["25%"]), " | ", format_num_space(var_quantile["75%"]), "\n"))
-    cat(paste0(spc, "median   ="), format_num_space(var_median), "\n")
-    cat(paste0(spc, "mean     ="), format_num_space(var_mean), "\n")
+    cat(paste0(spc, "na       ="), paste0(format_num_auto(var_na)," of ",format_num_auto(var_obs)," (",format_num_auto(var_na_pct),"%)\n"))
+    cat(paste0(spc, "unique   ="), paste0(format_num_auto(var_unique),"\n"))
+    cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min), " | ", format_num_auto(var_max), "\n"))
+    cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"]), " | ", format_num_auto(var_quantile["95%"]), "\n"))
+    cat(paste0(spc, "q25|q75  ="), paste0(format_num_auto(var_quantile["25%"]), " | ", format_num_auto(var_quantile["75%"]), "\n"))
+    cat(paste0(spc, "median   ="), format_num_auto(var_median), "\n")
+    cat(paste0(spc, "mean     ="), format_num_auto(var_mean), "\n")
   } else {
     result_num
   }
@@ -1492,8 +1531,8 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     for (i in seq(min(var_unique, max_cat)))  {
       var_name = format(var_frequency[[i, 1]], width = max_cat_len, justify = "left")
       cat(paste0(spc, " ", var_name,
-                 " = ", format_num_kMB(var_frequency[[i, 2]]), " (",
-                 format_num_kMB(var_frequency[[i,3]]),"%)\n" ))
+                 " = ", format_num_space(var_frequency[[i, 2]]), " (",
+                 format_num_space(var_frequency[[i,3]]),"%)\n" ))
     } # for
 
     # if more categories than displayed, show "..."
@@ -1667,22 +1706,16 @@ describe_tbl <- function(data, target, out = "text")  {
   # result as text
   if (!missing(target) & target_show == FALSE)  {
 
-    result_text <- paste0(format_num_space(describe_nrow),
-                          ifelse(describe_nrow >= 1000,
-                                 paste0(" (",format_num_space(describe_nrow),")"),
-                                 ""),
+    result_text <- paste0(format_num_auto(describe_nrow),
                           " observations with ",
-                          format_num_space(describe_ncol),
+                          format_num_auto(describe_ncol),
                           " variables; ",
                           " target = not binary")
   } else if (!missing(target) & target_show == TRUE) {
 
-    result_text <- paste0(format_num_space(describe_nrow),
-                          ifelse(describe_nrow >= 1000,
-                                 paste0(" (",format_num_kMB(describe_nrow),")"),
-                                 ""),
+    result_text <- paste0(format_num_auto(describe_nrow),
                           " observations with ",
-                          format_num_space(describe_ncol),
+                          format_num_auto(describe_ncol),
                           " variables; ",
                           format_num_space(describe_target1_cnt),
                           " targets (",
@@ -1938,11 +1971,11 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
       # num target, num -> explore_cor
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
-      plots[[i]] <- explore_cor(data_tmp, x = !!sym(var_name), y = !!target_quo)
+      plots[[i]] <- explore_cor(data_tmp, x = !!sym(var_name), y = !!target_quo, title = var_name)
 
       # num target, cat -> explore_cor
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
-      plots[[i]] <- explore_cor(data_tmp, y = !!sym(var_name), x = !!target_quo)
+      plots[[i]] <- explore_cor(data_tmp, y = !!sym(var_name), x = !!target_quo, title = var_name)
 
       # target, num
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE))  {
@@ -2134,6 +2167,7 @@ explain_logreg <- function(data, target, ...)  {
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
 #' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param title Title of the plot
 #' @param color Color of the plot
 #' @param ... Further arguments
 #' @return Plot
@@ -2141,7 +2175,7 @@ explain_logreg <- function(data, target, ...)  {
 #' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
 #' @export
 
-explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, color = "grey", ...)  {
+explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "grey", ...)  {
 
   # parameter x
   if(!missing(x))  {
@@ -2235,6 +2269,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   if(!is.na(target_txt) & (target_type == "cat")) {
     p <- p + facet_grid(vars(!!target_quo))
+  }
+
+
+  # title
+  if (!is.na(title) & nchar(title) > 0)  {
+    p <- p + ggtitle(title)
   }
 
   # plot grafic
@@ -2761,14 +2801,16 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     explore_cor(data[c(var_text, target_text)],
                 x = !!var_quo, y = !!target_quo,
                 min_val = min_val, max_val = max_val,
-                auto_scale = auto_scale, na = na, ...)
+                auto_scale = auto_scale, na = na,
+                title = target_text, ...)
 
     # var cat + target num -> correlation
   } else if (!is.na(var_text) & is.na(var2_text) & var_type == "cat" & !is.na(target_text) & guess_target == "num")  {
     explore_cor(data[c(var_text, target_text)],
                 y = !!var_quo, x = !!target_quo,
                 min_val = min_val, max_val = max_val,
-                auto_scale = auto_scale, na = na, ...)
+                auto_scale = auto_scale, na = na,
+                title = target_text, ...)
 
     # var_type oth
   } else if (!is.na(var_text) & var_type == "oth")  {

@@ -5,7 +5,7 @@
 \title{Explore the correlation between two variables}
 \usage{
 explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
-  auto_scale = TRUE, color = "grey", ...)
+  auto_scale = TRUE, title = NA, color = "grey", ...)
 }
 \arguments{
 \item{data}{A dataset}
@@ -23,6 +23,8 @@ explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
 \item{max_val}{All values > max_val are converted to max_val}
 
 \item{auto_scale}{Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
+
+\item{title}{Title of the plot}
 
 \item{color}{Color of the plot}
 
