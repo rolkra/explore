@@ -1,43 +1,6 @@
 ################################################################################
 # explore by Roland Krasser
 #
-# Version 0.4.2 (CRAN)
-#   add rmarkdown::pandoc_available("1.12.3") in example
-#
-# Version 0.4.3 (CRAN)
-#   Typo in DESCRIPTION (a easy -> an easy)
-#   fix parameter in explore: auto_scale, na
-#   add parameter min_val, max_val in explore_cat
-#   define min_val and max_val as filters in explore_num + explore_cat
-#   fix number of NA in explore (move code before auto_scale)
-#   explore_density with target: drop "propensity by"
-#   explore_shiny: use output_dir / tempdir()
-#   change "attribute" to "variable" (consistent)
-#
-# Version 0.4.4 (CRAN)
-#   add function explore_bar
-#   explore_density full tidy eval, target cat > 2 possible
-#   target_explore_cat full tidy eval
-#   target_explore_num full tidy eval
-#   add plot_var_info - function (ggplot obj.)
-#   plot_var_info explore/explore_all if <oth>
-#   add max_cat in explore_bar, explore_density and explain_tree
-#   add explore_tbl
-#   drop explore_cat & explore_num
-#   rename template_report_target_den > _split
-#   intelligent placing of labels in plots
-#   info window "generating report ..." in explore_shiny
-#   format_num -> format_num_kMB, format_num_space
-#   format_target -> if numeric split 0/1 by mean
-#   report -> default .html file extension
-#   consistency showing NA info in explore-title
-#   split default = FALSE
-#   target num in explore_all & report
-#   describe_tbl -> fix target not bin
-#   change out="vector" to out="list"
-#
-# Version 0.5.0 (DEV)
-#
 # dwh_connect, dwh_disconnect,
 # dwh_read_table, dwh_read_data, dwh_fastload
 # clean_var, balance_target
@@ -45,7 +8,9 @@
 # explore, explore_all, explore_tbl
 # explore_density, explore_shiny, explore_cor
 # explain_tree, explain_logreg
-# get_type, guess_cat_num, replace_na_with, format_num, format_target
+# get_type, guess_cat_num, replace_na_with,
+# format_num_kMB, format_num_space, format_num_auto,
+# format_target
 # get_nrow, plot_text, plot_var_info
 # target_explore_cat, target_explore_num
 ################################################################################
@@ -487,6 +452,11 @@ plot_var_info <- function(data, var, info = "")  {
 
 format_num_space <- function(number = 0, digits = 1)   {
 
+  # no format if it is not numeric
+  if (!is.numeric(number))  {
+    return(number)
+  }
+
   number <- format(round(number, digits),
                   big.mark = " ",
                   scientific = FALSE)
@@ -510,6 +480,11 @@ format_num_space <- function(number = 0, digits = 1)   {
 #' @export
 
 format_num_kMB <- function(number = 0, digits = 1)   {
+
+  # no format if it is not numeric
+  if (!is.numeric(number))  {
+    return(number)
+  }
 
   if (abs(number) >= 1000000000) {
     result = paste0(format(round(number / 1000000000, digits), digits = 15), "B")
@@ -542,6 +517,11 @@ format_num_kMB <- function(number = 0, digits = 1)   {
 #' @export
 
 format_num_auto <- function(number = 0, digits = 1)   {
+
+  # no format if it is not numeric
+  if (!is.numeric(number))  {
+    return(number)
+  }
 
   # scientific
   if (abs(number) >= 100000000000) {
@@ -1293,7 +1273,7 @@ get_type <- function(var)  {
     }
   }
 
-  if (var_class == "Date")  {
+  if (var_class %in% c("Date", "POSIXct", "POSIXt"))  {
     return("date")
   }
 
@@ -1326,7 +1306,7 @@ guess_cat_num <- function(var)  {
     return("cat")
   }
   # for unsupported classes return "oth"
-  if (class(var)[1] %in% c("numeric", "integer", "character", "logical"))  {
+  if (class(var)[1] %in% c("numeric", "integer", "character", "logical", "Date", "POSIXct"))  {
     var_class <- class(var)
   } else {
     return("oth")
@@ -1437,7 +1417,7 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "variable ="), var_name, "\n")
     #cat("type     =", paste0(var_type, " (cat/num = ", var_guess,")\n"))
     cat(paste0(spc, "type     ="), var_type,"\n")
-    cat(paste0(spc, "na       ="), paste0(format_num_auto(var_na)," of ",format_num_auto(var_obs)," (",format_num_auto(var_na_pct),"%)\n"))
+    cat(paste0(spc, "na       ="), paste0(format_num_auto(var_na)," of ",format_num_space(var_obs)," (",format_num_auto(var_na_pct),"%)\n"))
     cat(paste0(spc, "unique   ="), paste0(format_num_auto(var_unique),"\n"))
     cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min), " | ", format_num_auto(var_max), "\n"))
     cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"]), " | ", format_num_auto(var_quantile["95%"]), "\n"))

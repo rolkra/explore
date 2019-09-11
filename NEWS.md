@@ -5,6 +5,7 @@
 * explore_shiny(): target can be bin/num/cat
 * add function format_num_auto()
 * add parameter title to explore_cor()
+* add support for POSIXct in describe()
 * update README.md
 * add NEWS.md
 * add hex sticker
