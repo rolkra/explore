@@ -4,9 +4,12 @@
 * explain_tree(): add parameter max_target_cat
 * explore_shiny(): target can be bin/num/cat
 * add function format_num_auto()
+* add function total_fig_height()
+* get_nrow() deprecated, use total_fig_height() instead
 * add parameter title to explore_cor()
 * add support for POSIXct in describe()
 * update README.md
+* update Vignettes
 * add NEWS.md
 * add hex sticker
 

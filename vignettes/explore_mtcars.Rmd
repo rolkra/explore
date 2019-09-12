@@ -53,21 +53,8 @@ The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel
 
 ### Explore variables
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(mtcars, size = 2.5)}
 mtcars %>% 
-  select(mpg, cyl, disp, hp) %>% 
-  explore_all()
-```
-
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars %>% 
-  select(drat, wt, qsec, vs) %>% 
-  explore_all()
-```
-
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars %>% 
-  select(am, gear, carb) %>% 
   explore_all()
 ```
 

@@ -18,12 +18,6 @@ knitr::kable(d)
 
 ## Explore Variables
 
-```{r, message=FALSE, warning=FALSE, include=FALSE}
-total_col = 2
-total_x = 5 * total_col
-total_y = 3 * get_nrow(names(data), ncol = total_col, exclude = 0) 
-```
-
-```{r echo=FALSE, fig.height=total_y, fig.width=total_x, message=FALSE, warning=FALSE}
-data %>% explore_all(ncol = total_col)
+```{r echo=FALSE, fig.height=total_fig_height(data), fig.width=10, message=FALSE, warning=FALSE}
+data %>% explore_all(ncol = 2)
 ```

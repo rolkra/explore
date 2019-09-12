@@ -45,12 +45,10 @@ explore(iris)
 
 A shiny app is launched, you can inspect individual variable, explore their relation to a binary target, grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
  
-You can choose each variable containng 0/1, FALSE/TRUE or "no"/"yes" as a target. As the iris dataset doesn't contain a binary target, we create one:
+![](../man/figures/explore_shiny_iris_target_species.png){width=600px}
 
-```{R eval=FALSE, echo=TRUE}
-iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris %>% explore()
-```
+You can choose each variable containng as a target, that is binary (0/1, FALSE/TRUE or "no"/"yes"), categorical or numeric.
+
 
 ### Report variables
 
@@ -60,6 +58,8 @@ Create a rich HTML report of all variables with one line of code:
 # report of all variables
 iris %>% report(output_file = "report.html", output_dir = tempdir())
 ```
+
+![](../man/figures/report_attributes.png){width=600px}
 
 Or you can simply add a target and create the report. In this case we use a binary tharget, but a categorical or numerical target would work as well.
 
@@ -75,15 +75,27 @@ iris %>%
 
 If you use a binary tharget, the parameter ***split = FALSE*** will give you a different view on the data.
 
+![](../man/figures/report_target.png){width=600px}
+
 ### Grow a decision tree
 
 Grow a decision tree with one line of code:
 
-```{r fig.height=3, fig.width=6, message=FALSE, warning=FALSE, include=FALSE}
-iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-```
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explain_tree(target = Species)
+```
+
+You can grow a decision tree with a binary target too.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 iris %>% select(-Species) %>% explain_tree(target = is_versicolor)
+```
+
+Or using a numerical target. The syntax stays the same.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris %>% explain_tree(target = Sepal.Length)
 ```
 
 You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
@@ -172,6 +184,24 @@ iris %>%
   explore_all(target = Petal.Length)
 ```
 
+```{r message=FALSE, warning=FALSE}
+data(iris)
+```
+
+To use a high number of variables with explore_all() in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function total_fig_height() helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
+
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris)}
+iris %>% 
+  explore_all()
+```
+If you use a target: ```fig.height=total_fig_height(iris, target = Species)```
+
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris, target = Species)}
+iris %>% explore_all(target = Species)
+```
+
+You can control total_fig_height() by parameters ncols (number of columns of the plots) and size (height of 1 plot)
+
 ### Explore correlation between two variables
 
 Explore correlation between two variables with one line of code:
@@ -183,6 +213,7 @@ iris %>% explore(Sepal.Length, Petal.Length)
 You can add a target too:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 iris %>% explore(Sepal.Length, Petal.Length, target = is_versicolor)
 ```
 

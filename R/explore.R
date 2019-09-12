@@ -1329,9 +1329,9 @@ guess_cat_num <- function(var)  {
 
 
 #============================================================================
-#  get_nrow
+#  get_nrow()
 #============================================================================
-#' Get number of rows for a grid plot
+#' Get number of rows for a grid plot (deprecated, use total_fig_height() instead)
 #'
 #' @param varnames List of variables to be plotted
 #' @param exclude Number of variables that will be excluded from plot
@@ -1342,8 +1342,33 @@ guess_cat_num <- function(var)  {
 #' @export
 
 get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
+
+  warning("get_nrow() is deprecated.\nPlease use total_fig_height() instead")
+
   n <- length(varnames) - exclude
   result <- ceiling(n / ncol)
+  result
+}
+
+#============================================================================
+#  total_fig_height()
+#============================================================================
+#' Get fig.height for RMarkdown-junk using explore_all()
+#'
+#' @param data A dataset
+#' @param target Target variable
+#' @param ncol Number of columns (default = 2)
+#' @param size fig.height of 1 plot (default = 3)
+#' @return Number of rows
+#' @examples
+#' total_fig_height(iris, target = Species)
+#' @export
+
+total_fig_height <- function(data, target, ncol = 2, size = 3)  {
+
+  n_var <- ncol(data)
+  n <- n_var - ifelse(missing(target), 0, 1)
+  result <- ceiling(n / ncol) * size
   result
 }
 
