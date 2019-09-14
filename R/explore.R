@@ -288,7 +288,7 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
 
     # keep max. different levels
     if (n_var_cat > max_cat)  {
-        data[[var_txt]] <- forcats::fct_lump(data[[var_txt]],max_cat, other_level = ".OTHER")
+        data[[var_txt]] <- forcats::fct_lump(data[[var_txt]], max_cat, other_level = ".OTHER")
     }
   } # if max_cat
 
@@ -1490,7 +1490,9 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
 
   var_obs = length(data[[var_name]])
   var_na = sum(is.na(data[[var_name]]))
-  var_na_pct = var_na / var_obs * 100
+  var_na_pct = ifelse(var_obs > 0,
+                      var_na / var_obs * 100,
+                      0)
 
   var_unique = length(unique(data[[var_name]]))
 
@@ -1498,21 +1500,27 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   grp <- NULL
 
   # group categorial variable and calulate frequency
-  var_frequency <- data %>%
-    select(grp = !!var_quo) %>%
-    group_by(grp) %>%
-    summarise(n = n()) %>%
-    mutate(pct = n / sum(n) * 100) %>%
-    mutate(cat_len = nchar(as.character(grp)))
+  if (var_obs > 0)  {
 
-  # limit len of catnames
-  max_cat_len <- max(var_frequency$cat_len, na.rm = TRUE)
-  if(max_cat_len < 7)  {
-    max_cat_len = 7
-  }
-  if(max_cat_len > 20)  {
-    max_cat_len = 20
-  }
+    var_frequency <- data %>%
+      select(grp = !!var_quo) %>%
+      group_by(grp) %>%
+      summarise(n = n()) %>%
+      mutate(pct = n / sum(n) * 100) %>%
+      mutate(cat_len = nchar(as.character(grp)))
+
+    # limit len of catnames
+    max_cat_len <- max(var_frequency$cat_len, na.rm = TRUE)
+    if(max_cat_len < 7)  {
+      max_cat_len = 7
+    }
+    if(max_cat_len > 20)  {
+      max_cat_len = 20
+    }
+
+  } else {
+    var_frequency <- NA
+  } # if
 
   # result as a list
   result_cat <- list(name = var_name,
@@ -1533,12 +1541,14 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     cat(paste0(spc, "unique   ="), paste0(format_num_space(var_unique),"\n"))
 
     # show frequency for each category (maximum max_cat)
-    for (i in seq(min(var_unique, max_cat)))  {
-      var_name = format(var_frequency[[i, 1]], width = max_cat_len, justify = "left")
-      cat(paste0(spc, " ", var_name,
-                 " = ", format_num_space(var_frequency[[i, 2]]), " (",
-                 format_num_space(var_frequency[[i,3]]),"%)\n" ))
-    } # for
+    if (var_obs > 0)  {
+      for (i in seq(min(var_unique, max_cat)))  {
+        var_name = format(var_frequency[[i, 1]], width = max_cat_len, justify = "left")
+        cat(paste0(spc, " ", var_name,
+                   " = ", format_num_space(var_frequency[[i, 2]]), " (",
+                   format_num_space(var_frequency[[i,3]]),"%)\n" ))
+      } # for
+    } # if
 
     # if more categories than displayed, show "..."
     if (var_unique > max_cat)  {
@@ -1600,11 +1610,15 @@ describe_all <- function(data = NA, out = "large") {
                       format_type(get_type(data[[var_name]])))
 
     var_na = sum(is.na(data[[var_name]]))
-    var_na_pct = round(var_na / var_obs * 100,1)
+
+    var_na_pct = ifelse(var_obs > 0,
+                        round(var_na / var_obs * 100,1),
+                        0)
 
     var_unique = length(unique(data[[var_name]]))
 
-    if (get_type(data[[var_name]]) %in% c("logical","integer","double") & !is.factor(data[[var_name]]))  {
+    if (var_obs > 0 &
+        get_type(data[[var_name]]) %in% c("logical","integer","double") & !is.factor(data[[var_name]]))  {
       var_min = min(data[[var_name]], na.rm = TRUE)
       var_mean = mean(data[[var_name]], na.rm = TRUE)
       var_max = max(data[[var_name]], na.rm = TRUE)
@@ -1984,7 +1998,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
       # target, num
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE))  {
-      plots[[i]] <- target_explore_num(data_tmp, !!sym(var_name), target = !!target_quo)
+      plots[[i]] <- target_explore_num(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none")
 
       # target, num, split
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE))  {
@@ -1992,7 +2006,7 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
       # target, cat
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE)) {
-      plots[[i]] <- target_explore_cat(data_tmp, !!sym(var_name), target = !!target_quo)
+      plots[[i]] <- target_explore_cat(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none")
 
       # target, cat, split
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE)) {

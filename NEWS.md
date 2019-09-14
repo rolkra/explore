@@ -8,6 +8,7 @@
 * get_nrow() deprecated, use total_fig_height() instead
 * add parameter title to explore_cor()
 * add support for POSIXct in describe()
+* improved handling of dataframes with no observations
 * update README.md
 * update Vignettes
 * add NEWS.md

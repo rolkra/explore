@@ -20,11 +20,11 @@ The explore package simplifies Exploratory Data Analysis (EDA). Get faster insig
 
 There are three ways to use the package:
 
-* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target.
+* **Interactive data exploration** (univariat, bivariat, multivariat)
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric. 
 
-* **Manual exploration** using a easy to remember set of tidy functions. Introduces two main verbs. **describe()** to describe a variable or table, **explore()** to grafically explore a variable or table.
+* **Manual exploration** using a easy to remember set of tidy functions. Introduces four main verbs. **explore()** to grafically explore a variable or table, **describe()** to describe a variable or table, **explain_tree() **to create a simple decision tree that explains a target. **report()** to generate an automated report of all variables.
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
@@ -43,7 +43,7 @@ Explore your dataset (in this case the iris dataset) in one line of code:
 explore(iris)
 ```
 
-A shiny app is launched, you can inspect individual variable, explore their relation to a binary target, grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
+A shiny app is launched, you can inspect individual variable, explore their relation to a target (binary / categorical / numerical), grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
  
 ![](../man/figures/explore_shiny_iris_target_species.png){width=600px}
 
@@ -154,31 +154,31 @@ iris %>% explore(Sepal.Length, target = Petal.Length)
 
 ### Explore multiple variables
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width) %>% 
   explore_all()
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor, split = FALSE)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, Species) %>% 
   explore_all(target = Species)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, Petal.Length) %>% 
   explore_all(target = Petal.Length)
