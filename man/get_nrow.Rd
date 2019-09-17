@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{get_nrow}
 \alias{get_nrow}
-\title{Get number of rows for a grid plot}
+\title{Get number of rows for a grid plot (deprecated, use total_fig_height() instead)}
 \usage{
 get_nrow(varnames, exclude = 0, ncol = 2)
 }
@@ -17,7 +17,7 @@ get_nrow(varnames, exclude = 0, ncol = 2)
 Number of rows
 }
 \description{
-Get number of rows for a grid plot
+Get number of rows for a grid plot (deprecated, use total_fig_height() instead)
 }
 \examples{
 get_nrow(names(iris), ncol = 2)

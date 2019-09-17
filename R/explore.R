@@ -931,6 +931,7 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   # use a factor for var if low number of cats
   if (guess_cat_num(data[[var_txt]]) == "cat") {
     data[[var_txt]] <- factor(data[[var_txt]])
+    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
   }
 
   # use a factor for target so that fill works
@@ -1091,6 +1092,7 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
 #' @param data A dataset
 #' @param var Variable
 #' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param title Title of the plot (if empty var name)
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
 #' @param color Color of plot
@@ -1108,7 +1110,7 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
+explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # parameter data
   if(missing(data))  {
@@ -1170,10 +1172,10 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
    if (is.na(target_txt))  {
 
     # plot denisity var, no target
-    data %>%
+    p <- data %>%
       ggplot(aes(!!var_quo)) +
       geom_density(fill = color, alpha = 0.7) +
-      ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
+      #ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
       theme_light()
   } else {
@@ -1193,7 +1195,7 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
       ggplot(aes(!!var_quo, fill = !!target_quo)) +
       geom_density(alpha = 0.7) +
       #ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
-      ggtitle(var_txt) +
+      #ggtitle(var_txt) +
       labs(x = "", y = "") +
       theme_light()
 
@@ -1202,10 +1204,19 @@ explore_density <- function(data, var, target, min_val = NA, max_val = NA, color
        p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"), name = target_txt)
     }
 
-    # plot density + target
-    p
-
   } # if
+
+  # title
+  if (!is.na(title) & nchar(title) > 0)  {
+    p <- p + ggtitle(title)
+  } else if (is.na(target_txt)) {
+    p <- p + ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)"))
+  } else {
+    p <- p + ggtitle(paste0(var_txt))
+  }
+
+  # plot
+  p
 
 } # explore_density
 

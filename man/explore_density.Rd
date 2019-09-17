@@ -4,8 +4,9 @@
 \alias{explore_density}
 \title{Explore density of variable}
 \usage{
-explore_density(data, var, target, min_val = NA, max_val = NA,
-  color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)
+explore_density(data, var, target, title = "", min_val = NA,
+  max_val = NA, color = "grey", auto_scale = TRUE,
+  max_target_cat = 5, ...)
 }
 \arguments{
 \item{data}{A dataset}
@@ -13,6 +14,8 @@ explore_density(data, var, target, min_val = NA, max_val = NA,
 \item{var}{Variable}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
+
+\item{title}{Title of the plot (if empty var name)}
 
 \item{min_val}{All values < min_val are converted to min_val}
 

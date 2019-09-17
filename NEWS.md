@@ -9,6 +9,7 @@
 * add parameter title to explore_cor()
 * add support for POSIXct in describe()
 * improved handling of dataframes with no observations
+* add parameter title to explore_density()
 * update README.md
 * update Vignettes
 * add NEWS.md
