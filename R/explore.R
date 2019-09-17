@@ -1368,19 +1368,27 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #'
 #' @param data A dataset
 #' @param target Target variable
+#' @param nvar Number of variables to plot
 #' @param ncol Number of columns (default = 2)
 #' @param size fig.height of 1 plot (default = 3)
 #' @return Number of rows
 #' @examples
+#' total_fig_height(iris)
 #' total_fig_height(iris, target = Species)
+#' total_fig_height(nvar = 5)
 #' @export
 
-total_fig_height <- function(data, target, ncol = 2, size = 3)  {
+total_fig_height <- function(data, target, nvar = NA, ncol = 2, size = 3)  {
 
-  n_var <- ncol(data)
-  n <- n_var - ifelse(missing(target), 0, 1)
-  result <- ceiling(n / ncol) * size
-  result
+  if (!is.na(nvar)) {
+    n_var <- nvar
+    n <- n_var - ifelse(missing(target), 0, 1)
+  } else {
+    n_var <- ncol(data)
+    n <- n_var - ifelse(missing(target), 0, 1)
+  }
+    result <- ceiling(n / ncol) * size
+    result
 }
 
 #============================================================================

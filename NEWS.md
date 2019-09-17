@@ -1,4 +1,4 @@
-## explore (development version)
+## explore 0.5.0 (2019-09-17)
 
 * explain_tree(): target can be bin/num/cat
 * explain_tree(): add parameter max_target_cat
@@ -10,6 +10,7 @@
 * add support for POSIXct in describe()
 * improved handling of dataframes with no observations
 * add parameter title to explore_density()
+* add parameter nvar to total_fig_height()
 * update README.md
 * update Vignettes
 * add NEWS.md
