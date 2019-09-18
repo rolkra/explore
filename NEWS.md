@@ -28,6 +28,7 @@ Many functions now accept categorical and numerical targets (next to a binary ta
 * target_explore_num() now using correct tidy eval
 * add plot_var_info() - plots a info-text to a variable as ggplot obj.
 * plot_var_info() used in explore/explore_all if <oth>
+* plot_var_info() used if explore empty data
 * add parameter max_cat in explore_bar(), explore_density() and explain_tree()
 * add explore_tbl()
 * drop explore_cat() & explore_num()

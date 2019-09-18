@@ -904,6 +904,11 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
     stop(paste0("variable missing"))
   }
 
+  if(nrow(data) == 0) {
+    p <- data %>% plot_var_info(!!var_quo, "no observations")
+    return(p)
+  }
+
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -1127,6 +1132,12 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
   } else {
     stop(paste0("variable missing"))
   }
+
+  if(nrow(data) == 0) {
+    p <- data %>% plot_var_info(!!var_quo, "no observations")
+    return(p)
+  }
+
 
   # parameter target
   if(!missing(target))  {
@@ -1430,6 +1441,11 @@ describe_num <- function(data, var, out = "text", margin = 0) {
   var_name = var_txt
   var_type = get_type(data[[var_name]])
 
+  # datatype supported?
+  if (!var_type %in% c("integer", "double", "date"))  {
+    stop(paste0("datatype ", var_type, " not supported"))
+  }
+
   var_obs = length(data[[var_name]])
   var_na = sum(is.na(data[[var_name]]))
   var_na_pct = var_na / var_obs * 100
@@ -1466,8 +1482,14 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min), " | ", format_num_auto(var_max), "\n"))
     cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"]), " | ", format_num_auto(var_quantile["95%"]), "\n"))
     cat(paste0(spc, "q25|q75  ="), paste0(format_num_auto(var_quantile["25%"]), " | ", format_num_auto(var_quantile["75%"]), "\n"))
-    cat(paste0(spc, "median   ="), format_num_auto(var_median), "\n")
-    cat(paste0(spc, "mean     ="), format_num_auto(var_mean), "\n")
+    if(var_type == "date")  {
+      cat(paste0(spc, "median   ="), as.character(var_median), "\n")
+      cat(paste0(spc, "mean     ="), as.character(var_mean), "\n")
+    } else {
+      cat(paste0(spc, "median   ="), format_num_auto(var_median), "\n")
+      cat(paste0(spc, "mean     ="), format_num_auto(var_mean), "\n")
+    }
+
   } else {
     result_num
   }
@@ -2215,6 +2237,11 @@ explain_logreg <- function(data, target, ...)  {
 
 explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "grey", ...)  {
 
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
+
   # parameter x
   if(!missing(x))  {
     x_quo <- enquo(x)
@@ -2232,6 +2259,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     y_txt = NA
     return(NULL)
   }
+
+  if(nrow(data) == 0) {
+    p <- data %>% plot_var_info(!!x_quo, "no observations")
+    return(p)
+  }
+
 
   # parameter target
   if(!missing(target))  {
