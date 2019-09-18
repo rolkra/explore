@@ -1430,7 +1430,7 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
   } else {
-    var_txt = NA
+    stop("provide variable to describe")
   }
 
   # error if var is a factor
@@ -1521,7 +1521,7 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
   } else {
-    var_txt = NA
+    stop("provide variable to describe")
   }
 
   var_name = var_txt
