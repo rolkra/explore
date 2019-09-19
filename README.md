@@ -87,6 +87,7 @@ Explain target (is Species a versicolor?)
 ```r
 # define a target (is Species versicolor?)
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+iris$Species <- NULL
 
 # explore interactive
 explore(iris)
