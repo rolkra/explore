@@ -87,6 +87,9 @@ Explain target (is Species a versicolor?)
 ```r
 # define a target (is Species versicolor?)
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+
+# explore interactive
+explore(iris)
 ```
 
 <img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
