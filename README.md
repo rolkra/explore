@@ -80,7 +80,7 @@ explore(iris)
 
 Explore variables
 
-<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_target_species.PNG" alt="example interactive exploration" width="800">
+<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_target_species.png" alt="example interactive exploration" width="800">
 
 Explain target (is Species a versicolor?)
 
