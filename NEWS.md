@@ -1,4 +1,4 @@
-## explore 0.5.0 (2019-09-17)
+## explore 0.5.0 (2019-09-19)
 
 Interactive data exploration now accept categorical and numerical targets (next to a binary target).
 
