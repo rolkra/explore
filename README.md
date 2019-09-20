@@ -16,7 +16,7 @@ Simplifies Exploratory Data Analysis.
 
 There are three ways to use the package:
 
-* **Interactive data exploration** (univariat, bivariat, multivariat) limited to a binary target (in DEV version you can use binary / categorical / numerical). 
+* **Interactive data exploration** (univariat, bivariat, multivariat). A target can be defined (binary / categorical / numerical). 
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
 
