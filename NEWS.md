@@ -1,3 +1,7 @@
+## explore 0.5.1 (2019-10-07)
+
+Prepare for new dplyr 0.8.4
+
 ## explore 0.5.0 (2019-09-19)
 
 Interactive data exploration now accept categorical and numerical targets (next to a binary target).
