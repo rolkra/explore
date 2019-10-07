@@ -2484,28 +2484,35 @@ explore_tbl <- function(data)  {
   n_var <- nrow(d)
 
   # prepare "all variables"
-  bar1 <- d %>% count(type)
-  bar1$measure <- "all"
-  bar1$n_pct <- bar1$n / n_var * 100
+  bar1 <- d %>%
+    count(type) %>%
+    mutate(
+      measure = "all",
+      n_pct = n / n_var * 100
+    )
 
   # prepare "no variance"
   suppressWarnings(
     bar2 <- d %>%
       filter(type != "oth") %>%
       filter(unique == 1) %>%
-      count(type)
+      count(type) %>%
+      mutate(
+        measure = "no variance",
+        n_pct = n / n_var * 100
+      )
   )
-  bar2$measure <- "no variance"
-  bar2$n_pct <- bar2$n / n_var * 100
 
   # prepare "with NA"
   suppressWarnings(
     bar3 <- d %>%
       filter(na > 0) %>%
-      count(type)
+      count(type) %>%
+      mutate(
+        measure = "with NA",
+        n_pct = n / n_var * 100
+      )
   )
-  bar3$measure <- "with NA"
-  bar3$n_pct <- bar3$n / n_var * 100
 
   # prepare plot
   bar <- bind_rows(bar1, bar2, bar3)
