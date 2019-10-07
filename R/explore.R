@@ -1479,15 +1479,15 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     cat(paste0(spc, "type     ="), var_type,"\n")
     cat(paste0(spc, "na       ="), paste0(format_num_auto(var_na)," of ",format_num_space(var_obs)," (",format_num_auto(var_na_pct),"%)\n"))
     cat(paste0(spc, "unique   ="), paste0(format_num_auto(var_unique),"\n"))
-    cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min), " | ", format_num_auto(var_max), "\n"))
-    cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"]), " | ", format_num_auto(var_quantile["95%"]), "\n"))
-    cat(paste0(spc, "q25|q75  ="), paste0(format_num_auto(var_quantile["25%"]), " | ", format_num_auto(var_quantile["75%"]), "\n"))
+    cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min, digits=6), " | ", format_num_auto(var_max,digits=4), "\n"))
+    cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"],digits=6), " | ", format_num_auto(var_quantile["95%"],digits=6), "\n"))
+    cat(paste0(spc, "q25|q75  ="), paste0(format_num_auto(var_quantile["25%"],digits=6), " | ", format_num_auto(var_quantile["75%"],digits=6), "\n"))
     if(var_type == "date")  {
       cat(paste0(spc, "median   ="), as.character(var_median), "\n")
       cat(paste0(spc, "mean     ="), as.character(var_mean), "\n")
     } else {
       cat(paste0(spc, "median   ="), format_num_auto(var_median), "\n")
-      cat(paste0(spc, "mean     ="), format_num_auto(var_mean), "\n")
+      cat(paste0(spc, "mean     ="), format_num_auto(var_mean,digits=6), "\n")
     }
 
   } else {
@@ -1550,8 +1550,12 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
       mutate(pct = n / sum(n) * 100) %>%
       mutate(cat_len = nchar(as.character(grp)))
 
-    # limit len of catnames
-    max_cat_len <- max(var_frequency$cat_len, na.rm = TRUE)
+    # limit len of catnames (if not all NA)
+    max_cat_len <- 7
+    if(nrow(var_frequency) > 0 & !is.na(var_frequency[1,"grp"]))  {
+       max_cat_len <- max(var_frequency$cat_len, na.rm = TRUE)
+    }
+
     if(max_cat_len < 7)  {
       max_cat_len = 7
     }
