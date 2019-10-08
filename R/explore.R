@@ -1421,9 +1421,14 @@ total_fig_height <- function(data, target, nvar = NA, ncol = 2, size = 3)  {
 
 describe_num <- function(data, var, out = "text", margin = 0) {
 
-  # error if no data
-  if (missing(data)) {
-    stop("provide data to describe")
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
   }
 
   # parameter var
@@ -1432,6 +1437,11 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     var_txt <- quo_name(var_quo)[[1]]
   } else {
     stop("provide variable to describe")
+  }
+
+  # check if var in data
+  if(!var_txt %in% names(data)) {
+    stop("variable not found in table")
   }
 
   # error if var is a factor
@@ -1521,13 +1531,26 @@ describe_num <- function(data, var, out = "text", margin = 0) {
 
 describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
 
-  if (missing(data)) stop("provide data to describe")
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
 
   if(!missing(var))  {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
   } else {
     stop("provide variable to describe")
+  }
+
+  # check if var in data
+  if(!var_txt %in% names(data)) {
+    stop("variable not found in table")
   }
 
   var_name = var_txt
@@ -1631,6 +1654,16 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
 #' @export
 
 describe_all <- function(data = NA, out = "large") {
+
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
 
   # define variables for package check
   variable <- NULL
@@ -1736,6 +1769,16 @@ describe_all <- function(data = NA, out = "large") {
 #' @export
 
 describe_tbl <- function(data, target, out = "text")  {
+
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
 
   if(!missing(target))  {
     target <- enquo(target)
@@ -1853,10 +1896,26 @@ describe_tbl <- function(data, target, out = "text")  {
 
 describe <- function(data, var, target, out = "text", ...)  {
 
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
+
   # parameter var
   if(!missing(var))  {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
+
+    # check if var in data
+    if(!var_txt %in% names(data)) {
+      stop("variable not found in table")
+    }
+
   } else {
     var_txt = NA
   }
@@ -2514,6 +2573,11 @@ explore_tbl <- function(data)  {
   # data table available?
   if (missing(data))  {
     stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
   }
 
   # describe data
