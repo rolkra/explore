@@ -1473,22 +1473,27 @@ describe_num <- function(data, var, out = "text", margin = 0) {
                      mean = var_mean)
 
   if (out == "text")  {
+
+    txt <- ""
+
     spc <- paste(rep(" ", margin), collapse = "")
-    cat(paste0(spc, "variable ="), var_name, "\n")
+    txt <- paste0(txt, spc, "variable = ", var_name, "\n")
     #cat("type     =", paste0(var_type, " (cat/num = ", var_guess,")\n"))
-    cat(paste0(spc, "type     ="), var_type,"\n")
-    cat(paste0(spc, "na       ="), paste0(format_num_auto(var_na)," of ",format_num_space(var_obs)," (",format_num_auto(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num_auto(var_unique),"\n"))
-    cat(paste0(spc, "min|max  ="), paste0(format_num_auto(var_min, digits=6), " | ", format_num_auto(var_max,digits=4), "\n"))
-    cat(paste0(spc, "q05|q95  ="), paste0(format_num_auto(var_quantile["5%"],digits=6), " | ", format_num_auto(var_quantile["95%"],digits=6), "\n"))
-    cat(paste0(spc, "q25|q75  ="), paste0(format_num_auto(var_quantile["25%"],digits=6), " | ", format_num_auto(var_quantile["75%"],digits=6), "\n"))
+    txt <- paste0(txt, spc, "type     = ", var_type,"\n")
+    txt <- paste0(txt, spc, "na       = ", format_num_auto(var_na)," of ",format_num_space(var_obs)," (",format_num_auto(var_na_pct),"%)\n")
+    txt <- paste0(txt, spc, "unique   = ", format_num_auto(var_unique),"\n")
+    txt <- paste0(txt, spc, "min|max  = ", format_num_auto(var_min, digits=6), " | ", format_num_auto(var_max,digits=4), "\n")
+    txt <- paste0(txt, spc, "q05|q95  = ", format_num_auto(var_quantile["5%"],digits=6), " | ", format_num_auto(var_quantile["95%"],digits=6), "\n")
+    txt <- paste0(txt, spc, "q25|q75  = ", format_num_auto(var_quantile["25%"],digits=6), " | ", format_num_auto(var_quantile["75%"],digits=6), "\n")
     if(var_type == "date")  {
-      cat(paste0(spc, "median   ="), as.character(var_median), "\n")
-      cat(paste0(spc, "mean     ="), as.character(var_mean), "\n")
+      txt <- paste0(txt, spc, "median   = ", as.character(var_median), "\n")
+      txt <- paste0(txt, spc, "mean     = ", as.character(var_mean), "\n")
     } else {
-      cat(paste0(spc, "median   ="), format_num_auto(var_median), "\n")
-      cat(paste0(spc, "mean     ="), format_num_auto(var_mean,digits=6), "\n")
+      txt <- paste0(txt, spc, "median   = ", format_num_auto(var_median), "\n")
+      txt <- paste0(txt, spc, "mean     = ", format_num_auto(var_mean,digits=6), "\n")
     }
+    # print text output
+    cat(txt)
 
   } else {
     result_num
@@ -1578,27 +1583,33 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   # result as text
   if (out == "text")  {
 
+    txt <- ""
+
     spc <- paste(rep(" ", margin), collapse = "")
-    cat(paste0(spc, "variable ="), var_name, "\n")
+    txt <- paste0(txt, spc, "variable = ", var_name, "\n")
     #cat(paste0(spc, "type     ="), paste0(var_type, " (cat/num = ", var_guess,")\n"))
-    cat(paste0(spc, "type     ="), paste0(var_type,"\n"))
-    cat(paste0(spc, "na       ="), paste0(format_num_space(var_na)," of ",format_num_space(var_obs)," (",format_num_space(var_na_pct),"%)\n"))
-    cat(paste0(spc, "unique   ="), paste0(format_num_space(var_unique),"\n"))
+    txt <- paste0(txt, spc, "type     = ", var_type,"\n")
+    txt <- paste0(txt, spc, "na       = ", format_num_space(var_na)," of ",format_num_space(var_obs)," (",format_num_space(var_na_pct),"%)\n")
+    txt <- paste0(txt, spc, "unique   = ", format_num_space(var_unique),"\n")
 
     # show frequency for each category (maximum max_cat)
     if (var_obs > 0)  {
       for (i in seq(min(var_unique, max_cat)))  {
         var_name = format(var_frequency[[i, 1]], width = max_cat_len, justify = "left")
-        cat(paste0(spc, " ", var_name,
+        txt <- paste0(txt, spc, " ", var_name,
                    " = ", format_num_space(var_frequency[[i, 2]]), " (",
-                   format_num_space(var_frequency[[i,3]]),"%)\n" ))
+                   format_num_space(var_frequency[[i,3]]),"%)\n" )
       } # for
     } # if
 
     # if more categories than displayed, show "..."
     if (var_unique > max_cat)  {
-      cat(paste0(spc, " ..."))
+      txt <- paste0(txt, spc, " ...")
     }
+
+    # print text output
+    cat(txt)
+
   } else {
     result_cat
   }
@@ -1663,7 +1674,9 @@ describe_all <- function(data = NA, out = "large") {
     var_unique = length(unique(data[[var_name]]))
 
     if (var_obs > 0 &
-        get_type(data[[var_name]]) %in% c("logical","integer","double") & !is.factor(data[[var_name]]))  {
+        get_type(data[[var_name]]) %in% c("logical","integer","double") &
+        !is.factor(data[[var_name]]) &
+        var_na < var_obs)  {
       var_min = min(data[[var_name]], na.rm = TRUE)
       var_mean = mean(data[[var_name]], na.rm = TRUE)
       var_max = max(data[[var_name]], na.rm = TRUE)
@@ -2096,6 +2109,11 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
   type <- NULL
   variable <- NULL
 
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
+
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -2115,6 +2133,11 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
 
   # minimum 2 variables left?
   if (ncol(data) < 2) {
+    p <- plot_text("can't grow decision tree")
+    return(invisible(p))
+  }
+
+  if(nrow(data) == 0) {
     p <- plot_text("can't grow decision tree")
     return(invisible(p))
   }
@@ -2187,6 +2210,11 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
 #' @export
 
 explain_logreg <- function(data, target, ...)  {
+
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
 
   # parameter target
   if(!missing(target))  {
