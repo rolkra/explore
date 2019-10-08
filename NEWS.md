@@ -9,6 +9,7 @@ Bug Fixes
 * describe_all() bugfix variable with all NA
 * explain_tree() bugfix dataframe with 0 rows
 * improve speed describe() text output (RMarkdown)
+* explore() now checks if data is a data.frame
 
 ## explore 0.5.0 (2019-09-19)
 

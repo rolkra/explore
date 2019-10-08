@@ -1323,6 +1323,7 @@ guess_cat_num <- function(var)  {
     warning("no variable to guess")
     return("?")
   }
+
   # all factors are cat
   if (is.factor(var)) {
     return("cat")
@@ -2137,7 +2138,14 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
     return(invisible(p))
   }
 
+  # observations?
   if(nrow(data) == 0) {
+    p <- plot_text("can't grow decision tree")
+    return(invisible(p))
+  }
+
+  # target all NA?
+  if (all(is.na(data[[target_txt]])))  {
     p <- plot_text("can't grow decision tree")
     return(invisible(p))
   }
@@ -2296,7 +2304,6 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>% plot_var_info(!!x_quo, "no observations")
     return(p)
   }
-
 
   # parameter target
   if(!missing(target))  {
@@ -2833,6 +2840,21 @@ explore_shiny <- function(data, target)  {
 #' @export
 
 explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
+
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
+
+  # observations?
+  if(nrow(data) == 0) {
+    stop("data has 0 observations")
+  }
 
   # parameter var
   if (!missing(var)) {
