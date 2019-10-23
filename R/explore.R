@@ -534,10 +534,7 @@ format_num_auto <- function(number = 0, digits = 1)   {
   }
 
   # space, with kMB
-  return(paste0(format_num_space(number, digits),
-                " (",
-                format_num_kMB(number, digits),
-                ")"))
+  return(format_num_space(number, digits))
 
 } # format_num_auto
 
@@ -1330,7 +1327,7 @@ guess_cat_num <- function(var)  {
   }
   # for unsupported classes return "oth"
   if (class(var)[1] %in% c("numeric", "integer", "character", "logical", "Date", "POSIXct"))  {
-    var_class <- class(var)
+    var_class <- class(var)[1]
   } else {
     return("oth")
   }
@@ -1339,6 +1336,13 @@ guess_cat_num <- function(var)  {
   # num with limited number of unique values is cat
   var_unique <- length(unique(var))
   # return result
+
+  # treate Date always as cat
+  if (var_class == "Date")  {
+    return("cat")
+  }
+
+  # Decide on type and number of unique values
   if (var_type %in% c("integer", "double")) {
     if (var_unique < 10)  {
       return("cat")
@@ -1493,7 +1497,7 @@ describe_num <- function(data, var, out = "text", margin = 0) {
     txt <- paste0(txt, spc, "type     = ", var_type,"\n")
     txt <- paste0(txt, spc, "na       = ", format_num_auto(var_na)," of ",format_num_space(var_obs)," (",format_num_auto(var_na_pct),"%)\n")
     txt <- paste0(txt, spc, "unique   = ", format_num_auto(var_unique),"\n")
-    txt <- paste0(txt, spc, "min|max  = ", format_num_auto(var_min, digits=6), " | ", format_num_auto(var_max,digits=4), "\n")
+    txt <- paste0(txt, spc, "min|max  = ", format_num_auto(var_min, digits=6), " | ", format_num_auto(var_max,digits=6), "\n")
     txt <- paste0(txt, spc, "q05|q95  = ", format_num_auto(var_quantile["5%"],digits=6), " | ", format_num_auto(var_quantile["95%"],digits=6), "\n")
     txt <- paste0(txt, spc, "q25|q75  = ", format_num_auto(var_quantile["25%"],digits=6), " | ", format_num_auto(var_quantile["75%"],digits=6), "\n")
     if(var_type == "date")  {
@@ -2262,7 +2266,8 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
 #============================================================================
 #  explain_logreg
 #============================================================================
-#' Explain a binary target using logistic regression
+#' Explain a binary target using a logistic regression (glm).
+#' Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).
 #'
 #' @param data A dataset
 #' @param target Target variable (binary)

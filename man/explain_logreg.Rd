@@ -2,7 +2,8 @@
 % Please edit documentation in R/explore.R
 \name{explain_logreg}
 \alias{explain_logreg}
-\title{Explain a binary target using logistic regression}
+\title{Explain a binary target using a logistic regression (glm).
+Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).}
 \usage{
 explain_logreg(data, target, ...)
 }
@@ -17,7 +18,8 @@ explain_logreg(data, target, ...)
 Dataset with results (term, estimate, std.error, z.value, p.value)
 }
 \description{
-Explain a binary target using logistic regression
+Explain a binary target using a logistic regression (glm).
+Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).
 }
 \examples{
 data <- iris

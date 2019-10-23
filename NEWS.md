@@ -1,3 +1,8 @@
+## explore 0.5.2 (dev)
+
+* format_num_auto without brackets
+* treat Date variables as cat
+
 ## explore 0.5.1 (2019-10-07)
 
 Prepare for new dplyr 0.8.4
