@@ -1,5 +1,6 @@
 ## explore 0.5.2 (dev)
 
+* split scource-code file into multiple files
 * format_num_auto without brackets
 * treat Date variables as cat
 
