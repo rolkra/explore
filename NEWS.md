@@ -3,6 +3,7 @@
 * split scource-code file into multiple files
 * format_num_auto without brackets
 * treat Date variables as cat
+* report() fix automatic file extentison .html
 
 ## explore 0.5.1 (2019-10-07)
 

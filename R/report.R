@@ -54,7 +54,7 @@ report <- function(data, target, split = TRUE, output_file, output_dir)  {
   # if not, add it!
   if (!missing(output_file)) {
     len <- nchar(output_file)
-    if (tolower(substr(output_file, len-3, len)) != ".html")  {
+    if (tolower(substr(output_file, len-4, len)) != ".html")  {
       output_file <- paste0(output_file, ".html")
     }
   } # if
