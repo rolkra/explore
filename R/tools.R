@@ -50,6 +50,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' @param min_val All values < min_val are converted to min_val (var numeric or character)
 #' @param max_val All values > max_val are converted to max_val (var numeric or character)
 #' @param max_cat Maximum number of different factor levels for categorical variable (if more, .OTHER is added)
+#' @param simplify_text if TRUE, a character variable is simplified (trim, upper, ...)
 #' @param name New name of variable (as string)
 #' @return Dataset
 #' @import rlang
@@ -58,7 +59,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
 #' @export
 
-clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, name = NA)  {
+clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, simplify_text = FALSE, name = NA)  {
 
   # check if var is missing
   if (missing(var)){
@@ -114,6 +115,11 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
       data[[var_txt]] <- forcats::fct_lump(data[[var_txt]], max_cat, other_level = ".OTHER")
     }
   } # if max_cat
+
+  # simplify text
+  if (simplify_text == TRUE & is.character(data[[var_txt]]))  {
+    data[[var_txt]] <- simplify_text(data[[var_txt]])
+  }
 
   # rename variable
   if (!is.na(name))  {
@@ -676,3 +682,39 @@ data_dict_md <- function(data, title = "", description = NA, output_file = "data
   writeLines(txt, file_name)
 } # data_dict_md
 
+
+#============================================================================
+#  Function: simplify_text
+#============================================================================
+#' Simplifies a text string
+#'
+#' A text string is converted into a simplified version by
+#' trimming, converting to upper case, replacing german Umlaute,
+#' dropping special characters like comma and semicolon and
+#' replacing multiple spaces with one space.
+#'
+#' @param text text string
+#' @return text string
+#' @import dplyr
+#' @examples
+#' simplify_text(" Hello  World !, ")
+#' @export
+
+simplify_text <- function(text)  {
+
+  # return original text if text is not character
+  if (!is.character(text))  {
+    return(text)
+  }
+
+  # simplify text
+  text %>%
+    stringr::str_trim() %>%
+    stringr::str_to_upper() %>%
+    stringr::str_replace_all("\u00C4", "AE") %>%
+    stringr::str_replace_all("\u00D6", "OE") %>%
+    stringr::str_replace_all("\u00DC", "UE") %>%
+    stringr::str_replace_all("\u00DF", "SS") %>%
+    stringr::str_replace_all("[^0-9A-Z@#:!?_\\s\\.\\-]", "") %>%
+    stringr::str_replace_all("\\s+", " ")
+}

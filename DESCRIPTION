@@ -9,7 +9,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 URL: http://github.com/rolkra/explore
-Imports: broom, dplyr, DBI, DT, forcats, ggplot2 (>= 3.0.0), gridExtra, magrittr, MASS, odbc, rlang, rpart, rpart.plot, shiny, rmarkdown 
+Imports: broom, dplyr, DBI, DT, forcats, ggplot2 (>= 3.0.0), gridExtra, magrittr, MASS, odbc, rlang, rpart, rpart.plot, shiny, stringr, rmarkdown 
 RoxygenNote: 6.1.1
 Suggests: 
     knitr
