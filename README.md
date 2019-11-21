@@ -80,7 +80,7 @@ explore(iris)
 
 Explore variables
 
-<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_target_species.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore_shiny_iris_target_species.png" alt="example interactive exploration" width="800">
 
 Explain target (is Species a versicolor?)
 
@@ -93,7 +93,7 @@ iris$Species <- NULL
 explore(iris)
 ```
 
-<img src="https://github.com/rolkra/explore/blob/master/man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
 
 ### Automated Report
 
@@ -105,7 +105,7 @@ Report of all variables
 iris %>% report(output_dir = tempdir())
 ```
 
-<img src="https://github.com/rolkra/explore/blob/master/man/figures/report_attributes.png" alt="example report attributes" width="400">
+<img src="man/figures/report_attributes.png" alt="example report attributes" width="400">
 
 Report with defined target (binary target, split = FALSE)
 ```r
@@ -114,7 +114,7 @@ iris %>% report(output_dir = tempdir(),
                 split = FALSE)
 ```
 
-<img src="https://github.com/rolkra/explore/blob/master/man/figures/report_target.png" alt="example report attributes" width="400">
+<img src="man/figures/report_target.png" alt="example report attributes" width="400">
 
 
 ### Manual exploration
