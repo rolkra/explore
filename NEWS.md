@@ -1,10 +1,12 @@
-## explore 0.5.2 (dev)
+## explore 0.5.2 (2019-11-21)
 
 * split scource-code file into multiple files
 * format_num_auto without brackets
 * treat Date variables as cat
 * report() fix automatic file extentison .html
 * add simplify_text()
+* add parameter simplify_text to clean_var()
+* fix link in README.md
 
 ## explore 0.5.1 (2019-10-07)
 
