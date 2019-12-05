@@ -45,11 +45,6 @@ report <- function(data, target, split = TRUE, output_file, output_dir)  {
     target_text = NA
   }
 
-  # parameter split (set default value)
-  if (missing(split))  {
-    split = FALSE
-  }
-
   # check if output-file has .html extension
   # if not, add it!
   if (!missing(output_file)) {

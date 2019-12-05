@@ -12,7 +12,7 @@ describe_all(data = NA, out = "large")
 \item{out}{Output format ("small"|"large")}
 }
 \value{
-Dataset
+Dataset (tibble)
 }
 \description{
 Describe all variables of a dataset

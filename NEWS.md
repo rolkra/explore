@@ -1,5 +1,7 @@
 ## explore 0.5.3 (DEV)
 
+* describe_all() returns a tibble, column 'variable' is character
+* report() split = TRUE as default
 
 ## explore 0.5.2 (2019-11-21)
 
