@@ -3,6 +3,8 @@
 * describe_all() returns a tibble
 * describe_all(): column 'variable' is character (not factor)
 * report() split = TRUE as default
+* add rescale01()
+* add parameter rescale01 to clean_var()
 
 ## explore 0.5.2 (2019-11-21)
 

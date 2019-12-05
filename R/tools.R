@@ -36,105 +36,6 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
   return (chartr(new,old,text))
 }
 
-
-#============================================================================
-#  clean_var
-#============================================================================
-#' Clean variable
-#'
-#' Clean variable (replace NA values, set min_val and max_val)
-#'
-#' @param data A dataset
-#' @param var Name of variable
-#' @param na Value that replaces NA
-#' @param min_val All values < min_val are converted to min_val (var numeric or character)
-#' @param max_val All values > max_val are converted to max_val (var numeric or character)
-#' @param max_cat Maximum number of different factor levels for categorical variable (if more, .OTHER is added)
-#' @param simplify_text if TRUE, a character variable is simplified (trim, upper, ...)
-#' @param name New name of variable (as string)
-#' @return Dataset
-#' @import rlang
-#' @import dplyr
-#' @examples
-#' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
-#' @export
-
-clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, simplify_text = FALSE, name = NA)  {
-
-  # check if var is missing
-  if (missing(var)){
-    warning("no variable defined, call function with variable that you want to clean!")
-    return(data)
-  }
-
-  # tidy evaluation
-  var_quo <- enquo(var)
-  var_txt <- quo_name(var_quo)[[1]]
-
-  # check if var exists
-  if (sum(colnames(data) == var_txt) == 0){
-    warning("can't find variable " ,var_txt, " in data, check variable name!")
-    return(data)
-  }
-
-  # replace NA
-  if (!is.na(na))  {
-    na_pos <- is.na(data[[var_txt]])
-    data[na_pos, var_txt] <- na
-  }
-
-  # set min value
-  if (!is.na(min_val) & !is.factor(data[[var_txt]]))  {
-    col <- data[ ,var_txt]
-    col[col < min_val] <- min_val
-    data[ ,var_txt] <- col
-  }
-
-  # set max value
-  if (!is.na(max_val) & !is.factor(data[[var_txt]]))  {
-    col <- data[ ,var_txt]
-    col[col > max_val] <- max_val
-    data[ ,var_txt] <- col
-  }
-
-  # set levels based on max_cat
-  if (!is.na(max_cat) & max_cat > 0)  {
-    # factorise if necessary
-    if (!is.factor(data[[var_txt]])) {
-      data[[var_txt]] <- factor(data[[var_txt]])
-    }
-
-    # number of different levels of variable
-    n_var_cat <- length(levels(data[[var_txt]]))
-
-    # add level for NA (if in data)
-    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
-
-    # keep max. different levels
-    if (n_var_cat > max_cat)  {
-      data[[var_txt]] <- forcats::fct_lump(data[[var_txt]], max_cat, other_level = ".OTHER")
-    }
-  } # if max_cat
-
-  # simplify text
-  if (simplify_text == TRUE & is.character(data[[var_txt]]))  {
-    data[[var_txt]] <- simplify_text(data[[var_txt]])
-  }
-
-  # rename variable
-  if (!is.na(name))  {
-    var_names <- colnames(data)
-    if (name %in% var_names & name != var_txt)  {
-      warning("variable ", name, " already exists in data. Did not rename, select other name!")
-    } else {
-      colnames(data)[colnames(data) == var_txt] <- name
-    }
-  }
-
-  # return data
-  data
-} # clean_var
-
 #============================================================================
 #  balance_target
 #============================================================================
@@ -718,3 +619,129 @@ simplify_text <- function(text)  {
     stringr::str_replace_all("[^0-9A-Z@#:!?_\\s\\.\\-]", "") %>%
     stringr::str_replace_all("\\s+", " ")
 }
+
+#============================================================================
+#  Function: rescale01
+#============================================================================
+#' Rescales a numeric variable into values between 0 and 1
+#'
+#' @param var text string
+#' @return text string
+#' @import dplyr
+#' @examples
+#' simplify_text(" Hello  World !, ")
+#' @export
+
+rescale01 <- function(x)  {
+
+  # rescale
+    y <- x / ( max(x) - min(x) )
+    y <- y - min(y)
+
+  # return
+  y
+} # rescale
+
+#============================================================================
+#  clean_var
+#============================================================================
+#' Clean variable
+#'
+#' Clean variable (replace NA values, set min_val and max_val)
+#'
+#' @param data A dataset
+#' @param var Name of variable
+#' @param na Value that replaces NA
+#' @param min_val All values < min_val are converted to min_val (var numeric or character)
+#' @param max_val All values > max_val are converted to max_val (var numeric or character)
+#' @param max_cat Maximum number of different factor levels for categorical variable (if more, .OTHER is added)
+#' @param rescale01 Rescale into value between 0 and 1 (var must be numeric)
+#' @param simplify_text if TRUE, a character variable is simplified (trim, upper, ...)
+#' @param name New name of variable (as string)
+#' @return Dataset
+#' @import rlang
+#' @import dplyr
+#' @examples
+#' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
+#' @export
+
+clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, rescale01 = FALSE, simplify_text = FALSE, name = NA)  {
+
+  # check if var is missing
+  if (missing(var)){
+    warning("no variable defined, call function with variable that you want to clean!")
+    return(data)
+  }
+
+  # tidy evaluation
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
+
+  # check if var exists
+  if (sum(colnames(data) == var_txt) == 0){
+    warning("can't find variable " ,var_txt, " in data, check variable name!")
+    return(data)
+  }
+
+  # replace NA
+  if (!is.na(na))  {
+    na_pos <- is.na(data[[var_txt]])
+    data[na_pos, var_txt] <- na
+  }
+
+  # set min value
+  if (!is.na(min_val) & !is.factor(data[[var_txt]]))  {
+    col <- data[ ,var_txt]
+    col[col < min_val] <- min_val
+    data[ ,var_txt] <- col
+  }
+
+  # set max value
+  if (!is.na(max_val) & !is.factor(data[[var_txt]]))  {
+    col <- data[ ,var_txt]
+    col[col > max_val] <- max_val
+    data[ ,var_txt] <- col
+  }
+
+  # set levels based on max_cat
+  if (!is.na(max_cat) & max_cat > 0)  {
+    # factorise if necessary
+    if (!is.factor(data[[var_txt]])) {
+      data[[var_txt]] <- factor(data[[var_txt]])
+    }
+
+    # number of different levels of variable
+    n_var_cat <- length(levels(data[[var_txt]]))
+
+    # add level for NA (if in data)
+    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
+
+    # keep max. different levels
+    if (n_var_cat > max_cat)  {
+      data[[var_txt]] <- forcats::fct_lump(data[[var_txt]], max_cat, other_level = ".OTHER")
+    }
+  } # if max_cat
+
+  # simplify text
+  if (simplify_text == TRUE & is.character(data[[var_txt]]))  {
+    data[[var_txt]] <- simplify_text(data[[var_txt]])
+  }
+
+  # simplify text
+  if (rescale01 == TRUE & is.numeric(data[[var_txt]]))  {
+    data[[var_txt]] <- rescale01(data[[var_txt]])
+  }
+
+  # rename variable
+  if (!is.na(name))  {
+    var_names <- colnames(data)
+    if (name %in% var_names & name != var_txt)  {
+      warning("variable ", name, " already exists in data. Did not rename, select other name!")
+    } else {
+      colnames(data)[colnames(data) == var_txt] <- name
+    }
+  }
+
+  # return data
+  data
+} # clean_var
