@@ -2,6 +2,7 @@
 
 export(balance_target)
 export(clean_var)
+export(count_pct)
 export(data_dict_md)
 export(decrypt)
 export(describe)

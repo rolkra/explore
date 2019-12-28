@@ -7,14 +7,14 @@
 rescale01(x)
 }
 \arguments{
-\item{var}{text string}
+\item{x}{numeric vector (to be rescaled)}
 }
 \value{
-text string
+vector with values between 0 and 1
 }
 \description{
 Rescales a numeric variable into values between 0 and 1
 }
 \examples{
-simplify_text(" Hello  World !, ")
+rescale01(0:10)
 }

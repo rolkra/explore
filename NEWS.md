@@ -5,6 +5,7 @@
 * report() split = TRUE as default
 * add rescale01()
 * add parameter rescale01 to clean_var()
+* add function count_pct()
 
 ## explore 0.5.2 (2019-11-21)
 
