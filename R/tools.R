@@ -765,13 +765,13 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
 count_pct <- function(data, ...)  {
 
   d <- data %>%
-    count(...)
+    dplyr::count(...)
 
   names(d) <- c("value", "n")
 
   d <- d %>%
-    mutate(tot = sum(n),
-           pct = n / sum(n) * 100.00)
+    dplyr::mutate(tot = sum(n),
+                  pct = n / sum(n) * 100.00)
 
   d
 } # count_pct
