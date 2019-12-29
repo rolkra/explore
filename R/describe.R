@@ -107,7 +107,7 @@ describe_num <- function(data, var, out = "text", margin = 0) {
 } # describe_num
 
 #============================================================================
-#  describe_cat (out = text | list)
+#  describe_cat (out = text | list | tibble)
 #============================================================================
 #' Describe categorial variable
 #'
@@ -148,6 +148,13 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
     stop("variable not found in table")
   }
 
+  # out = tibble
+  if (out %in% c("tibble","df","tbl"))  {
+    d <- data %>% count_pct(!!var_quo)
+    return(d)
+  }
+
+  # out = list | text
   var_name = var_txt
   var_type = ifelse(is.factor(data[[var_name]]),
                     "factor",

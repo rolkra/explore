@@ -15,7 +15,7 @@ count_pct(data, ...)
 Dataset
 }
 \description{
-Adds variables tot (total) and
+Adds variables total and
 pct (percentage) to dplyr::count()
 }
 \examples{

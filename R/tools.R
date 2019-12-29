@@ -751,7 +751,7 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
 #============================================================================
 #' Adds percentage to dplyr::count()
 #'
-#' Adds variables tot (total) and
+#' Adds variables total and
 #' pct (percentage) to dplyr::count()
 #'
 #' @param data A dataset
@@ -770,7 +770,7 @@ count_pct <- function(data, ...)  {
   names(d) <- c("value", "n")
 
   d <- d %>%
-    dplyr::mutate(tot = sum(n),
+    dplyr::mutate(total = sum(n),
                   pct = n / sum(n) * 100.00)
 
   d

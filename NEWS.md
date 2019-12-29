@@ -6,6 +6,7 @@
 * add rescale01()
 * add parameter rescale01 to clean_var()
 * add function count_pct()
+* add out='tibble' to describe_cat()
 
 ## explore 0.5.2 (2019-11-21)
 
