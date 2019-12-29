@@ -1380,3 +1380,89 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   } # if
 
 } # explore
+
+
+#============================================================================
+#  Function: explore_bintar
+#============================================================================
+#' Explore variable + binary target (values 0/1)
+#'
+#' Create a plot to explore relation between a variable and a binary target.
+#' The target variable is choosen automatically if possible (name starts with 'target')
+#'
+#' @param data A dataset
+#' @param var Numerical variable
+#' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param title Title of the plot
+#' @return Plot object
+#' @examples
+#' iris$target01 <- ifelse(iris$Species == "versicolor",1,0)
+#' explore_bintar(iris)
+#' @importFrom magrittr "%>%"
+#' @import rlang
+#' @export
+
+explore_bintar <- function(data, var, target = NULL, title = NULL) {
+
+  # data table available?
+  if (missing(data))  {
+    stop("expect a data table to explore")
+  }
+
+  # data type data.frame?
+  if (!is.data.frame(data))  {
+    stop("expect a table of type data.frame")
+  }
+
+  # observations?
+  if(nrow(data) == 0) {
+    stop("data has 0 observations")
+  }
+
+  # parameter var
+  if (!missing(var)) {
+    var_quo <- enquo(var)
+    var_text <- quo_name(var_quo)[[1]]
+    if (!var_text %in% names(data))  {
+      stop(paste0("variable '", var_text, "' not found"))
+    }
+  } else {
+    var_quo <- NA
+    var_text <- NA
+  }
+
+  # intelligent guessing if num or cat
+  # based on postfix and type of variable names
+  if (!is.na(var_text))  {
+    var_type <- guess_cat_num(data[[var_text]])
+  } else {
+    var_type = "?"
+  }
+
+  # guessing of target
+  if (missing(target)) {
+    var_names <- names(data)
+    target_pos <- stringr::str_detect(var_names, "target*")
+    target_var <- var_names[target_pos == TRUE]
+
+    if (length(target_var) == 1) {
+      target_quo <- sym(target_var[1])
+    } else {
+      stop("target not defined, guessing not possible")
+    }
+  } else {
+    target_quo <- enquo(target)
+  }
+
+  if (var_type == "num") {
+    p <- target_explore_num(data, var = !!var_quo, target = !!target_quo, title = title)
+  } else if (var_type == "cat") {
+    p <- target_explore_cat(data, var = !!var_quo, target = !!target_quo, title = title)
+  } else {
+    p <- plot_var_info(!!var_quo, info="can't plot\ntyype not supported")
+  }
+
+  p
+
+} # explore_bintar
+
