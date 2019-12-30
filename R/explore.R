@@ -1383,26 +1383,33 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
 
 #============================================================================
-#  Function: explore_bintar
+#  Function: explore_targetpct
 #============================================================================
 #' Explore variable + binary target (values 0/1)
 #'
-#' Create a plot to explore relation between a variable and a binary target.
-#' The target variable is choosen automatically if possible (name starts with 'target')
+#' Create a plot to explore relation between a variable and a binary target
+#' as target percent. The target variable is choosen automatically
+#' if possible (name starts with 'target')
 #'
 #' @param data A dataset
 #' @param var Numerical variable
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param title Title of the plot
+#' @param min_val All values < min_val are converted to min_val
+#' @param max_val All values > max_val are converted to max_val
+#' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
+#' @param na Value to replace NA
+#' @param flip Flip plot? (for categorical variables)
+#' @param ... Further arguments
 #' @return Plot object
 #' @examples
 #' iris$target01 <- ifelse(iris$Species == "versicolor",1,0)
-#' explore_bintar(iris)
+#' explore_targetpct(iris)
 #' @importFrom magrittr "%>%"
 #' @import rlang
 #' @export
 
-explore_bintar <- function(data, var, target = NULL, title = NULL) {
+explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, flip = NA, ...) {
 
   # data table available?
   if (missing(data))  {
@@ -1455,14 +1462,29 @@ explore_bintar <- function(data, var, target = NULL, title = NULL) {
   }
 
   if (var_type == "num") {
-    p <- target_explore_num(data, var = !!var_quo, target = !!target_quo, title = title)
+    p <- target_explore_num(data,
+                            var = !!var_quo,
+                            target = !!target_quo,
+                            title = title,
+                            min_val = min_val, max_val = max_val,
+                            auto_scale = auto_scale,
+                            na = na,
+                            flip = flip,
+                            ...)
   } else if (var_type == "cat") {
-    p <- target_explore_cat(data, var = !!var_quo, target = !!target_quo, title = title)
+    p <- target_explore_cat(data,
+                            var = !!var_quo,
+                            target = !!target_quo,
+                            title = title,
+                            min_val = min_val, max_val = max_val,
+                            na = na,
+                            flip = flip,
+                            ...)
   } else {
     p <- plot_var_info(!!var_quo, info="can't plot\ntyype not supported")
   }
 
   p
 
-} # explore_bintar
+} # explore_targetpct
 

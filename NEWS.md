@@ -7,7 +7,7 @@
 * add parameter rescale01 to clean_var()
 * add function count_pct()
 * add out='tibble' to describe_cat()
-* add function explore_bintar()
+* add function explore_targetpct()
 
 ## explore 0.5.2 (2019-11-21)
 
