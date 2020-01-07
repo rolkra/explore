@@ -289,10 +289,10 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
   target_n <- NULL
   pct <- NULL
 
-  # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # parameter var
   if(!missing(var))  {
@@ -518,10 +518,10 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
 
 explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
 
-  # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # parameter var
   if(!missing(var))  {
@@ -655,6 +655,11 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 
 explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -764,10 +769,10 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
 
 explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "grey", ...)  {
 
-  # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # parameter x
   if(!missing(x))  {
@@ -900,15 +905,10 @@ explore_tbl <- function(data)  {
   na <- NULL
   measure <- NULL
 
-  # data table available?
-  if (missing(data))  {
-    stop("expect a data table to explore")
-  }
-
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # describe data
   d <- describe_all(data)
@@ -1234,20 +1234,10 @@ explore_shiny <- function(data, target)  {
 
 explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
-  # data table available?
-  if (missing(data))  {
-    stop("expect a data table to explore")
-  }
-
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
-
-  # observations?
-  if(nrow(data) == 0) {
-    stop("data has 0 observations")
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # parameter var
   if (!missing(var)) {
@@ -1411,20 +1401,10 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
 explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, flip = NA, ...) {
 
-  # data table available?
-  if (missing(data))  {
-    stop("expect a data table to explore")
-  }
-
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
-
-  # observations?
-  if(nrow(data) == 0) {
-    stop("data has 0 observations")
-  }
+  # check parameter data
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
   # parameter var
   if (!missing(var)) {
