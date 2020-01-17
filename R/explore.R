@@ -270,6 +270,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @param target target (can have more than 2 levels)
 #' @param flip Should plot be flipped? (change of x and y)
 #' @param title Title of the plot (if empty var name)
+#' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param legend_position Position of the legend ("bottom"|"top"|"none")
@@ -282,7 +283,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @import ggplot2
 #' @export
 
-explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -328,16 +329,36 @@ explore_bar <- function(data, var, target, flip = TRUE, title = "", max_cat = 30
     n_target_cat <- length(unique(data[[target_txt]]))
   }
 
-  # number of levels of var
+  # number of levels of var (if not numeric)
   var_cat <- data %>% count(!!var_quo) %>% pull(!!var_quo)
-  if (length(var_cat) > max_cat)  {
+  if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
+      length(var_cat) > max_cat)  {
     data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
+    warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
   }
 
-  # use a factor for var if low number of cats
-  if (guess_cat_num(data[[var_txt]]) == "cat") {
+  # numeric? of use a factor for var if low number of cats
+  if (!missing(numeric) & numeric == TRUE)  {
+    data[[var_txt]] <- as.numeric(data[[var_txt]])
+    if (missing(flip)) {
+      flip <- FALSE
+    }
+  } else if ((!missing(numeric) & numeric == FALSE) |
+             guess_cat_num(data[[var_txt]]) == "cat") {
     data[[var_txt]] <- factor(data[[var_txt]])
     data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
+    if (missing(flip)) {
+      flip <- TRUE
+    }
+  } # if
+
+  # guess flip
+  if (missing(flip)) {
+    if(is.numeric(data[[var_txt]])) {
+      flip <- FALSE
+    } else {
+      flip <- TRUE
+    }
   }
 
   # use a factor for target so that fill works

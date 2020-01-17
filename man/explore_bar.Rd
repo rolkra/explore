@@ -4,8 +4,8 @@
 \alias{explore_bar}
 \title{Explore categorial variable using bar charts}
 \usage{
-explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
-  max_target_cat = 5, legend_position = "right", label,
+explore_bar(data, var, target, flip = NA, title = "", numeric = NA,
+  max_cat = 30, max_target_cat = 5, legend_position = "right", label,
   label_size = 2.7)
 }
 \arguments{
@@ -18,6 +18,8 @@ explore_bar(data, var, target, flip = TRUE, title = "", max_cat = 30,
 \item{flip}{Should plot be flipped? (change of x and y)}
 
 \item{title}{Title of the plot (if empty var name)}
+
+\item{numeric}{Display variable as numeric (not category)}
 
 \item{max_cat}{Maximum number of categories to be plotted}
 

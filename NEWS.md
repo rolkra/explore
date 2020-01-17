@@ -1,5 +1,6 @@
-## explore 0.5.3 (DEV)
+## explore 0.5.3 (2020-01-17)
 
+* explore_bar(): add parameter numeric
 * describe_all() returns a tibble
 * describe_all(): column 'variable' is character (not factor)
 * report() split = TRUE as default
