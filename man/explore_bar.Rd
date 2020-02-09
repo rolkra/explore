@@ -6,7 +6,7 @@
 \usage{
 explore_bar(data, var, target, flip = NA, title = "", numeric = NA,
   max_cat = 30, max_target_cat = 5, legend_position = "right", label,
-  label_size = 2.7)
+  label_size = 2.7, ...)
 }
 \arguments{
 \item{data}{A dataset}

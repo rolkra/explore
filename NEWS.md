@@ -1,3 +1,11 @@
+## explore 0.5.4 (2020-02-10)
+
+Maintenance update:
+
+* fix param ... in description (PR#16223, see
+<https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16223>)
+
+
 ## explore 0.5.3 (2020-01-17)
 
 * explore_bar(): add parameter numeric

@@ -26,7 +26,7 @@ explore(data, var, var2, target, split, min_val = NA, max_val = NA,
 
 \item{na}{Value to replace NA}
 
-\item{...}{Further arguments}
+\item{...}{Further arguments (like flip = TRUE/FALSE)}
 }
 \value{
 Plot object

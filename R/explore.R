@@ -283,7 +283,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @import ggplot2
 #' @export
 
-explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7, ...)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -1220,7 +1220,7 @@ explore_shiny <- function(data, target)  {
 #' @param max_val All values > max_val are converted to max_val
 #' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @param na Value to replace NA
-#' @param ... Further arguments
+#' @param ... Further arguments (like flip = TRUE/FALSE)
 #' @return Plot object
 #' @import rlang
 #' @examples
