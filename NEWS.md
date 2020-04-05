@@ -1,4 +1,4 @@
-## explore 0.5.5 (2020-04-05)
+## explore 0.5.5 (2020-04-06)
 
 Maintenance update:
 

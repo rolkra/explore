@@ -1326,7 +1326,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
     # var + var2 -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {
-    explore_cor(data[c(var_text, var2_text)],
+    explore_cor(data[unique(c(var_text, var2_text))],
                 x = !!var_quo, y = !!var2_quo,
                 min_val = min_val, max_val = max_val,
                 auto_scale = auto_scale, na = na, ...)
@@ -1334,14 +1334,14 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     # var + var2 + target -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & !is.na(target_text))  {
     #explore_cor(data[c(var_text, var2_text, target_text)], !!var_quo, !!var2_quo, !!target_quo, ...)
-    explore_cor(data[c(var_text, var2_text, target_text)],
+    explore_cor(data[unique(c(var_text, var2_text, target_text))],
                 x = !!var_quo, y = !!var2_quo, target = !!target_quo,
                 min_val = min_val, max_val = max_val,
                 auto_scale = auto_scale, na = na, ...)
 
     # var num + target num -> correlation
   } else if (!is.na(var_text) & is.na(var2_text) & var_type == "num" & !is.na(target_text) & guess_target == "num")  {
-    explore_cor(data[c(var_text, target_text)],
+    explore_cor(data[unique(c(var_text, target_text))],
                 x = !!var_quo, y = !!target_quo,
                 min_val = min_val, max_val = max_val,
                 auto_scale = auto_scale, na = na,
@@ -1349,7 +1349,7 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
     # var cat + target num -> correlation
   } else if (!is.na(var_text) & is.na(var2_text) & var_type == "cat" & !is.na(target_text) & guess_target == "num")  {
-    explore_cor(data[c(var_text, target_text)],
+    explore_cor(data[unique(c(var_text, target_text))],
                 y = !!var_quo, x = !!target_quo,
                 min_val = min_val, max_val = max_val,
                 auto_scale = auto_scale, na = na,
@@ -1373,26 +1373,26 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
 
     # target, num, split
   } else if (!is.na(target_text) & (var_type == "num") & (split == TRUE)) {
-    explore_density(data[c(var_text, target_text)],
+    explore_density(data[unique(c(var_text, target_text))],
                     var = !!var_quo, target = !!target_quo,
                     min_val = min_val, max_val = max_val,
                     auto_scale = auto_scale, na = na, ...)
 
     # target, num
   } else if (!is.na(target_text) & (var_type == "num")) {
-    target_explore_num(data[c(var_text, target_text)],
+    target_explore_num(data[unique(c(var_text, target_text))],
                        !!var_quo, target = !!target_quo,
                        min_val = min_val, max_val = max_val,
                        auto_scale = auto_scale, na = na, ...)
 
     # target, cat, split
   } else if (!is.na(target_text) & (var_type == "cat") & (split == TRUE)) {
-    explore_bar(data[c(var_text, target_text)],
+    explore_bar(data[unique(c(var_text, target_text))],
                        !!var_quo, target = !!target_quo,
                        ...)
     # target, cat
   } else if (!is.na(target_text) & (var_type == "cat")) {
-    target_explore_cat(data[c(var_text, target_text)],
+    target_explore_cat(data[unique(c(var_text, target_text))],
                        !!var_quo, target = !!target_quo,
                        min_val = min_val, max_val = max_val, na = na, ...)
   } # if
@@ -1462,11 +1462,13 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 
     if (length(target_var) == 1) {
       target_quo <- sym(target_var[1])
+      target_text <- target_var[1]
     } else {
       stop("target not defined, guessing not possible")
     }
   } else {
     target_quo <- enquo(target)
+    target_text <- quo_name(target_quo)[[1]]
   }
 
   if (var_type == "num") {
