@@ -1,3 +1,10 @@
+## explore 0.5.5 (2020-04-05)
+
+Maintenance update:
+
+* fix breaking changes tibble 3.0.0
+
+
 ## explore 0.5.4 (2020-02-10)
 
 Maintenance update:

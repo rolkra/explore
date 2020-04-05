@@ -324,7 +324,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 
   # number of levels of target
   if (missing(target))  {
-    n_target_cat = 1
+    n_target_cat <- 1
   } else {
     n_target_cat <- length(unique(data[[target_txt]]))
   }
@@ -362,7 +362,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   }
 
   # use a factor for target so that fill works
-  if (n_target_cat > 1 & !is.factor(data[[target_txt]]))  {
+  if (n_target_cat > 1 && !is.factor(data[[target_txt]]))  {
     data[[target_txt]] <- factor(data[[target_txt]])
     data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
 
@@ -826,9 +826,16 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     target_txt = NA
   }
 
+  # guess cat/num
   x_type = guess_cat_num(data[[x_txt]])
   y_type = guess_cat_num(data[[y_txt]])
-  target_type = guess_cat_num(data[[target_txt]])
+
+  if (!is.na(target_txt)) {
+    target_type = guess_cat_num(data[[target_txt]])
+  }
+  else {
+    target_type = "oth"
+  }
 
   if(x_type == "num")  {
 
@@ -1463,6 +1470,13 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
   }
 
   if (var_type == "num") {
+
+    # default flip = TRUE
+    if (is.na(flip)) {
+      flip <- TRUE
+    }
+
+    # plot
     p <- target_explore_num(data,
                             var = !!var_quo,
                             target = !!target_quo,
@@ -1473,6 +1487,13 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
                             flip = flip,
                             ...)
   } else if (var_type == "cat") {
+
+    # default flip = TRUE
+    if (is.na(flip)) {
+      flip <- TRUE
+    }
+
+    # plot
     p <- target_explore_cat(data,
                             var = !!var_quo,
                             target = !!target_quo,
