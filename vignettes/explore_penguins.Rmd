@@ -1,0 +1,104 @@
+---
+title: "explore penguins"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{explore penguins}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## How to explore the penguins dataset using the explore package.
+
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
+
+We will use just 8 function names to explore penguins:
+
+| function       | package   | description                             |
+|----------------|-----------|-----------------------------------------|
+| library        | {base}    | load a package                          |
+| is.na()        | {base}    | detect NA values (undefined values)     |
+| filter()       | {dplyr}   | subset rows using column values         |
+| describe_tbl() | {explore} | describe a table (rows, columns, ...)   |
+| describe()     | {explore} | describe all variables of the table     |
+| explore()      | {explore} | explore graphically a variable          |
+| explore_all()  | {explore} | explore all variables of the table      |
+| explain_tree() | {explore} | explain a target using an decision tree |
+
+
+The penguins dataset comes with the palmerpenguins package
+(https://github.com/allisonhorst/palmerpenguins).
+
+So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} (for filter and %>%) and {explore} for data exploration.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+library(palmerpenguins)
+```
+
+### Check dataset
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+penguins %>% describe_tbl()
+```
+
+```{r message=FALSE, warning=FALSE}
+penguins %>% describe()
+```
+There are some NA-values (unknown values) in the data. 11 of 344 observations contain NA values. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
+
+### Data cleaning
+
+We use only penguins with known flipper length for the data exploration!
+
+```{r}
+data <- penguins %>% 
+  filter(!is.na(flipper_length_mm))
+```
+
+### Explore variables
+
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(data, size = 2.5)}
+data %>% 
+  explore_all()
+```
+
+### Which species?
+
+What is the relationship between all the variables and species?
+
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(data, target = species, size = 2.5)}
+data %>% 
+  explore_all(target = species)
+```
+
+We already see some strong patterns in the data. flipper_length_mm seperates species Gentoo, bill_length_mm seperates species Adelie from Chinstrap. And we see that Chinstrap and Gentoo are located on seperate islands.
+
+Now we explain species using a decision tree:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explain_tree(target = species)
+```
+
+We found an easy explanation how to find out the species by just using flipper_length_mm and bill_length_mm.
+
+* If flipper_legnth_mm >= 207, it is a Gentoo penguin (95% right)
+* If flipper_length_mm < 207 and bill_length_mm < 43, it is a Adelie penguin (97% right)
+* If flipper_length_mm < 207 and bill_length_mm >= 43, it is a Chinstrap penguin (92% right)
+
+Now let's take a closer look to these variables:
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+data %>% explore(flipper_length_mm, bill_length_mm, target = species)
+```
+
+The plot shows a not perfect but good seperation between the 3 species!

@@ -1,5 +1,7 @@
 ## explore 0.6.0 (2020-08-14)
 
+* new Vignette "explore_penguins"
+* new Vignette "explore_titanic" (count data)
 * explore_count(): plot count() output
 * explore_tree(): default value for minsplit = 10% of obs
 * explore_cor(): use geom_point for small datasets
@@ -7,7 +9,6 @@
 * describe_tbl(): add observations containing NA
 * guess_cat_num(): parameter description (optional)
 * count_pct(): no renaming of variables
-* new Vignette "explore_titanic"
 
 
 ## explore 0.5.5 (2020-04-06)
