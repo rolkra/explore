@@ -18,43 +18,34 @@ knitr::opts_chunk$set(
 
 ## How to explore the penguins dataset using the explore package.
 
-The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
-
-We will use just 8 function names to explore penguins:
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! We will use < 10 lines of code and just 6 function names to explore penguins:
 
 | function       | package   | description                             |
 |----------------|-----------|-----------------------------------------|
 | library        | {base}    | load a package                          |
-| is.na()        | {base}    | detect NA values (undefined values)     |
-| filter()       | {dplyr}   | subset rows using column values         |
-| describe_tbl() | {explore} | describe a table (rows, columns, ...)   |
-| describe()     | {explore} | describe all variables of the table     |
+| drop_na()      | {tidyr}   | drop observations containing NA values  |
+| describe()     | {explore} | describe variables of the table         |
 | explore()      | {explore} | explore graphically a variable          |
 | explore_all()  | {explore} | explore all variables of the table      |
-| explain_tree() | {explore} | explain a target using an decision tree |
+| explain_tree() | {explore} | explain a target using a decision tree  |
 
+The penguins dataset comes with the palmerpenguins package. It has 344 observations and 8 variables. (https://github.com/allisonhorst/palmerpenguins)
 
-The penguins dataset comes with the palmerpenguins package
-(https://github.com/allisonhorst/palmerpenguins).
-
-So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} (for filter and %>%) and {explore} for data exploration.
+So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for %>%, {tidyr} for drop_na() and {explore} for data exploration.
 
 ```{r message=FALSE, warning=FALSE}
-library(dplyr)
-library(explore)
 library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+library(explore)
 ```
 
-### Check dataset
-
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-penguins %>% describe_tbl()
-```
+### Describe variables
 
 ```{r message=FALSE, warning=FALSE}
 penguins %>% describe()
 ```
-There are some NA-values (unknown values) in the data. 11 of 344 observations contain NA values. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
+There are some NA-values (unknown values) in the data. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
 
 ### Data cleaning
 
@@ -62,8 +53,10 @@ We use only penguins with known flipper length for the data exploration!
 
 ```{r}
 data <- penguins %>% 
-  filter(!is.na(flipper_length_mm))
+  drop_na(flipper_length_mm)
 ```
+
+We reduced the penguins from 344 to 342.
 
 ### Explore variables
 
