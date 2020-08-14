@@ -81,20 +81,20 @@ If you use a binary tharget, the parameter ***split = FALSE*** will give you a d
 
 Grow a decision tree with one line of code:
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 iris %>% explain_tree(target = Species)
 ```
 
 You can grow a decision tree with a binary target too.
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 iris %>% select(-Species) %>% explain_tree(target = is_versicolor)
 ```
 
 Or using a numerical target. The syntax stays the same.
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 iris %>% explain_tree(target = Sepal.Length)
 ```
 
@@ -213,8 +213,7 @@ iris %>% explore(Sepal.Length, Petal.Length)
 You can add a target too:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris %>% explore(Sepal.Length, Petal.Length, target = is_versicolor)
+iris %>% explore(Sepal.Length, Petal.Length, target = Species)
 ```
 
 ### Other options

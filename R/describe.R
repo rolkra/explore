@@ -109,7 +109,7 @@ describe_num <- function(data, var, out = "text", margin = 0) {
 #============================================================================
 #  describe_cat (out = text | list | tibble)
 #============================================================================
-#' Describe categorial variable
+#' Describe categorical variable
 #'
 #' @param data A dataset
 #' @param var Variable or variable name
@@ -171,7 +171,7 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   # define variable for cran check
   grp <- NULL
 
-  # group categorial variable and calulate frequency
+  # group categorical variable and calculate frequency
   if (var_obs > 0)  {
 
     var_frequency <- data %>%
@@ -396,6 +396,10 @@ describe_tbl <- function(data, target, out = "text")  {
   describe_nrow <- nrow(data)
   describe_ncol <- ncol(data)
 
+  # complete observations (no NA in row)
+  describe_complete <- sum(complete.cases(data))
+
+  # result of describe_all()
   d <- data %>% describe_all()
   describe_with_na <- sum(ifelse(d$na > 0, 1, 0))
   describe_no_variance <- sum(ifelse(d$unique == 1, 1, 0))
@@ -418,8 +422,9 @@ describe_tbl <- function(data, target, out = "text")  {
     }
   }
 
-  # result as a list (text)
+  # result as a list
   result_list <- list(observations = describe_nrow,
+                      complete_obs = describe_complete,
                       variables = describe_ncol,
                       with_na = describe_with_na,
                       no_variance = describe_no_variance,
@@ -455,8 +460,10 @@ describe_tbl <- function(data, target, out = "text")  {
                           " variables")
   } # if
 
-  # add with_na and no_variance
+  # add obs_with_na, vars_with_na and no_variance
   result_text <- paste0(result_text,
+                        "\n",
+                        format_num_space(describe_nrow - describe_complete), " observations containing missings (NA)",
                         "\n",
                         format_num_space(describe_with_na), " variables containing missings (NA)",
                         "\n",

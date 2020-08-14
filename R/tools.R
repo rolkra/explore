@@ -404,12 +404,13 @@ get_type <- function(var)  {
 #' Guess if variable is categorial or numerical based on name, type and values of variable
 #'
 #' @param var A vector (dataframe column)
+#' @param descr A description of the variable (optional)
 #' @return "cat" (categorial), "num" (numerical) or "oth" (other)
 #' @examples
 #' guess_cat_num(iris$Species)
 #' @export
 
-guess_cat_num <- function(var)  {
+guess_cat_num <- function(var, descr)  {
   # if var is missing, return "?"
   if (missing(var))  {
     warning("no variable to guess")
@@ -426,13 +427,18 @@ guess_cat_num <- function(var)  {
   } else {
     return("oth")
   }
-  ## intelligent guessing if num or cat (based on postfix of variable names)
-  var_type <- typeof(var)
-  # num with limited number of unique values is cat
-  var_unique <- length(unique(var))
-  # return result
 
-  # treate Date always as cat
+  # variable type
+  var_type <- typeof(var)
+
+  # number of unique values
+  if (missing(descr))  {
+    var_unique <- length(unique(var))
+  } else {
+    var_unique <- descr$unique
+  }
+
+  # treat Date always as cat
   if (var_class == "Date")  {
     return("cat")
   }
@@ -767,7 +773,7 @@ count_pct <- function(data, ...)  {
   d <- data %>%
     dplyr::count(...)
 
-  names(d) <- c("value", "n")
+ #names(d) <- c("value", "n")
 
   d <- d %>%
     dplyr::mutate(total = sum(n),

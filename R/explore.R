@@ -1,12 +1,12 @@
 #============================================================================
 #  Function: target_explore_cat
 #============================================================================
-#' Explore categorial variable + target
+#' Explore categorical variable + target
 #'
-#' Create a plot to explore relation between categorial variable and a binary target
+#' Create a plot to explore relation between categorical variable and a binary target
 #'
 #' @param data A dataset
-#' @param var Categorial variable
+#' @param var Categorical variable
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
@@ -151,7 +151,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 #============================================================================
 #  Function: target_explore_num
 #============================================================================
-#' Explore categorial variable + target
+#' Explore categorical variable + target
 #'
 #' Create a plot to explore relation between numerical variable and a binary target
 #'
@@ -260,9 +260,9 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #============================================================================
 #  explore_bar
 #============================================================================
-#' Explore categorial variable using bar charts
+#' Explore categorical variable using bar charts
 #'
-#' Create a barplot to explore a categorial variable.
+#' Create a barplot to explore a categorical variable.
 #' If a target is selected, the barplot is created for all levels of the target.
 #'
 #' @param data A dataset
@@ -826,10 +826,15 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     target_txt = NA
   }
 
-  # guess cat/num
-  x_type = guess_cat_num(data[[x_txt]])
-  y_type = guess_cat_num(data[[y_txt]])
+  # describe x, y
+  x_descr <- data %>% describe(!!x_quo, out = "list")
+  y_descr <- data %>% describe(!!y_quo, out = "list")
 
+  # guess cat/num x,y
+  x_type = guess_cat_num(data[[x_txt]], descr = x_descr)
+  y_type = guess_cat_num(data[[y_txt]], descr = y_descr)
+
+  # guess cat/num target
   if (!is.na(target_txt)) {
     target_type = guess_cat_num(data[[target_txt]])
   }
@@ -837,6 +842,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     target_type = "oth"
   }
 
+  # auto_scale?
   if(x_type == "num")  {
 
     # autoscale (if mni_val and max_val not used)
@@ -852,7 +858,34 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   } # if num
 
-  if(x_type == "num" & y_type == "num")  {
+  # use geom_point?
+  use_points <- ifelse(
+      x_type == "num" & y_type == "num" &
+      nrow(data) <= 500 &
+      x_descr$unique / nrow(data) >= 0.1 &
+      y_descr$unique / nrow(data) >= 0.1,
+      TRUE,
+      FALSE
+  )
+
+  if(x_type == "num" & y_type == "num" & use_points)  {
+
+    if (!is.na(target_txt)) {
+
+    p <- data %>%
+      ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
+      geom_point(alpha = 0.45, size = 2.5) +
+      theme_light()
+    } else {
+
+      p <- data %>%
+        ggplot(aes(x = !!x_quo, y = !!y_quo)) +
+        geom_point(alpha = 0.45, size = 2.5) +
+        theme_light()
+    }
+  }
+
+  else if(x_type == "num" & y_type == "num" & !use_points)  {
 
     # boxplot (x = num, y = num)
     p <- data %>%
@@ -860,9 +893,8 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
       geom_boxplot(aes(group = cut(!!x_quo, bins)), fill = color) +
       theme_light()
-
-
   }
+
   else if(x_type == "cat" & y_type == "num") {
 
     data[[x_txt]] <- as.factor(data[[x_txt]])
@@ -897,10 +929,10 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
       theme_light()
   }
 
-  if(!is.na(target_txt) & (target_type == "cat")) {
+  # facet
+  if(!is.na(target_txt) & (target_type == "cat") & !use_points) {
     p <- p + facet_grid(vars(!!target_quo))
   }
-
 
   # title
   if (!is.na(title) & nchar(title) > 0)  {
@@ -1154,7 +1186,7 @@ explore_shiny <- function(data, target)  {
       shiny::removeModal()
 
       # show Report
-      browseURL(paste0("file://", file.path(output_dir, output_file)))
+      browseURL(paste0("file://", file.path(output_dir, output_file)), browser = NULL)
     })
 
     output$graph_target <- shiny::renderPlot({
@@ -1512,3 +1544,168 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 
 } # explore_targetpct
 
+#============================================================================
+#  Function: explore_count
+#============================================================================
+#' Explore count data (categories + frequency)
+#'
+#' Create a plot to explore count data (categories + freuency)
+#' Variable named 'n' is auto detected as Frequency
+#'
+#' @param data A dataset (categories + frequency)
+#' @param cat Numerical variable
+#' @param n Number of observations (frequency)
+#' @param target Target variable
+#' @param pct Show as percent?
+#' @param split Split by target?
+#' @param title Title of the plot
+#' @param flip Flip plot? (for categorical variables)
+#' @return Plot object
+#' @examples
+#' library(dplyr)
+#' iris %>%
+#'   count(Species) %>%
+#'   explore_count(Species)
+#' @importFrom magrittr "%>%"
+#' @import rlang
+#' @export
+
+explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, flip = NA)  {
+
+  # define variables for CRAN-package check
+  plot_cat <- NULL
+  plot_n <- NULL
+  plot_target <- NULL
+  plot_n_sum <- NULL
+  plot_n_pct <- NULL
+  plot_n_tot <- NULL
+
+  # check parameters
+  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
+  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  assertthat::assert_that(ncol(data) >= 2, msg = "explect at least 2 variables in data")
+
+  # parameter var
+  if(!missing(cat))  {
+    cat_quo <- enquo(cat)
+    cat_txt <- quo_name(cat_quo)[[1]]
+    if (!cat_txt %in% names(data)) {
+      stop(paste0("variable '", cat_txt, "' not found"))
+    }
+  } else {
+    cat_txt <- names(data)[1]
+  }
+
+  # parameter var
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    if (!n_txt %in% names(data)) {
+      stop(paste0("variable '", n_txt, "' not found"))
+    }
+  } else {
+    if("n" %in% names(data)) {
+      n_txt <- "n"
+    } else {
+      stop("variable n not defined")
+    }
+  }
+
+  # parameter var
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+    if (!target_txt %in% names(data)) {
+      stop(paste0("variable '", target_txt, "' not found"))
+    }
+  } else {
+    target_txt <- ""
+  }
+
+  ## no target defined
+  if(target_txt == "")  {
+
+    # prepare data (no target)
+    data_plot <- data[, c(cat_txt, n_txt)]
+    names(data_plot) <- c("plot_cat","plot_n")
+    data_plot <- suppressMessages(
+      data_plot %>%
+        group_by(plot_cat) %>%
+        summarise(plot_n_sum = sum(plot_n)) %>%
+        mutate(plot_n_tot = sum(plot_n_sum)) %>%
+        mutate(plot_n_pct = plot_n_sum / plot_n_tot * 100)
+    )
+
+    # geom_col (absolute | percent) no target
+    if(pct == FALSE)  {
+      p <- data_plot %>%
+        ggplot(aes(x = plot_cat, y = plot_n_sum)) +
+        geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
+        theme_light() +
+        labs(y = "count", x = cat_txt)
+    } else {
+      p <- data_plot %>%
+        ggplot(aes(x = plot_cat, y = plot_n_pct)) +
+        geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
+        theme_light() +
+        labs(y = "%", x = cat_txt)
+    }
+
+    ## target defined
+  } else {
+
+    # prepare data (target)
+    data_plot <- data[, c(target_txt, cat_txt, n_txt)]
+    names(data_plot) <- c("plot_target", "plot_cat","plot_n")
+    data_plot <- suppressMessages(
+      data_plot %>%
+        group_by(plot_target, plot_cat) %>%
+        summarise(plot_n_sum = sum(plot_n)) %>%
+        mutate(plot_n_tot = sum(plot_n_sum)) %>%
+        mutate(plot_n_pct = plot_n_sum / plot_n_tot * 100)
+    )
+
+    # geom_col (absolute | percent) with target
+    if(pct == TRUE | split == TRUE)  {
+      # geom_col dodge
+      p <- data_plot %>%
+        ggplot(aes(x = plot_cat, y = plot_n_pct, fill = plot_target)) +
+        geom_col(position = "dodge") +
+        theme_light() +
+        labs(y = "%", x = cat_txt, fill = target_txt)
+    } else {
+      # geom_col stack
+      p <- data_plot %>%
+        ggplot(aes(x = plot_cat, y = plot_n_sum, fill = plot_target)) +
+        geom_col(position = "stack") +
+        theme_light() +
+        labs(y = "count", x = cat_txt, fill = target_txt)
+    }
+  } # if target
+
+
+  # guess flip
+  if (missing(flip)) {
+    if(is.numeric(data[[cat_txt]])) {
+      flip <- FALSE
+    } else {
+      flip <- TRUE
+    }
+  }
+
+  # flip plot
+  if (is.na(flip) | flip) {
+    p <- p + coord_flip()
+  }
+
+  # title
+  if (!is.na(title) & nchar(title) > 0)  {
+    p <- p + ggtitle(title)
+  }
+
+  # return plot
+  p
+  #data_plot
+
+} # explore_count

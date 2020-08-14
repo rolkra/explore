@@ -4,8 +4,7 @@
 \alias{decrypt}
 \title{decrypt text}
 \usage{
-decrypt(text, codeletters = c(toupper(letters), letters, 0:9),
-  shift = 18)
+decrypt(text, codeletters = c(toupper(letters), letters, 0:9), shift = 18)
 }
 \arguments{
 \item{text}{A text (character)}

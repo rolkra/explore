@@ -4,9 +4,18 @@
 \alias{explore_density}
 \title{Explore density of variable}
 \usage{
-explore_density(data, var, target, title = "", min_val = NA,
-  max_val = NA, color = "grey", auto_scale = TRUE,
-  max_target_cat = 5, ...)
+explore_density(
+  data,
+  var,
+  target,
+  title = "",
+  min_val = NA,
+  max_val = NA,
+  color = "grey",
+  auto_scale = TRUE,
+  max_target_cat = 5,
+  ...
+)
 }
 \arguments{
 \item{data}{A dataset}

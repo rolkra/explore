@@ -4,10 +4,12 @@
 \alias{guess_cat_num}
 \title{Return if variable is categorial or nomerical}
 \usage{
-guess_cat_num(var)
+guess_cat_num(var, descr)
 }
 \arguments{
 \item{var}{A vector (dataframe column)}
+
+\item{descr}{A description of the variable (optional)}
 }
 \value{
 "cat" (categorial), "num" (numerical) or "oth" (other)

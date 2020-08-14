@@ -4,9 +4,18 @@
 \alias{explore_targetpct}
 \title{Explore variable + binary target (values 0/1)}
 \usage{
-explore_targetpct(data, var, target = NULL, title = NULL,
-  min_val = NA, max_val = NA, auto_scale = TRUE, na = NA,
-  flip = NA, ...)
+explore_targetpct(
+  data,
+  var,
+  target = NULL,
+  title = NULL,
+  min_val = NA,
+  max_val = NA,
+  auto_scale = TRUE,
+  na = NA,
+  flip = NA,
+  ...
+)
 }
 \arguments{
 \item{data}{A dataset}

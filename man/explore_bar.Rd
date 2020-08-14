@@ -2,11 +2,22 @@
 % Please edit documentation in R/explore.R
 \name{explore_bar}
 \alias{explore_bar}
-\title{Explore categorial variable using bar charts}
+\title{Explore categorical variable using bar charts}
 \usage{
-explore_bar(data, var, target, flip = NA, title = "", numeric = NA,
-  max_cat = 30, max_target_cat = 5, legend_position = "right", label,
-  label_size = 2.7, ...)
+explore_bar(
+  data,
+  var,
+  target,
+  flip = NA,
+  title = "",
+  numeric = NA,
+  max_cat = 30,
+  max_target_cat = 5,
+  legend_position = "right",
+  label,
+  label_size = 2.7,
+  ...
+)
 }
 \arguments{
 \item{data}{A dataset}
@@ -37,6 +48,6 @@ explore_bar(data, var, target, flip = NA, title = "", numeric = NA,
 Plot object (bar chart)
 }
 \description{
-Create a barplot to explore a categorial variable.
+Create a barplot to explore a categorical variable.
 If a target is selected, the barplot is created for all levels of the target.
 }

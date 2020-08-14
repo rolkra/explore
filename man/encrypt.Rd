@@ -4,8 +4,7 @@
 \alias{encrypt}
 \title{encrypt text}
 \usage{
-encrypt(text, codeletters = c(toupper(letters), letters, 0:9),
-  shift = 18)
+encrypt(text, codeletters = c(toupper(letters), letters, 0:9), shift = 18)
 }
 \arguments{
 \item{text}{A text (character)}

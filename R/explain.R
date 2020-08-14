@@ -9,7 +9,7 @@
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
-#' @param minsplit The minimum number of observations that must exist in a node in order for a split to be attempted (rpart-parameter)
+#' @param minsplit The minimum number of observations that must exist in a node to split.
 #' @param cp Complexity parameter (rpart-parameter)
 #' @param size Textsize of plot
 #' @param ... Further arguments
@@ -21,7 +21,7 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = 20, cp = 0, size = 0.7, ...)  {
+explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL

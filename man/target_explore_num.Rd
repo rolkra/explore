@@ -2,11 +2,20 @@
 % Please edit documentation in R/explore.R
 \name{target_explore_num}
 \alias{target_explore_num}
-\title{Explore categorial variable + target}
+\title{Explore categorical variable + target}
 \usage{
-target_explore_num(data, var, target = "target_ind", min_val = NA,
-  max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE,
-  na = NA, legend_position = "bottom")
+target_explore_num(
+  data,
+  var,
+  target = "target_ind",
+  min_val = NA,
+  max_val = NA,
+  flip = TRUE,
+  title = NA,
+  auto_scale = TRUE,
+  na = NA,
+  legend_position = "bottom"
+)
 }
 \arguments{
 \item{data}{A dataset}

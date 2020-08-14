@@ -4,8 +4,13 @@
 \alias{data_dict_md}
 \title{Create a data dictionary Markdown file}
 \usage{
-data_dict_md(data, title = "", description = NA,
-  output_file = "data_dict.md", output_dir)
+data_dict_md(
+  data,
+  title = "",
+  description = NA,
+  output_file = "data_dict.md",
+  output_dir
+)
 }
 \arguments{
 \item{data}{A dataframe (data dictionary for all variables)}

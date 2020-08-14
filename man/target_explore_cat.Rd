@@ -2,17 +2,27 @@
 % Please edit documentation in R/explore.R
 \name{target_explore_cat}
 \alias{target_explore_cat}
-\title{Explore categorial variable + target}
+\title{Explore categorical variable + target}
 \usage{
-target_explore_cat(data, var, target = "target_ind", min_val = NA,
-  max_val = NA, flip = TRUE, num2char = TRUE, title = NA,
-  auto_scale = TRUE, na = NA, max_cat = 30,
-  legend_position = "bottom")
+target_explore_cat(
+  data,
+  var,
+  target = "target_ind",
+  min_val = NA,
+  max_val = NA,
+  flip = TRUE,
+  num2char = TRUE,
+  title = NA,
+  auto_scale = TRUE,
+  na = NA,
+  max_cat = 30,
+  legend_position = "bottom"
+)
 }
 \arguments{
 \item{data}{A dataset}
 
-\item{var}{Categorial variable}
+\item{var}{Categorical variable}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
@@ -38,5 +48,5 @@ target_explore_cat(data, var, target = "target_ind", min_val = NA,
 Plot object
 }
 \description{
-Create a plot to explore relation between categorial variable and a binary target
+Create a plot to explore relation between categorical variable and a binary target
 }

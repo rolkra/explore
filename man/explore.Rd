@@ -4,8 +4,18 @@
 \alias{explore}
 \title{Explore a dataset or variable}
 \usage{
-explore(data, var, var2, target, split, min_val = NA, max_val = NA,
-  auto_scale = TRUE, na = NA, ...)
+explore(
+  data,
+  var,
+  var2,
+  target,
+  split,
+  min_val = NA,
+  max_val = NA,
+  auto_scale = TRUE,
+  na = NA,
+  ...
+)
 }
 \arguments{
 \item{data}{A dataset}

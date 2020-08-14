@@ -4,8 +4,19 @@
 \alias{explore_cor}
 \title{Explore the correlation between two variables}
 \usage{
-explore_cor(data, x, y, target, bins = 8, min_val = NA, max_val = NA,
-  auto_scale = TRUE, title = NA, color = "grey", ...)
+explore_cor(
+  data,
+  x,
+  y,
+  target,
+  bins = 8,
+  min_val = NA,
+  max_val = NA,
+  auto_scale = TRUE,
+  title = NA,
+  color = "grey",
+  ...
+)
 }
 \arguments{
 \item{data}{A dataset}

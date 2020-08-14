@@ -2,7 +2,7 @@
 % Please edit documentation in R/describe.R
 \name{describe_cat}
 \alias{describe_cat}
-\title{Describe categorial variable}
+\title{Describe categorical variable}
 \usage{
 describe_cat(data, var, max_cat = 10, out = "text", margin = 0)
 }
@@ -21,7 +21,7 @@ describe_cat(data, var, max_cat = 10, out = "text", margin = 0)
 Description as text or list
 }
 \description{
-Describe categorial variable
+Describe categorical variable
 }
 \examples{
 describe_cat(iris, Species)

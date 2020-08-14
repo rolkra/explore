@@ -4,9 +4,17 @@
 \alias{clean_var}
 \title{Clean variable}
 \usage{
-clean_var(data, var, na = NA, min_val = NA, max_val = NA,
-  max_cat = NA, rescale01 = FALSE, simplify_text = FALSE,
-  name = NA)
+clean_var(
+  data,
+  var,
+  na = NA,
+  min_val = NA,
+  max_val = NA,
+  max_cat = NA,
+  rescale01 = FALSE,
+  simplify_text = FALSE,
+  name = NA
+)
 }
 \arguments{
 \item{data}{A dataset}

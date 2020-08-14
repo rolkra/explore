@@ -1,0 +1,123 @@
+---
+title: "explore titanic"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{explore_titanic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## How to explore the Titanic dataset using the explore package.
+
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
+
+The titanic dataset is available in base R. But it is not a data frame, therefore we we need to convert it first.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+titanic <- as.data.frame(Titanic)
+```
+
+### Explore dataset
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_tbl()
+```
+
+The data has 5 variables and only 32 rows. Each row does NOT represent an observation. It is not tidy, instead the data set contains Frequencies!
+
+```{r message=FALSE, warning=FALSE}
+titanic %>% describe()
+```
+
+All variables are categorical except Freq, representing the frequency.
+
+The data look like this:
+
+```{r message=FALSE, warning=FALSE}
+titanic %>% head(10)
+```
+
+### Explore variables
+
+As the normal explore() function of the {explore} package expects a tidy dataset (each row is an observation), we need to switch to explore_count().
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Class, n = Freq)
+```
+
+We get the exact numbers by using count() together with the wt-parameter (weight)
+
+```{r message=FALSE, warning=FALSE}
+titanic %>% count(Class, wt = Freq)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Sex, n = Freq)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Age, n = Freq)
+```
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Survived, n = Freq)
+```
+
+### Survived?
+
+Now we want to check the relation between variables and Survived. We can use the explore_count() function with Survived as target.
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Class, target = Survived, n = Freq, split = FALSE)
+```
+
+To get a better feeling of the relationship between Class and Survived, we switch to percentage and split the target into sperate bars. We can do that by using split = TRUE (which is default).
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Class, target = Survived, n = Freq, split = TRUE)
+```
+
+Now we get a plot, where each color sum to 100%. So a big difference in bar length indicates an important relationship between the two variables. In this case, passengers of 1st Class had the highest probability to survive.
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Sex, target = Survived, n = Freq)
+```
+
+Female are much more likely to survive!
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Age, target = Survived, n = Freq)
+```
+
+Child had an advantage to survive.
+
+### Other correlations
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Age, target = Sex, n = Freq)
+```
+
+There are more female child than male child.
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Age, target = Class, n = Freq)
+```
+
+Child are unlikely in the 1st class! And all Crew members are adult as expected.
+
+```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
+titanic %>% explore_count(Sex, target = Class, n = Freq)
+```
+
+Almost no female Crew members! Female tend to have better Class!
