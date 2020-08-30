@@ -23,7 +23,7 @@ The explore package simplifies Exploratory Data Analysis (EDA). Get faster insig
 | function       | package   | description                             |
 |----------------|-----------|-----------------------------------------|
 | library        | {base}    | load a package                          |
-| drop_na()      | {tidyr}   | drop observations containing NA values  |
+| filter()       | {dplyr}   | subset rows using column values         |
 | describe()     | {explore} | describe variables of the table         |
 | explore()      | {explore} | explore graphically a variable          |
 | explore_all()  | {explore} | explore all variables of the table      |
@@ -31,12 +31,11 @@ The explore package simplifies Exploratory Data Analysis (EDA). Get faster insig
 
 The penguins dataset comes with the palmerpenguins package. It has 344 observations and 8 variables. (https://github.com/allisonhorst/palmerpenguins)
 
-So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for %>%, {tidyr} for drop_na() and {explore} for data exploration.
+So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for filter() and %>% and {explore} for data exploration.
 
 ```{r message=FALSE, warning=FALSE}
 library(palmerpenguins)
 library(dplyr)
-library(tidyr)
 library(explore)
 ```
 
@@ -53,7 +52,7 @@ We use only penguins with known flipper length for the data exploration!
 
 ```{r}
 data <- penguins %>% 
-  drop_na(flipper_length_mm)
+  filter(flipper_length_mm > 0)
 ```
 
 We reduced the penguins from 344 to 342.

@@ -1253,6 +1253,7 @@ explore_shiny <- function(data, target)  {
 #' @param data A dataset
 #' @param var A variable
 #' @param var2 A variable for checking correlation
+#' @param n A Variable for number of observations (count data)
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param split Split by target variable (FALSE/TRUE)
 #' @param min_val All values < min_val are converted to min_val
@@ -1292,7 +1293,7 @@ explore_shiny <- function(data, target)  {
 #'
 #' @export
 
-explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
+explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
   # check parameter data
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
@@ -1318,10 +1319,21 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
     if (!var2_text %in% names(data))  {
       stop(paste0("variable '", var2_text, "' not found"))
     }
-
   } else {
     var2_quo <- NA
     var2_text <- NA
+  }
+
+  # parameter n
+  if (!missing(n)) {
+    n_quo <- enquo(n)
+    n_text <- quo_name(n_quo)[[1]]
+    if (!n_text %in% names(data))  {
+      stop(paste0("variable '", n_text, "' not found"))
+    }
+  } else {
+    n_quo <- NA
+    n_text <- NA
   }
 
   # parameter target
@@ -1355,6 +1367,14 @@ explore <- function(data, var, var2, target, split, min_val = NA, max_val = NA, 
   # interactive (shiny)
   if (is.na(var_text))  {
     explore_shiny(data)
+
+    # count data
+  } else if (!is.na(n_text) & is.na(target_text))  {
+    explore_count(data, cat = !!var_quo, n = !!n_quo, split = split, ...)
+
+    # count data + target
+  } else if (!is.na(n_text)  & !is.na(target_text))  {
+    explore_count(data, cat = !!var_quo, n = !!n_quo, target = !!target_quo, split = split, ...)
 
     # var + var2 -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {

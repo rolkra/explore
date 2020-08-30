@@ -8,6 +8,7 @@ explore(
   data,
   var,
   var2,
+  n,
   target,
   split,
   min_val = NA,
@@ -23,6 +24,8 @@ explore(
 \item{var}{A variable}
 
 \item{var2}{A variable for checking correlation}
+
+\item{n}{A Variable for number of observations (count data)}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
