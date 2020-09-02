@@ -6,7 +6,7 @@
 * add default parameter n for count data: 
   explore(), explore_all, explore_tree(), 
   describe(), describe_cat, describe_num(), describe_tbl(),
-  total_fig_height() 
+  total_fig_height(), report()
 * explore_tree(): default value for minsplit = 10% of obs
 * explore_cor(): use geom_point for small datasets
 * explore_shiny(): use browseURL() with parameter browser=NULL
