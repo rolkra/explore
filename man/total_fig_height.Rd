@@ -4,7 +4,7 @@
 \alias{total_fig_height}
 \title{Get fig.height for RMarkdown-junk using explore_all()}
 \usage{
-total_fig_height(data, n, target, nvar = NA, ncol = 2, size = 3)
+total_fig_height(data, n, target, nvar = NA, ncol = 2, size = 2.5)
 }
 \arguments{
 \item{data}{A dataset}

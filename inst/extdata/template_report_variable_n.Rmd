@@ -1,0 +1,27 @@
+---
+title: "Explore"
+output: 
+  html_document
+---
+
+## Describe Raw Data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data %>% describe_tbl()
+d <- describe(data)
+knitr::kable(d)
+```
+
+## Describe Count Data
+
+Variable `r var_name_n` is used as count-data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+describe_tbl(data, n = !!sym(var_name_n))
+```
+
+## Explore Variables
+
+```{r echo=FALSE, fig.height=total_fig_height(data, n=1), fig.width=10, message=FALSE, warning=FALSE}
+data %>% explore_all(n = !!sym(var_name_n), ncol = 2)
+```

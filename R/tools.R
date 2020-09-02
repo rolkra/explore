@@ -496,7 +496,7 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #' total_fig_height(nvar = 5)
 #' @export
 
-total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
+total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 2.5)  {
 
   if (!is.na(nvar)) {
     n_var <- nvar

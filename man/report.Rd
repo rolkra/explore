@@ -4,10 +4,12 @@
 \alias{report}
 \title{Generate a report of all variables}
 \usage{
-report(data, target, split = TRUE, output_file, output_dir)
+report(data, n, target, split = TRUE, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}
+
+\item{n}{Weights variable for count data}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
