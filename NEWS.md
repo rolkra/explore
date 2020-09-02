@@ -4,6 +4,8 @@
 * new Vignette "explore_titanic" (count data)
 * explore_count(): plot count() output
 * explore_tree(): default value for minsplit = 10% of obs
+* explore(): add default parameter n for count data
+* explore_tree(): add default parameter n for count data
 * explore_cor(): use geom_point for small datasets
 * explore_shiny(): use browseURL() with parameter browser=NULL
 * describe_tbl(): add observations containing NA

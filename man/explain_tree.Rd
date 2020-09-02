@@ -7,6 +7,7 @@
 explain_tree(
   data,
   target,
+  n,
   max_cat = 10,
   max_target_cat = 5,
   maxdepth = 3,
@@ -20,6 +21,8 @@ explain_tree(
 \item{data}{A dataset}
 
 \item{target}{Target variable}
+
+\item{n}{weigths (for count data)}
 
 \item{max_cat}{Drop categorical variables with higher number of levels}
 

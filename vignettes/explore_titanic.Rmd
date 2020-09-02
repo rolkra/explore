@@ -96,6 +96,18 @@ titanic %>% explore(Age, target = Survived, n = Freq)
 
 Child had an advantage to survive.
 
+Now we can create a simple decision tree. As we have count-data we need to pass parameter n.
+
+```{r}
+titanic %>% explain_tree(target = Survived, n = Freq)
+```
+
+We see that Sex and Class can give a good explanation who are more likely to survive.
+
+* Sex = Male: 21% survived
+* Sex = Female & Class = 3rd: 46% survived
+* Sex = Female & Class <> 3rd: 93% survived
+
 ### Other correlations
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}

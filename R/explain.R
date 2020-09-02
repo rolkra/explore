@@ -6,6 +6,7 @@
 #'
 #' @param data A dataset
 #' @param target Target variable
+#' @param n weigths (for count data)
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
@@ -14,6 +15,7 @@
 #' @param size Textsize of plot
 #' @param ... Further arguments
 #' @return Plot
+#' @importFrom tidyr uncount
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -21,7 +23,7 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, ...)  {
+explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -30,6 +32,15 @@ explain_tree <- function(data, target, max_cat = 10, max_target_cat = 5, maxdept
   # parameter data
   if(missing(data))  {
     stop(paste0("data missing"))
+  }
+
+  # parameter n
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    data <- data %>% tidyr::uncount(weights = !!n_quo)
+  } else {
+    n_txt = NA
   }
 
   # parameter target
