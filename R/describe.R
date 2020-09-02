@@ -5,6 +5,7 @@
 #'
 #' @param data A dataset
 #' @param var Variable or variable name
+#' @param n Weights variable for count-data
 #' @param out Output format ("text"|"list")
 #' @param margin Left margin for text output (number of spaces)
 #' @return Description as text or list
@@ -14,7 +15,7 @@
 #' describe_num(iris, Sepal.Length)
 #' @export
 
-describe_num <- function(data, var, out = "text", margin = 0) {
+describe_num <- function(data, var, n, out = "text", margin = 0) {
 
   # data table available?
   if (missing(data))  {
@@ -42,6 +43,15 @@ describe_num <- function(data, var, out = "text", margin = 0) {
   # error if var is a factor
   if (is.factor(data[[var_txt]]))  {
     stop("use describe_cat for a factor")
+  }
+
+  # check for count data
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    data <- data %>%
+      select(!!var_quo, !!n_quo) %>%
+      tidyr::uncount(weights = !!n_quo)
   }
 
   var_name = var_txt
@@ -113,18 +123,20 @@ describe_num <- function(data, var, out = "text", margin = 0) {
 #'
 #' @param data A dataset
 #' @param var Variable or variable name
+#' @param n Weights variable for count-data
 #' @param max_cat Maximum number of categories displayed
 #' @param out Output format ("text"|"list")
 #' @param margin Left margin for text output (number of spaces)
 #' @return Description as text or list
 #' @importFrom magrittr "%>%"
+#' @importFrom tidyr uncount
 #' @import rlang
 #' @import dplyr
 #' @examples
 #' describe_cat(iris, Species)
 #' @export
 
-describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
+describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 
   # data table available?
   if (missing(data))  {
@@ -146,6 +158,15 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
   # check if var in data
   if(!var_txt %in% names(data)) {
     stop("variable not found in table")
+  }
+
+  # check for count data
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    data <- data %>%
+      select(!!var_quo, !!n_quo) %>%
+      tidyr::uncount(weights = !!n_quo)
   }
 
   # out = tibble
@@ -176,9 +197,8 @@ describe_cat <- function(data, var, max_cat = 10, out = "text", margin = 0) {
 
     var_frequency <- data %>%
       select(grp = !!var_quo) %>%
-      group_by(grp) %>%
-      summarise(n = n()) %>%
-      mutate(pct = n / sum(n) * 100) %>%
+      count(grp) %>%
+      mutate(pct = .data$n / sum(.data$n) * 100) %>%
       mutate(cat_len = nchar(as.character(grp)))
 
     # limit len of catnames (if not all NA)
@@ -359,6 +379,7 @@ describe_all <- function(data = NA, out = "large") {
 #' Describe table (e.g. number of rows and columns of dataset)
 #'
 #' @param data A dataset
+#' @param n Weigts variable for count-data
 #' @param target Target variable (binary)
 #' @param out Output format ("text"|"list")
 #' @return Description as text or list
@@ -370,7 +391,7 @@ describe_all <- function(data = NA, out = "large") {
 #' describe_tbl(iris, is_virginica)
 #' @export
 
-describe_tbl <- function(data, target, out = "text")  {
+describe_tbl <- function(data, n, target, out = "text")  {
 
   # data table available?
   if (missing(data))  {
@@ -382,6 +403,7 @@ describe_tbl <- function(data, target, out = "text")  {
     stop("expect a table of type data.frame")
   }
 
+  # parameter target
   if(!missing(target))  {
     target <- enquo(target)
     target_txt <- quo_name(target)[[1]]
@@ -392,17 +414,32 @@ describe_tbl <- function(data, target, out = "text")  {
     target_txt = NA
   }
 
-  # number of rows /columns of data
-  describe_nrow <- nrow(data)
-  describe_ncol <- ncol(data)
+  # parameter n
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    if (!n_txt %in% names(data)) {
+      stop(paste0("n variable '", n_txt, "' not found"))
+    }
+  } else {
+    n_txt <- NA
+  }
 
-  # complete observations (no NA in row)
-  describe_complete <- sum(complete.cases(data))
+  # calculate observations depending on n
+  if (is.na(n_txt)) {
+    describe_nrow <- nrow(data)
+    describe_complete <- sum(complete.cases(data))
+  } else {
+    describe_nrow <- sum(data[[n_txt]])
+    data_complete <- data[complete.cases(data), ]
+    describe_complete <- sum(data_complete[[n_txt]])
+  }
 
-  # result of describe_all()
+  # calculate variables
   d <- data %>% describe_all()
   describe_with_na <- sum(ifelse(d$na > 0, 1, 0))
   describe_no_variance <- sum(ifelse(d$unique == 1, 1, 0))
+  describe_ncol <- ncol(data)
 
   # check if target is binary
   describe_target0_cnt <- 0
@@ -486,6 +523,7 @@ describe_tbl <- function(data, target, out = "text")  {
 #'
 #' @param data A dataset
 #' @param var A variable of the dataset
+#' @param n Weights variable for count-data
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param out Output format ("text"|"list") of variable description
 #' @param ... Further arguments
@@ -503,7 +541,7 @@ describe_tbl <- function(data, target, out = "text")  {
 #' iris %>% describe(Sepal.Length)
 #' @export
 
-describe <- function(data, var, target, out = "text", ...)  {
+describe <- function(data, var, n, target, out = "text", ...)  {
 
   # data table available?
   if (missing(data))  {
@@ -537,6 +575,14 @@ describe <- function(data, var, target, out = "text", ...)  {
     target_txt = NA
   }
 
+  # parameter n
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+  } else {
+    n_txt = NA
+  }
+
   # decide which describe-function to use
   if (is.na(var_txt) & !is.na(target_txt))  {
     describe_tbl(data, target = !!target_quo)
@@ -545,14 +591,22 @@ describe <- function(data, var, target, out = "text", ...)  {
   } else if (!is.na(var_txt)) {
 
     # reduce variables of data (to improve speed and memory)
-    data <- data[var_txt]
+   if (is.na(n_txt))  {
+      data <- data[var_txt]
+   } else {
+     data <- data[c(var_txt, n_txt)]
+   }
 
-    # describe depending on type (cat/num)
+    # describe depending on type (cat/num) and count
     var_guess <- guess_cat_num(data[[var_txt]])
-    if (var_guess == "num") {
+    if ((var_guess == "num") & is.na(n_txt)) {
       describe_num(data, !!var_quo, out = out, ...)
-    } else if (var_guess == "cat") {
+    } else if ((var_guess == "cat") & is.na(n_txt)) {
       describe_cat(data, !!var_quo, out = out, ...)
+    } else if ((var_guess == "num") & !is.na(n_txt))  {
+      describe_num(data, !!var_quo, n=!!n_quo, out = out, ...)
+    } else if ((var_guess == "cat") & !is.na(n_txt))  {
+      describe_cat(data, !!var_quo, n=!!n_quo, out = out, ...)
     } else {
       warning("please use a numeric or character variable to describe")
     }

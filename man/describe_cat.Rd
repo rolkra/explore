@@ -4,12 +4,14 @@
 \alias{describe_cat}
 \title{Describe categorical variable}
 \usage{
-describe_cat(data, var, max_cat = 10, out = "text", margin = 0)
+describe_cat(data, var, n, max_cat = 10, out = "text", margin = 0)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{var}{Variable or variable name}
+
+\item{n}{Weights variable for count-data}
 
 \item{max_cat}{Maximum number of categories displayed}
 

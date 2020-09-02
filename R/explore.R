@@ -661,6 +661,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' Explore all variables of a dataset (create plots)
 #'
 #' @param data A dataset
+#' @param n Weights variable (only for count data)
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param ncol Layout of plots (number of columns)
 #' @param split Split by target (TRUE|FALSE)
@@ -674,7 +675,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, target, ncol = 2, split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, split = TRUE)  {
 
   # check parameter data
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
@@ -691,7 +692,15 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
     guess_target = "oth"
   }
 
-  # varable name of target
+  # parameter n
+  if(!missing(n))  {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+  } else {
+    n_txt = NA
+  }
+
+  # variable name of target
   var_name_target = target_txt
 
   # names of variables in data
@@ -700,6 +709,11 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
   # if target_explore is used, ignore target variable
   if (!is.na(var_name_target)) {
     var_names <- var_names[var_names != var_name_target]
+  }
+
+  # if n is used, ignore n variable
+  if (!is.na(n_txt)) {
+    var_names <- var_names[var_names != n_txt]
   }
 
   #pre define list of plots
@@ -714,19 +728,33 @@ explore_all <- function(data, target, ncol = 2, split = TRUE)  {
     var_name <- var_names[i]
 
     # reduce variables of data (to improve speed and memory)
-    if (is.na(var_name_target)) {
+    if (is.na(var_name_target) & is.na(n_txt)) {
       data_tmp <- data[var_name]
     }
-    else {
+    else if (!is.na(var_name_target) & is.na(n_txt)) {
       data_tmp <- data[c(var_name, var_name_target)]
+    }
+    else if (is.na(var_name_target) & !is.na(n_txt)) {
+      data_tmp <- data[c(var_name, n_txt)]
+    }
+    else if (!is.na(var_name_target) & !is.na(n_txt)) {
+      data_tmp <- data[c(var_name, n_txt, var_name_target)]
     }
 
     # intelligent guessing if num or cat
     # based on postfix and type of variable names
     var_type <- guess_cat_num(data_tmp[[var_name]])
 
+    # count data, no target
+    if (!is.na(n_txt) & (is.na(var_name_target)))  {
+      plots[[i]] <- explore_count(data_tmp, n = !!n_quo)
+
+    # count data, target
+    } else if (!is.na(n_txt) & (!is.na(var_name_target)))  {
+        plots[[i]] <- explore_count(data_tmp, n = !!n_quo, target = !!target_quo, split = split)
+
     # no target, num
-    if ( (var_type == "num") & (is.na(var_name_target))) {
+    } else if ( (var_type == "num") & (is.na(var_name_target))) {
       plots[[i]] <- explore_density(data_tmp, !!sym(var_name))
 
       # no target, cat

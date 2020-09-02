@@ -4,10 +4,12 @@
 \alias{describe_tbl}
 \title{Describe table}
 \usage{
-describe_tbl(data, target, out = "text")
+describe_tbl(data, n, target, out = "text")
 }
 \arguments{
 \item{data}{A dataset}
+
+\item{n}{Weigts variable for count-data}
 
 \item{target}{Target variable (binary)}
 

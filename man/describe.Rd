@@ -4,12 +4,14 @@
 \alias{describe}
 \title{Describe a dataset or variable}
 \usage{
-describe(data, var, target, out = "text", ...)
+describe(data, var, n, target, out = "text", ...)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{var}{A variable of the dataset}
+
+\item{n}{Weights variable for count-data}
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 

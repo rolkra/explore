@@ -4,12 +4,14 @@
 \alias{describe_num}
 \title{Describe numerical variable}
 \usage{
-describe_num(data, var, out = "text", margin = 0)
+describe_num(data, var, n, out = "text", margin = 0)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{var}{Variable or variable name}
+
+\item{n}{Weights variable for count-data}
 
 \item{out}{Output format ("text"|"list")}
 

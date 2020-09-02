@@ -30,6 +30,10 @@ titanic <- as.data.frame(Titanic)
 
 ### Explore dataset
 
+```{r}
+titanic %>% describe_tbl(n = Freq)
+```
+
 ```{r message=FALSE, warning=FALSE}
 titanic %>% describe()
 ```
@@ -50,10 +54,10 @@ As the normal explore() function of the {explore} package expects a tidy dataset
 titanic %>% explore(Class, n = Freq)
 ```
 
-We get the exact numbers by using count() together with the wt-parameter (weight)
+We get the exact numbers by using describe() together with the n-parameter (weight)
 
 ```{r message=FALSE, warning=FALSE}
-titanic %>% count(Class, wt = Freq)
+titanic %>% describe(Class, n = Freq)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
