@@ -329,6 +329,22 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     n_target_cat <- length(unique(data[[target_txt]]))
   }
 
+  # guess flip
+  if (missing(flip)) {
+    if(is.numeric(data[[var_txt]])) {
+      flip <- FALSE
+    } else {
+      flip <- TRUE
+    }
+  }
+
+  # check NA
+  na_check <- data %>%
+    mutate(na_ind = ifelse(is.na(!!var_quo),1,0)) %>%
+    summarize(na_cnt = sum(na_ind), na_pct = sum(na_ind)/n())
+  na_cnt <- na_check[1,1]
+  na_pct <- na_check[1,2]
+
   # number of levels of var (if not numeric)
   var_cat <- data %>% count(!!var_quo) %>% pull(!!var_quo)
   if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
@@ -351,15 +367,6 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
       flip <- TRUE
     }
   } # if
-
-  # guess flip
-  if (missing(flip)) {
-    if(is.numeric(data[[var_txt]])) {
-      flip <- FALSE
-    } else {
-      flip <- TRUE
-    }
-  }
 
   # use a factor for target so that fill works
   if (n_target_cat > 1 && !is.factor(data[[target_txt]]))  {
@@ -385,13 +392,6 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
       label <- FALSE
     }
   }
-
-  # check NA
-  na_check <- data %>%
-    mutate(na_ind = ifelse(is.na(!!var_quo),1,0)) %>%
-    summarize(na_cnt = sum(na_ind), na_pct = sum(na_ind)/n())
-  na_cnt <- na_check[1,1]
-  na_pct <- na_check[1,2]
 
   # prepare + plot (with target)
 

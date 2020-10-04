@@ -1,3 +1,7 @@
+## explore 0.6.2 (2020-10-04)
+
+* Bugfix explore_bar(): NA in plot
+
 ## explore 0.6.1 (2020-09-04)
 
 * change URL: http://github.com to https://github.com
