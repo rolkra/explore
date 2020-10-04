@@ -980,13 +980,14 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' Explore a table. Plots variable types, variables with no variance and variables with NA
 #'
 #' @param data A dataset
+#' @param n Weight variable for count data
 #' @importFrom magrittr "%>%"
 #' @import dplyr
 #' @examples
 #' explore_tbl(iris)
 #' @export
 
-explore_tbl <- function(data)  {
+explore_tbl <- function(data, n)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -997,6 +998,28 @@ explore_tbl <- function(data)  {
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
   assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
   assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+
+  # parameter n
+  if (!missing(n)) {
+    n_quo <- enquo(n)
+    n_txt <- quo_name(n_quo)[[1]]
+    if (!n_txt %in% names(data))  {
+      stop(paste0("variable '", n_txt, "' not found"))
+    }
+    info_obs <- paste("with", format_num_kMB(nrow(data)), "observations")
+  } else {
+    n_quo <- NA
+    n_txt <- NA
+  }
+
+  # info text for observations
+  if (is.na(n_txt)) {
+    info_obs <- paste0("with ", format_num_kMB(nrow(data)), " observations")
+  } else {
+    total_nrow <- sum(data[[n_txt]])
+    info_obs <- paste0("with ", format_num_kMB(total_nrow), " observations (",
+                      nrow(data), " in raw data)")
+  }
 
   # describe data
   d <- describe_all(data)
@@ -1059,7 +1082,7 @@ explore_tbl <- function(data)  {
               position = "stack"
               ) +
     labs(title = paste(ncol(data), "variables"),
-         subtitle = paste("with", format_num_kMB(nrow(data)), "observations"),
+         subtitle = info_obs,
          y = "variables",
          x = "") +
     coord_flip() +

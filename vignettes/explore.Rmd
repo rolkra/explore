@@ -190,13 +190,13 @@ data(iris)
 
 To use a high number of variables with explore_all() in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function total_fig_height() helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
 
-```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris)}
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, size=2.5)}
 iris %>% 
   explore_all()
 ```
 If you use a target: ```fig.height=total_fig_height(iris, target = Species)```
 
-```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris, target = Species)}
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, target = Species, size=2.5)}
 iris %>% explore_all(target = Species)
 ```
 

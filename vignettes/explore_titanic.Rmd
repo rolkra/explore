@@ -60,16 +60,10 @@ We get the exact numbers by using describe() together with the n-parameter (weig
 titanic %>% describe(Class, n = Freq)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Sex, n = Freq)
-```
+To explore all variables, we can simply use explore_all(). You automatically fit the height of the plot using `fig.height=total_fig_height(titanic, n = Freq)` in the code chunk header.
 
-```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Age, n = Freq)
-```
-
-```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Survived, n = Freq)
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(titanic, n = Freq)}
+titanic %>% explore_all(n = Freq)
 ```
 
 ### Survived?

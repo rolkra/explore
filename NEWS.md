@@ -1,12 +1,14 @@
-## explore 0.6.0 (2020-09-16)
+## explore 0.6.1 (2020-09-04)
 
+* change URL: http://github.com to https://github.com
 * new Vignette "explore_penguins"
 * new Vignette "explore_titanic" (count data)
 * explore_count(): plot count() output
 * add default parameter n for count data: 
-  explore(), explore_all, explore_tree(), 
+  explore(), explore_all(), explore_tbl(), 
+  explain_tree(), report(),
   describe(), describe_cat, describe_num(), describe_tbl(),
-  total_fig_height(), report()
+  total_fig_height()
 * explore_tree(): default value for minsplit = 10% of obs
 * explore_cor(): use geom_point for small datasets
 * explore_shiny(): use browseURL() with parameter browser=NULL

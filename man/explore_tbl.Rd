@@ -4,10 +4,12 @@
 \alias{explore_tbl}
 \title{Explore table}
 \usage{
-explore_tbl(data)
+explore_tbl(data, n)
 }
 \arguments{
 \item{data}{A dataset}
+
+\item{n}{Weight variable for count data}
 }
 \description{
 Explore a table. Plots variable types, variables with no variance and variables with NA
