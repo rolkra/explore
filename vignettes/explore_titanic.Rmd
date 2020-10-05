@@ -24,21 +24,22 @@ The titanic dataset is available in base R. The data has 5 variables and only 32
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
+library(tibble)
 library(explore)
-titanic <- as.data.frame(Titanic)
+titanic <- as_tibble(Titanic)
 ```
 
 ### Explore dataset
 
 ```{r}
-titanic %>% describe_tbl(n = Freq)
+titanic %>% describe_tbl(n = n)
 ```
 
 ```{r message=FALSE, warning=FALSE}
 titanic %>% describe()
 ```
 
-All variables are categorical except Freq, representing the frequency.
+All variables are categorical except n, representing the number of observations.
 
 The data look like this:
 
@@ -51,19 +52,19 @@ titanic %>% head(10)
 As the normal explore() function of the {explore} package expects a tidy dataset (each row is an observation), we need add the parameter n (number of observations)
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Class, n = Freq)
+titanic %>% explore(Class, n = n)
 ```
 
 We get the exact numbers by using describe() together with the n-parameter (weight)
 
 ```{r message=FALSE, warning=FALSE}
-titanic %>% describe(Class, n = Freq)
+titanic %>% describe(Class, n = n)
 ```
 
 To explore all variables, we can simply use explore_all(). You automatically fit the height of the plot using `fig.height=total_fig_height(titanic, n = Freq)` in the code chunk header.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(titanic, n = Freq)}
-titanic %>% explore_all(n = Freq)
+titanic %>% explore_all(n = n)
 ```
 
 ### Survived?
@@ -71,25 +72,25 @@ titanic %>% explore_all(n = Freq)
 Now we want to check the relation between variables and Survived. We can use the explore() function with Survived as target.
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Class, target = Survived, n = Freq, split = FALSE)
+titanic %>% explore(Class, target = Survived, n = n, split = FALSE)
 ```
 
 To get a better feeling of the relationship between Class and Survived, we switch to percentage and split the target into sperate bars. We can do that by using split = TRUE (which is default).
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Class, target = Survived, n = Freq, split = TRUE)
+titanic %>% explore(Class, target = Survived, n = n, split = TRUE)
 ```
 
 Now we get a plot, where each color sum to 100%. So a big difference in bar length indicates an important relationship between the two variables. In this case, passengers of 1st Class had the highest probability to survive.
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Sex, target = Survived, n = Freq)
+titanic %>% explore(Sex, target = Survived, n = n)
 ```
 
 Female are much more likely to survive!
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Age, target = Survived, n = Freq)
+titanic %>% explore(Age, target = Survived, n = n)
 ```
 
 Child had an advantage to survive.
@@ -97,25 +98,25 @@ Child had an advantage to survive.
 Now we can create a simple decision tree. As we have count-data we need to pass parameter n.
 
 ```{r}
-titanic %>% explain_tree(target = Survived, n = Freq)
+titanic %>% explain_tree(target = Survived, n = n)
 ```
 
 We see that Sex and Class can give a good explanation who are more likely to survive.
 
-* Sex = Male: 21% survived
-* Sex = Female & Class = 3rd: 46% survived
-* Sex = Female & Class <> 3rd: 93% survived
+* Sex = Male: **21% survived** (79% of all observations)
+* Sex = Female & Class = 3rd: **46% survived** (9% of all observations)
+* Sex = Female & Class <> 3rd: **93% survived** (12% of all observations)
 
 ### Other correlations
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Age, target = Class, n = Freq)
+titanic %>% explore(Age, target = Class, n = n)
 ```
 
 Child are unlikely in the 1st class! And all Crew members are adult as expected.
 
 ```{r message=FALSE, warning=FALSE, fig.height= 2.5, fig.width=4}
-titanic %>% explore(Sex, target = Class, n = Freq)
+titanic %>% explore(Sex, target = Class, n = n)
 ```
 
 Almost no female Crew members! Female tend to have better Class!

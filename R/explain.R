@@ -39,8 +39,8 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
     n_quo <- enquo(n)
     n_txt <- quo_name(n_quo)[[1]]
     # convert all character to factor
-    data[sapply(DF, is.character)] <- lapply(
-      data[sapply(DF, is.character)], as.factor)
+    data[sapply(data, is.character)] <- lapply(
+      data[sapply(data, is.character)], as.factor)
     # uncount data
     data <- data %>% tidyr::uncount(weights = !!n_quo)
   } else {
