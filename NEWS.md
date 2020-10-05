@@ -3,6 +3,7 @@
 * Bugfix explore_bar(): NA in plot
 * explain_tree(): convert character variables into factors
 * vignette "explore_titanic": change to tibble
+* update README.md
 
 ## explore 0.6.1 (2020-09-04)
 
