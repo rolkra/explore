@@ -121,7 +121,7 @@ iris %>% report(output_dir = tempdir(),
 
 ### Manual exploration
 
-Example how to use the functions of the explore package to explore the iris dataset
+Example how to use the functions of the explore package to explore tidy data (each row is an observation) like the iris dataset:
 
 ```r
 # load packages
@@ -164,4 +164,37 @@ iris %>% explain_tree(target = is_versicolor)
 
 # explain target using a logistic regression
 iris %>% explain_logreg(target = is_versicolor)
+```
+
+Example how to use the functions of the explore package to explore count-data (each row is a group of observations):
+
+
+```r
+# load packages
+library(dplyr)
+library(tibble)
+library(explore)
+
+# use titanic dataset
+# n = number of observations
+titanic <- as_tibble(Titanic)
+
+# describe data
+describe(titanic)
+
+# describe Class
+titanic %>% describe(Class, n = n)
+
+# explore Class
+titanic %>% explore(Class, n = n)
+
+# explore relationship between Class and the target
+titanic %>% explore(Class, n = n, target = Survived)
+
+# explore relationship between all variables and the target
+titanic %>% explore_all(n = n, target = Survived)
+
+# explain target using a decision tree
+titanic %>% explain_tree(n = n, target = Survived)
+
 ```

@@ -138,7 +138,7 @@ data %>% explore(wt, target = highmpg)
 data %>% explore(wt, target = highmpg, split = FALSE)
 ```
 
-wt (weight) is a good predictor for high mpg.
+The plot shows the percentage of cars with high mpg. Cars with high mpg have a weight < 2.5. So wt (weight) is a good predictor for high mpg. 
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 mtcars %>% explore(wt, mpg)
@@ -158,6 +158,10 @@ Let's build a decision tree with horsepower as target:
 mtcars %>% 
   explain_tree(target = hp, minsplit=15)
 ```
+
+All cars have an average hp of 147 (shown in the top node). Then the data is split by cyl. Cars with cyl<7 (56% of all cars) have an average hp of 98 and cars with cp>=7 (44% of all cars) have an average hp of 209. 
+
+The variables cyl and mpg can explain hp. The bottom nodes are showing an average hp of 80, 121 and 209.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 mtcars %>% 
