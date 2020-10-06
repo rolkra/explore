@@ -1,4 +1,4 @@
-## explore 0.6.2 (2020-10-05)
+## explore 0.6.2 (2020-10-07)
 
 * Bugfix explore_bar(): NA in plot
 * explain_tree(): convert character variables into factors
