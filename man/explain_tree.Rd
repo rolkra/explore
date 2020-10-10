@@ -14,6 +14,7 @@ explain_tree(
   minsplit = nrow(data)/10,
   cp = 0,
   size = 0.7,
+  out = "plot",
   ...
 )
 }
@@ -36,10 +37,12 @@ explain_tree(
 
 \item{size}{Textsize of plot}
 
+\item{out}{Output of function: "plot" | "model"}
+
 \item{...}{Further arguments}
 }
 \value{
-Plot
+Plot or additional the model (if out = "model")
 }
 \description{
 Explain a target using a simple decision tree (classification or regression)

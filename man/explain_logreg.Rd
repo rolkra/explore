@@ -5,17 +5,20 @@
 \title{Explain a binary target using a logistic regression (glm).
 Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).}
 \usage{
-explain_logreg(data, target, ...)
+explain_logreg(data, target, out = "tibble", ...)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{target}{Target variable (binary)}
 
+\item{out}{Output of the function: "tibble" | "model"}
+
 \item{...}{Further arguments}
 }
 \value{
 Dataset with results (term, estimate, std.error, z.value, p.value)
+or the model (if out = "model")
 }
 \description{
 Explain a binary target using a logistic regression (glm).

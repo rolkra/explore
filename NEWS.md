@@ -1,7 +1,10 @@
-## explore 0.6.2 (2020-10-07)
+## explore 0.6.2 (2020-10-11)
 
 * Bugfix explore_bar(): NA in plot
-* explain_tree(): convert character variables into factors
+* explore_count(): convert target into factor
+* explain_tree(): convert character variables into factors (count data)
+* explain_tree(): parameter out ("plot" | "model")
+* explain_logreg(): parameter out ("tibble" | "model")
 * vignette "explore_titanic": change to tibble
 * vignette "explore_mtcars": add explanations
 * update README.md

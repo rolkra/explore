@@ -1683,7 +1683,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     }
   }
 
-  # parameter var
+  # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
@@ -1725,6 +1725,12 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 
     ## target defined
   } else {
+
+    # use a factor for target
+    if (!is.factor(data[[target_txt]]))  {
+      data[[target_txt]] <- factor(data[[target_txt]])
+      data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
+    }
 
     # prepare data (target)
     data_plot <- data[, c(target_txt, cat_txt, n_txt)]

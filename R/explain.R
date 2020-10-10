@@ -13,8 +13,9 @@
 #' @param minsplit The minimum number of observations that must exist in a node to split.
 #' @param cp Complexity parameter (rpart-parameter)
 #' @param size Textsize of plot
+#' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
-#' @return Plot
+#' @return Plot or additional the model (if out = "model")
 #' @importFrom tidyr uncount
 #' @examples
 #' data <- iris
@@ -23,7 +24,7 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, ...)  {
+explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, out = "plot", ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -129,6 +130,11 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
     plot_text("can't grow decision tree")
   } # if tree exists
 
+  # output
+  if (out == "model") {
+    return(mod)
+  }
+
 } # explain_tree
 
 #============================================================================
@@ -139,8 +145,10 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
 #'
 #' @param data A dataset
 #' @param target Target variable (binary)
+#' @param out Output of the function: "tibble" | "model"
 #' @param ... Further arguments
 #' @return Dataset with results (term, estimate, std.error, z.value, p.value)
+#' or the model (if out = "model")
 #' @importFrom stats complete.cases as.formula glm
 #' @examples
 #' data <- iris
@@ -149,7 +157,7 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
 #' explain_logreg(data, target = is_versicolor)
 #' @export
 
-explain_logreg <- function(data, target, ...)  {
+explain_logreg <- function(data, target, out = "tibble", ...)  {
 
   # parameter data
   if(missing(data))  {
@@ -182,6 +190,14 @@ explain_logreg <- function(data, target, ...)  {
 
   #summary(mod)
 
-  broom::tidy(mod_stepwise)
+  df_model <- broom::tidy(mod_stepwise)
+
+  # output
+  if (out == "tibble") {
+    df_model
+  } else {
+    mod_stepwise
+  }
+
 
 } # explain_logreg
