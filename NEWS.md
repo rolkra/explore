@@ -2,6 +2,8 @@
 
 * Bugfix explore_bar(): NA in plot
 * explore_count(): convert target into factor
+* explore_count(): add default title (cat name)
+* explore_count(): add parameter numeric, max_cat, max_target_cat
 * explain_tree(): convert character variables into factors (count data)
 * explain_tree(): parameter out ("plot" | "model")
 * explain_logreg(): parameter out ("tibble" | "model")

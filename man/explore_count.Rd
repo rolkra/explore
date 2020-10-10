@@ -12,6 +12,9 @@ explore_count(
   pct = FALSE,
   split = TRUE,
   title = NA,
+  numeric = FALSE,
+  max_cat = 30,
+  max_target_cat = 5,
   flip = NA
 )
 }
@@ -29,6 +32,12 @@ explore_count(
 \item{split}{Split by target?}
 
 \item{title}{Title of the plot}
+
+\item{numeric}{Display variable as numeric (not category)}
+
+\item{max_cat}{Maximum number of categories to be plotted}
+
+\item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
 
 \item{flip}{Flip plot? (for categorical variables)}
 }

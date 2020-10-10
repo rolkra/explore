@@ -747,11 +747,11 @@ explore_all <- function(data, n, target, ncol = 2, split = TRUE)  {
 
     # count data, no target
     if (!is.na(n_txt) & (is.na(var_name_target)))  {
-      plots[[i]] <- explore_count(data_tmp, n = !!n_quo)
+      plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, pct = TRUE)
 
     # count data, target
     } else if (!is.na(n_txt) & (!is.na(var_name_target)))  {
-        plots[[i]] <- explore_count(data_tmp, n = !!n_quo, target = !!target_quo, split = split)
+        plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, target = !!target_quo, split = split)
 
     # no target, num
     } else if ( (var_type == "num") & (is.na(var_name_target))) {
@@ -1421,7 +1421,7 @@ explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = N
 
     # count data
   } else if (!is.na(n_text) & is.na(target_text))  {
-    explore_count(data, cat = !!var_quo, n = !!n_quo, split = split, ...)
+    explore_count(data, cat = !!var_quo, n = !!n_quo, split = split, pct = TRUE, ...)
 
     # count data + target
   } else if (!is.na(n_text)  & !is.na(target_text))  {
@@ -1630,6 +1630,9 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 #' @param pct Show as percent?
 #' @param split Split by target?
 #' @param title Title of the plot
+#' @param numeric Display variable as numeric (not category)
+#' @param max_cat Maximum number of categories to be plotted
+#' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param flip Flip plot? (for categorical variables)
 #' @return Plot object
 #' @examples
@@ -1641,7 +1644,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 #' @import rlang
 #' @export
 
-explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, flip = NA)  {
+explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, flip = NA)  {
 
   # define variables for CRAN-package check
   plot_cat <- NULL
@@ -1694,6 +1697,68 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     target_txt <- ""
   }
 
+  # number of levels of target
+  if (missing(target))  {
+    n_target_cat <- 1
+  } else {
+    n_target_cat <- length(unique(data[[target_txt]]))
+  }
+
+  # guess flip
+  if (missing(flip)) {
+    if(is.numeric(data[[cat_txt]])) {
+      flip <- FALSE
+    } else {
+      flip <- TRUE
+    }
+  }
+
+  # check NA
+  na_cnt <- data %>%
+    filter(is.na(.data[[cat_txt]])) %>%
+    summarize(na_cnt = sum(.data[[n_txt]])) %>%
+    pull(na_cnt)
+  n_tot <- data %>% summarise(n_tot = sum(.data[[n_txt]])) %>% pull(n_tot)
+  na_pct <- na_cnt / n_tot * 100
+
+  # limit number of levels of var (if not numeric)
+  var_cat <- data %>% count(!!cat_quo) %>% pull(!!cat_quo)
+  if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
+       length(var_cat) > max_cat)  {
+    data <- data %>% filter(!!cat_quo %in% var_cat[1:max_cat])
+    warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
+  }
+
+  # numeric? of use a factor for var if low number of cats
+  if (!missing(numeric) & numeric == TRUE)  {
+    data[[cat_txt]] <- as.numeric(data[[cat_txt]])
+    if (missing(flip)) {
+      flip <- FALSE
+    }
+  } else if ((!missing(numeric) & numeric == FALSE) |
+             guess_cat_num(data[[cat_txt]]) == "cat") {
+    data[[cat_txt]] <- factor(data[[cat_txt]])
+    data[[cat_txt]] <- forcats::fct_explicit_na(data[[cat_txt]], na_level = ".NA")
+    if (missing(flip)) {
+      flip <- TRUE
+    }
+  } # if
+
+  # use a factor for target so that fill works
+  if (n_target_cat > 1 && !is.factor(data[[target_txt]]))  {
+    data[[target_txt]] <- factor(data[[target_txt]])
+    data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
+
+    # keep max. different levels
+    if (n_target_cat > max_target_cat)  {
+      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+    }
+    # recalculate number of levels in target
+    n_target_cat <- length(levels(data[[target_txt]]))
+
+  }
+
+
   ## no target defined
   if(target_txt == "")  {
 
@@ -1714,23 +1779,17 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
         ggplot(aes(x = plot_cat, y = plot_n_sum)) +
         geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
         theme_light() +
-        labs(y = "count", x = cat_txt)
+        labs(y = "count", x = "")
     } else {
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_pct)) +
         geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
         theme_light() +
-        labs(y = "%", x = cat_txt)
+        labs(y = "%", x = "")
     }
 
     ## target defined
   } else {
-
-    # use a factor for target
-    if (!is.factor(data[[target_txt]]))  {
-      data[[target_txt]] <- factor(data[[target_txt]])
-      data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
-    }
 
     # prepare data (target)
     data_plot <- data[, c(target_txt, cat_txt, n_txt)]
@@ -1750,26 +1809,17 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
         ggplot(aes(x = plot_cat, y = plot_n_pct, fill = plot_target)) +
         geom_col(position = "dodge") +
         theme_light() +
-        labs(y = "%", x = cat_txt, fill = target_txt)
+        labs(y = "%", x = "", fill = target_txt)
     } else {
       # geom_col stack
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_sum, fill = plot_target)) +
         geom_col(position = "stack") +
         theme_light() +
-        labs(y = "count", x = cat_txt, fill = target_txt)
+        labs(y = "count", x = "", fill = target_txt)
     }
   } # if target
 
-
-  # guess flip
-  if (missing(flip)) {
-    if(is.numeric(data[[cat_txt]])) {
-      flip <- FALSE
-    } else {
-      flip <- TRUE
-    }
-  }
 
   # flip plot
   if (is.na(flip) | flip) {
@@ -1779,6 +1829,10 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   # title
   if (!is.na(title) & nchar(title) > 0)  {
     p <- p + ggtitle(title)
+  } else if (missing(target)) {
+    p <- p + ggtitle(paste0(cat_txt, ", NA = ", na_cnt, " (",round(na_pct,1), "%)"))
+  } else {
+    p <- p + ggtitle(cat_txt)
   }
 
   # return plot
