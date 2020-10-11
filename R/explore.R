@@ -1421,11 +1421,11 @@ explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = N
 
     # count data
   } else if (!is.na(n_text) & is.na(target_text))  {
-    explore_count(data, cat = !!var_quo, n = !!n_quo, split = split, pct = TRUE, ...)
+    explore_count(data[unique(c(var_text, n_text))], cat = !!var_quo, n = !!n_quo, split = split, pct = TRUE, ...)
 
     # count data + target
   } else if (!is.na(n_text)  & !is.na(target_text))  {
-    explore_count(data, cat = !!var_quo, n = !!n_quo, target = !!target_quo, split = split, ...)
+    explore_count(data[unique(c(var_text, n_text, target_text))], cat = !!var_quo, n = !!n_quo, target = !!target_quo, split = split, ...)
 
     # var + var2 -> correlation
   } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {

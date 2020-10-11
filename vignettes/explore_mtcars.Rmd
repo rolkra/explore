@@ -163,6 +163,25 @@ All cars have an average hp of 147 (shown in the top node). Then the data is spl
 
 The variables cyl and mpg can explain hp. The bottom nodes are showing an average hp of 80, 121 and 209.
 
+In the tree rounded values are shown. If you want to know the exact values for each split, you can use the parameter ```out = "model"``` to get the model returned and take a look.
+
+```{r fig.height=4, fig.width=6, message=FALSE, warning=FALSE, include=FALSE}
+model <- mtcars %>% 
+  explain_tree(target = hp, minsplit=15, out = "model")
+```
+
+```
+model <- mtcars %>% 
+  explain_tree(target = hp, minsplit=15, out = "model")
+```
+```{r echo=TRUE, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
+model
+```
+
+You see that the split for mpg is done at exactly 21.45
+
+Now let's take a look at the direct correlation the variables used in the tree and hp:
+
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 mtcars %>% 
   select(hp, cyl, mpg) %>% 
