@@ -413,7 +413,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     # plot
     p <- ggplot(data_bar, aes(x = !!var_quo)) +
       geom_col(aes(y = pct, fill = !!target_quo), position = "dodge") +
-      theme_minimal() +
+      theme_light() +
       theme(legend.position = legend_position) +
       labs(x = "", y = "%")
 
@@ -434,7 +434,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
                position = "dodge",
                fill = "lightgrey",
                color = "lightgrey") +
-      theme_minimal() +
+      theme_light() +
       labs(x = "", y = "%")
 
   }
@@ -1086,7 +1086,7 @@ explore_tbl <- function(data, n)  {
          y = "variables",
          x = "") +
     coord_flip() +
-    theme_minimal()
+    theme_light()
 } # explore_tbl
 
 #============================================================================
