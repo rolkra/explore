@@ -4,7 +4,7 @@
 \alias{dwh_fastload}
 \title{write data to a DWH table}
 \usage{
-dwh_fastload(data, dsn, table, ...)
+dwh_fastload(data, dsn, table, overwrite = FALSE, append = FALSE, ...)
 }
 \arguments{
 \item{data}{dataframe}
@@ -12,6 +12,10 @@ dwh_fastload(data, dsn, table, ...)
 \item{dsn}{DSN string}
 
 \item{table}{table name (character string)}
+
+\item{overwrite}{Overwrite table if already exist}
+
+\item{append}{Append data to table}
 
 \item{...}{Further arguments to be passed to DBI::dbConnect()}
 }

@@ -126,6 +126,8 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE, ...)  {
 #' @param data dataframe
 #' @param dsn DSN string
 #' @param table table name (character string)
+#' @param overwrite Overwrite table if already exist
+#' @param append Append data to table
 #' @param ... Further arguments to be passed to DBI::dbConnect()
 #' @return status
 #' @examples
@@ -134,7 +136,7 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE, ...)  {
 #' }
 #' @export
 
-dwh_fastload <- function(data, dsn, table, ...)  {
+dwh_fastload <- function(data, dsn, table, overwrite = FALSE, append = FALSE, ...)  {
 
   # check table (must be 'database.table')
   # split string at '.'
@@ -152,7 +154,7 @@ dwh_fastload <- function(data, dsn, table, ...)  {
   con <- DBI::dbConnect(odbc::odbc(), dsn=dsn, database=database_name, ...)
 
   # write data
-  DBI::dbWriteTable(con, name=table_name, value=data)
+  DBI::dbWriteTable(con, name=table_name, value=data, overwrite=overwrite, append=append)
 
   # disconnect
   DBI::dbDisconnect(con)

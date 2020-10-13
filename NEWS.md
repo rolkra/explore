@@ -1,4 +1,4 @@
-## explore 0.6.2 (2020-10-12)
+## explore 0.6.2 (2020-10-13)
 
 * Bugfix explore_bar(): NA in plot
 * explore_count(): convert target into factor
@@ -10,6 +10,7 @@
 * vignette "explore_titanic": change to tibble
 * vignette "explore_mtcars": add explanations
 * change theme_minimal to theme_light
+* dwh_fastload(): add parameters overwrite and append
 * update README.md
 
 ## explore 0.6.1 (2020-09-04)
