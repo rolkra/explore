@@ -13,6 +13,7 @@ explain_tree(
   maxdepth = 3,
   minsplit = nrow(data)/10,
   cp = 0,
+  weights = NA,
   size = 0.7,
   out = "plot",
   ...
@@ -34,6 +35,9 @@ explain_tree(
 \item{minsplit}{The minimum number of observations that must exist in a node to split.}
 
 \item{cp}{Complexity parameter (rpart-parameter)}
+
+\item{weights}{Vecotr containing weight of each observation (rpart-parameter). Can
+not be used in combination with parameter n (weight of count-data)}
 
 \item{size}{Textsize of plot}
 

@@ -12,6 +12,8 @@
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
 #' @param minsplit The minimum number of observations that must exist in a node to split.
 #' @param cp Complexity parameter (rpart-parameter)
+#' @param weights Vecotr containing weight of each observation (rpart-parameter). Can
+#' not be used in combination with parameter n (weight of count-data)
 #' @param size Textsize of plot
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
@@ -24,7 +26,9 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3, minsplit = nrow(data)/10, cp = 0, size = 0.7, out = "plot", ...)  {
+explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3,
+                         minsplit = nrow(data)/10, cp = 0, weights = NA,
+                         size = 0.7, out = "plot", ...)  {
 
   # define variables to pass CRAN-checks
   type <- NULL
@@ -55,6 +59,16 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
   } else {
     target_txt = NA
     return(NULL)
+  }
+
+  # no obs-weights for count-data
+  if (!missing(n)) {
+    weights <- NA
+  }
+
+  # default obs-weights
+  if (!is.vector(weights) | length(weights) < nrow(data)) {
+    weights <- rep(1, nrow(data))
   }
 
   # drop variables, that are not usable
@@ -98,6 +112,7 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
     mod <- rpart::rpart(formula_txt,
                         data = data,
                         method = "class",
+                        weights = weights,
                         control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
 
   } else {
@@ -105,6 +120,7 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
     # create tree num
     mod <- rpart::rpart(formula_txt,
                         data = data,
+                        weights = weights,
                         method = "anova",  #"class",
                         control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
 
