@@ -6,14 +6,14 @@
 #'
 #' @param data A dataset
 #' @param target Target variable
-#' @param n weigths (for count data)
+#' @param n weigths variable (for count data)
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
 #' @param minsplit The minimum number of observations that must exist in a node to split.
 #' @param cp Complexity parameter (rpart-parameter)
-#' @param weights Vecotr containing weight of each observation (rpart-parameter). Can
-#' not be used in combination with parameter n (weight of count-data)
+#' @param weights Vector containing weight of each observation (rpart-parameter). Can
+#' not be used in combination with parameter n (variable containing weight for count-data)
 #' @param size Textsize of plot
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
@@ -140,6 +140,7 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
                            box.palette = 'Blues',    # colors for nodes
                            shadow.col = 0,           # color of shadow, 0 = none
                            cex = size,
+                           left = FALSE,
                            ...)
   } else {
 

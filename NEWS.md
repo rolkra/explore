@@ -1,6 +1,7 @@
 ## explore 0.6.3 (2021-01-15)
 
 * add weights parameter to explain_tree()
+* flip no/yes label in rpart.plot
 
 ## explore 0.6.2 (2020-10-13)
 
