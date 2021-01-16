@@ -27,7 +27,7 @@
 #' @export
 
 explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3,
-                         minsplit = nrow(data)/10, cp = 0, weights = NA,
+                         minsplit = NA, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
 
   # define variables to pass CRAN-checks
@@ -39,7 +39,7 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
     stop(paste0("data missing"))
   }
 
-  # parameter n
+  # parameter n, uncount
   if(!missing(n))  {
     n_quo <- enquo(n)
     n_txt <- quo_name(n_quo)[[1]]
@@ -69,6 +69,11 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
   # default obs-weights
   if (!is.vector(weights) | length(weights) < nrow(data)) {
     weights <- rep(1, nrow(data))
+  }
+
+  # parameter minsplit
+  if(is.na(minsplit)) {
+    minsplit <- sum(weights)/10
   }
 
   # drop variables, that are not usable

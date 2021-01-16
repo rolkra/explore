@@ -2,6 +2,7 @@
 
 * add weights parameter to explain_tree()
 * flip no/yes label in rpart.plot
+* fix minsplit for count-data
 
 ## explore 0.6.2 (2020-10-13)
 
