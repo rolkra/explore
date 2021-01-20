@@ -106,6 +106,63 @@ balance_target <- function(data, target, min_prop = 0.1) {
 } # balance_target
 
 #============================================================================
+#  weight_target
+#============================================================================
+#' Weight target variable
+#'
+#' Create weights for the target variable in your dataset
+#' so that are equal weiths for target = 0 and target = 1.
+#' Target must be 0/1, FALSE/TRUE ore no/yes
+#'
+#' @param data A dataset
+#' @param target Target variable (0/1, TRUE/FALSE, yes/no)
+#' @return Weights for each observation (as a vector)
+#' @import rlang
+#' @import dplyr
+#' @examples
+#' iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+#' weights <- weight_target(iris, target = is_versicolor)
+#' summary(weights)
+#' @export
+
+weight_target <- function(data, target) {
+
+  # check if parameters are missing
+  if (missing(data))  {
+    stop("data is missing")
+  }
+
+  if (missing(target))  {
+    stop("target is missing")
+  }
+
+  # tidy eval for target
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
+
+  # check levels of target
+  target_levels <- length(unique(data[[target_txt]]))
+  if (target_levels > 2)  {
+    stop(paste("target has", target_levels, "levels, expected 2"))
+  }
+
+  # weight
+  observed_prop   <- data %>%
+    dplyr::pull(!!target_quo) %>%
+    table()
+  minClass        <- min(observed_prop)
+  names(minClass) <- names(which(observed_prop == minClass))
+
+  weights = ifelse(data[[target_txt]] == names(minClass),
+                     max(observed_prop)/min(observed_prop), 1)
+
+  # return weigthts
+  return(weights)
+
+  } # weight_target
+
+
+#============================================================================
 #  plot_text
 #============================================================================
 #' Plot a text
