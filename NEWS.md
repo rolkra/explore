@@ -4,6 +4,7 @@
 * flip no/yes label in rpart.plot
 * fix minsplit for count-data
 * add weight_target()
+* add unit testing (testthat)
 
 ## explore 0.6.2 (2020-10-13)
 
