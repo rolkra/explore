@@ -224,6 +224,33 @@ plot_var_info <- function(data, var, info = "")  {
 } # plot_var_info
 
 #============================================================================
+#  plot_legend_targetpct()
+#============================================================================
+#' Plots a legend that can be used for explore_all with a binary target
+#'
+#' @param border Draw a border?
+#' @return Base plot
+#' @examples
+#' plot_legend_targetpct(border = TRUE)
+#' @export
+
+plot_legend_targetpct <- function(border = TRUE) {
+
+  par(mar=c(0,0,0,0))
+  plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
+  legend(0.5,0.5,
+         legend = c("00-05%", "06-20%", "21-40%","41+%"),
+         fill =c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
+         horiz = TRUE,
+         xjust = 0.5,
+         yjust = 0.5,
+         border = TRUE,
+         box.lty = ifelse(border, 1, 0))
+
+} # plot_legend_targetpct
+
+
+#============================================================================
 #  format_num_spcace
 #============================================================================
 #' Format number as character string (space as big.mark)

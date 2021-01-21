@@ -23,6 +23,9 @@ data %>% explore(!!sym(var_name_target))
 
 ## Explore Variables
 
+```{r echo=FALSE, fig.height=0.5, fig.width=10, message=FALSE, warning=FALSE}
+plot_legend_targetpct()
+```
 ```{r echo=FALSE, fig.height=total_fig_height(data, target = 1), fig.width=10, message=FALSE, warning=FALSE}
 data %>% explore_all(ncol = 2, target = !!sym(var_name_target), split = FALSE)
 ```
