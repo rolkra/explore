@@ -230,15 +230,16 @@ plot_var_info <- function(data, var, info = "")  {
 #'
 #' @param border Draw a border?
 #' @return Base plot
+#''@importFrom graphics legend par plot
 #' @examples
 #' plot_legend_targetpct(border = TRUE)
 #' @export
 
 plot_legend_targetpct <- function(border = TRUE) {
 
-  par(mar=c(0,0,0,0))
+  graphics::par(mar=c(0,0,0,0))
   plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
-  legend(0.5,0.5,
+  graphics::legend(0.5,0.5,
          legend = c("00-05%", "06-20%", "21-40%","41+%"),
          fill =c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
          horiz = TRUE,
