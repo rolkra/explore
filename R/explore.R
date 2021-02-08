@@ -105,7 +105,11 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
   # create plot
   plot_bar <- ggplot(data = data_bar) +
     geom_bar(aes(x=cat, y=target_pct, fill=weight), stat="identity") +
-    theme_light() +
+    theme(
+      panel.background = element_rect("white"),
+      panel.grid.major = element_line("grey85"),
+      panel.grid.minor = element_line("grey85"),
+      panel.border = element_rect(fill = NA, color = "lightgrey")) +
     theme(plot.margin=unit(c(0.5,0.5,0,1),"cm")) +   # o,r,u,l
     ggtitle(ifelse(is.na(title), var_txt, title)) +
     labs(x = "", y = "% target") +
@@ -413,7 +417,11 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     # plot
     p <- ggplot(data_bar, aes(x = !!var_quo)) +
       geom_col(aes(y = pct, fill = !!target_quo), position = "dodge") +
-      theme_light() +
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey")) +
       theme(legend.position = legend_position) +
       labs(x = "", y = "%")
 
@@ -434,7 +442,11 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
                position = "dodge",
                fill = "lightgrey",
                color = "lightgrey") +
-      theme_light() +
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey")) +
       labs(x = "", y = "%")
 
   }
@@ -610,7 +622,12 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
       geom_density(fill = color, alpha = 0.7) +
       #ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
+
   } else {
 
     # factorise target
@@ -630,7 +647,12 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
       #ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       #ggtitle(var_txt) +
       labs(x = "", y = "") +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
+
 
     # target with 2 levels
     if (n_target_cat == 2)  {
@@ -903,13 +925,23 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
       geom_point(alpha = 0.45, size = 2.5) +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
+
     } else {
 
       p <- data %>%
         ggplot(aes(x = !!x_quo, y = !!y_quo)) +
         geom_point(alpha = 0.45, size = 2.5) +
-        theme_light()
+        theme(
+          panel.background = element_rect("white"),
+          panel.grid.major = element_line("grey85"),
+          panel.grid.minor = element_line("grey85"),
+          panel.border = element_rect(fill = NA, color = "lightgrey"))
+
     }
   }
 
@@ -920,7 +952,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
       # cut only when more then 1 different value in data
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
       geom_boxplot(aes(group = cut(!!x_quo, bins)), fill = color) +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
+
   }
 
   else if(x_type == "cat" & y_type == "num") {
@@ -931,7 +968,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
       geom_boxplot(aes(group = !!x_quo), fill = color) +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
+
   }
 
   else if(x_type == "num" & y_type == "cat") {
@@ -942,7 +984,11 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>%
       ggplot(aes(x = !!y_quo, y = !!x_quo)) +
       geom_boxplot(aes(group = !!y_quo), fill = color) +
-      theme_light() +
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey")) +
       coord_flip()
   }
 
@@ -954,7 +1000,11 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>%
       ggplot(aes(x = !!x_quo, fill = !!y_quo)) +
       geom_bar(position = "fill") +
-      theme_light()
+      theme(
+        panel.background = element_rect("white"),
+        panel.grid.major = element_line("grey85"),
+        panel.grid.minor = element_line("grey85"),
+        panel.border = element_rect(fill = NA, color = "lightgrey"))
   }
 
   # facet
@@ -1086,7 +1136,12 @@ explore_tbl <- function(data, n)  {
          y = "variables",
          x = "") +
     coord_flip() +
-    theme_light()
+    theme(
+      panel.background = element_rect("white"),
+      panel.grid.major = element_line("grey85"),
+      panel.grid.minor = element_line("grey85"),
+      panel.border = element_rect(fill = NA, color = "lightgrey"))
+
 } # explore_tbl
 
 #============================================================================
@@ -1778,14 +1833,22 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_sum)) +
         geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
-        theme_light() +
+        theme(
+          panel.background = element_rect("white"),
+          panel.grid.major = element_line("grey85"),
+          panel.grid.minor = element_line("grey85"),
+          panel.border = element_rect(fill = NA, color = "lightgrey")) +
         labs(y = "count", x = "")
     } else {
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_pct)) +
         geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
-        theme_light() +
-        labs(y = "%", x = "")
+        theme(
+          panel.background = element_rect("white"),
+          panel.grid.major = element_line("grey85"),
+          panel.grid.minor = element_line("grey85"),
+          panel.border = element_rect(fill = NA, color = "lightgrey")) +
+      labs(y = "%", x = "")
     }
 
     ## target defined
@@ -1808,14 +1871,22 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_pct, fill = plot_target)) +
         geom_col(position = "dodge") +
-        theme_light() +
+        theme(
+          panel.background = element_rect("white"),
+          panel.grid.major = element_line("grey85"),
+          panel.grid.minor = element_line("grey85"),
+          panel.border = element_rect(fill = NA, color = "lightgrey")) +
         labs(y = "%", x = "", fill = target_txt)
     } else {
       # geom_col stack
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_sum, fill = plot_target)) +
         geom_col(position = "stack") +
-        theme_light() +
+        theme(
+          panel.background = element_rect("white"),
+          panel.grid.major = element_line("grey85"),
+          panel.grid.minor = element_line("grey85"),
+          panel.border = element_rect(fill = NA, color = "lightgrey")) +
         labs(y = "count", x = "", fill = target_txt)
     }
   } # if target

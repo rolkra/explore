@@ -1,3 +1,7 @@
+## explore 0.7.1 
+
+* change theme_light() into individual theme() so that set_theme works.
+
 ## explore 0.7.0 (2021-01-21)
 
 * add weights parameter to explain_tree()
