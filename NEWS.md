@@ -1,6 +1,8 @@
 ## explore 0.7.1 
 
 * change theme_light() into individual theme() so that set_theme works.
+* add rmarkdown to Suggests in DESCRIPTION
+* fix URL in DESCRIPTION
 
 ## explore 0.7.0 (2021-01-21)
 
