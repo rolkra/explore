@@ -8,11 +8,12 @@ Description: Interactive data exploration with one line of code or use an easy t
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/rolkra/explore
+URL: https://github.com/rolkra/explore/
 Imports: assertthat, broom, dplyr, DBI, DT, forcats, ggplot2 (>= 3.0.0), gridExtra, magrittr, MASS, odbc, rlang, rpart, rpart.plot, shiny, stringr, tibble, tidyr, rmarkdown 
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     palmerpenguins,
+    rmarkdown,
     testthat
 VignetteBuilder: knitr
