@@ -4,11 +4,34 @@ Title: Simplifies Exploratory Data Analysis
 Version: 0.7.1
 Author: Roland Krasser
 Maintainer: Roland Krasser <roland.krasser@gmail.com>
-Description: Interactive data exploration with one line of code or use an easy to remember set of tidy functions for exploratory data analysis. Introduces three main verbs. explore() to graphically explore a variable or table, describe() to describe a variable or table and report() to create an automated report.
+Description: Interactive data exploration with one line of code or use an easy 
+    to remember set of tidy functions for exploratory data analysis. 
+    Introduces three main verbs. explore() to graphically explore a variable or 
+    table, describe() to describe a variable or table and report() to create an 
+    automated report.
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/rolkra/explore/
-Imports: assertthat, broom, dplyr, DBI, DT, forcats, ggplot2 (>= 3.0.0), gridExtra, magrittr, MASS, odbc, rlang, rmarkdown, rpart, rpart.plot, shiny, stringr, tibble, tidyr 
+Imports: 
+    assertthat, 
+    broom, 
+    dplyr, 
+    DBI, 
+    DT, 
+    forcats, 
+    ggplot2 (>= 3.0.0), 
+    gridExtra, 
+    magrittr, 
+    MASS, 
+    odbc, 
+    rlang, 
+    rmarkdown, 
+    rpart, 
+    rpart.plot, 
+    shiny, 
+    stringr, 
+    tibble, 
+    tidyr 
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
