@@ -1,3 +1,8 @@
+## explore 0.8.0 (2022-01-02)
+
+* All dwh_ functions are no longer included in {explore}
+  Alternative: source https://github.com/rolkra/dwh
+
 ## explore 0.7.1 (2021-06-03)
 
 * change theme_light() into individual theme() so that set_theme works.
