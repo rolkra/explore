@@ -41,7 +41,7 @@ You can use {explore} with **tidy data** (each row is an observation) or with **
 install.packages("explore")
 ```
 
-To install the explore package on Debian / Ubuntu, you may need to install some additional dependencies first:
+To install the explore package on Debian / Ubuntu, you may need to install some additional dependencies first (explore 0.7.1 or below):
 
 ```
 sudo apt install unixodbc unixodbc-dev
