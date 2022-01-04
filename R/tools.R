@@ -1,5 +1,5 @@
 #============================================================================
-#  Function: Encrypt (Passwort)
+#  Function: Encrypt (Password)
 #============================================================================
 #' encrypt text
 #'
@@ -18,7 +18,7 @@ encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 }
 
 #============================================================================
-#  Function: Decrypt (Passwort)
+#  Function: Decrypt (Password)
 #============================================================================
 #' decrypt text
 #'
