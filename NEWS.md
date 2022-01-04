@@ -1,7 +1,8 @@
 ## explore 0.8.0 (2022-01-02)
 
-* All dwh_ functions are no longer included in {explore}
+* all dwh_ functions are no longer included in {explore}
   Alternative: source https://github.com/rolkra/dwh
+* add create_fake_data()
 
 ## explore 0.7.1 (2021-06-03)
 
