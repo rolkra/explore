@@ -885,6 +885,7 @@ count_pct <- function(data, ...)  {
 #' @param target1_prob Probability that buy = 1
 #' @param add_extreme Add an obervation with extreme values?
 #' @param flip_gender Should Male/Female be flipped in data?
+#' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
 #'
 #' @return A dataframe
@@ -917,6 +918,7 @@ create_fake_data = function(obs = 1000,
                     target1_prob = 0.5,
                     add_extreme = TRUE,
                     flip_gender = FALSE,
+                    add_id = FALSE,
                     seed = 123) {
 
   # set seed (randomization)
@@ -996,6 +998,11 @@ create_fake_data = function(obs = 1000,
   # flip gender?
   if (flip_gender) {
     data[["female_ind"]] <- ifelse(data[["female_ind"]] == 1, 0, 1)
+  }
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
   }
 
   # return data
