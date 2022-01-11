@@ -1,8 +1,9 @@
-## explore 0.8.0 (2022-01-02)
+## explore 0.8.0 (2022-01-11)
 
 * all dwh_ functions are no longer included in {explore}
   Alternative: source https://github.com/rolkra/dwh
 * add create_fake_data()
+* add get_var_buckets()
 
 ## explore 0.7.1 (2021-06-03)
 

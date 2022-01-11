@@ -596,6 +596,59 @@ total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
   result
 }
 
+#============================================================================
+#  get_var_buckets()
+#============================================================================
+#' Put variables into "buckets" to create a set of plots instead one large plot
+#'
+#' @param data A dataset
+#' @param bucket_size Maximum number of variables in one bucket
+#' @param target_var_name Name of the target variable (if defined)
+#' @return Buckets as a list
+#' @examples
+#' total_fig_height(iris)
+#' total_fig_height(iris, target = Species)
+#' total_fig_height(nvar = 5)
+#' @export
+
+get_var_buckets <- function(data, bucket_size = 100, target_var_name = NA) {
+
+  target_defined <- !is.na(target_var_name)
+
+  # get variable names
+  # if target is used, drop target name
+  if (target_defined) {
+    names <- names(data)
+    names <- names[names != target_var_name]
+  } else {
+    names <- names(data)
+  }
+
+  # initialize
+  n_var <- length(names)
+  n_bucket <- ceiling(length(names) / bucket_size)
+  bucket_var <- vector(mode = "list", length = n_bucket)
+
+  # create buckets
+  for (i in seq_len(n_bucket))  {
+
+    start <- (i-1) * bucket_size + 1
+    end <- start + bucket_size - 1
+    if (end > n_var) {end <- n_var}
+
+    if (target_defined) {
+      bucket_var[[i]] <- c(names[start:end], target_var_name)
+    } else {
+      bucket_var[[i]] <- names[start:end]
+    }
+
+  } #for
+
+  # return buckets
+  bucket_var
+
+} # get_var_buckets
+
 
 #============================================================================
 #  Function: data_dict_md
