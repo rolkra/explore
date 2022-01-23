@@ -1,4 +1,4 @@
-## explore 0.8.0 (2022-01-11)
+## explore 0.8.0 (2022-01-23)
 
 * all dwh_ functions are no longer included in {explore}
   Alternative: source https://github.com/rolkra/dwh
@@ -6,6 +6,7 @@
 * add create_random_data()
 * add get_var_buckets()
 * code styling
+* report templates: add var buckets (to plot large number of variables)
 
 ## explore 0.7.1 (2021-06-03)
 
