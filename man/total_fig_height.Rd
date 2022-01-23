@@ -9,9 +9,9 @@ total_fig_height(data, n, target, nvar = NA, ncol = 2, size = 3)
 \arguments{
 \item{data}{A dataset}
 
-\item{n}{Weights variable for count data}
+\item{n}{Weights variable for count data? (TRUE / MISSING)}
 
-\item{target}{Target variable}
+\item{target}{Target variable (TRUE / MISSING)}
 
 \item{nvar}{Number of variables to plot}
 

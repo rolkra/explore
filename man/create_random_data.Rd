@@ -10,7 +10,7 @@ create_random_data(
   target_name = "target_ind",
   factorise_target = FALSE,
   target1_prob = 0.5,
-  add_id = FALSE,
+  add_id = TRUE,
   seed = 123
 )
 }

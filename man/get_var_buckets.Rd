@@ -4,14 +4,16 @@
 \alias{get_var_buckets}
 \title{Put variables into "buckets" to create a set of plots instead one large plot}
 \usage{
-get_var_buckets(data, bucket_size = 100, target_var_name = NA)
+get_var_buckets(data, bucket_size = 100, var_name_target = NA, var_name_n = NA)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{bucket_size}{Maximum number of variables in one bucket}
 
-\item{target_var_name}{Name of the target variable (if defined)}
+\item{var_name_target}{Name of the target variable (if defined)}
+
+\item{var_name_n}{Name of the weight (n) variable (if defined)}
 }
 \value{
 Buckets as a list

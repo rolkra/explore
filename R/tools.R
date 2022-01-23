@@ -518,8 +518,8 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #' Get fig.height for RMarkdown-junk using explore_all()
 #'
 #' @param data A dataset
-#' @param n Weights variable for count data
-#' @param target Target variable
+#' @param n Weights variable for count data? (TRUE / MISSING)
+#' @param target Target variable (TRUE / MISSING)
 #' @param nvar Number of variables to plot
 #' @param ncol Number of columns (default = 2)
 #' @param size fig.height of 1 plot (default = 3)
@@ -549,7 +549,8 @@ total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
 #'
 #' @param data A dataset
 #' @param bucket_size Maximum number of variables in one bucket
-#' @param target_var_name Name of the target variable (if defined)
+#' @param var_name_target Name of the target variable (if defined)
+#' @param var_name_n Name of the weight (n) variable (if defined)
 #' @return Buckets as a list
 #' @examples
 #' total_fig_height(iris)
@@ -557,17 +558,20 @@ total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
 #' total_fig_height(nvar = 5)
 #' @export
 
-get_var_buckets <- function(data, bucket_size = 100, target_var_name = NA) {
+get_var_buckets <- function(data, bucket_size = 100,
+                            var_name_target = NA, var_name_n = NA) {
 
-  target_defined <- !is.na(target_var_name)
+  target_defined <- !is.na(var_name_target)
+  n_defined <- !is.na(var_name_n)
 
-  # get variable names
-  # if target is used, drop target name
+  # get variable names that can be used in explore-plots
+  # if target or n is used, drop them
+  names <- names(data)
   if (target_defined) {
-    names <- names(data)
-    names <- names[names != target_var_name]
-  } else {
-    names <- names(data)
+    names <- names[names != var_name_target]
+  }
+  if (n_defined) {
+    names <- names[names != var_name_n]
   }
 
   # initialize
@@ -584,11 +588,16 @@ get_var_buckets <- function(data, bucket_size = 100, target_var_name = NA) {
     end <- start + bucket_size_plot - 1
     if (end > n_var) {end <- n_var}
 
+    bucket_var[[i]] <- names[start:end]
+
     if (target_defined) {
-      bucket_var[[i]] <- c(names[start:end], target_var_name)
-    } else {
-      bucket_var[[i]] <- names[start:end]
+      bucket_var[[i]] <- c(bucket_var[[i]], var_name_target)
     }
+
+    if (n_defined) {
+      bucket_var[[i]] <- c(bucket_var[[i]], var_name_n)
+    }
+
 
   } #for
 
