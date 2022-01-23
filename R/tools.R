@@ -1,6 +1,3 @@
-#============================================================================
-#  Function: Encrypt (Password)
-#============================================================================
 #' encrypt text
 #'
 #' @param text A text (character)
@@ -17,9 +14,6 @@ encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
   return (chartr(old,new,text))
 }
 
-#============================================================================
-#  Function: Decrypt (Password)
-#============================================================================
 #' decrypt text
 #'
 #' @param text A text (character)
@@ -36,9 +30,6 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
   return (chartr(new,old,text))
 }
 
-#============================================================================
-#  balance_target
-#============================================================================
 #' Balance target variable
 #'
 #' Balances the target variable in your dataset.
@@ -105,9 +96,6 @@ balance_target <- function(data, target, min_prop = 0.1) {
   }
 } # balance_target
 
-#============================================================================
-#  weight_target
-#============================================================================
 #' Weight target variable
 #'
 #' Create weights for the target variable in your dataset
@@ -154,17 +142,14 @@ weight_target <- function(data, target) {
   names(minClass) <- names(which(observed_prop == minClass))
 
   weights = ifelse(data[[target_txt]] == names(minClass),
-                     max(observed_prop)/min(observed_prop), 1)
+                   max(observed_prop)/min(observed_prop), 1)
 
   # return weigthts
   return(weights)
 
-  } # weight_target
+} # weight_target
 
 
-#============================================================================
-#  plot_text
-#============================================================================
 #' Plot a text
 #'
 #' Plots a text (base plot) and let you choose text-size and color
@@ -183,9 +168,6 @@ plot_text <- function(text="hello world", size=1.2, color="black")  {
   text(x = 0.5, y = 0.5, text, cex = size, col = color)
 }
 
-#============================================================================
-#  plot_var_info
-#============================================================================
 #' Plot a variable info
 #'
 #' Creates a ggplot with the variable-name as title and a text
@@ -223,9 +205,6 @@ plot_var_info <- function(data, var, info = "")  {
           plot.margin = unit(c(0.1,0.1,0.5,1), "cm")) #t,r,b,l
 } # plot_var_info
 
-#============================================================================
-#  plot_legend_targetpct()
-#============================================================================
 #' Plots a legend that can be used for explore_all with a binary target
 #'
 #' @param border Draw a border?
@@ -240,20 +219,17 @@ plot_legend_targetpct <- function(border = TRUE) {
   graphics::par(mar=c(0,0,0,0))
   plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
   graphics::legend(0.5,0.5,
-         legend = c("00-05%", "06-20%", "21-40%","41+%"),
-         fill =c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
-         horiz = TRUE,
-         xjust = 0.5,
-         yjust = 0.5,
-         border = TRUE,
-         box.lty = ifelse(border, 1, 0))
+                   legend = c("00-05%", "06-20%", "21-40%","41+%"),
+                   fill =c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
+                   horiz = TRUE,
+                   xjust = 0.5,
+                   yjust = 0.5,
+                   border = TRUE,
+                   box.lty = ifelse(border, 1, 0))
 
 } # plot_legend_targetpct
 
 
-#============================================================================
-#  format_num_spcace
-#============================================================================
 #' Format number as character string (space as big.mark)
 #'
 #' Formats a big number using space as big.mark (1000 = 1 000)
@@ -280,9 +256,6 @@ format_num_space <- function(number = 0, digits = 1)   {
 
 } # format_num_space
 
-#============================================================================
-#  format_num_kMB
-#============================================================================
 #' Format number as character string (kMB)
 #'
 #' Formats a big number as k (1 000), M (1 000 000) or B (1 000 000 000)
@@ -316,9 +289,6 @@ format_num_kMB <- function(number = 0, digits = 1)   {
 }
 
 
-#============================================================================
-#  format_num_auto
-#============================================================================
 #' Format number as character string (auto)
 #'
 #' Formats a number depending on the value as number with space, scientific or
@@ -353,9 +323,6 @@ format_num_auto <- function(number = 0, digits = 1)   {
 
 } # format_num_auto
 
-#============================================================================
-#  format_target
-#============================================================================
 #' Format target
 #'
 #' Formats a target as a 0/1 variable. If target is numeric, 1 = above average.
@@ -383,9 +350,6 @@ format_target <- function(target)   {
   }
 } # format_target
 
-#============================================================================
-#  Function: replace_na_with
-#============================================================================
 #' Replace NA
 #'
 #' Replace NA values of a variable in a dataframe
@@ -408,9 +372,6 @@ replace_na_with <- function(data, var_name, with)  {
   return(data)
 }
 
-#============================================================================
-#  format_type
-#============================================================================
 #' Format type description
 #'
 #' Format type description of varable to 3 letters (int|dbl|lgl|chr|dat)
@@ -439,9 +400,6 @@ format_type <- function(type) {
   return("oth")
 } # format_type
 
-#============================================================================
-#  get_type
-#============================================================================
 #' Return type of variable
 #'
 #' Return value of typeof, except if variable contains <hide>, then return "other"
@@ -481,9 +439,6 @@ get_type <- function(var)  {
 } # get_type
 
 
-#============================================================================
-#  guess_cat_num
-#============================================================================
 #' Return if variable is categorial or nomerical
 #'
 #' Guess if variable is categorial or numerical based on name, type and values of variable
@@ -541,9 +496,6 @@ guess_cat_num <- function(var, descr)  {
 } # guess_cat_num
 
 
-#============================================================================
-#  get_nrow()
-#============================================================================
 #' Get number of rows for a grid plot (deprecated, use total_fig_height() instead)
 #'
 #' @param varnames List of variables to be plotted
@@ -563,9 +515,6 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
   result
 }
 
-#============================================================================
-#  total_fig_height()
-#============================================================================
 #' Get fig.height for RMarkdown-junk using explore_all()
 #'
 #' @param data A dataset
@@ -596,9 +545,6 @@ total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
   result
 }
 
-#============================================================================
-#  get_var_buckets()
-#============================================================================
 #' Put variables into "buckets" to create a set of plots instead one large plot
 #'
 #' @param data A dataset
@@ -627,13 +573,15 @@ get_var_buckets <- function(data, bucket_size = 100, target_var_name = NA) {
   # initialize
   n_var <- length(names)
   n_bucket <- ceiling(length(names) / bucket_size)
+  bucket_size_plot <- ceiling(n_var / n_bucket)
+
   bucket_var <- vector(mode = "list", length = n_bucket)
 
   # create buckets
   for (i in seq_len(n_bucket))  {
 
-    start <- (i-1) * bucket_size + 1
-    end <- start + bucket_size - 1
+    start <- (i-1) * bucket_size_plot + 1
+    end <- start + bucket_size_plot - 1
     if (end > n_var) {end <- n_var}
 
     if (target_defined) {
@@ -650,9 +598,6 @@ get_var_buckets <- function(data, bucket_size = 100, target_var_name = NA) {
 } # get_var_buckets
 
 
-#============================================================================
-#  Function: data_dict_md
-#============================================================================
 #' Create a data dictionary Markdown file
 #'
 #' @param data A dataframe (data dictionary for all variables)
@@ -731,9 +676,6 @@ data_dict_md <- function(data, title = "", description = NA, output_file = "data
 } # data_dict_md
 
 
-#============================================================================
-#  Function: simplify_text
-#============================================================================
 #' Simplifies a text string
 #'
 #' A text string is converted into a simplified version by
@@ -767,9 +709,6 @@ simplify_text <- function(text)  {
     stringr::str_replace_all("\\s+", " ")
 }
 
-#============================================================================
-#  Function: rescale01
-#============================================================================
 #' Rescales a numeric variable into values between 0 and 1
 #'
 #' @param x numeric vector (to be rescaled)
@@ -782,16 +721,13 @@ simplify_text <- function(text)  {
 rescale01 <- function(x)  {
 
   # rescale
-    y <- x / ( max(x) - min(x) )
-    y <- y - min(y)
+  y <- x / ( max(x) - min(x) )
+  y <- y - min(y)
 
   # return
   y
 } # rescale
 
-#============================================================================
-#  clean_var
-#============================================================================
 #' Clean variable
 #'
 #' Clean variable (replace NA values, set min_val and max_val)
@@ -893,9 +829,6 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
   data
 } # clean_var
 
-#============================================================================
-#  count_pct
-#============================================================================
 #' Adds percentage to dplyr::count()
 #'
 #' Adds variables total and
@@ -914,7 +847,7 @@ count_pct <- function(data, ...)  {
   d <- data %>%
     dplyr::count(...)
 
- #names(d) <- c("value", "n")
+  #names(d) <- c("value", "n")
 
   d <- d %>%
     dplyr::mutate(total = sum(n),
@@ -924,9 +857,6 @@ count_pct <- function(data, ...)  {
 } # count_pct
 
 
-#============================================================================
-#  create_fake_data
-#============================================================================
 #' Create fake data
 #'
 #' Fake data that can be used for unit-testing or demonstration
@@ -966,13 +896,13 @@ count_pct <- function(data, ...)  {
 
 
 create_fake_data = function(obs = 1000,
-                    target_name = "target_ind",
-                    factorise_target = FALSE,
-                    target1_prob = 0.5,
-                    add_extreme = TRUE,
-                    flip_gender = FALSE,
-                    add_id = FALSE,
-                    seed = 123) {
+                            target_name = "target_ind",
+                            factorise_target = FALSE,
+                            target1_prob = 0.5,
+                            add_extreme = TRUE,
+                            flip_gender = FALSE,
+                            add_id = FALSE,
+                            seed = 123) {
 
   # set seed (randomization)
   set.seed(seed)
@@ -1062,3 +992,78 @@ create_fake_data = function(obs = 1000,
   data
 
 } # fakedata
+
+#' Create random data
+#'
+#' Random data that can be used for unit-testing or demonstration
+#'
+#' @param obs Number of observations
+#' @param vars Number of variables
+#' @param target_name Variable name of target
+#' @param factorise_target Should target variable be factorised?
+#' (from 0/1 to facotr no/yes)?
+#' @param target1_prob Probability that buy = 1
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization
+#'
+#' @return A dataframe
+#' @export
+#'
+#' @md
+#' @details
+#' Variables in dataset:
+#' * id = Identifier
+#' * var_X = variable containing values between 0 and 100
+#'
+#' Target in dataset:
+#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
+
+
+create_random_data = function(obs = 1000, vars = 10,
+                              target_name = "target_ind",
+                              factorise_target = FALSE,
+                              target1_prob = 0.5,
+                              add_id = FALSE,
+                              seed = 123) {
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  # create basic dataset
+  data <- data.frame(
+    id = seq(from = 1, to = obs),
+    target_ind = sample(c(0, 1),
+                        obs,
+                        prob = c(1 - target1_prob, target1_prob),
+                        replace = TRUE)
+  )
+
+  # add features
+  for (i in seq_len(vars)) {
+    data[[paste0("var_",i)]] <- as.integer(
+      round(runif(obs)*100,0))
+  }
+
+
+  # factorise target?
+  if (factorise_target) {
+    data$buy <- factor(data$buy,
+                       levels = c(0, 1),
+                       labels = c("no", "yes"))
+  }
+
+  # rename target?
+  if (target_name != "target_ind") {
+    data[[target_name]] <- data$target_ind
+    data$target_ind <- NULL
+  }
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
+  }
+
+  # return data
+  data
+
+} # randomdata
