@@ -61,9 +61,9 @@ We get the exact numbers by using describe() together with the n-parameter (weig
 titanic %>% describe(Class, n = n)
 ```
 
-To explore all variables, we can simply use explore_all(). You automatically fit the height of the plot using `fig.height=total_fig_height(titanic, n = Freq)` in the code chunk header.
+To explore all variables, we can simply use explore_all(). You automatically fit the height of the plot using `fig.height=total_fig_height(titanic, var_name_n = "n")` in the code chunk header.
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(titanic, n = Freq)}
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(titanic, var_name_n = "n")}
 titanic %>% explore_all(n = n)
 ```
 

@@ -194,9 +194,10 @@ To use a high number of variables with explore_all() in a RMarkdown-File, it is 
 iris %>% 
   explore_all()
 ```
-If you use a target: ```fig.height=total_fig_height(iris, target = Species)```
 
-```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, target = Species, size=2.5)}
+If you use a target: ```fig.height=total_fig_height(iris, var_name_target = "Species")```
+
+```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, var_name_target = "Species", size=2.5)}
 iris %>% explore_all(target = Species)
 ```
 
@@ -295,36 +296,4 @@ iris %>%
             na = 5.8, 
             name = "sepal_length") %>% 
   describe()
-```
-
-### Connecting to a datawarehouse
-
-The explore package comes with a set easy to remember function to connect, read and write from/to a datawarehouse (dwh) using odbc.
-
-```{R eval=FALSE, echo=TRUE}
-# connect to a dwh(odbc DSN must be defined)
-dwh <- dwh_connect("DWH_DSN")
-
-# if you need to pass user and password
-dwh <- dwh_connect("DWH_DSN", 
-                    user = "myuser",
-                    pwd = rstudioapi::askForPassword()
-                  )
-
-# read table from a dwh
-data <- dwh_read_table(dwh, "db.tablename")
-
-# read data from a dwh using sql
-data <- dwh_read_data(dwh, sql = "select * from db.tablename")
-
-# disconnect from dwh
-dwh_disconnect(dwh)
-
-```
-
-To write large data to a dwh you can use `dwh_fastload()`. It connects to a dwh, writes the data and disconnects.
-
-```{R eval=FALSE, echo=TRUE}
-# connect to a dwh(odbc DSN must be defined)
-data  %>% dwh_fastload("DWH_DSN", "db.tablename")
 ```

@@ -23,6 +23,22 @@ data %>% explore(!!sym(var_name_target))
 
 ## Explore Variables
 
-```{r echo=FALSE, fig.height=total_fig_height(data, target = 1), fig.width=10, message=FALSE, warning=FALSE}
-data %>% explore_all(ncol = 2, target = !!sym(var_name_target), split = TRUE)
+```{r include=FALSE}
+# create buckets of variables
+buckets <- data %>% 
+  explore::get_var_buckets(
+    bucket_size = 100
+  )
+
+# height of each plot
+fig_height <- data[buckets[[1]]] %>% 
+  explore::total_fig_height(var_name_target = var_name_target)
+
+```
+
+```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
+for (i in seq_along(buckets)) {
+  data[buckets[[i]]] %>% 
+    explore_all(ncol = 2, target = !!sym(var_name_target), split = TRUE)
+}
 ```

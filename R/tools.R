@@ -518,8 +518,8 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #' Get fig.height for RMarkdown-junk using explore_all()
 #'
 #' @param data A dataset
-#' @param n Weights variable for count data? (TRUE / MISSING)
-#' @param target Target variable (TRUE / MISSING)
+#' @param var_name_n Weights variable for count data? (TRUE / MISSING)
+#' @param var_name_target Target variable (TRUE / MISSING)
 #' @param nvar Number of variables to plot
 #' @param ncol Number of columns (default = 2)
 #' @param size fig.height of 1 plot (default = 3)
@@ -530,7 +530,8 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #' total_fig_height(nvar = 5)
 #' @export
 
-total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
+total_fig_height <- function(data, var_name_n, var_name_target,
+                             nvar = NA, ncol = 2, size = 3)  {
 
   if (!is.na(nvar)) {
     n_var <- nvar
@@ -538,8 +539,8 @@ total_fig_height <- function(data, n, target, nvar = NA, ncol = 2, size = 3)  {
     n_var <- ncol(data)
   }
 
-  n_var <- n_var - ifelse(missing(target), 0, 1)
-  n_var <- n_var - ifelse(missing(n), 0, 1)
+  n_var <- n_var - ifelse(missing(var_name_target), 0, 1)
+  n_var <- n_var - ifelse(missing(var_name_n), 0, 1)
 
   result <- ceiling(n_var / ncol) * size
   result
