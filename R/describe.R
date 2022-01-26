@@ -1,6 +1,3 @@
-#============================================================================
-#  describe_num (out = text | list)
-#============================================================================
 #' Describe numerical variable
 #'
 #' @param data A dataset
@@ -116,9 +113,6 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
   }
 } # describe_num
 
-#============================================================================
-#  describe_cat (out = text | list | tibble)
-#============================================================================
 #' Describe categorical variable
 #'
 #' @param data A dataset
@@ -262,9 +256,6 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 } # describe_cat
 
 
-#============================================================================
-#  describe_all
-#============================================================================
 #' Describe all variables of a dataset
 #'
 #' @param data A dataset
@@ -371,9 +362,6 @@ describe_all <- function(data = NA, out = "large") {
 
 } # function describe_all
 
-#============================================================================
-#  describe_tbl, out = text | list
-#============================================================================
 #' Describe table
 #'
 #' Describe table (e.g. number of rows and columns of dataset)
@@ -514,9 +502,6 @@ describe_tbl <- function(data, n, target, out = "text")  {
   }
 } # describe_tbl
 
-#============================================================================
-#  describe
-#============================================================================
 #' Describe a dataset or variable
 #'
 #' Describe a dataset or variable (depending on input parameters)

@@ -1,6 +1,3 @@
-#============================================================================
-#  function: dwh_connect
-#============================================================================
 #' connect to DWH
 #'
 #' connect to datawarehouse (DWH) using ODBC
@@ -25,9 +22,6 @@ dwh_connect <- function(dsn, user = NA, pwd = NA, pwd_crypt = FALSE, ...)  {
 
 }
 
-#============================================================================
-#  function: dwh_disconnect
-#============================================================================
 #' disconnect from DWH
 #'
 #' disconnect from datawarehouse (DWH) using a ODBC connection
@@ -48,9 +42,6 @@ dwh_disconnect <- function(connection, ...)  {
 
 }
 
-#============================================================================
-#  function: dwh_read_table
-#============================================================================
 #' read a table from DWH
 #'
 #' read a table from DWH using a ODBC connection
@@ -74,9 +65,6 @@ dwh_read_table <- function(connection, table, names_lower = TRUE, ...)  {
 
 }
 
-#============================================================================
-#  function: dwh_read_data
-#============================================================================
 #' read data from DWH
 #'
 #' read data from DWH using a ODBC connection
@@ -100,9 +88,6 @@ dwh_read_data <- function(connection, sql, names_lower = TRUE, ...)  {
 
 }
 
-#============================================================================
-#  function: dwh_fastload
-#============================================================================
 #' write data to a DWH table
 #'
 #' write data fast to a DWH table using a ODBC connection

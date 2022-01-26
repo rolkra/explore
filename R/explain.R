@@ -1,7 +1,3 @@
-#============================================================================
-#  explain_tree
-#============================================================================
-
 #' Explain a target using a simple decision tree (classification or regression)
 #'
 #' @param data A dataset
@@ -159,9 +155,6 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
 
 } # explain_tree
 
-#============================================================================
-#  explain_logreg
-#============================================================================
 #' Explain a binary target using a logistic regression (glm).
 #' Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).
 #'

@@ -1,6 +1,3 @@
-#============================================================================
-#  Function: target_explore_cat
-#============================================================================
 #' Explore categorical variable + target
 #'
 #' Create a plot to explore relation between categorical variable and a binary target
@@ -152,9 +149,6 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
 } # target_explore_cat
 
-#============================================================================
-#  Function: target_explore_num
-#============================================================================
 #' Explore categorical variable + target
 #'
 #' Create a plot to explore relation between numerical variable and a binary target
@@ -261,9 +255,6 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 
 } # target_explore_num
 
-#============================================================================
-#  explore_bar
-#============================================================================
 #' Explore categorical variable using bar charts
 #'
 #' Create a barplot to explore a categorical variable.
@@ -521,9 +512,6 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 
 } # explore_bar
 
-#============================================================================
-#  explore_density
-#============================================================================
 #' Explore density of variable
 #'
 #' Create a density plot to explore numerical variable
@@ -675,9 +663,6 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 
 } # explore_density
 
-#============================================================================
-#  explore_all
-#============================================================================
 #' Explore all variables
 #'
 #' Explore all variables of a dataset (create plots)
@@ -817,9 +802,6 @@ explore_all <- function(data, n, target, ncol = 2, split = TRUE)  {
 
 } # explore_all
 
-#============================================================================
-#  explore_cor
-#============================================================================
 #' Explore the correlation between two variables
 #'
 #' @param data A dataset
@@ -1022,9 +1004,6 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
 } # explore_cor
 
-#============================================================================
-#  explore_tbl
-#============================================================================
 #' Explore table
 #'
 #' Explore a table. Plots variable types, variables with no variance and variables with NA
@@ -1144,9 +1123,6 @@ explore_tbl <- function(data, n)  {
 
 } # explore_tbl
 
-#============================================================================
-#  explore_shiny
-#============================================================================
 #' Explore dataset interactive
 #'
 #' Launches a shiny app to explore a dataset
@@ -1351,9 +1327,6 @@ explore_shiny <- function(data, target)  {
 
 } # explore_shiny
 
-#============================================================================
-#  explore
-#============================================================================
 #' Explore a dataset or variable
 #'
 #' @param data A dataset
@@ -1558,9 +1531,6 @@ explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = N
 } # explore
 
 
-#============================================================================
-#  Function: explore_targetpct
-#============================================================================
 #' Explore variable + binary target (values 0/1)
 #'
 #' Create a plot to explore relation between a variable and a binary target
@@ -1670,9 +1640,6 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 
 } # explore_targetpct
 
-#============================================================================
-#  Function: explore_count
-#============================================================================
 #' Explore count data (categories + frequency)
 #'
 #' Create a plot to explore count data (categories + freuency)
