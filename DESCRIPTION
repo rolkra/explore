@@ -27,6 +27,7 @@ Imports:
     rpart, 
     rpart.plot, 
     shiny, 
+    stats,
     stringr, 
     tibble, 
     tidyr 
