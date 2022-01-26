@@ -34,6 +34,6 @@ Get fig.height for RMarkdown-junk using explore_all()
 }
 \examples{
 total_fig_height(iris)
-total_fig_height(iris, target = Species)
+total_fig_height(iris, var_name_target = "Species")
 total_fig_height(nvar = 5)
 }

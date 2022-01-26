@@ -22,7 +22,7 @@ Buckets as a list
 Put variables into "buckets" to create a set of plots instead one large plot
 }
 \examples{
-total_fig_height(iris)
-total_fig_height(iris, target = Species)
-total_fig_height(nvar = 5)
+get_var_buckets(iris)
+get_var_buckets(iris, bucket_size = 2)
+get_var_buckets(iris, bucket_size = 2, var_name_target = "Species")
 }

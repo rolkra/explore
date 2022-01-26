@@ -526,7 +526,7 @@ get_nrow <- function(varnames, exclude = 0, ncol = 2)  {
 #' @return Number of rows
 #' @examples
 #' total_fig_height(iris)
-#' total_fig_height(iris, target = Species)
+#' total_fig_height(iris, var_name_target = "Species")
 #' total_fig_height(nvar = 5)
 #' @export
 
@@ -554,9 +554,9 @@ total_fig_height <- function(data, var_name_n, var_name_target,
 #' @param var_name_n Name of the weight (n) variable (if defined)
 #' @return Buckets as a list
 #' @examples
-#' total_fig_height(iris)
-#' total_fig_height(iris, target = Species)
-#' total_fig_height(nvar = 5)
+#' get_var_buckets(iris)
+#' get_var_buckets(iris, bucket_size = 2)
+#' get_var_buckets(iris, bucket_size = 2, var_name_target = "Species")
 #' @export
 
 get_var_buckets <- function(data, bucket_size = 100,
@@ -914,6 +914,11 @@ create_fake_data = function(obs = 1000,
                             add_id = FALSE,
                             seed = 123) {
 
+  # define variables for CRAN-package check
+  target_ind <- NULL
+  age <- NULL
+  city_ind <- NULL
+
   # set seed (randomization)
   set.seed(seed)
 
@@ -931,8 +936,8 @@ create_fake_data = function(obs = 1000,
   data <- data %>%
     dplyr::mutate(
       age = round(ifelse(target_ind == 1,
-                         rnorm(obs, mean = 45, sd = 10),
-                         rnorm(obs, mean = 60, sd = 10)
+                         stats::rnorm(obs, mean = 45, sd = 10),
+                         stats::rnorm(obs, mean = 60, sd = 10)
       ), 0),
       city_ind = ifelse(target_ind == 1,
                         sample(c(0, 1), obs, replace = TRUE, prob = c(0.4, 0.6)),
@@ -958,8 +963,8 @@ create_fake_data = function(obs = 1000,
                              sample(c(0, 1), obs, replace = TRUE, prob = c(0.2, 0.8))
       ),
       bbi_usg_gb = ifelse(age > 75,
-                          round(rnorm(obs, mean = 10, sd = 1)),
-                          round(rnorm(obs, mean = 50, sd = 10))
+                          round(stats::rnorm(obs, mean = 10, sd = 1)),
+                          round(stats::rnorm(obs, mean = 50, sd = 10))
       ) + city_ind * 20 + target_ind * 10,
       hh_single = ifelse(age < 35 & city_ind == 1,
                          sample(c(0, 1), obs, replace = TRUE, prob = c(0.2, 0.8)),
@@ -1051,7 +1056,7 @@ create_random_data = function(obs = 1000, vars = 10,
   # add features
   for (i in seq_len(vars)) {
     data[[paste0("var_",i)]] <- as.integer(
-      round(runif(obs)*100,0))
+      round(stats::runif(obs)*100,0))
   }
 
 
