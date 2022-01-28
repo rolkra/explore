@@ -1,9 +1,10 @@
-## explore 0.8.0 (2022-01-26)
+## explore 0.8.0 (2022-01-28)
 
 * all dwh_ functions are no longer included in {explore}
   Alternative: source https://github.com/rolkra/dwh
 * add create_fake_data()
 * add create_random_data()
+* add add_random_var()
 * add get_var_buckets()
 * total_fig_height(): parameters var_name_target, var_name_n 
 * code styling

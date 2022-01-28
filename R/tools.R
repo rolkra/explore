@@ -867,6 +867,41 @@ count_pct <- function(data, ...)  {
 } # count_pct
 
 
+#' Add a random variable to dataset
+#'
+#' @param data A dataset
+#' @param name Name of new variable (as string)
+#' @param min_val Minimum random integers
+#' @param max_val Maximum random integers
+#' @param overwrite Can new random variable overwrite an existing variable in dataset?
+#' @return Dataset containing new random variable
+#' @examples
+#' add_random_var(iris)
+#' add_random_var(iris, name = "random_var")
+#' add_random_var(iris, min_val = 1, max_val = 10)
+#' add_random_var(iris, min_val = 1, max_val = 100, overwrite = FALSE)
+#' @export
+
+add_random_var <- function(data, name = "random",
+                           min_val = 0, max_val = 1,
+                           overwrite = TRUE) {
+
+  if (name %in% names(data) & !overwrite) {
+    stop("Variable ", name, " already exists!")
+  }
+
+  # possible integer values
+  values <- seq(from = min_val, to = max_val)
+
+  # add random variable
+  data[[name]] <- sample(values, nrow(data), replace = TRUE)
+
+  # return data
+  data
+
+} #add_random_var
+
+
 #' Create fake data
 #'
 #' Fake data that can be used for unit-testing or demonstration
