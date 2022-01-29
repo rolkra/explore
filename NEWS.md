@@ -1,4 +1,4 @@
-## explore 0.8.0 (2022-01-28)
+## explore 0.8.0 (2022-01-29)
 
 * all dwh_ functions are no longer included in {explore}
   Alternative: source https://github.com/rolkra/dwh
@@ -45,7 +45,7 @@
 
 ## explore 0.6.1 (2020-09-04)
 
-* change URL: http://github.com to https://github.com
+* Fix Github URL
 * new Vignette "explore_penguins"
 * new Vignette "explore_titanic" (count data)
 * explore_count(): plot count() output
@@ -74,7 +74,7 @@ Maintenance update:
 Maintenance update:
 
 * fix param ... in description (PR#16223, see
-<https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16223>)
+<https://bugs.r-project.org/show_bug.cgi?id=16223>)
 
 
 ## explore 0.5.3 (2020-01-17)
