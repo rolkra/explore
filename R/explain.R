@@ -22,8 +22,9 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxdepth = 3,
-                         minsplit = NA, cp = 0, weights = NA,
+explain_tree <- function(data, target, n, max_obs = 100000,
+                         max_cat = 10, max_target_cat = 5, maxdepth = 3,
+                         minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
 
   # define variables to pass CRAN-checks
@@ -109,12 +110,30 @@ explain_tree <- function(data, target, n, max_cat = 10, max_target_cat = 5, maxd
       data[[target_txt]] <- forcats::fct_lump(data[[target_txt]], max_target_cat, other_level = ".OTHER")
     }
 
-    # create tree cat
-    mod <- rpart::rpart(formula_txt,
-                        data = data,
-                        method = "class",
-                        weights = weights,
-                        control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+    # get prior probabilities
+    n <- table(data[[target_txt]])
+    prior <- n / sum(n)
+
+
+    if (all(weights == 1)) {
+
+      # create tree cat with prior probabilities
+      mod <- rpart::rpart(formula_txt,
+                          data = data,
+                          method = "class",
+                          parms = list(prior = prior),
+                          control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+    } else {
+
+      # create tree cat with weights
+      mod <- rpart::rpart(formula_txt,
+                          data = data,
+                          method = "class",
+                          weights = weights,
+                          control = rpart::rpart.control(maxdepth=maxdepth, minsplit=minsplit, cp=cp))
+
+
+    } # checking weights
 
   } else {
 
