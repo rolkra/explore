@@ -4,7 +4,7 @@
 \alias{report}
 \title{Generate a report of all variables}
 \usage{
-report(data, n, target, split = TRUE, output_file, output_dir)
+report(data, n, target, targetpct, split, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}
@@ -13,7 +13,9 @@ report(data, n, target, split = TRUE, output_file, output_dir)
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{split}{Split by target? (TRUE/FALSE)}
+\item{targetpct}{Plot variable as target% (FALSE/TRUE)}
+
+\item{split}{Alternative to targetpct (split = !targetpct)}
 
 \item{output_file}{Filename of the html report}
 

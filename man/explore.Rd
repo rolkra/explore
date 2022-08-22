@@ -10,6 +10,7 @@ explore(
   var2,
   n,
   target,
+  targetpct,
   split,
   min_val = NA,
   max_val = NA,
@@ -29,7 +30,9 @@ explore(
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{split}{Split by target variable (FALSE/TRUE)}
+\item{targetpct}{Plot variable as target% (FALSE/TRUE)}
+
+\item{split}{Alternative to targetpct (split = !targetpct)}
 
 \item{min_val}{All values < min_val are converted to min_val}
 

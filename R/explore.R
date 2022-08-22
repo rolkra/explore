@@ -1334,7 +1334,8 @@ explore_shiny <- function(data, target)  {
 #' @param var2 A variable for checking correlation
 #' @param n A Variable for number of observations (count data)
 #' @param target Target variable (0/1 or FALSE/TRUE)
-#' @param split Split by target variable (FALSE/TRUE)
+#' @param targetpct Plot variable as target% (FALSE/TRUE)
+#' @param split Alternative to targetpct (split = !targetpct)
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
 #' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
@@ -1372,7 +1373,7 @@ explore_shiny <- function(data, target)  {
 #'
 #' @export
 
-explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
+explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
   # check parameter data
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
@@ -1429,9 +1430,13 @@ explore <- function(data, var, var2, n, target, split, min_val = NA, max_val = N
     guess_target = "oth"
   }
 
-  # parameter density (set default value)
-  if (missing(split))  {
-      split = TRUE
+  # parameter targetpct & split (set default value)
+  if (missing(targetpct)) {
+    if (missing(split)) {
+        split = TRUE
+    }
+  } else {
+    split = !targetpct
   }
 
   # intelligent guessing if num or cat
@@ -1650,7 +1655,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = 
 #' @param n Number of observations (frequency)
 #' @param target Target variable
 #' @param pct Show as percent?
-#' @param split Split by target?
+#' @param split Split by target (FALSE/TRUE)
 #' @param title Title of the plot
 #' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted

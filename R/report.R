@@ -6,7 +6,8 @@
 #' @param data A dataset
 #' @param n Weights variable for count data
 #' @param target Target variable (0/1 or FALSE/TRUE)
-#' @param split Split by target? (TRUE/FALSE)
+#' @param targetpct Plot variable as target% (FALSE/TRUE)
+#' @param split Alternative to targetpct (split = !targetpct)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
 #' @import rmarkdown
@@ -16,7 +17,7 @@
 #' }
 #' @export
 
-report <- function(data, n, target, split = TRUE, output_file, output_dir)  {
+report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
 
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
@@ -41,6 +42,15 @@ report <- function(data, n, target, split = TRUE, output_file, output_dir)  {
   } else {
     target_quo = NA
     target_text = NA
+  }
+
+  # parameter targetpct & split (set default value)
+  if (missing(targetpct)) {
+    if (missing(split)) {
+      split = TRUE
+    }
+  } else {
+    split = !targetpct
   }
 
   # parameter n

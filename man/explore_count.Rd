@@ -29,7 +29,7 @@ explore_count(
 
 \item{pct}{Show as percent?}
 
-\item{split}{Split by target?}
+\item{split}{Split by target (FALSE/TRUE)}
 
 \item{title}{Title of the plot}
 

@@ -1,3 +1,14 @@
+## explore 0.9.0 (2022-09-01)
+
+* rename create_x_data() to create_data_x()
+* rename add_x_var() to add_var_x()
+* extend create_data funtions
+* extend add_var functions
+* explain_tree(): set default minsplit to 20
+* explain_tree(): set prior probabilities
+* explore(): targetpct as alternqtive to split parameter
+* report(): targetpct as alternative to split parameter
+
 ## explore 0.8.0 (2022-01-29)
 
 * all dwh_ functions are no longer included in {explore}
