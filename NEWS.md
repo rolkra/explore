@@ -8,6 +8,7 @@
 * explain_tree(): set prior probabilities
 * explore(): targetpct as alternqtive to split parameter
 * report(): targetpct as alternative to split parameter
+* balance_target(): add parameter seed
 
 ## explore 0.8.0 (2022-01-29)
 
