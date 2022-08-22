@@ -2,6 +2,17 @@ context("tools")
 library(explore)
 
 
+# balance target ----------------------------------------------------------
+
+# result should be reproducible if same seed is used
+test_that("balance_target()", {
+  data <- iris
+  data$is_versicolor <- ifelse(data$Species == "versicolor", 1, 0)
+  expect_equal(balance_target(data, target = is_versicolor, seed = 123),
+               balance_target(data, target = is_versicolor, seed = 123)
+  )
+})
+
 # weight_target -----------------------------------------------------------
 
 # weight target() with rare target_ind = 1

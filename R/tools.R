@@ -38,6 +38,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' @param data A dataset
 #' @param target Target variable (0/1, TRUE/FALSE, yes/no)
 #' @param min_prop Minimum proportion of one of the target categories
+#' @param seed Seed for random number generator
 #' @return Data
 #' @import rlang
 #' @import dplyr
@@ -47,7 +48,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' describe(balanced, is_versicolor)
 #' @export
 
-balance_target <- function(data, target, min_prop = 0.1) {
+balance_target <- function(data, target, min_prop = 0.1, seed) {
 
   # check if parameters are missing
   if (missing(data))  {
@@ -85,15 +86,27 @@ balance_target <- function(data, target, min_prop = 0.1) {
     return(data)
 
   } else {
-    data_minClass <- data %>%
-      dplyr::filter(!!target_quo == names(minClass)) %>%
+
+    tmp_min <- data %>% dplyr::filter(!!target_quo == names(minClass))
+    tmp_max <- data %>% dplyr::filter(!!target_quo != names(minClass))
+
+    # set seed (if defined) to ensure reproducibility
+    if (!missing(seed)) {set.seed(seed)}
+
+    # sampling
+    data_minClass <- tmp_min %>%
       dplyr::sample_n(minClass)
-    data_maxClass <- data %>%
-      dplyr::filter(!!target_quo != names(minClass)) %>%
+    data_maxClass <- tmp_max %>%
       dplyr::sample_n(maxClass)
 
-    return(rbind(data_minClass, data_maxClass))
-  }
+    # mix it up
+    data <- rbind(data_minClass, data_maxClass)
+    if (!missing(seed)) {set.seed(seed)}
+    data <- data %>% dplyr::sample_n(nrow(data))
+
+    # return
+    data
+    }
 } # balance_target
 
 #' Weight target variable

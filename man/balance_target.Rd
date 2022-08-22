@@ -4,7 +4,7 @@
 \alias{balance_target}
 \title{Balance target variable}
 \usage{
-balance_target(data, target, min_prop = 0.1)
+balance_target(data, target, min_prop = 0.1, seed)
 }
 \arguments{
 \item{data}{A dataset}
@@ -12,6 +12,8 @@ balance_target(data, target, min_prop = 0.1)
 \item{target}{Target variable (0/1, TRUE/FALSE, yes/no)}
 
 \item{min_prop}{Minimum proportion of one of the target categories}
+
+\item{seed}{Seed for random number generator}
 }
 \value{
 Data
