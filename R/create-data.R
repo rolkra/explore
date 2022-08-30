@@ -60,17 +60,17 @@ create_data_person <- function(obs = 1000, seed = 123) {
     favorite_icecream = sample(c("Vanilla", "Chocolate","Strawberry", "Lemon", "Cookie", "Hazelnut","Apple"),
                                prob=c(0.3,0.2,0.2,0.1,0.1,0.05,0.05),
                                nobs, replace = TRUE),
-    likes_garlic = sample(0:1, nobs, prob = c(0.4, 0.6), replace = TRUE),
-    likes_sushi = sample(0:1, nobs, prob = c(0.5, 0.5), replace = TRUE),
-    likes_beatles = sample(0:1, nobs, prob = c(0.6, 0.4), replace = TRUE),
-    likes_beer = sample(0:1, nobs, prob = c(0.6, 0.4), replace = TRUE)
+    likes_garlic = as.integer(sample(0:1, nobs, prob = c(0.4, 0.6), replace = TRUE)),
+    likes_sushi = as.integer(sample(0:1, nobs, prob = c(0.5, 0.5), replace = TRUE)),
+    likes_beatles = as.integer(sample(0:1, nobs, prob = c(0.6, 0.4), replace = TRUE)),
+    likes_beer = as.integer(sample(0:1, nobs, prob = c(0.6, 0.4), replace = TRUE))
   )
 
   # not random correlations
   random01 <- runif(nobs)
-  data$likes_beatles <- ifelse(data$likes_beatles + data$age/50 * random01>= 1, 1, 0)
-  data$likes_beer <- ifelse(data$gender == "Male" & random01 >= 0.2, 1, data$likes_beer)
-  data$likes_sushi <- ifelse(data$age/75 + random01/4 >= 1, 0, data$likes_sushi)
+  data$likes_beatles <- ifelse(data$likes_beatles + data$age/50 * random01>= 1, 1L, 0L)
+  data$likes_beer <- ifelse(data$gender == "Male" & random01 >= 0.2, 1L, data$likes_beer)
+  data$likes_sushi <- ifelse(data$age/75 + random01/4 >= 1, 0L, data$likes_sushi)
   data$shoe_size <- ifelse(data$gender == "Female"  & random01 >= 0.3, data$shoe_size - 1.8, data$shoe_size)
   data$income <- ifelse(data$education > 50 & random01 > 0.3, data$income + data$education/2, data$income)
   data$handset <- ifelse(data$handset == "Android" & data$income>75 & data$education<25, "Apple", data$handset)
@@ -140,59 +140,60 @@ create_data_buy = function(obs = 1000,
 
   # create basic dataset
   data <- data.frame(
-    id = seq(from = 1, to = obs),
-    period = rep(202012, obs),
-    target_ind = sample(c(0, 1),
-                        obs,
-                        prob = c(1 - target1_prob, target1_prob),
-                        replace = TRUE)
+    id = as.integer(seq(from = 1, to = obs)),
+    period = as.integer(rep(202012, obs)),
+    target_ind = sample(
+      c(0L, 1L),
+      obs,
+      prob = c(1 - target1_prob, target1_prob),
+      replace = TRUE)
   )
 
   # add features
   data <- data %>%
     dplyr::mutate(
-      age = round(ifelse(target_ind == 1,
+      age = as.integer(round(ifelse(target_ind == 1,
                          stats::rnorm(obs, mean = 45, sd = 10),
                          stats::rnorm(obs, mean = 60, sd = 10)
-      ), 0),
+      ), 0)),
       city_ind = ifelse(target_ind == 1,
-                        sample(c(0, 1), obs, replace = TRUE, prob = c(0.4, 0.6)),
-                        sample(c(0, 1), obs, replace = TRUE, prob = c(0.6, 0.4))
+                        sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.4, 0.6)),
+                        sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.6, 0.4))
       ),
       female_ind = ifelse(target_ind == 1,
-                          sample(c(0, 1), obs, replace = TRUE, prob = c(0.3, 0.7)),
-                          sample(c(0, 1), obs, replace = TRUE, prob = c(0.7, 0.3))
+                          sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.3, 0.7)),
+                          sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.7, 0.3))
       ),
       fixedvoice_ind = ifelse(age > 70,
-                              sample(c(0, 1), obs, replace = TRUE, prob = c(0.3, 0.7)),
-                              sample(c(0, 1), obs, replace = TRUE, prob = c(0.95, 0.05))
+                              sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.3, 0.7)),
+                              sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.95, 0.05))
       ),
-      fixeddata_ind = 1,
+      fixeddata_ind = 1L,
       fixedtv_ind = ifelse(target_ind == 1,
-                           sample(c(0, 1), obs, replace = TRUE, prob = c(0.4, 0.6)),
-                           sample(c(0, 1), obs, replace = TRUE, prob = c(0.8, 0.2))
+                           sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.4, 0.6)),
+                           sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.8, 0.2))
       ),
-      mobilevoice_ind = sample(c(0, 1), obs, replace = TRUE, prob = c(0.4, 0.6)),
+      mobilevoice_ind = sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.4, 0.6)),
       mobiledata_ind = sample(c("NO","MOBILE STICK", "BUSINESS"), obs, replace = TRUE, prob = c(0.5, 0.3, 0.2)),
       bbi_speed_ind = ifelse(age > 60,
-                             sample(c(0, 1), obs, replace = TRUE, prob = c(0.9, 0.1)),
-                             sample(c(0, 1), obs, replace = TRUE, prob = c(0.2, 0.8))
+                             sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.9, 0.1)),
+                             sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.2, 0.8))
       ),
-      bbi_usg_gb = ifelse(age > 75,
+      bbi_usg_gb = as.integer(ifelse(age > 75,
                           round(stats::rnorm(obs, mean = 10, sd = 1)),
                           round(stats::rnorm(obs, mean = 50, sd = 10))
-      ) + city_ind * 20 + target_ind * 10,
+      ) + city_ind * 20 + target_ind * 10),
       hh_single = ifelse(age < 35 & city_ind == 1,
-                         sample(c(0, 1), obs, replace = TRUE, prob = c(0.2, 0.8)),
-                         sample(c(0, 1), obs, replace = TRUE, prob = c(0.7, 0.3))
+                         sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.2, 0.8)),
+                         sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.7, 0.3))
       )
     ) # mutate
 
   # add extreme values?
   if (add_extreme) {
     extreme <- data[nrow(data), ]
-    extreme$bbi_usg_gb <- 100000
-    extreme$target_ind <- 0
+    extreme$bbi_usg_gb <- 100000L
+    extreme$target_ind <- 0L
     data[nrow(data), ] <- extreme[1, ]
   }
 
@@ -261,7 +262,7 @@ create_data_random = function(obs = 1000, vars = 10,
   # create basic dataset
   data <- data.frame(
     id = seq(from = 1, to = obs),
-    target_ind = sample(c(0, 1),
+    target_ind = sample(c(0L, 1L),
                         obs,
                         prob = c(1 - target1_prob, target1_prob),
                         replace = TRUE)

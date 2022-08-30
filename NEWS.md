@@ -9,6 +9,7 @@
 * explore(): targetpct as alternqtive to split parameter
 * report(): targetpct as alternative to split parameter
 * balance_target(): add parameter seed
+* fix variable type for create_data_x()
 
 ## explore 0.8.0 (2022-01-29)
 
