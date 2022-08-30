@@ -6,7 +6,7 @@
 * extend add_var functions
 * explain_tree(): set default minsplit to 20
 * explain_tree(): set prior probabilities
-* explore(): targetpct as alternqtive to split parameter
+* explore(): targetpct as alternative to split parameter
 * report(): targetpct as alternative to split parameter
 * balance_target(): add parameter seed
 * fix variable type for create_data_x()
