@@ -19,7 +19,7 @@ add_var_random_cat <- function(data,
                                cat = LETTERS[1:6],
                                prob,
                                overwrite = TRUE,
-                               seed = 123) {
+                               seed) {
 
   # data table available?
   if (missing(data))  {

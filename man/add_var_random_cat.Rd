@@ -10,7 +10,7 @@ add_var_random_cat(
   cat = LETTERS[1:6],
   prob,
   overwrite = TRUE,
-  seed = 123
+  seed
 )
 }
 \arguments{
