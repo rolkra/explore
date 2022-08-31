@@ -1,4 +1,4 @@
-## explore 0.9.0 (2022-09-01)
+## explore 0.9.0 (2022-08-31)
 
 * rename create_x_data() to create_data_x()
 * rename add_x_var() to add_var_x()
