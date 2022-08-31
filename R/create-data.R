@@ -87,21 +87,6 @@ create_data_person <- function(obs = 1000, seed = 123) {
 #'
 #' Artificial data that can be used for unit-testing or teaching
 #'
-#' @param obs Number of observations
-#' @param target_name Variable name of target
-#' @param factorise_target Should target variable be factorised?
-#' (from 0/1 to facotr no/yes)?
-#' @param target1_prob Probability that buy = 1
-#' @param add_extreme Add an obervation with extreme values?
-#' @param flip_gender Should Male/Female be flipped in data?
-#' @param add_id Add an id-variable to data?
-#' @param seed Seed for randomization
-#'
-#' @return A dataframe
-#' @export
-#'
-#' @md
-#' @details
 #' Variables in dataset:
 #' * id = Identifier
 #' * period = Year & Month (YYYYMM)
@@ -119,7 +104,18 @@ create_data_person <- function(obs = 1000, seed = 123) {
 #' Target in dataset:
 #' * buy (may be renamed) = Did customer buy a new product in next month?
 #' (1 = yes, 0 = no)
-
+#' @param obs Number of observations
+#' @param target_name Variable name of target
+#' @param factorise_target Should target variable be factorised?
+#' (from 0/1 to facotr no/yes)?
+#' @param target1_prob Probability that buy = 1
+#' @param add_extreme Add an obervation with extreme values?
+#' @param flip_gender Should Male/Female be flipped in data?
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization
+#'
+#' @return A dataframe
+#' @export
 
 create_data_buy = function(obs = 1000,
                            target_name = "buy",
@@ -228,6 +224,13 @@ create_data_buy = function(obs = 1000,
 #'
 #' Random data that can be used for unit-testing or teaching
 #'
+#' Variables in dataset:
+#' * id = Identifier
+#' * var_X = variable containing values between 0 and 100
+#'
+#' Target in dataset:
+#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
+#'
 #' @param obs Number of observations
 #' @param vars Number of variables
 #' @param target_name Variable name of target
@@ -239,15 +242,6 @@ create_data_buy = function(obs = 1000,
 #'
 #' @return A dataframe
 #' @export
-#'
-#' @md
-#' @details
-#' Variables in dataset:
-#' * id = Identifier
-#' * var_X = variable containing values between 0 and 100
-#'
-#' Target in dataset:
-#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
 
 create_data_random = function(obs = 1000, vars = 10,
                               target_name = "target_ind",

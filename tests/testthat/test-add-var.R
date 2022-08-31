@@ -186,8 +186,8 @@ test_that("add_var_random_cat()", {
 # add new random variable with character cat
 test_that("add_var_random_cat()", {
   expect_equal(
-    add_var_random_cat(iris, cat = 0, name = "cat")[["cat"]],
-    rep(10, nrow(iris))
+    add_var_random_cat(iris, cat = c(1), name = "cat")[["cat"]],
+    rep(1, nrow(iris))
   )
 })
 

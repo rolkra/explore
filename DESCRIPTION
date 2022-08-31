@@ -32,8 +32,10 @@ Imports:
     tibble, 
     tidyr 
 RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     palmerpenguins,
     testthat
 VignetteBuilder: knitr
+

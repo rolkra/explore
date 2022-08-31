@@ -415,7 +415,7 @@ format_type <- function(type) {
 
 #' Return type of variable
 #'
-#' Return value of typeof, except if variable contains <hide>, then return "other"
+#' Return value of typeof, except if variable contains hide, then return "other"
 #'
 #' @param var A vector (dataframe column)
 #' @return Value of typeof or "other"

@@ -13,7 +13,7 @@ get_type(var)
 Value of typeof or "other"
 }
 \description{
-Return value of typeof, except if variable contains <hide>, then return "other"
+Return value of typeof, except if variable contains hide, then return "other"
 }
 \examples{
 get_type(iris$Species)

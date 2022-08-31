@@ -13,7 +13,7 @@ report(data, n, target, targetpct, split, output_file, output_dir)
 
 \item{target}{Target variable (0/1 or FALSE/TRUE)}
 
-\item{targetpct}{Plot variable as target% (FALSE/TRUE)}
+\item{targetpct}{Plot variable as target\% (FALSE/TRUE)}
 
 \item{split}{Alternative to targetpct (split = !targetpct)}
 
