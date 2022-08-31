@@ -22,7 +22,7 @@
 #' explain_tree(data, target = is_versicolor)
 #' @export
 
-explain_tree <- function(data, target, n, max_obs = 100000,
+explain_tree <- function(data, target, n,
                          max_cat = 10, max_target_cat = 5, maxdepth = 3,
                          minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {

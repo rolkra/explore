@@ -20,5 +20,5 @@ Dataset containing new id variable
 Add a variable id at first column in dataset
 }
 \examples{
-add_var_id_starsign(iris)
+add_var_id(iris)
 }

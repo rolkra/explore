@@ -45,8 +45,8 @@ create_data_person <- function(obs = 1000, seed = 123) {
     age = sample(16:95, nobs, replace = TRUE),
     gender = sample(c("Male","Female", "X"), prob = c(0.49, 0.49, 0.02), nobs, replace = TRUE),
     eye_color = sample(c("blue","green","brown"), nobs, replace = TRUE),
-    shoe_size = trunc(rnorm(nobs, mean = 43, sd = 3)),
-    iq = trunc(rnorm(nobs, mean = 100, sd = 20)),
+    shoe_size = trunc(stats::rnorm(nobs, mean = 43, sd = 3)),
+    iq = trunc(stats::rnorm(nobs, mean = 100, sd = 20)),
     education = sample(c(0:100), nobs, replace = TRUE),
     income = sample(c(0:100), nobs, replace = TRUE),
 
@@ -67,7 +67,7 @@ create_data_person <- function(obs = 1000, seed = 123) {
   )
 
   # not random correlations
-  random01 <- runif(nobs)
+  random01 <- stats::runif(nobs)
   data$likes_beatles <- ifelse(data$likes_beatles + data$age/50 * random01>= 1, 1L, 0L)
   data$likes_beer <- ifelse(data$gender == "Male" & random01 >= 0.2, 1L, data$likes_beer)
   data$likes_sushi <- ifelse(data$age/75 + random01/4 >= 1, 0L, data$likes_sushi)

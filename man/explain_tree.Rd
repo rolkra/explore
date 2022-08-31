@@ -8,7 +8,6 @@ explain_tree(
   data,
   target,
   n,
-  max_obs = 1e+05,
   max_cat = 10,
   max_target_cat = 5,
   maxdepth = 3,

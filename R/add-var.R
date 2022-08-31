@@ -178,7 +178,7 @@ add_var_random_dbl <- function(data, name = "random_dbl",
   }
 
   # add random variable
-  data[[name]] <- runif(nrow(data), min = min_val, max = max_val)
+  data[[name]] <- stats::runif(nrow(data), min = min_val, max = max_val)
 
   # return data
   data
@@ -235,7 +235,7 @@ add_var_random_starsign <- function(data, name = "random_starsign", lang = "en",
 #' @param overwrite Can new id variable overwrite an existing variable in dataset?
 #' @return Dataset containing new id variable
 #' @examples
-#' add_var_id_starsign(iris)
+#' add_var_id(iris)
 #' @export
 
 add_var_id <- function(data, name = "id", overwrite = FALSE)  {
