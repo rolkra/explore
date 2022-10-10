@@ -6,8 +6,8 @@ library(explore)
 # create empty dataset
 test_that("create_data_empty()", {
   expect_equal(
-    dim(create_data_empty(obs = 1000)),
-    c(1000, 0)
+    dim(create_data_empty(obs = 100)),
+    c(100, 0)
   )
 })
 
@@ -16,14 +16,14 @@ test_that("create_data_empty()", {
 # create dataset with obs
 test_that("create_data_buy()", {
   expect_equal(
-    nrow(create_data_buy(obs = 1000)),
-    1000
+    nrow(create_data_buy(obs = 100)),
+    100
   )
 })
 
 # create dataset with target as factor
 test_that("create_data_buy()", {
-  d <- create_data_buy(obs = 1000, target_name = "target", factorise_target = TRUE)
+  d <- create_data_buy(obs = 100, target_name = "target", factorise_target = TRUE)
   expect_equal(
     is.factor(d$target),
     TRUE
@@ -33,8 +33,8 @@ test_that("create_data_buy()", {
 # create dataset is reproducible when using the same seed
 test_that("create_data_buy()", {
   expect_equal(
-    create_data_buy(obs = 1000, seed = 1),
-    create_data_buy(obs = 1000, seed = 1)
+    create_data_buy(obs = 100, seed = 1),
+    create_data_buy(obs = 100, seed = 1)
   )
 })
 
@@ -44,19 +44,44 @@ test_that("create_data_buy()", {
 # create dataset with obs
 test_that("create_data_person()", {
   expect_equal(
-    nrow(create_data_person(obs = 1000)),
-    1000
+    nrow(create_data_person(obs = 100)),
+    100
   )
 })
 
 # create dataset is reproducible when using the same seed
 test_that("create_data_person()", {
   expect_equal(
-    create_data_person(obs = 1000, seed = 1),
-    create_data_person(obs = 1000, seed = 1)
+    create_data_person(obs = 100, seed = 1),
+    create_data_person(obs = 100, seed = 1)
   )
 })
 
+# create data app ------------------------------------------------------
+
+# create dataset with obs
+test_that("create_data_app()", {
+  expect_equal(
+    nrow(create_data_app(obs = 100)),
+    100
+  )
+})
+
+# create dataset is reproducible when using the same seed
+test_that("create_data_app()", {
+  expect_equal(
+    create_data_app(obs = 100, seed = 1),
+    create_data_app(obs = 100, seed = 1)
+  )
+})
+
+# add_id works
+test_that("create_data_app()", {
+  expect_true(
+    ncol(create_data_app(obs = 100, add_id = TRUE)) ==
+    ncol(create_data_app(obs = 100, add_id = FALSE)) + 1
+  )
+})
 
 # create data random ------------------------------------------------------
 

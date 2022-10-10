@@ -32,7 +32,7 @@ create_data_empty <- function(obs = 1000, add_id = FALSE) {
 #' @return A dataframe
 #' @export
 
-create_data_person <- function(obs = 1000, seed = 123) {
+create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
   # reproducible random numbers
   set.seed(seed)
@@ -76,6 +76,11 @@ create_data_person <- function(obs = 1000, seed = 123) {
   data$handset <- ifelse(data$handset == "Android" & data$income>75 & data$education<25, "Apple", data$handset)
   # add extreme values
   #data[1,"age"] <- 5000
+
+  # add id variable?
+  if(add_id) {
+    data <- data %>% add_var_id(name = "id")
+  }
 
   # return data
   data
