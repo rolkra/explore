@@ -38,6 +38,14 @@ test_that("create_data_buy()", {
   )
 })
 
+# add_id works
+test_that("create_data_buy()", {
+  expect_true(
+    ncol(create_data_buy(obs = 100, add_id = TRUE)) ==
+      ncol(create_data_buy(obs = 100, add_id = FALSE)) + 1
+  )
+})
+
 
 # create data person ------------------------------------------------------
 
@@ -54,6 +62,14 @@ test_that("create_data_person()", {
   expect_equal(
     create_data_person(obs = 100, seed = 1),
     create_data_person(obs = 100, seed = 1)
+  )
+})
+
+# add_id works
+test_that("create_data_person()", {
+  expect_true(
+    ncol(create_data_person(obs = 100, add_id = TRUE)) ==
+      ncol(create_data_person(obs = 100, add_id = FALSE)) + 1
   )
 })
 
@@ -88,15 +104,24 @@ test_that("create_data_app()", {
 # create dataset with obs
 test_that("create_data_random()", {
   expect_equal(
-    nrow(create_data_random(obs = 1000)),
-    1000
+    nrow(create_data_random(obs = 100)),
+    100
   )
 })
 
 # create dataset is reproducible when using the same seed
 test_that("create_data_random()", {
   expect_equal(
-    create_data_random(obs = 1000, seed = 1),
-    create_data_random(obs = 1000, seed = 1)
+    create_data_random(obs = 100, seed = 1),
+    create_data_random(obs = 100, seed = 1)
   )
 })
+
+# add_id works
+test_that("create_data_random()", {
+  expect_true(
+    ncol(create_data_random(obs = 100, add_id = TRUE)) ==
+      ncol(create_data_random(obs = 100, add_id = FALSE)) + 1
+  )
+})
+
