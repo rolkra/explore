@@ -19,7 +19,7 @@ balance_target(data, target, min_prop = 0.1, seed)
 Data
 }
 \description{
-Balances the target variable in your dataset.
+Balances the target variable in your dataset using downsampling.
 Target must be 0/1, FALSE/TRUE ore no/yes
 }
 \examples{

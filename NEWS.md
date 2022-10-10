@@ -1,6 +1,9 @@
 ## explore 1.0.0 (to be released)
 
-
+* Dependency DT (>= 0.3.0)
+* Use native pipe in README.md
+* Improve documentation
+* Add function create_data_app()
 
 ## explore 0.9.0 (2022-08-31)
 

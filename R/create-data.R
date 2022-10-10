@@ -220,6 +220,73 @@ create_data_buy = function(obs = 1000,
 
 } # create_data_buy
 
+
+#' Create data app
+#'
+#' Artificial data that can be used for unit-testing or teaching
+#'
+#' @param obs Number of observations
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization (integer)
+#'
+#' @return A dataframe
+#' @export
+
+create_data_app = function(obs = 1000,
+                           add_id = FALSE,
+                           seed = 123) {
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  data <- create_data_empty(obs = obs) |>
+    add_var_id(name = "id")
+
+  data <- data |>
+    add_var_random_cat("os", c("iOS", "Android", "Other"), prob = c(0.4, 0.5, 0.1)) |>
+    add_var_random_01("free", prob = c(0.4, 0.6)) |>
+    add_var_random_int("downloads", min_val = 0, max_val = 7500) |>
+    add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) |>
+    add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) |>
+    add_var_random_int("updates", min_val = 0, max_val = 100)
+
+  set.seed(123) # to make it reproducible
+
+  # add effect free
+  prob <- 0.7
+  size <- 5000
+  data$downloads <- ifelse(runif(nrow(data)) <= prob,
+                           data$downloads + (data$free * runif(nrow(data)) * size),
+                           data$downloads)
+
+  # add effect rating
+  prob <- 0.8
+  size <- 1000
+  data$downloads <- ifelse(runif(nrow(data)) <= prob,
+                           data$downloads + (data$rating * runif(nrow(data)) * size),
+                           data$downloads)
+
+  # add effect type=GAME
+  prob <- 0.4
+  size <- 3000
+  data$downloads <- ifelse(runif(nrow(data)) <= prob,
+                           data$downloads + ifelse(data$type == "Games", runif(nrow(data)) * size, 0),
+                           data$downloads)
+
+  # make downloads int again
+  data$downloads <- as.integer(data$downloads)
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
+  }
+
+  # return data
+  data
+
+} # create_data_app
+
+
 #' Create data random
 #'
 #' Random data that can be used for unit-testing or teaching

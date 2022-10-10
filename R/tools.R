@@ -32,7 +32,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 
 #' Balance target variable
 #'
-#' Balances the target variable in your dataset.
+#' Balances the target variable in your dataset using downsampling.
 #' Target must be 0/1, FALSE/TRUE ore no/yes
 #'
 #' @param data A dataset
