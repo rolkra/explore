@@ -41,14 +41,6 @@ You can use {explore} with **tidy data** (each row is an observation) or with **
 install.packages("explore")
 ```
 
-To install the explore package on Debian / Ubuntu, you may need to install some additional dependencies first (explore 0.7.1 or below):
-
-```
-sudo apt install unixodbc unixodbc-dev
-install.packages("odbc")
-install.packages("explore")
-```
-
 ### DEV version (github)
 ```r
 # install from github
@@ -104,14 +96,14 @@ If no target is defined, the report shows all variables. If a target is defined,
 
 Report of all variables
 ```r
-iris %>% report(output_dir = tempdir())
+iris |> report(output_dir = tempdir())
 ```
 
 <img src="man/figures/report_attributes.png" alt="example report attributes" width="400">
 
 Report with defined target (binary target, split = FALSE)
 ```r
-iris %>% report(output_dir = tempdir(),
+iris |> report(output_dir = tempdir(),
                 target = is_versicolor,
                 split = FALSE)
 ```
@@ -126,44 +118,43 @@ Example how to use the functions of the explore package to explore tidy data (ea
 ```r
 # load packages
 library(explore)
-library(magrittr)  # to use the pipe operator %>%
 
 # use iris dataset
 data(iris)
 
 # explore Species
-iris %>% explore(Species)
+iris |> explore(Species)
 
 # explore Sepal.Length
-iris %>% explore(Sepal.Length)
+iris |> explore(Sepal.Length)
 
 # define a target (is Species versicolor?)
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 
 # explore relationship between Sepal.Length and the target
-iris %>% explore(Sepal.Length, target = is_versicolor)
+iris |> explore(Sepal.Length, target = is_versicolor)
 
 # explore relationship between all variables and the target
-iris %>% explore_all(target = is_versicolor)
+iris |> explore_all(target = is_versicolor)
 
 # explore correlation between Sepal.Length and Petal.Length
-iris %>% explore(Sepal.Length, Petal.Length)
+iris |> explore(Sepal.Length, Petal.Length)
 
 # explore correlation between Sepal.Length, Petal.Length and a target
-iris %>% explore(Sepal.Length, Petal.Length, target = is_versicolor)
+iris |> explore(Sepal.Length, Petal.Length, target = is_versicolor)
 
 # describe dataset
 describe(iris)
 
 # describe Species
-iris %>% describe(Species)
+iris |> describe(Species)
 
 # explain target using a decision tree
 iris$Species <- NULL
-iris %>% explain_tree(target = is_versicolor)
+iris |> explain_tree(target = is_versicolor)
 
 # explain target using a logistic regression
-iris %>% explain_logreg(target = is_versicolor)
+iris |> explain_logreg(target = is_versicolor)
 ```
 
 Example how to use the functions of the explore package to explore count-data (each row is a group of observations):
@@ -171,7 +162,6 @@ Example how to use the functions of the explore package to explore count-data (e
 
 ```r
 # load packages
-library(dplyr)
 library(tibble)
 library(explore)
 
@@ -183,18 +173,18 @@ titanic <- as_tibble(Titanic)
 describe(titanic)
 
 # describe Class
-titanic %>% describe(Class, n = n)
+titanic |> describe(Class, n = n)
 
 # explore Class
-titanic %>% explore(Class, n = n)
+titanic |> explore(Class, n = n)
 
 # explore relationship between Class and the target
-titanic %>% explore(Class, n = n, target = Survived)
+titanic |> explore(Class, n = n, target = Survived)
 
 # explore relationship between all variables and the target
-titanic %>% explore_all(n = n, target = Survived)
+titanic |> explore_all(n = n, target = Survived)
 
 # explain target using a decision tree
-titanic %>% explain_tree(n = n, target = Survived)
+titanic |> explain_tree(n = n, target = Survived)
 
 ```
