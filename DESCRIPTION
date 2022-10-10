@@ -16,7 +16,7 @@ Imports:
     assertthat, 
     broom, 
     dplyr, 
-    DT, 
+    DT (>= 0.3.0), 
     forcats, 
     ggplot2 (>= 3.0.0), 
     gridExtra, 
@@ -31,11 +31,10 @@ Imports:
     stringr, 
     tibble, 
     tidyr 
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     palmerpenguins,
     testthat
 VignetteBuilder: knitr
-
