@@ -4,6 +4,7 @@
 * Use native pipe in README.md
 * Improve documentation
 * Add function create_data_app()
+* Add support for integer64
 
 ## explore 0.9.0 (2022-08-31)
 
