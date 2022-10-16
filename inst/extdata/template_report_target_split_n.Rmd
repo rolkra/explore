@@ -32,6 +32,8 @@ data %>% explore(!!sym(var_name_target), n = !!sym(var_name_n))
 # create buckets of variables
 buckets <- data %>% 
   explore::get_var_buckets(
+    var_name_target = var_name_target,
+    var_name_n = var_name_n,
     bucket_size = 100
   )
 
