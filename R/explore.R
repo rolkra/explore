@@ -345,7 +345,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
       length(var_cat) > max_cat)  {
     data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
-    warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
+    #warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
   }
 
   # numeric? of use a factor for var if low number of cats
@@ -1753,7 +1753,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
        length(var_cat) > max_cat)  {
     data <- data %>% filter(!!cat_quo %in% var_cat[1:max_cat])
-    warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
+    #warning(paste("number of bars limited to", max_cat, "by parameter max_cat"))
   }
 
   # numeric? of use a factor for var if low number of cats

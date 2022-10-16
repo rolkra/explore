@@ -6,6 +6,7 @@
 * Add function create_data_app()
 * Add support for integer64
 * Bugfix report() >100 variables
+* No warning-message in explore_count()
 
 ## explore 0.9.0 (2022-08-31)
 
