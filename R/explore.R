@@ -1056,54 +1056,38 @@ explore_tbl <- function(data, n)  {
   # number of variables in data
   n_var <- nrow(d)
 
-  # prepare "all variables"
-  bar1 <- d %>%
-    count(type) %>%
-    mutate(
-      measure = "all",
-      n_pct = n / n_var * 100
-    )
+  # prepare bars
+  bar <- d |>
+    mutate(group = case_when(
+      na > 0 ~ "with NA",
+      unique == 1 ~ "no variance",
+      TRUE ~ "ok"
+    )) |>
+    count(type, group)
 
-  # prepare "no variance"
-  suppressWarnings(
-    bar2 <- d %>%
-      filter(type != "oth") %>%
-      filter(unique == 1) %>%
-      count(type) %>%
-      mutate(
-        measure = "no variance",
-        n_pct = n / n_var * 100
-      )
-  )
+  bar$group <- factor(
+    bar$group,
+    levels = c("with NA", "no variance", "ok"),
+    ordered = TRUE)
 
-  # prepare "with NA"
-  suppressWarnings(
-    bar3 <- d %>%
-      filter(na > 0) %>%
-      count(type) %>%
-      mutate(
-        measure = "with NA",
-        n_pct = n / n_var * 100
-      )
-  )
+  bar_all = bar |>
+    group_by(group) |>
+    summarise(n = sum(n)) |>
+    ungroup() |>
+    mutate(type = "variables (all)")
 
   # prepare plot
-  bar <- bind_rows(bar1, bar2, bar3)
-  type_default <- min(as.character(bar$type), na.rm = TRUE)
-  bar <- bar %>% clean_var(type, na = type_default)
-  bar$type <- factor(bar$type, levels = c("lgl","int","dbl","fct","chr","dat","oth"))
+  bar <- bind_rows(bar, bar_all)
+  #type_default <- min(as.character(bar$type), na.rm = TRUE)
+  #bar <- bar %>% clean_var(type, na = type_default)
 
   # define colors
-  color_mapping <- c("lgl" = "blue",
-                     "int" = "cornflowerblue",
-                     "dbl" = "cyan",
-                     "fct" = "yellow",
-                     "chr" = "orange",
-                     "dat" = "brown",
-                     "oth" = "red")
+  color_mapping <- c("no variance" = "lightblue",
+                     "with NA" = "coral",
+                     "ok" = "grey")
   # plot
   bar %>%
-    ggplot(aes(measure, n, fill = type)) +
+    ggplot(aes(type, n, fill = group)) +
     geom_col() +
     scale_fill_manual(values = color_mapping) +
     #geom_text(aes(measure, n, group = type, label = as.character(n)), size = 2.5) +
@@ -1121,7 +1105,7 @@ explore_tbl <- function(data, n)  {
       panel.grid.minor = element_line("grey85"),
       panel.border = element_rect(fill = NA, color = "lightgrey"))
 
-} # explore_tbl
+ } # explore_tbl
 
 #' Explore dataset interactive
 #'

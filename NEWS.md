@@ -7,6 +7,7 @@
 * Add support for integer64
 * Bugfix report() >100 variables
 * No warning-message in explore_count()
+* Redesign explore_tbl()
 
 ## explore 0.9.0 (2022-08-31)
 
