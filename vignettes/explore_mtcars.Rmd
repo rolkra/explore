@@ -1,5 +1,5 @@
 ---
-title: "explore mtcars"
+title: "explore_mtcars"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

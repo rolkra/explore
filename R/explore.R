@@ -623,7 +623,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
         panel.border = element_rect(fill = NA, color = "lightgrey"))
 
     if (show_mean_var) {
-      if (mean_var <= max_val) {
+      if ((auto_scale == FALSE) | (mean_var <= max_val)) {
         p <- p + geom_vline(xintercept = mean_var,
                             color = "#7f7f7f", alpha = 0.5,
                             linetype = "dashed", size = 1)
