@@ -560,7 +560,6 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
     return(p)
   }
 
-
   # parameter target
   if(!missing(target))  {
     target_quo <- enquo(target)
@@ -582,6 +581,13 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
     n_target_cat = 1
   } else {
     n_target_cat <- length(unique(data[[target_txt]]))
+  }
+
+  # mean
+  show_mean_var <- FALSE
+  if (is.na(min_val) & is.na(max_val) & missing(target)) {
+    mean_var <- mean(data[[var_txt]])
+    show_mean_var <- TRUE
   }
 
   # count NA
@@ -615,6 +621,14 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
         panel.grid.major = element_line("grey85"),
         panel.grid.minor = element_line("grey85"),
         panel.border = element_rect(fill = NA, color = "lightgrey"))
+
+    if (show_mean_var) {
+      if (mean_var <= max_val) {
+        p <- p + geom_vline(xintercept = mean_var,
+                            color = "#7f7f7f", alpha = 0.5,
+                            linetype = "dashed", size = 1)
+      }
+    }
 
   } else {
 

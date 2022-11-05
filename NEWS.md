@@ -8,6 +8,7 @@
 * Bugfix report() >100 variables
 * No warning-message in explore_count()
 * Redesign explore_tbl()
+* Add mean to explore_density() plot
 
 ## explore 0.9.0 (2022-08-31)
 
