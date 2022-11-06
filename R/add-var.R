@@ -185,6 +185,31 @@ add_var_random_dbl <- function(data, name = "random_dbl",
 
 } # add_var_random_dbl
 
+#' Add a random moon variable to dataset
+#'
+#' @param data A dataset
+#' @param name Name of new variable (as string)
+#' @param overwrite Can new random variable overwrite an existing variable in dataset?
+#' @param seed Seed for random number generation (integer)
+#' @return Dataset containing new random variable
+#' @examples
+#' add_var_random_moon(iris)
+#' @export
+
+add_var_random_moon <- function(data, name = "random_moon", overwrite = TRUE, seed) {
+
+  # add starsign
+  moons <- c("New ( )   ", "Waxing  (+)", "Full (O)", "Waning  (-) ")
+  data <- add_var_random_cat(data,
+                             cat = moons,
+                             name = name,
+                             prob = c(0.1, 0.4, 0.1, 0.4),
+                             overwrite = overwrite,
+                             seed = seed)
+  # return data
+  data
+
+} # add_var_random_moon
 
 #' Add a random starsign variable to dataset
 #'

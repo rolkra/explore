@@ -198,6 +198,31 @@ test_that("add_var_random_cat()", {
   )
 })
 
+# add random moon -----------------------------------------------------
+
+# add new random variable called "random moon"
+test_that("add_var_random_moon()", {
+  expect_equal(
+    names(add_var_random_moon(iris)),
+    c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", "random_moon" )
+  )
+})
+
+# add new random variable called "moon"
+test_that("add_var_random_moon()", {
+  expect_equal(
+    names(add_var_random_moon(iris, name = "moon")),
+    c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species", "moon" )
+  )
+})
+
+# do not overwrite existing variable (if overwrite = FALSE)
+test_that("add_var_random_moon()", {
+  expect_error(
+    add_var_random_moon(iris, name = "Species", overwrite = FALSE)
+  )
+})
+
 # add random starsign -----------------------------------------------------
 
 # add new random variable called "random starsign"

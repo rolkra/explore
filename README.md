@@ -192,33 +192,34 @@ titanic |> explain_tree(n = n, target = Survived)
 Some other useful functions:
 
 ```r
-# create dataset and describe it
+# create dataset and explore it
 data <- create_data_app(obs = 1000)
-describe(data)
+explore(data)
 
 data <- create_data_buy(obs = 1000)
-describe(data)
+explore(data)
 
 data <- create_data_churn(obs = 1000)
-describe(data)
+explore(data)
 
 data <- create_data_person(obs = 1000)
-describe(data)
+explore(data)
 
 # create random dataset with 100 observarions and 5 random variables
-# and describe it
+# and explore it
 data <- create_data_random(obs = 100, vars = 5)
-describe(data)
+explore(data)
 
-# create your own random dataset and describe it
-# create dataset and describe it
-data <- create_data_empty(obs = 1000) %>% 
-  add_var_random_01("target") %>% 
-  add_var_random_dbl("age", min_val = 18, max_val = 80) %>% 
+# create your own random dataset and explore it
+data <- create_data_empty(obs = 1000) |> 
+  add_var_random_01("target") |> 
+  add_var_random_dbl("age", min_val = 18, max_val = 80) |> 
   add_var_random_cat("gender", 
                      cat = c("male", "female", "other"), 
-                     prob = c(0.4, 0.4, 0.2)) %>% 
-  add_var_random_starsign()
-describe(data)
+                     prob = c(0.4, 0.4, 0.2)) |> 
+  add_var_random_starsign() |> 
+  add_var_random_moon()
+  
+explore(data)
 
 ```

@@ -245,15 +245,15 @@ create_data_app = function(obs = 1000,
   # set seed (randomization)
   set.seed(seed)
 
-  data <- create_data_empty(obs = obs) |>
+  data <- create_data_empty(obs = obs) %>%
     add_var_id(name = "id")
 
-  data <- data |>
-    add_var_random_cat("os", c("iOS", "Android", "Other"), prob = c(0.4, 0.5, 0.1)) |>
-    add_var_random_01("free", prob = c(0.4, 0.6)) |>
-    add_var_random_int("downloads", min_val = 0, max_val = 7500) |>
-    add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) |>
-    add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) |>
+  data <- data %>%
+    add_var_random_cat("os", c("iOS", "Android", "Other"), prob = c(0.4, 0.5, 0.1)) %>%
+    add_var_random_01("free", prob = c(0.4, 0.6)) %>%
+    add_var_random_int("downloads", min_val = 0, max_val = 7500) %>%
+    add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) %>%
+    add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) %>%
     add_var_random_int("updates", min_val = 0, max_val = 100)
 
   set.seed(123) # to make it reproducible
@@ -310,18 +310,18 @@ create_data_churn = function(obs = 1000,
   # set seed (randomization)
   set.seed(seed)
 
-  data <- create_data_empty(obs = obs) |>
+  data <- create_data_empty(obs = obs) %>%
     add_var_id(name = "id")
 
-  data <- data |>
-    add_var_random_int("price", min_val = 9, max_val = 29) |>
-    add_var_random_cat("type", c("Regular", "Promo", "Premium"), prob = c(0.30, 0.50, 0.20)) |>
-    add_var_random_int("usage", min_val = 0, max_val = 100) |>
-    add_var_random_01("shared", prob = c(0.6, 0.4)) |>
-    add_var_random_cat("device", c("Phone", "Tablet", "Computer"), prob = c(0.5, 0.25, 0.25)) |>
-    add_var_random_01("newsletter", prob = c(0.5, 0.5)) |>
-    add_var_random_cat("language", c("en", "sp", "de", "fr"), prob = c(0.5, 0.3, 0.1, 0.1)) |>
-    add_var_random_int("duration", min_val = 0, max_val = 100) |>
+  data <- data %>%
+    add_var_random_int("price", min_val = 9, max_val = 29) %>%
+    add_var_random_cat("type", c("Regular", "Promo", "Premium"), prob = c(0.30, 0.50, 0.20)) %>%
+    add_var_random_int("usage", min_val = 0, max_val = 100) %>%
+    add_var_random_01("shared", prob = c(0.6, 0.4)) %>%
+    add_var_random_cat("device", c("Phone", "Tablet", "Computer"), prob = c(0.5, 0.25, 0.25)) %>%
+    add_var_random_01("newsletter", prob = c(0.5, 0.5)) %>%
+    add_var_random_cat("language", c("en", "sp", "de", "fr"), prob = c(0.5, 0.3, 0.1, 0.1)) %>%
+    add_var_random_int("duration", min_val = 0, max_val = 100) %>%
     add_var_random_01("churn", prob = c(0.6, 0.4))
 
 

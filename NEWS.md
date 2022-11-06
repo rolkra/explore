@@ -11,6 +11,8 @@
 * Add mean to explore_density() plot
 * Enrich README.md
 * Add create_data_churn()
+* Add add_var_random_moon()
+* Vignettes: switch from %>% to |>
 
 ## explore 0.9.0 (2022-08-31)
 
