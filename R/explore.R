@@ -1036,6 +1036,7 @@ explore_tbl <- function(data, n)  {
   type <- NULL
   na <- NULL
   measure <- NULL
+  group <- NULL
 
   # check parameter data
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")

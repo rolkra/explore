@@ -27,6 +27,7 @@ create_data_empty <- function(obs = 1000, add_id = FALSE) {
 #' Artificial data that can be used for unit-testing or teaching
 #'
 #' @param obs Number of observations
+#' @param add_id Add an id
 #' @param seed Seed for randomization (integer)
 #'
 #' @return A dataframe
@@ -260,22 +261,22 @@ create_data_app = function(obs = 1000,
   # add effect free
   prob <- 0.7
   size <- 5000
-  data$downloads <- ifelse(runif(nrow(data)) <= prob,
-                           data$downloads + (data$free * runif(nrow(data)) * size),
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + (data$free * stats::runif(nrow(data)) * size),
                            data$downloads)
 
   # add effect rating
   prob <- 0.8
   size <- 1000
-  data$downloads <- ifelse(runif(nrow(data)) <= prob,
-                           data$downloads + (data$rating * runif(nrow(data)) * size),
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + (data$rating * stats::runif(nrow(data)) * size),
                            data$downloads)
 
   # add effect type=GAME
   prob <- 0.4
   size <- 3000
-  data$downloads <- ifelse(runif(nrow(data)) <= prob,
-                           data$downloads + ifelse(data$type == "Games", runif(nrow(data)) * size, 0),
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + ifelse(data$type == "Games", stats::runif(nrow(data)) * size, 0),
                            data$downloads)
 
   # make downloads int again
