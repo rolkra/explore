@@ -74,15 +74,15 @@ explore(iris)
 
 #### Explore variables
 
-<img src="man/figures/explore-shiny-iris.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore-shiny-iris.png" alt="example interactive exploration" width="600">
 
 #### Explore variables with target
 
-<img src="man/figures/explore-shiny-iris-target-species.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore-shiny-iris-target-species.png" alt="example interactive exploration" width="600">
 
 #### Explain target (Decision Tree)
 
-<img src="man/figures/explore-shiny-iris-tree.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore-shiny-iris-tree.png" alt="example interactive exploration" width="600">
 
 ### Automated Report
 
