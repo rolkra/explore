@@ -199,6 +199,9 @@ describe(data)
 data <- create_data_buy(obs = 1000)
 describe(data)
 
+data <- create_data_churn(obs = 1000)
+describe(data)
+
 data <- create_data_person(obs = 1000)
 describe(data)
 

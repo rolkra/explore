@@ -269,6 +269,7 @@ Use one of the prepared datasets to explore:
 
 * create_data_app()
 * create_data_buy()
+* Create_data_churn()
 * create_data_person()
 * create_data_random()
 

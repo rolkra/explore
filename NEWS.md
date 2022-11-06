@@ -10,6 +10,7 @@
 * Redesign explore_tbl()
 * Add mean to explore_density() plot
 * Enrich README.md
+* Add create_data_churn()
 
 ## explore 0.9.0 (2022-08-31)
 

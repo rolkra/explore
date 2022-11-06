@@ -292,6 +292,87 @@ create_data_app = function(obs = 1000,
 
 } # create_data_app
 
+#' Create data churn
+#'
+#' Artificial data that can be used for unit-testing or teaching
+#'
+#' @param obs Number of observations
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization (integer)
+#'
+#' @return A dataframe
+#' @export
+
+create_data_churn = function(obs = 1000,
+                             add_id = FALSE,
+                             seed = 123) {
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  data <- create_data_empty(obs = obs) |>
+    add_var_id(name = "id")
+
+  data <- data |>
+    add_var_random_int("price", min_val = 9, max_val = 29) |>
+    add_var_random_cat("type", c("Regular", "Promo", "Premium"), prob = c(0.30, 0.50, 0.20)) |>
+    add_var_random_int("usage", min_val = 0, max_val = 100) |>
+    add_var_random_01("shared", prob = c(0.6, 0.4)) |>
+    add_var_random_cat("device", c("Phone", "Tablet", "Computer"), prob = c(0.5, 0.25, 0.25)) |>
+    add_var_random_01("newsletter", prob = c(0.5, 0.5)) |>
+    add_var_random_cat("language", c("en", "sp", "de", "fr"), prob = c(0.5, 0.3, 0.1, 0.1)) |>
+    add_var_random_int("duration", min_val = 0, max_val = 100) |>
+    add_var_random_01("churn", prob = c(0.6, 0.4))
+
+
+  set.seed(123) # to make it reproducible
+
+  # add effect Promo
+  prob <- 0.4
+  change <- stats::runif(nrow(data)) <= prob &
+    data$type == "Promo"
+  data$price[change] <- data$price[change] - 5
+
+  # add effect Premium
+  prob <- 0.5
+  change <- stats::runif(nrow(data)) <= prob &
+    data$type == "Premium"
+  data$price[change] <- 29
+
+  # add effect shared
+  prob <- 0.5
+  change <- stats::runif(nrow(data)) <= prob &
+    data$shared == 1
+  data$usage[change] <- data$usage[change] * 1.5
+
+  # add effect churn type=Premium
+  prob <- 0.3
+  change <- stats::runif(nrow(data)) <= prob &
+    data$price >= 22
+  data$churn[change] <- 1
+
+  # add effect churn newsletter=1
+  prob <- 0.3
+  change <- stats::runif(nrow(data)) <= prob &
+    data$newsletter == 1
+  data$churn[change] <- 0
+
+  # add effect churn shared=1
+  prob <- 0.3
+  change <- stats::runif(nrow(data)) <= prob &
+    data$shared == 1
+  data$churn[change] <- 0
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
+  }
+
+  # return data
+  data
+
+} # create_data_churn
+
 
 #' Create data random
 #'

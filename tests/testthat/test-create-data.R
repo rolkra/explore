@@ -99,6 +99,32 @@ test_that("create_data_app()", {
   )
 })
 
+# create data churn ------------------------------------------------------
+
+# create dataset with obs
+test_that("create_data_churn()", {
+  expect_equal(
+    nrow(create_data_churn(obs = 100)),
+    100
+  )
+})
+
+# create dataset is reproducible when using the same seed
+test_that("create_data_churn()", {
+  expect_equal(
+    create_data_churn(obs = 100, seed = 1),
+    create_data_churn(obs = 100, seed = 1)
+  )
+})
+
+# add_id works
+test_that("create_data_churn()", {
+  expect_true(
+    ncol(create_data_churn(obs = 100, add_id = TRUE)) ==
+      ncol(create_data_churn(obs = 100, add_id = FALSE)) + 1
+  )
+})
+
 # create data random ------------------------------------------------------
 
 # create dataset with obs
