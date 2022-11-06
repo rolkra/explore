@@ -685,6 +685,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' @param n Weights variable (only for count data)
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param ncol Layout of plots (number of columns)
+#' @param targetpct Plot variable as target% (FALSE/TRUE)
 #' @param split Split by target (TRUE|FALSE)
 #' @return Plot
 #' @import rlang
@@ -696,7 +697,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, n, target, ncol = 2, split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, targetpct, split = TRUE)  {
 
   # check parameter data
   assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
@@ -719,6 +720,15 @@ explore_all <- function(data, n, target, ncol = 2, split = TRUE)  {
     n_txt <- quo_name(n_quo)[[1]]
   } else {
     n_txt = NA
+  }
+
+  # parameter targetpct & split (set default value)
+  if (missing(targetpct)) {
+    if (missing(split)) {
+      split = TRUE
+    }
+  } else {
+    split = !targetpct
   }
 
   # variable name of target
