@@ -73,7 +73,7 @@ iris |>
 
 ```
 
-If you use a binary tharget, the parameter ***split = FALSE*** will give you a different view on the data.
+If you use a binary tharget, the parameter ***split = FALSE*** (or targetpct = TRUE) will give you a different view on the data.
 
 ![](../man/figures/report-target.png){width=600px}
 
