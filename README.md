@@ -72,22 +72,17 @@ library(explore)
 explore(iris)
 ```
 
-Explore variables
+#### Explore variables
 
-<img src="man/figures/explore_shiny_iris_target_species.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore-shiny-iris.png" alt="example interactive exploration" width="800">
 
-Explain target (is Species a versicolor?)
+#### Explore variables with target
 
-```r
-# define a target (is Species versicolor?)
-iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris$Species <- NULL
+<img src="man/figures/explore-shiny-iris-target-species.png" alt="example interactive exploration" width="800">
 
-# explore interactive
-explore(iris)
-```
+#### Explain target (Decision Tree)
 
-<img src="man/figures/explore_shiny_iris_tree.png" alt="example interactive exploration" width="800">
+<img src="man/figures/explore-shiny-iris-tree.png" alt="example interactive exploration" width="800">
 
 ### Automated Report
 
@@ -99,16 +94,32 @@ Report of all variables
 iris |> report(output_dir = tempdir())
 ```
 
-<img src="man/figures/report_attributes.png" alt="example report attributes" width="400">
+<img src="man/figures/report-attributes.png" alt="example report attributes" width="400">
 
-Report with defined target (binary target, split = FALSE)
+To create a report that shows all variables in relation to a target, just add the
+target parameter
+
 ```r
-iris |> report(output_dir = tempdir(),
-                target = is_versicolor,
-                split = FALSE)
+iris |> report(output_dir = tempdir(), target = Species)
 ```
 
-<img src="man/figures/report_target.png" alt="example report attributes" width="400">
+<img src="man/figures/report-target-split.png" alt="example report attributes" width="400">
+
+To create a report with a binary target you can use the parameter targetpct = TRUE
+(or split = FALSE)
+
+```r
+# define a target (is Species versicolor?)
+iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
+iris$Species <- NULL
+
+# create report
+iris |> report(output_dir = tempdir(),
+                target = is_versicolor,
+                targetpct = TRUE)
+```
+
+<img src="man/figures/report-target.png" alt="example report attributes" width="400">
 
 
 ### Manual exploration

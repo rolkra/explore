@@ -45,7 +45,7 @@ explore(iris)
 
 A shiny app is launched, you can inspect individual variable, explore their relation to a target (binary / categorical / numerical), grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
  
-![](../man/figures/explore_shiny_iris_target_species.png){width=600px}
+![](../man/figures/explore-shiny-iris-target-species.png){width=600px}
 
 You can choose each variable containng as a target, that is binary (0/1, FALSE/TRUE or "no"/"yes"), categorical or numeric.
 
@@ -59,9 +59,9 @@ Create a rich HTML report of all variables with one line of code:
 iris |> report(output_file = "report.html", output_dir = tempdir())
 ```
 
-![](../man/figures/report_attributes.png){width=600px}
+![](../man/figures/report-attributes.png){width=600px}
 
-Or you can simply add a target and create the report. In this case we use a binary tharget, but a categorical or numerical target would work as well.
+Or you can simply add a target and create the report. In this case we use a binary target, but a categorical or numerical target would work as well.
 
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables and their relationship with a binary target
@@ -75,7 +75,7 @@ iris |>
 
 If you use a binary tharget, the parameter ***split = FALSE*** will give you a different view on the data.
 
-![](../man/figures/report_target.png){width=600px}
+![](../man/figures/report-target.png){width=600px}
 
 ### Grow a decision tree
 

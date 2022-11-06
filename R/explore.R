@@ -1207,7 +1207,7 @@ explore_shiny <- function(data, target)  {
                            choices = names(data),
                            selected = "disp"),
         shiny::checkboxInput(inputId = "auto_scale", label="auto scale", value=TRUE),
-        shiny::checkboxInput(inputId = "split", label="split by target", value=TRUE),
+        shiny::checkboxInput(inputId = "targetpct", label="% target (0/1)", value=FALSE),
         shiny::hr(),
         shiny::actionButton(inputId = "report", "report all")
         , width = 3),  #sidebarPanel
@@ -1259,7 +1259,7 @@ explore_shiny <- function(data, target)  {
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with split
-      } else if(input$split == TRUE)  {
+      } else if(input$targetpct == FALSE)  {
         input_file <- ifelse(run_explore_package,
                              system.file("extdata", "template_report_target_split.Rmd", package="explore"),
                              "C:/R/template_report_target_split.Rmd")
@@ -1282,7 +1282,7 @@ explore_shiny <- function(data, target)  {
 
     output$graph_target <- shiny::renderPlot({
       if(input$target != "<no target>" & input$var != input$target)  {
-        data %>% explore(!!sym(input$var), target = !!sym(input$target), auto_scale = input$auto_scale, split = input$split)
+        data %>% explore(!!sym(input$var), target = !!sym(input$target), auto_scale = input$auto_scale, split = !input$targetpct)
       }
     }) # renderPlot graph_target
 
