@@ -1,0 +1,108 @@
+---
+title: "Notebook Explore"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(explore)
+library(rlang)
+```
+
+# Introduction
+
+This is an R Notebook that helps you to explore your data. To use your owen data
+just replace the code below.
+
+The Notebook uses the R package {explore} and is designed to explore small datasets as well as large datasets (with > 100 variables) 
+
+Data must be in a "tidy" format (each row is an observation, each column is a variable, each cell is a single value)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Replace this code with your own data and target
+data <- create_data_churn()
+var_name_target <- "churn"
+```
+
+# Data Understanding
+
+## Explore Table
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data  |>  explore_tbl()
+```
+
+## Describe Table
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data  |>  describe_tbl()
+```
+
+## Describe Variables
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+d <- describe(data)
+knitr::kable(d)
+```
+
+## Explore Variables
+
+```{r include=FALSE}
+# create buckets of variables
+buckets <- data  |>  
+  explore::get_var_buckets(
+    bucket_size = 100
+  )
+
+# height of each plot
+fig_height <- data[buckets[[1]]]  |>  
+  explore::total_fig_height()
+
+```
+
+```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
+for (i in seq_along(buckets)) {
+  data[buckets[[i]]]  |>  
+    explore_all(ncol = 2)
+}
+```
+
+# Finding Insights
+
+## Explore Target
+
+```{r fig.height=3, echo=FALSE, fig.height=3, fig.width=5, message=FALSE, warning=FALSE}
+data |> explore(!!sym(var_name_target))
+```
+
+## Explore Variables + Target
+
+```{r include=FALSE}
+# create buckets of variables
+buckets <- data  |>  
+  explore::get_var_buckets(
+    var_name_target = var_name_target,
+    bucket_size = 100
+  )
+
+# height of each plot
+fig_height <- data[buckets[[1]]]  |>  
+  explore::total_fig_height(var_name_target = var_name_target)
+
+```
+
+```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
+for (i in seq_along(buckets)) {
+  data[buckets[[i]]]  |>  
+    explore_all(ncol = 2, target = !!sym(var_name_target), split = TRUE)
+}
+```
+
+## Explain Target
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data  |>  explain_tree(target = !!sym(var_name_target))
+```
+

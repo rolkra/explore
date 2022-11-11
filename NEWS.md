@@ -1,4 +1,4 @@
-## explore 1.0.0 (to be released)
+## explore 1.0.0 (2022-11-11)
 
 * Dependency DT (>= 0.3.0)
 * Use native pipe in README.md

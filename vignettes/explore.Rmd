@@ -338,3 +338,15 @@ iris |>
             name = "sepal_length") |> 
   describe()
 ```
+
+### Create Notebook
+
+Create an RMarkdown template to explore your own data. Set output_dir (existing file may be overwritten)
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+create_notebook_explore(
+  output_dir = tempdir(),
+  output_file = "notebook-explore.Rmd")
+```
+
+![](../man/figures/notebook-explore.png){width=600px}
