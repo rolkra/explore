@@ -13,6 +13,7 @@
 * Add create_data_churn()
 * Add add_var_random_moon()
 * Vignettes: switch from %>% to |>
+* Add create_notebook_explore()
 
 ## explore 0.9.0 (2022-08-31)
 

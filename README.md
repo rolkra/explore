@@ -233,4 +233,10 @@ data <- create_data_empty(obs = 1000) |>
   
 explore(data)
 
+# create an RMarkdown template to explore your own data
+# set output_dir (existing file may be overwritten)
+create_notebook_explore(
+  output_dir = tempdir(),
+  output_file = "notebook-explore.Rmd")
+
 ```

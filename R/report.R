@@ -131,3 +131,46 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
     )
   } # if
 } # report
+
+#' Generate a notebook
+#'
+#' Generate an RMarkdown Notebook template for a report. You must provide a
+#' output-directory (parameter output_dir). The default file-name is
+#' "notebook-explore.Rmd" (may overwrite existing file with same name)
+#'
+#' @param output_file Filename of the html report
+#' @param output_dir Directory where to save the html report
+#' @examples
+#' create_notebook_explore(output_file = "explore.Rmd", output_dir = tempdir())
+#' @export
+
+create_notebook_explore <- function(output_file = "notebook-explore.Rmd", output_dir) {
+
+  # output_dir must be defined
+  if(missing(output_dir)) {
+    stop("output_dir must be defined")
+  }
+
+  # check if output-file has .Rmd extension
+  # if not, add it!
+  if (!missing(output_file)) {
+    len <- nchar(output_file)
+    if (tolower(substr(output_file, len-4, len)) != ".rmd")  {
+      output_file <- paste0(output_file, ".Rmd")
+    }
+  } # if
+
+  # get notebook template
+  file_read <- system.file("extdata", "template_notebook_explore.Rmd", package="explore")
+  file_write = path.expand(file.path(output_dir, output_file))
+
+  # generate notebook
+  success <- file.copy(from = file_read, to = file_write, overwrite = TRUE)
+
+  if (success) {
+    message(paste("Notebook", file_write, "generated"))
+  } else {
+    message(paste("Can not generate notebook", file_write))
+  }
+
+} # create_notebook_explore
