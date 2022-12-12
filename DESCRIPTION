@@ -1,7 +1,7 @@
 Package: explore
 Type: Package
 Title: Simplifies Exploratory Data Analysis
-Version: 1.0.0
+Version: 1.0.1
 Author: Roland Krasser
 Maintainer: Roland Krasser <roland.krasser@gmail.com>
 Description: Interactive data exploration with one line of code or use an easy 

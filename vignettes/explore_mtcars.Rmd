@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
 
-The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for mtcars, select, mutate and the |> operator).
+The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for mtcars, select, mutate and the %>% operator).
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -30,11 +30,11 @@ library(explore)
 ### Explore dataset
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-mtcars |> explore_tbl()
+mtcars %>% explore_tbl()
 ```
 
 ```{r message=FALSE, warning=FALSE}
-mtcars |> describe()
+mtcars %>% describe()
 ```
 
 The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
@@ -56,7 +56,7 @@ carb     | Number of carburetors
 ### Explore variables
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(mtcars, size = 2.5)}
-mtcars |> 
+mtcars %>% 
   explore_all()
 ```
 
@@ -65,7 +65,7 @@ mtcars |>
 Is there a difference between cars with 3,4 and 5 gears?
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars |> 
+mtcars %>% 
   explore(gear)
 ```
 
@@ -74,8 +74,8 @@ Most of the cars in the dataset have 3 or 4 gears. 15.6% have 5 gears.
 Now check relation between some of the variables and gear:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars |> 
-  select(gear, mpg, hp, cyl, am) |> 
+mtcars %>% 
+  select(gear, mpg, hp, cyl, am) %>% 
   explore_all(target = gear)
 ```
 
@@ -89,31 +89,31 @@ Cars that have mpg (miles per gallon) > 25
 We copy the data and create a new target variable 
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-data <- mtcars |> 
-  mutate(highmpg = if_else(mpg > 25, 1, 0, 0)) |> 
+data <- mtcars %>% 
+  mutate(highmpg = if_else(mpg > 25, 1, 0, 0)) %>% 
   select(-mpg)
 
-data |> explore(highmpg)
+data %>% explore(highmpg)
 ```
 
 So, about 19% of all cars have mpg > 25.
 What else is special about them?
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> 
-  select(highmpg, cyl, disp, hp) |> 
+data %>% 
+  select(highmpg, cyl, disp, hp) %>% 
   explore_all(target = highmpg)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> 
-  select(highmpg, drat, wt, qsec, vs) |> 
+data %>% 
+  select(highmpg, drat, wt, qsec, vs) %>% 
   explore_all(target = highmpg)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> 
-  select(highmpg, am, gear, carb) |> 
+data %>% 
+  select(highmpg, am, gear, carb) %>% 
   explore_all(target = highmpg)
 ```
 
@@ -122,7 +122,7 @@ There are some strong differences between cars with / without "high mpg".
 Now let's grow a decision tree:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> 
+data %>% 
   explain_tree(target = highmpg)
 ```
 
@@ -131,17 +131,17 @@ Growing a decision tree, shows that there seems to be a very strong correlation 
 Let's take a closer look to wt:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> explore(wt, target = highmpg)
+data %>% explore(wt, target = highmpg)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> explore(wt, target = highmpg, split = FALSE)
+data %>% explore(wt, target = highmpg, split = FALSE)
 ```
 
 The plot shows the percentage of cars with high mpg. Cars with high mpg have a weight < 2.5. So wt (weight) is a good predictor for high mpg. 
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars |> explore(wt, mpg)
+mtcars %>% explore(wt, mpg)
 ```
 
 There is a strong correlation between wt and mpg.
@@ -155,7 +155,7 @@ Is there a relation between horsepower and other variables like number of cylind
 Let's build a decision tree with horsepower as target:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars |> 
+mtcars %>% 
   explain_tree(target = hp, minsplit=15)
 ```
 
@@ -166,12 +166,12 @@ The variables cyl and mpg can explain hp. The bottom nodes are showing an averag
 In the tree rounded values are shown. If you want to know the exact values for each split, you can use the parameter ```out = "model"``` to get the model returned and take a look.
 
 ```{r fig.height=4, fig.width=6, message=FALSE, warning=FALSE, include=FALSE}
-model <- mtcars |> 
+model <- mtcars %>% 
   explain_tree(target = hp, minsplit=15, out = "model")
 ```
 
 ```
-model <- mtcars |> 
+model <- mtcars %>% 
   explain_tree(target = hp, minsplit=15, out = "model")
 ```
 ```{r echo=TRUE, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
@@ -183,8 +183,8 @@ You see that the split for mpg is done at exactly 21.45
 Now let's take a look at the direct correlation the variables used in the tree and hp:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-mtcars |> 
-  select(hp, cyl, mpg) |> 
+mtcars %>% 
+  select(hp, cyl, mpg) %>% 
   explore_all(target = hp)
 ```
 

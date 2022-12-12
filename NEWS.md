@@ -1,3 +1,7 @@
+## explore 1.0.1 (dev)
+
+* Switch back to %>% in vignettes (compatibility)
+
 ## explore 1.0.0 (2022-11-11)
 
 * Dependency DT (>= 0.3.0)

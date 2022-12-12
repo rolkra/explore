@@ -31,7 +31,7 @@ The explore package simplifies Exploratory Data Analysis (EDA). Get faster insig
 
 The penguins dataset comes with the palmerpenguins package. It has 344 observations and 8 variables. (https://github.com/allisonhorst/palmerpenguins)
 
-So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for filter() and |> and {explore} for data exploration.
+So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for filter() and %>% and {explore} for data exploration.
 
 ```{r message=FALSE, warning=FALSE}
 library(palmerpenguins)
@@ -42,7 +42,7 @@ library(explore)
 ### Describe variables
 
 ```{r message=FALSE, warning=FALSE}
-penguins |> describe()
+penguins %>% describe()
 ```
 There are some NA-values (unknown values) in the data. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
 
@@ -51,7 +51,7 @@ There are some NA-values (unknown values) in the data. The variable containing t
 We use only penguins with known flipper length for the data exploration!
 
 ```{r}
-data <- penguins |> 
+data <- penguins %>% 
   filter(flipper_length_mm > 0)
 ```
 
@@ -60,7 +60,7 @@ We reduced the penguins from 344 to 342.
 ### Explore variables
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(data, size = 2.5)}
-data |> 
+data %>% 
   explore_all()
 ```
 
@@ -69,7 +69,7 @@ data |>
 What is the relationship between all the variables and species?
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(data, var_name_target = "species", size = 2.2)}
-data |> 
+data %>% 
   explore_all(target = species)
 ```
 
@@ -78,7 +78,7 @@ We already see some strong patterns in the data. flipper_length_mm seperates spe
 Now we explain species using a decision tree:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-data |> explain_tree(target = species)
+data %>% explain_tree(target = species)
 ```
 
 We found an easy explanation how to find out the species by just using flipper_length_mm and bill_length_mm.
@@ -90,7 +90,7 @@ We found an easy explanation how to find out the species by just using flipper_l
 Now let's take a closer look to these variables:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-data |> explore(flipper_length_mm, bill_length_mm, target = species)
+data %>% explore(flipper_length_mm, bill_length_mm, target = species)
 ```
 
 The plot shows a not perfect but good seperation between the 3 species!

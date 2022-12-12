@@ -56,7 +56,7 @@ Create a rich HTML report of all variables with one line of code:
 
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables
-iris |> report(output_file = "report.html", output_dir = tempdir())
+iris %>% report(output_file = "report.html", output_dir = tempdir())
 ```
 
 ![](../man/figures/report-attributes.png){width=600px}
@@ -66,7 +66,7 @@ Or you can simply add a target and create the report. In this case we use a bina
 ```{R eval=FALSE, echo=TRUE}
 # report of all variables and their relationship with a binary target
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris |> 
+iris %>% 
   report(output_file = "report.html", 
          output_dir = tempdir(),
          target = is_versicolor)
@@ -82,20 +82,20 @@ If you use a binary tharget, the parameter ***split = FALSE*** (or targetpct = T
 Grow a decision tree with one line of code:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-iris |> explain_tree(target = Species)
+iris %>% explain_tree(target = Species)
 ```
 
 You can grow a decision tree with a binary target too.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
-iris |> select(-Species) |> explain_tree(target = is_versicolor)
+iris %>% select(-Species) %>% explain_tree(target = is_versicolor)
 ```
 
 Or using a numerical target. The syntax stays the same.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
-iris |> explain_tree(target = Sepal.Length)
+iris %>% explain_tree(target = Sepal.Length)
 ```
 
 You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
@@ -105,13 +105,13 @@ You can control the growth of the tree using the parameters `maxdepth`, `minspli
 Explore your table with one line of code to see which type of variables it contains.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore_tbl()
+iris %>% explore_tbl()
 ```
 
 You can also use describe_tbl() if you just need the main facts without visualisation.
 
 ```{r message=FALSE, warning=FALSE}
-iris |> describe_tbl()
+iris %>% describe_tbl()
 ```
 
 ### Explore variables
@@ -119,11 +119,11 @@ iris |> describe_tbl()
 Explore a variable with one line of code. You don't have to care if a variable is numerical or categorical.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Species)
+iris %>% explore(Species)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length)
+iris %>% explore(Sepal.Length)
 ```
 
 ### Explore variables with a target
@@ -131,56 +131,56 @@ iris |> explore(Sepal.Length)
 Explore a variable and its relationship with a binary target with one line of code. You don't have to care if a variable is numerical or categorical.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, target = is_versicolor)
+iris %>% explore(Sepal.Length, target = is_versicolor)
 ```
 
 Using split = FALSE will change the plot to %target:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, target = is_versicolor, split = FALSE)
+iris %>% explore(Sepal.Length, target = is_versicolor, split = FALSE)
 ```
 
 The target can have more than two levels:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, target = Species)
+iris %>% explore(Sepal.Length, target = Species)
 ```
 
 Or the target can even be numeric:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, target = Petal.Length)
+iris %>% explore(Sepal.Length, target = Petal.Length)
 ```
 
 ### Explore multiple variables
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
-iris |> 
-  select(Sepal.Length, Sepal.Width) |> 
+iris %>% 
+  select(Sepal.Length, Sepal.Width) %>% 
   explore_all()
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
-iris |> 
-  select(Sepal.Length, Sepal.Width, is_versicolor) |> 
+iris %>% 
+  select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
-iris |> 
-  select(Sepal.Length, Sepal.Width, is_versicolor) |> 
+iris %>% 
+  select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor, split = FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
-iris |> 
-  select(Sepal.Length, Sepal.Width, Species) |> 
+iris %>% 
+  select(Sepal.Length, Sepal.Width, Species) %>% 
   explore_all(target = Species)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
-iris |> 
-  select(Sepal.Length, Sepal.Width, Petal.Length) |> 
+iris %>% 
+  select(Sepal.Length, Sepal.Width, Petal.Length) %>% 
   explore_all(target = Petal.Length)
 ```
 
@@ -191,14 +191,14 @@ data(iris)
 To use a high number of variables with explore_all() in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function total_fig_height() helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, size=2.5)}
-iris |> 
+iris %>% 
   explore_all()
 ```
 
 If you use a target: ```fig.height=total_fig_height(iris, var_name_target = "Species")```
 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, var_name_target = "Species", size=2.5)}
-iris |> explore_all(target = Species)
+iris %>% explore_all(target = Species)
 ```
 
 You can control total_fig_height() by parameters ncols (number of columns of the plots) and size (height of 1 plot)
@@ -208,13 +208,13 @@ You can control total_fig_height() by parameters ncols (number of columns of the
 Explore correlation between two variables with one line of code:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, Petal.Length)
+iris %>% explore(Sepal.Length, Petal.Length)
 ```
 
 You can add a target too:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, Petal.Length, target = Species)
+iris %>% explore(Sepal.Length, Petal.Length, target = Species)
 ```
 
 ### Other options
@@ -222,13 +222,13 @@ iris |> explore(Sepal.Length, Petal.Length, target = Species)
 If you use explore to explore a variable and want to set lower and upper limits for values, you can use the `min_val` and `max_val` parameters. All values below min_val will be set to min_val. All values above max_val will be set to max_val.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, min_val = 4.5, max_val = 7)
+iris %>% explore(Sepal.Length, min_val = 4.5, max_val = 7)
 ```
 
 `explore` uses auto-scale by default. To deactivate it use the parameter `auto_scale = FALSE`
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> explore(Sepal.Length, auto_scale = FALSE)
+iris %>% explore(Sepal.Length, auto_scale = FALSE)
 ```
 
 ### Describing data
@@ -236,31 +236,31 @@ iris |> explore(Sepal.Length, auto_scale = FALSE)
 Describe your data in one line of code:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> describe()
+iris %>% describe()
 ```
 
 The result is a data-frame, where each row is a variable of your data. You can use `filter` from dplyr for quick checks:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # show all variables that contain less than 5 unique values
-iris |> describe() |> filter(unique < 5)
+iris %>% describe() %>% filter(unique < 5)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # show all variables contain NA values
-iris |> describe() |> filter(na > 0)
+iris %>% describe() %>% filter(na > 0)
 ```
 
 You can use `describe` for describing variables too. You don't need to care if a variale is numerical or categorical. The output is a text.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # describe a numerical variable
-iris |> describe(Species)
+iris %>% describe(Species)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # describe a categorical variable
-iris |> describe(Sepal.Length)
+iris %>% describe(Sepal.Length)
 ```
 
 ### Create Data
@@ -289,19 +289,19 @@ You can build you own random dataset by using ```create_data_empty()``` and  ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # create dataset and describe it
-data <- create_data_empty(obs = 1000) |> 
-  add_var_random_01("target") |> 
-  add_var_random_dbl("age", min_val = 18, max_val = 80) |> 
+data <- create_data_empty(obs = 1000) %>% 
+  add_var_random_01("target") %>% 
+  add_var_random_dbl("age", min_val = 18, max_val = 80) %>% 
   add_var_random_cat("gender", 
                      cat = c("male", "female", "other"), 
-                     prob = c(0.4, 0.4, 0.2)) |> 
-  add_var_random_starsign() |>
+                     prob = c(0.4, 0.4, 0.2)) %>% 
+  add_var_random_starsign() %>%
   add_var_random_moon()
 describe(data)
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-data |> select(random_starsign, random_moon) |> explore_all()
+data %>% select(random_starsign, random_moon) %>% explore_all()
 ```
 
 ### Data Dictionary
@@ -309,7 +309,7 @@ data |> select(random_starsign, random_moon) |> explore_all()
 Create a Data Dictionary of a dataset (Markdown File data_dict.md)
 
 ```{R eval=FALSE, echo=TRUE}
-iris  |>  data_dict_md(output_dir = tempdir())
+iris  %>%  data_dict_md(output_dir = tempdir())
 ```
 
 Add title, detailed descriptions and change default filename
@@ -330,12 +330,12 @@ data_dict_md(iris,
 To clean a variable you can use `clean_var`. With one line of code you can rename a variable, replace NA-values and set a minimum and maximum for the value.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-iris |> 
+iris %>% 
   clean_var(Sepal.Length, 
             min_val = 4.5, 
             max_val = 7.0, 
             na = 5.8, 
-            name = "sepal_length") |> 
+            name = "sepal_length") %>% 
   describe()
 ```
 
