@@ -1,6 +1,7 @@
 ## explore 1.0.1 (dev)
 
 * Switch back to %>% in vignettes (compatibility)
+* No hard coded path for markdown-templates
 
 ## explore 1.0.0 (2022-11-11)
 

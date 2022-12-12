@@ -1239,7 +1239,7 @@ explore_shiny <- function(data, target)  {
 
       # get name of selected target
       # rmarkdown templates uses variables data and var_name_target
-      # templates must be located in package or if code is only sourced in C:/R
+      # templates must be located in package
       var_name_target = input$target
       #path <- getwd()
       output_dir <- normalizePath(path.expand(tempdir()))
@@ -1248,21 +1248,14 @@ explore_shiny <- function(data, target)  {
       # show waiting-window
       shiny::showModal(modalDialog("Generating report ... (this may take a while)", footer = NULL))
 
-      # check if explore package is loaded
-      run_explore_package <- ifelse(max(search() == "package:explore") == 1, TRUE, FALSE)
-
       # report only variables
       if(input$target == "<no target>")  {
-        input_file <- ifelse(run_explore_package,
-                             system.file("extdata", "template_report_variable.Rmd", package="explore"),
-                             "C:/R/template_report_variable.Rmd")
+        input_file <- system.file("extdata", "template_report_variable.Rmd", package="explore")
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with split
       } else if(input$targetpct == FALSE)  {
-        input_file <- ifelse(run_explore_package,
-                             system.file("extdata", "template_report_target_split.Rmd", package="explore"),
-                             "C:/R/template_report_target_split.Rmd")
+        input_file <- system.file("extdata", "template_report_target_split.Rmd", package="explore")
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with percent
