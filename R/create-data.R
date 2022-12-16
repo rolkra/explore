@@ -45,7 +45,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
   data <- tibble::tibble(
     age = sample(16:95, nobs, replace = TRUE),
     gender = sample(c("Male","Female", "X"), prob = c(0.49, 0.49, 0.02), nobs, replace = TRUE),
-    eye_color = sample(c("blue","green","brown"), nobs, replace = TRUE),
+    eye_color = sample(c("Blue","Green","Brown"), nobs, replace = TRUE),
     shoe_size = trunc(stats::rnorm(nobs, mean = 43, sd = 3)),
     iq = trunc(stats::rnorm(nobs, mean = 100, sd = 20)),
     education = sample(c(0:100), nobs, replace = TRUE),
@@ -53,7 +53,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
     handset = sample(c("Apple","Android", "Other"), prob = c(0.4,0.5, 0.1), nobs, replace = TRUE),
 
-    pet = sample(c("dog","cat","other","no"),
+    pet = sample(c("Dog","Cat","Other","No"),
                  prob = c(0.23,0.22,0.11,0.35),
                  nobs, replace = TRUE),
 
@@ -445,3 +445,76 @@ create_data_random = function(obs = 1000, vars = 10,
   data
 
 } # create_data_random
+
+#' Create data unfair
+#'
+#' Artificial data that can be used for unit-testing or teaching
+#' (fairness & AI bias)
+#' @param obs Number of observations
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization (integer)
+#'
+#' @return A dataframe
+#' @export
+
+create_data_unfair = function(obs = 1000,
+                              add_id = FALSE,
+                              seed = 123) {
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  # start with data_person
+  data <- create_data_person(obs = obs, add_id = add_id)
+  data$favorite_pizza <- NULL
+  data$favorite_icecream <- NULL
+  data$likes_beer <- NULL
+  data$likes_beatles <- NULL
+  data$likes_garlic <- NULL
+  data$likes_sushi <- NULL
+
+  # add additonal variables
+  data <- data %>%
+    add_var_random_01("smoking", prob = c(0.7, 0.3)) %>%
+    add_var_random_01("name_arabic", prob = c(0.8, 0.2)) %>%
+    add_var_random_cat("outfit", cat = c("Alternative", "Casual", "Elegant"), prob = c(0.1, 0.5, 0.4)) %>%
+    add_var_random_01("glasses", prob = c(0.65, 0.35)) %>%
+    add_var_random_01("tatoos", prob = c(0.80, 0.20)) %>%
+    add_var_random_cat("pet", cat = c("Cat", "Dog", "Other", "No")) %>%
+    add_var_random_01("kids") %>%
+    add_var_random_cat("bad_debt", cat = c(0,1,2), prob = c(0.8, 0.15, 0.05)) %>%
+    add_var_random_cat("credit_card", cat = c("Master", "Visa", "Other", "No"), prob = c(0.4, 0.4, 0.1, 0.1)) %>%
+    add_var_random_01("left_handed", prob = c(0.8, 0.2)) %>%
+    add_var_random_cat("skin_color", cat = c("White", "Black", "Brown", "Yellow", "Red"), prob = c(0.75,0.1,0.05,0.09,0.01)) %>%
+    add_var_random_cat("religion", cat = c("Christian", "Muslim", "Other", "No"), prob = c(0.55,0.15,0.10,0.20)) %>%
+    add_var_random_dbl("internet_gb", min_val = 0, max_val = 500, seed = 5)
+
+  # not random correlations
+  data$eye_color <- ifelse(data$skin_color == "White" & stats::runif(nrow(data)) > 0.4, "Blue", data$eye_color)
+  data$eye_color <- ifelse(data$skin_color == "Black" & stats::runif(nrow(data)) > 0.3, "Brown", data$eye_color)
+  data$eye_color <- ifelse(data$skin_color == "Red" & stats::runif(nrow(data)) > 0.1, "Brown", data$eye_color)
+  data$religion <- ifelse(data$skin_color %in% c("Yellow", "Red") & stats::runif(nrow(data)) > 0.2, "Other", data$religion)
+  data$name_arabic <- ifelse(data$religion == "Other" & data$eye_color != "Blue",
+                             sample(0:1, nrow(data), prob = c(0.5,0.5), replace = TRUE),
+                             sample(0:1, nrow(data), prob = c(0.9,0.1), replace = TRUE))
+  data$internet_gb <- data$internet_gb - data$age*3
+  data$internet_gb <- ifelse(data$internet_gb < 0, 0, data$internet_gb)
+  # add target
+  data <- data %>%
+    add_var_random_01(name = "target", prob = c(0.75, 0.25), seed = 1)
+
+  # add pattern for target
+  data$target <- ifelse(data$age <= 20 & data$handset == "Apple" & stats::runif(nrow(data)) > 0.6, 1, data$target)
+  data$target <- ifelse(data$age > 20 & data$age < 70 & data$gender == "Female" & stats::runif(nrow(data)) > 0.6, 0, data$target)
+  data$target <- ifelse(data$age > 75 & stats::runif(nrow(data)) > 0.6, 1, data$target)
+  data$target <- ifelse(data$bad_debt > 0 & stats::runif(nrow(data)) > 0.8, 1, data$target)
+  data$target <- ifelse(data$bad_debt > 1 & stats::runif(nrow(data)) > 0.8, 1, data$target)
+  data$target <- ifelse(data$income < 50 & data$credit_card == "Other" & stats::runif(nrow(data)) > 0.5, 1, data$target)
+  data$target <- ifelse(data$credit_card == "Other" & stats::runif(nrow(data)) > 0.8, 1, data$target)
+  data$target <- as.integer(data$target)
+
+  # return data
+  data
+
+} # create_data_unfair()
+
