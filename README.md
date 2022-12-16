@@ -216,6 +216,9 @@ explore(data)
 data <- create_data_person(obs = 1000)
 explore(data)
 
+data <- create_data_unfair(obs = 1000)
+explore(data)
+
 # create random dataset with 100 observarions and 5 random variables
 # and explore it
 data <- create_data_random(obs = 100, vars = 5)

@@ -1,7 +1,8 @@
 ## explore 1.0.1 (dev)
 
-* Switch back to %>% in vignettes (compatibility)
+* Switch back to %>% in vignettes (compatibility R < 4.1)
 * No hard coded path for markdown-templates
+* Add create_data_unfair()
 
 ## explore 1.0.0 (2022-11-11)
 
