@@ -3,6 +3,7 @@
 * Switch back to %>% in vignettes (compatibility R < 4.1)
 * No hard coded path for markdown-templates
 * Add create_data_unfair()
+* Add screen_size to create_data_app()
 
 ## explore 1.0.0 (2022-11-11)
 

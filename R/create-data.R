@@ -254,7 +254,8 @@ create_data_app = function(obs = 1000,
     add_var_random_int("downloads", min_val = 0, max_val = 7500) %>%
     add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) %>%
     add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) %>%
-    add_var_random_int("updates", min_val = 0, max_val = 100)
+    add_var_random_int("updates", min_val = 0, max_val = 100) %>%
+    add_var_random_int("screen_sizes", min_val = 1, max_val = 5)
 
   set.seed(123) # to make it reproducible
 
@@ -278,6 +279,41 @@ create_data_app = function(obs = 1000,
   data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
                            data$downloads + ifelse(data$type == "Games", stats::runif(nrow(data)) * size, 0),
                            data$downloads)
+
+  # add effect os=iOS
+  data$rating <- ifelse(data$os == "iOS" & data$rating == 1 & stats::runif(nrow(data)) > 0.6,
+                           5,
+                           data$rating)
+  data$downloads <- ifelse(data$os == "Android",
+                           data$downloads * 1.3,
+                           data$downloads)
+
+
+  # add effect os=Other
+  data$downloads <- ifelse(data$os == "Other",
+                           data$downloads/2,
+                           data$downloads)
+  data$updates <- ifelse(data$os == "Other",
+                           data$updates/3,
+                           data$updates)
+  data$rating <- ifelse(data$os == "Other" & data$rating >= 3 & stats::runif(nrow(data)) > 0.3,
+                        1,
+                        data$rating)
+
+  # add effect iOS screen-size <= 2 (iOs/iPad)
+  data$screen_sizes <- ifelse(data$os == "iOS" & data$screen_sizes > 2,
+                              2,
+                              data$screen_size)
+
+  # add effect Other screen-size
+  data$screen_sizes <- ifelse(data$os == "Android" & data$screen_sizes == 1 & stats::runif(nrow(data)) > 0.2,
+                              3,
+                              data$screen_size)
+
+  # add effect Other screen-size
+  data$screen_sizes <- ifelse(data$os == "Other" & data$screen_sizes > 1,
+                              1,
+                              data$screen_size)
 
   # make downloads int again
   data$downloads <- as.integer(data$downloads)

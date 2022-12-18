@@ -1260,9 +1260,7 @@ explore_shiny <- function(data, target)  {
 
         # report target with percent
       } else {
-        input_file <- ifelse(run_explore_package,
-                             system.file("extdata", "template_report_target_pct.Rmd", package="explore"),
-                             "C:/R/template_report_target_pct.Rmd")
+        input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
       }
 
