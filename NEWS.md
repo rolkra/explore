@@ -1,4 +1,4 @@
-## explore 1.0.1 (dev)
+## explore 1.0.1 (2022-12-20)
 
 * Switch back to %>% in vignettes (compatibility R < 4.1)
 * No hard coded path for markdown-templates

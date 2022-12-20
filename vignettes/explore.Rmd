@@ -271,6 +271,7 @@ Use one of the prepared datasets to explore:
 * create_data_buy()
 * Create_data_churn()
 * create_data_person()
+* create_data_unfair()
 * create_data_random()
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}

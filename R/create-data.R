@@ -306,7 +306,7 @@ create_data_app = function(obs = 1000,
                               data$screen_size)
 
   # add effect Other screen-size
-  data$screen_sizes <- ifelse(data$os == "Android" & data$screen_sizes == 1 & stats::runif(nrow(data)) > 0.2,
+  data$screen_sizes <- ifelse(data$os == "Android" & data$screen_sizes <= 2 & stats::runif(nrow(data)) > 0.2,
                               3,
                               data$screen_size)
 
@@ -501,7 +501,7 @@ create_data_unfair = function(obs = 1000,
   set.seed(seed)
 
   # start with data_person
-  data <- create_data_person(obs = obs, add_id = add_id)
+  data <- create_data_person(obs = obs, add_id = add_id, seed = seed)
   data$favorite_pizza <- NULL
   data$favorite_icecream <- NULL
   data$likes_beer <- NULL
