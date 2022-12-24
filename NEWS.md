@@ -1,3 +1,7 @@
+## explore 1.0.2 (develop)
+
+* add_var_random_01() creates variable with type integer
+
 ## explore 1.0.1 (2022-12-20)
 
 * Switch back to %>% in vignettes (compatibility R < 4.1)

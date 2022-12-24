@@ -77,7 +77,7 @@ add_var_random_01 <- function(data, name = "random_01", prob = c(0.5, 0.5), over
 
   data <- add_var_random_cat(data,
                              name = name,
-                             cat = c(0, 1),
+                             cat = c(0L, 1L),
                              prob = prob,
                              overwrite = overwrite,
                              seed = seed)
