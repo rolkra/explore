@@ -23,7 +23,7 @@ create_data_buy(
 \item{factorise_target}{Should target variable be factorised?
 (from 0/1 to facotr no/yes)?}
 
-\item{target1_prob}{Probability that buy = 1}
+\item{target1_prob}{Probability that target = 1}
 
 \item{add_extreme}{Add an obervation with extreme values?}
 

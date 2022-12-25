@@ -24,7 +24,7 @@ create_data_random(
 \item{factorise_target}{Should target variable be factorised?
 (from 0/1 to facotr no/yes)?}
 
-\item{target1_prob}{Probability that buy = 1}
+\item{target1_prob}{Probability that target = 1}
 
 \item{add_id}{Add an id-variable to data?}
 
