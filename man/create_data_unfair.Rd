@@ -4,10 +4,20 @@
 \alias{create_data_unfair}
 \title{Create data unfair}
 \usage{
-create_data_unfair(obs = 1000, add_id = FALSE, seed = 123)
+create_data_unfair(
+  obs = 1000,
+  target_name = "target_ind",
+  factorise_target = FALSE,
+  add_id = FALSE,
+  seed = 123
+)
 }
 \arguments{
 \item{obs}{Number of observations}
+
+\item{target_name}{Variable name of target}
+
+\item{factorise_target}{Should target variable be factorised?}
 
 \item{add_id}{Add an id-variable to data?}
 

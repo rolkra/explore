@@ -227,112 +227,13 @@ create_data_buy = function(obs = 1000,
 } # create_data_buy
 
 
-#' Create data app
-#'
-#' Artificial data that can be used for unit-testing or teaching
-#'
-#' @param obs Number of observations
-#' @param add_id Add an id-variable to data?
-#' @param seed Seed for randomization (integer)
-#'
-#' @return A dataframe
-#' @export
-
-create_data_app = function(obs = 1000,
-                           add_id = FALSE,
-                           seed = 123) {
-
-  # set seed (randomization)
-  set.seed(seed)
-
-  data <- create_data_empty(obs = obs) %>%
-    add_var_id(name = "id")
-
-  data <- data %>%
-    add_var_random_cat("os", c("iOS", "Android", "Other"), prob = c(0.4, 0.5, 0.1)) %>%
-    add_var_random_01("free", prob = c(0.4, 0.6)) %>%
-    add_var_random_int("downloads", min_val = 0, max_val = 7500) %>%
-    add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) %>%
-    add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) %>%
-    add_var_random_int("updates", min_val = 0, max_val = 100) %>%
-    add_var_random_int("screen_sizes", min_val = 1, max_val = 5)
-
-  set.seed(123) # to make it reproducible
-
-  # add effect free
-  prob <- 0.7
-  size <- 5000
-  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
-                           data$downloads + (data$free * stats::runif(nrow(data)) * size),
-                           data$downloads)
-
-  # add effect rating
-  prob <- 0.8
-  size <- 1000
-  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
-                           data$downloads + (data$rating * stats::runif(nrow(data)) * size),
-                           data$downloads)
-
-  # add effect type=GAME
-  prob <- 0.4
-  size <- 3000
-  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
-                           data$downloads + ifelse(data$type == "Games", stats::runif(nrow(data)) * size, 0),
-                           data$downloads)
-
-  # add effect os=iOS
-  data$rating <- ifelse(data$os == "iOS" & data$rating == 1 & stats::runif(nrow(data)) > 0.6,
-                           5,
-                           data$rating)
-  data$downloads <- ifelse(data$os == "Android",
-                           data$downloads * 1.3,
-                           data$downloads)
-
-
-  # add effect os=Other
-  data$downloads <- ifelse(data$os == "Other",
-                           data$downloads/2,
-                           data$downloads)
-  data$updates <- ifelse(data$os == "Other",
-                           data$updates/3,
-                           data$updates)
-  data$rating <- ifelse(data$os == "Other" & data$rating >= 3 & stats::runif(nrow(data)) > 0.3,
-                        1,
-                        data$rating)
-
-  # add effect iOS screen-size <= 2 (iOs/iPad)
-  data$screen_sizes <- ifelse(data$os == "iOS" & data$screen_sizes > 2,
-                              2,
-                              data$screen_size)
-
-  # add effect Other screen-size
-  data$screen_sizes <- ifelse(data$os == "Android" & data$screen_sizes <= 2 & stats::runif(nrow(data)) > 0.2,
-                              3,
-                              data$screen_size)
-
-  # add effect Other screen-size
-  data$screen_sizes <- ifelse(data$os == "Other" & data$screen_sizes > 1,
-                              1,
-                              data$screen_size)
-
-  # make downloads int again
-  data$downloads <- as.integer(data$downloads)
-
-  # add id?
-  if (!add_id)  {
-    data$id <- NULL
-  }
-
-  # return data
-  data
-
-} # create_data_app
-
 #' Create data churn
 #'
 #' Artificial data that can be used for unit-testing or teaching
 #'
 #' @param obs Number of observations
+#' @param target_name Variable name of target
+#' @param factorise_target Should target variable be factorised?
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
@@ -340,6 +241,8 @@ create_data_app = function(obs = 1000,
 #' @export
 
 create_data_churn = function(obs = 1000,
+                             target_name = "churn",
+                             factorise_target = FALSE,
                              add_id = FALSE,
                              seed = 123) {
 
@@ -398,6 +301,18 @@ create_data_churn = function(obs = 1000,
   change <- stats::runif(nrow(data)) <= prob &
     data$shared == 1
   data$churn[change] <- 0
+
+  # factorise target?
+  if (factorise_target) {
+    data$churn <- factor(data$churn,
+                              levels = c(0, 1),
+                              labels = c("no", "yes"))
+  }
+
+  # rename target?
+  if (target_name != "churn") {
+    names(data)[[grep("churn", names(data))]] <- target_name
+  }
 
   # add id?
   if (!add_id)  {
@@ -461,7 +376,7 @@ create_data_random = function(obs = 1000, vars = 10,
 
   # factorise target?
   if (factorise_target) {
-    data$buy <- factor(data$buy,
+    data$target_ind <- factor(data$target_ind,
                        levels = c(0, 1),
                        labels = c("no", "yes"))
   }
@@ -487,6 +402,8 @@ create_data_random = function(obs = 1000, vars = 10,
 #' Artificial data that can be used for unit-testing or teaching
 #' (fairness & AI bias)
 #' @param obs Number of observations
+#' @param target_name Variable name of target
+#' @param factorise_target Should target variable be factorised?
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
@@ -494,6 +411,8 @@ create_data_random = function(obs = 1000, vars = 10,
 #' @export
 
 create_data_unfair = function(obs = 1000,
+                              target_name = "target_ind",
+                              factorise_target = FALSE,
                               add_id = FALSE,
                               seed = 123) {
 
@@ -549,8 +468,122 @@ create_data_unfair = function(obs = 1000,
   data$target <- ifelse(data$credit_card == "Other" & stats::runif(nrow(data)) > 0.8, 1, data$target)
   data$target <- as.integer(data$target)
 
+  # factorise target?
+  if (factorise_target) {
+    data$target <- factor(data$target,
+                              levels = c(0, 1),
+                              labels = c("no", "yes"))
+  }
+
+  # rename target?
+  if (target_name != "target") {
+    data[[target_name]] <- data$target
+    data$target <- NULL
+  }
+
   # return data
   data
 
 } # create_data_unfair()
+
+#' Create data app
+#'
+#' Artificial data that can be used for unit-testing or teaching
+#'
+#' @param obs Number of observations
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization (integer)
+#'
+#' @return A dataframe
+#' @export
+
+create_data_app = function(obs = 1000,
+                           add_id = FALSE,
+                           seed = 123) {
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  data <- create_data_empty(obs = obs) %>%
+    add_var_id(name = "id")
+
+  data <- data %>%
+    add_var_random_cat("os", c("iOS", "Android", "Other"), prob = c(0.4, 0.5, 0.1)) %>%
+    add_var_random_01("free", prob = c(0.4, 0.6)) %>%
+    add_var_random_int("downloads", min_val = 0, max_val = 7500) %>%
+    add_var_random_cat("rating", c(1L,2L,3L,4L,5L), prob = c(0.15, 0.1, 0.05, 0.5, 0.2)) %>%
+    add_var_random_cat("type", c("Games", "Connect", "Work", "Learn", "Media", "Shopping", "Tools", "Kids", "Travel", "Other"), prob = c(0.15,0.05,0.05,0.1,0.1,0.1,0.1,0.1,0.1,0.15)) %>%
+    add_var_random_int("updates", min_val = 0, max_val = 100) %>%
+    add_var_random_int("screen_sizes", min_val = 1, max_val = 5)
+
+  set.seed(123) # to make it reproducible
+
+  # add effect free
+  prob <- 0.7
+  size <- 5000
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + (data$free * stats::runif(nrow(data)) * size),
+                           data$downloads)
+
+  # add effect rating
+  prob <- 0.8
+  size <- 1000
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + (data$rating * stats::runif(nrow(data)) * size),
+                           data$downloads)
+
+  # add effect type=GAME
+  prob <- 0.4
+  size <- 3000
+  data$downloads <- ifelse(stats::runif(nrow(data)) <= prob,
+                           data$downloads + ifelse(data$type == "Games", stats::runif(nrow(data)) * size, 0),
+                           data$downloads)
+
+  # add effect os=iOS
+  data$rating <- ifelse(data$os == "iOS" & data$rating == 1 & stats::runif(nrow(data)) > 0.6,
+                        5,
+                        data$rating)
+  data$downloads <- ifelse(data$os == "Android",
+                           data$downloads * 1.3,
+                           data$downloads)
+
+
+  # add effect os=Other
+  data$downloads <- ifelse(data$os == "Other",
+                           data$downloads/2,
+                           data$downloads)
+  data$updates <- ifelse(data$os == "Other",
+                         data$updates/3,
+                         data$updates)
+  data$rating <- ifelse(data$os == "Other" & data$rating >= 3 & stats::runif(nrow(data)) > 0.3,
+                        1,
+                        data$rating)
+
+  # add effect iOS screen-size <= 2 (iOs/iPad)
+  data$screen_sizes <- ifelse(data$os == "iOS" & data$screen_sizes > 2,
+                              2,
+                              data$screen_size)
+
+  # add effect Other screen-size
+  data$screen_sizes <- ifelse(data$os == "Android" & data$screen_sizes <= 2 & stats::runif(nrow(data)) > 0.2,
+                              3,
+                              data$screen_size)
+
+  # add effect Other screen-size
+  data$screen_sizes <- ifelse(data$os == "Other" & data$screen_sizes > 1,
+                              1,
+                              data$screen_size)
+
+  # make downloads int again
+  data$downloads <- as.integer(data$downloads)
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
+  }
+
+  # return data
+  data
+
+} # create_data_app
 

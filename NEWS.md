@@ -1,6 +1,7 @@
 ## explore 1.0.2 (develop)
 
 * add_var_random_01() creates variable of type integer
+* add target_name & factorise_target parameter to more create_data_*()
 
 ## explore 1.0.1 (2022-12-20)
 

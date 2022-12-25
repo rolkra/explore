@@ -82,6 +82,14 @@ test_that("add_var_random_01()", {
   )
 })
 
+# new variable is type of integer
+test_that("add_var_random_01()", {
+  expect_equal(
+    is.integer(add_var_random_01(iris, name = "new")[["new"]]),
+    TRUE
+  )
+})
+
 # add_var_random_int ------------------------------------------------------
 
 # add new random variable called "random_int"

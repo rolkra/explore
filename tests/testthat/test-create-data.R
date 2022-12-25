@@ -125,6 +125,15 @@ test_that("create_data_churn()", {
   )
 })
 
+# create dataset with target as factor
+test_that("create_data_churn()", {
+  d <- create_data_churn(obs = 100, target_name = "target", factorise_target = TRUE)
+  expect_equal(
+    is.factor(d$target),
+    TRUE
+  )
+})
+
 # create data random ------------------------------------------------------
 
 # create dataset with obs
@@ -151,6 +160,15 @@ test_that("create_data_random()", {
   )
 })
 
+# create dataset with target as factor
+test_that("create_data_random()", {
+  d <- create_data_random(obs = 100, target_name = "target", factorise_target = TRUE)
+  expect_equal(
+    is.factor(d$target),
+    TRUE
+  )
+})
+
 # create data unfair ------------------------------------------------------
 
 # create dataset with obs
@@ -174,5 +192,14 @@ test_that("create_data_unfair()", {
   expect_true(
     ncol(create_data_churn(obs = 100, add_id = TRUE)) ==
       ncol(create_data_churn(obs = 100, add_id = FALSE)) + 1
+  )
+})
+
+# create dataset with target as factor
+test_that("create_data_unfair()", {
+  d <- create_data_churn(obs = 100, target_name = "target", factorise_target = TRUE)
+  expect_equal(
+    is.factor(d$target),
+    TRUE
   )
 })

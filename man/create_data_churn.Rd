@@ -4,10 +4,20 @@
 \alias{create_data_churn}
 \title{Create data churn}
 \usage{
-create_data_churn(obs = 1000, add_id = FALSE, seed = 123)
+create_data_churn(
+  obs = 1000,
+  target_name = "churn",
+  factorise_target = FALSE,
+  add_id = FALSE,
+  seed = 123
+)
 }
 \arguments{
 \item{obs}{Number of observations}
+
+\item{target_name}{Variable name of target}
+
+\item{factorise_target}{Should target variable be factorised?}
 
 \item{add_id}{Add an id-variable to data?}
 
