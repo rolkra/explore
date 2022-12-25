@@ -2,21 +2,34 @@
 #'
 #' @param obs Number of observations
 #' @param add_id Add an id
+#' @param seed Seed for randomization (integer)
 #' @return Dataset
 #' @examples
 #' create_data_empty()
 #' @export
 
-create_data_empty <- function(obs = 1000, add_id = FALSE) {
+create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
+
+  # reproducible random numbers
+  set.seed(seed)
+
+  # create empty data frame
   data <- data.frame(
     row.names = seq(1, obs)
   )
 
+  # add if
   if (add_id)  {
     data[["id"]] <- seq(1, obs)
   }
 
+  # return data
   data
 
 } # create_data_empty
@@ -34,6 +47,12 @@ create_data_empty <- function(obs = 1000, add_id = FALSE) {
 #' @export
 
 create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
+
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
 
   # reproducible random numbers
   set.seed(seed)
@@ -131,6 +150,12 @@ create_data_buy = function(obs = 1000,
                            flip_gender = FALSE,
                            add_id = FALSE,
                            seed = 123) {
+
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
 
   # define variables for CRAN-package check
   target_ind <- NULL
@@ -246,6 +271,12 @@ create_data_churn = function(obs = 1000,
                              add_id = FALSE,
                              seed = 123) {
 
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
+
   # set seed (randomization)
   set.seed(seed)
 
@@ -354,6 +385,11 @@ create_data_random = function(obs = 1000, vars = 10,
                               target1_prob = 0.5,
                               add_id = TRUE,
                               seed = 123) {
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
 
   # set seed (randomization)
   set.seed(seed)
@@ -415,6 +451,11 @@ create_data_unfair = function(obs = 1000,
                               factorise_target = FALSE,
                               add_id = FALSE,
                               seed = 123) {
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
 
   # set seed (randomization)
   set.seed(seed)
@@ -500,6 +541,11 @@ create_data_unfair = function(obs = 1000,
 create_data_app = function(obs = 1000,
                            add_id = FALSE,
                            seed = 123) {
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
 
   # set seed (randomization)
   set.seed(seed)

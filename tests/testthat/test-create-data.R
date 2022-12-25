@@ -3,13 +3,19 @@ library(explore)
 
 # create_data_empty -------------------------------------------------------
 
-# create empty dataset
+# create empty dataset with obs
 test_that("create_data_empty()", {
   expect_equal(
     dim(create_data_empty(obs = 100)),
     c(100, 0)
   )
 })
+
+# error if obs < 1
+test_that("create_data_empty()", {
+  expect_error(create_data_empty(obs = -1))
+})
+
 
 # create data buy ---------------------------------------------------------
 
@@ -19,6 +25,11 @@ test_that("create_data_buy()", {
     nrow(create_data_buy(obs = 100)),
     100
   )
+})
+
+# error if obs < 1
+test_that("create_data_buy()", {
+  expect_error(create_data_buy(obs = -1))
 })
 
 # create dataset with target as factor
@@ -57,6 +68,11 @@ test_that("create_data_person()", {
   )
 })
 
+# error if obs < 1
+test_that("create_data_person()", {
+  expect_error(create_data_person(obs = -1))
+})
+
 # create dataset is reproducible when using the same seed
 test_that("create_data_person()", {
   expect_equal(
@@ -83,6 +99,11 @@ test_that("create_data_app()", {
   )
 })
 
+# error if obs < 1
+test_that("create_data_app()", {
+  expect_error(create_data_app(obs = -1))
+})
+
 # create dataset is reproducible when using the same seed
 test_that("create_data_app()", {
   expect_equal(
@@ -107,6 +128,11 @@ test_that("create_data_churn()", {
     nrow(create_data_churn(obs = 100)),
     100
   )
+})
+
+# error if obs < 1
+test_that("create_data_churn()", {
+  expect_error(create_data_churn(obs = -1))
 })
 
 # create dataset is reproducible when using the same seed
@@ -144,6 +170,11 @@ test_that("create_data_random()", {
   )
 })
 
+# error if obs < 1
+test_that("create_data_random()", {
+  expect_error(create_data_random(obs = -1))
+})
+
 # create dataset is reproducible when using the same seed
 test_that("create_data_random()", {
   expect_equal(
@@ -177,6 +208,11 @@ test_that("create_data_unfair()", {
     nrow(create_data_churn(obs = 100)),
     100
   )
+})
+
+# error if obs < 1
+test_that("create_data_unfair()", {
+  expect_error(create_data_unfair(obs = -1))
 })
 
 # create dataset is reproducible when using the same seed
