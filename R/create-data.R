@@ -466,86 +466,6 @@ create_data_churn = function(obs = 1000,
 
 } # create_data_churn
 
-
-#' Create data random
-#'
-#' Random data that can be used for unit-testing or teaching
-#'
-#' Variables in dataset:
-#' * id = Identifier
-#' * var_X = variable containing values between 0 and 100
-#'
-#' Target in dataset:
-#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
-#'
-#' @param obs Number of observations
-#' @param vars Number of variables
-#' @param target_name Variable name of target
-#' @param factorise_target Should target variable be factorised?
-#' (from 0/1 to facotr no/yes)?
-#' @param target1_prob Probability that target = 1
-#' @param add_id Add an id-variable to data?
-#' @param seed Seed for randomization
-#'
-#' @return A dataframe
-#' @export
-
-create_data_random = function(obs = 1000, vars = 10,
-                              target_name = "target_ind",
-                              factorise_target = FALSE,
-                              target1_prob = 0.5,
-                              add_id = TRUE,
-                              seed = 123) {
-  # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.numeric(target1_prob))
-  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
-
-  # set seed (randomization)
-  set.seed(seed)
-
-  # create basic dataset
-  data <- data.frame(
-    id = seq(from = 1, to = obs),
-    target_ind = sample(c(0L, 1L),
-                        obs,
-                        prob = c(1 - target1_prob, target1_prob),
-                        replace = TRUE)
-  )
-
-  # add features
-  for (i in seq_len(vars)) {
-    data[[paste0("var_",i)]] <- as.integer(
-      round(stats::runif(obs)*100,0))
-  }
-
-
-  # factorise target?
-  if (factorise_target) {
-    data$target_ind <- factor(data$target_ind,
-                       levels = c(0, 1),
-                       labels = c("no", "yes"))
-  }
-
-  # rename target?
-  if (target_name != "target_ind") {
-    data[[target_name]] <- data$target_ind
-    data$target_ind <- NULL
-  }
-
-  # add id?
-  if (!add_id)  {
-    data$id <- NULL
-  }
-
-  # return data
-  data
-
-} # create_data_random
-
 #' Create data unfair
 #'
 #' Artificial data that can be used for unit-testing or teaching
@@ -644,4 +564,82 @@ create_data_unfair = function(obs = 1000,
 
 } # create_data_unfair()
 
+#' Create data random
+#'
+#' Random data that can be used for unit-testing or teaching
+#'
+#' Variables in dataset:
+#' * id = Identifier
+#' * var_X = variable containing values between 0 and 100
+#'
+#' Target in dataset:
+#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
+#'
+#' @param obs Number of observations
+#' @param vars Number of variables
+#' @param target_name Variable name of target
+#' @param factorise_target Should target variable be factorised?
+#' (from 0/1 to facotr no/yes)?
+#' @param target1_prob Probability that target = 1
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization
+#'
+#' @return A dataframe
+#' @export
+
+create_data_random = function(obs = 1000, vars = 10,
+                              target_name = "target_ind",
+                              factorise_target = FALSE,
+                              target1_prob = 0.5,
+                              add_id = TRUE,
+                              seed = 123) {
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.numeric(target1_prob))
+  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
+
+  # set seed (randomization)
+  set.seed(seed)
+
+  # create basic dataset
+  data <- data.frame(
+    id = seq(from = 1, to = obs),
+    target_ind = sample(c(0L, 1L),
+                        obs,
+                        prob = c(1 - target1_prob, target1_prob),
+                        replace = TRUE)
+  )
+
+  # add features
+  for (i in seq_len(vars)) {
+    data[[paste0("var_",i)]] <- as.integer(
+      round(stats::runif(obs)*100,0))
+  }
+
+
+  # factorise target?
+  if (factorise_target) {
+    data$target_ind <- factor(data$target_ind,
+                              levels = c(0, 1),
+                              labels = c("no", "yes"))
+  }
+
+  # rename target?
+  if (target_name != "target_ind") {
+    data[[target_name]] <- data$target_ind
+    data$target_ind <- NULL
+  }
+
+  # add id?
+  if (!add_id)  {
+    data$id <- NULL
+  }
+
+  # return data
+  data
+
+} # create_data_random
 
