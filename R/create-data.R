@@ -226,7 +226,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' * fixeddata_ind = Customer has a fixed data product (1 = yes, 0 = no)
 #' * fixedtv_ind = Customer has a fixed tv product (1 = yes, 0 = no)
 #' * mobilevoice_ind = Customer has a mobile voice product (1 = yes, 0 = no)
-#' * mobiledata_ind = Customer has a mobile data product (1 = yes, 0 = no)
+#' * mobiledata_prd = Customer has a mobile data product (NO/MOBILE STICK/BUSINESS)
 #' * bbi_speed_ind = Customer has a Broadband Internet (BBI) with extra speed
 #' * bbi_usg_gb = Broadband Internet (BBI) usage in Gigabyte (GB) last month
 #' * hh_single = Expected to be a Single Household (1 = yes, 0 = no)
@@ -308,7 +308,7 @@ create_data_buy = function(obs = 1000,
                            sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.8, 0.2))
       ),
       mobilevoice_ind = sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.4, 0.6)),
-      mobiledata_ind = sample(c("NO","MOBILE STICK", "BUSINESS"), obs, replace = TRUE, prob = c(0.5, 0.3, 0.2)),
+      mobiledata_prd = sample(c("NO","MOBILE STICK", "BUSINESS"), obs, replace = TRUE, prob = c(0.5, 0.3, 0.2)),
       bbi_speed_ind = ifelse(age > 60,
                              sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.9, 0.1)),
                              sample(c(0L, 1L), obs, replace = TRUE, prob = c(0.2, 0.8))

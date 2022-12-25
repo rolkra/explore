@@ -5,6 +5,7 @@
 * add target1_prob parameter to more create_data_*()
 * add checks to create_data_*()
 * format variable random_moon
+* add abtest()
 
 ## explore 1.0.1 (2022-12-20)
 
