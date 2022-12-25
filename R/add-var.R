@@ -199,7 +199,7 @@ add_var_random_dbl <- function(data, name = "random_dbl",
 add_var_random_moon <- function(data, name = "random_moon", overwrite = TRUE, seed) {
 
   # add starsign
-  moons <- c("New ( )   ", "Waxing  (+)", "Full (O)", "Waning  (-) ")
+  moons <- c("New ( )", "Waxing (+)", "Full (O)", "Waning (-) ")
   data <- add_var_random_cat(data,
                              cat = moons,
                              name = name,
