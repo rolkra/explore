@@ -4,7 +4,7 @@
 #' @param expr Expression, that results in a FALSE/TRUE
 #' @param target Target variable (must be 0/1 or FALSE/TRUE)
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
-#' @return Is difference significant? (FALSE/TRUE)
+#' @return Plot that shows if difference is significant
 #' @examples
 #' data <- create_data_buy(obs = 100)
 #' abtest(data, female_ind == 1, target = buy)
@@ -39,7 +39,7 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
       target1_pct = mean({{target}})
     )
 
-  print(data_ab)
+  # print(data_ab)
 
   if (nrow (data_ab) < 2) {
     cat("Expression does not generate 2 groups (A/B)\n")
@@ -47,6 +47,7 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   }
 
   # slice A/B groups
+  expression_txt <- names(data_ab)[1]
   names(data_ab)[1] <- "expression"
   a_grp <- data_ab %>% dplyr::filter(expression == TRUE)
   b_grp <- data_ab %>% dplyr::filter(expression == FALSE)
@@ -70,7 +71,30 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
     result_lgl <- FALSE
   }
 
-  cat(result_txt, "\n")
-  result_lgl
+  # cat(result_txt, "\n")
+
+  # plot result
+  p <- data_ab |>
+    ggplot2::ggplot(ggplot2::aes(x = expression, y = target1_pct)) +
+    ggplot2::geom_col(fill = "lightgrey") +
+    ggplot2::geom_text(ggplot2::aes(
+      label = round(target1_pct, 2),
+      vjust = ifelse(target1_pct == 0, 0, 1.2)
+    ), position = "stack", size = 3) +
+    ggplot2::geom_hline(yintercept = data_ab$target1_pct, alpha = 0.3, linetype = "dashed") +
+    ggplot2::labs(
+      title = "A/B test (Chi2)",
+      subtitle = result_txt,
+      y = "% target",
+      x = expression_txt
+    ) +
+    ggplot2::ylim(c(0, max(data_ab$target1_pct) * 1.1)) +
+    ggplot2::theme(
+      panel.background = ggplot2::element_rect("white"),
+      panel.grid.major = ggplot2::element_line("grey85"),
+      panel.grid.minor = ggplot2::element_line("grey85"),
+      panel.border = ggplot2::element_rect(fill = NA, color = "lightgrey"))
+
+  p
 
 } # abtest

@@ -16,7 +16,7 @@ abtest(data, expr, target, sign_level = 0.05)
 \item{sign_level}{Significance Level (typical 0.01/0.05/0.10)}
 }
 \value{
-Is difference significant? (FALSE/TRUE)
+Plot that shows if difference is significant
 }
 \description{
 A/B testing
