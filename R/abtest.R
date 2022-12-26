@@ -36,7 +36,7 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
     dplyr::summarise(
       n = dplyr::n(),
       target1_sum = sum({{target}}),
-      target1_pct = mean({{target}})
+      target1_pct = mean({{target}} * 100)
     )
 
   # print(data_ab)
