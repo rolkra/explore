@@ -1082,12 +1082,12 @@ explore_tbl <- function(data, n)  {
   n_var <- nrow(d)
 
   # prepare bars
-  bar <- d |>
+  bar <- d %>%
     mutate(group = case_when(
       na > 0 ~ "with NA",
       unique == 1 ~ "no variance",
       TRUE ~ "ok"
-    )) |>
+    )) %>%
     count(type, group)
 
   bar$group <- factor(
@@ -1095,10 +1095,10 @@ explore_tbl <- function(data, n)  {
     levels = c("with NA", "no variance", "ok"),
     ordered = TRUE)
 
-  bar_all = bar |>
-    group_by(group) |>
-    summarise(n = sum(n)) |>
-    ungroup() |>
+  bar_all = bar %>%
+    group_by(group) %>%
+    summarise(n = sum(n)) %>%
+    ungroup() %>%
     mutate(type = "variables (all)")
 
   # prepare plot

@@ -6,6 +6,7 @@
 * add checks to create_data_*()
 * format variable random_moon
 * add abtest()
+* remove native pipe in explore_tbl()
 
 ## explore 1.0.1 (2022-12-20)
 

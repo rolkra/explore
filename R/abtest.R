@@ -61,12 +61,12 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   # result text
   if (result$p.value <= sign_level)  {
     result_txt <- paste0(
-      "significant, p value = ", round(result$p.value, 2),
+      "SIGNIFICANT, p value = ", round(result$p.value, 2),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- TRUE
   } else  {
     result_txt <- paste0(
-      "not significant, p value = ", round(result$p.value, 2),
+      "NOT significant, p value = ", round(result$p.value, 2),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- FALSE
   }
