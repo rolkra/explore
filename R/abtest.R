@@ -74,7 +74,7 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   # cat(result_txt, "\n")
 
   # plot result
-  p <- data_ab |>
+  p <- data_ab %>%
     ggplot2::ggplot(ggplot2::aes(x = expression, y = target1_pct)) +
     ggplot2::geom_col(fill = "lightgrey") +
     ggplot2::geom_text(ggplot2::aes(
