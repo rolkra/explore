@@ -94,7 +94,7 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
     ggplot2::geom_col(fill = "lightgrey") +
     ggplot2::geom_hline(yintercept = data_ab$target1_pct, alpha = 0.3, linetype = "dashed") +
     ggplot2::geom_text(ggplot2::aes(
-      label = paste("n =", n, "\n", "target =", target1_sum)
+      label = paste("n =", format_num_space(n), "\n", "target =", format_num_space(target1_sum))
     ), position = ggplot2::position_stack(vjust = 0.5),
     size = 3, color = "white") +
     ggplot2::geom_text(ggplot2::aes(
