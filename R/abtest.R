@@ -39,24 +39,39 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
       target1_pct = mean({{target}} * 100)
     )
 
-  # print(data_ab)
-
+  # return if less than 2 groups!
   if (nrow (data_ab) < 2) {
     cat("Expression does not generate 2 groups (A/B)\n")
     return(NA)
   }
 
-  # slice A/B groups
+  # rename expression
   expression_txt <- names(data_ab)[1]
   names(data_ab)[1] <- "expression"
+
+  # slice A/B groups
   a_grp <- data_ab %>% dplyr::filter(expression == TRUE)
   b_grp <- data_ab %>% dplyr::filter(expression == FALSE)
 
+  m <- matrix(c(
+    a_grp$target1_sum, b_grp$target1_sum,
+    a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2)
+
   # test for significance
-  result <- chisq.test(
-    matrix(c(
-      a_grp$target1_sum, b_grp$target1_sum,
-      a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2))
+  if (any(m <= 5)) {
+    test_used <- "Fisher's Exact"
+    result <- fisher.test(
+      matrix(c(
+        a_grp$target1_sum, b_grp$target1_sum,
+        a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2))
+
+  } else {
+    test_used <- "Chi2"
+    result <- chisq.test(
+      matrix(c(
+        a_grp$target1_sum, b_grp$target1_sum,
+        a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2))
+  }
 
   # result text
   if (result$p.value <= sign_level)  {
@@ -77,15 +92,19 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   p <- data_ab %>%
     ggplot2::ggplot(ggplot2::aes(x = expression, y = target1_pct)) +
     ggplot2::geom_col(fill = "lightgrey") +
+    ggplot2::geom_hline(yintercept = data_ab$target1_pct, alpha = 0.3, linetype = "dashed") +
+    ggplot2::geom_text(ggplot2::aes(
+      label = paste("n =", n, "\n", "target =", target1_sum)
+    ), position = ggplot2::position_stack(vjust = 0.5),
+    size = 3, color = "white") +
     ggplot2::geom_text(ggplot2::aes(
       label = round(target1_pct, 2),
       vjust = ifelse(target1_pct == 0, 0, 1.2)
     ), position = "stack", size = 3) +
-    ggplot2::geom_hline(yintercept = data_ab$target1_pct, alpha = 0.3, linetype = "dashed") +
     ggplot2::labs(
-      title = "A/B test (Chi2)",
+      title = paste0("A/B test (", test_used, ")"),
       subtitle = result_txt,
-      y = "% target",
+      y = paste0("% target (", target_txt, ")"),
       x = expression_txt
     ) +
     ggplot2::ylim(c(0, max(data_ab$target1_pct) * 1.1)) +
