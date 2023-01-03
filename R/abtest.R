@@ -91,8 +91,10 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   # plot result
   p <- data_ab %>%
     ggplot2::ggplot(ggplot2::aes(x = expression, y = target1_pct)) +
-    ggplot2::geom_col(fill = "lightgrey") +
-    ggplot2::geom_hline(yintercept = data_ab$target1_pct, alpha = 0.3, linetype = "dashed") +
+    ggplot2::geom_col(fill = "grey") +
+    ggplot2::geom_hline(
+      yintercept = data_ab$target1_pct, alpha = 0.3,
+      linetype = "dashed", color = "black") +
     ggplot2::geom_text(ggplot2::aes(
       label = paste("n =", format_num_space(n), "\n", "target =", format_num_space(target1_sum))
     ), position = ggplot2::position_stack(vjust = 0.5),
