@@ -586,8 +586,10 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
   # mean
   show_mean_var <- FALSE
   if (is.na(min_val) & is.na(max_val) & missing(target)) {
-    mean_var <- mean(data[[var_txt]])
-    show_mean_var <- TRUE
+    mean_var <- mean(data[[var_txt]], na.rm = TRUE)
+    if (!is.na(mean_var)) {
+     show_mean_var <- TRUE
+    }
   }
 
   # count NA

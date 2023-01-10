@@ -7,6 +7,7 @@
 * format variable random_moon
 * add abtest()
 * remove native pipe in explore_tbl()
+* fix error in explore() median if NA values
 
 ## explore 1.0.1 (2022-12-20)
 
