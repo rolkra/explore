@@ -5,6 +5,7 @@
 #' @param target Target variable (must be 0/1 or FALSE/TRUE)
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
 #' @return Plot that shows if difference is significant
+#' @importFrom("stats", "chisq.test", "fisher.test")
 #' @examples
 #' data <- create_data_buy(obs = 100)
 #' abtest(data, female_ind == 1, target = buy)
@@ -22,6 +23,10 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
     stop("parameter target is missing")
     return(NA)
   }
+
+  # define variables for CRAN-package check
+  target1_sum <- NULL
+  target1_pct <- NULL
 
   # format target as 0/1
   target_ori <- data[[target_txt]]
