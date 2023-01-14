@@ -1,4 +1,4 @@
-## explore 1.0.2 (develop)
+## explore 1.0.2 (2023-01-14)
 
 * add_var_random_01() creates variable of type integer
 * add target_name & factorise_target parameter to more create_data_*()
@@ -8,6 +8,7 @@
 * add abtest()
 * remove native pipe in explore_tbl()
 * fix error in explore() median if NA values
+* add tests for explore (no error if data contains NA)
 
 ## explore 1.0.1 (2022-12-20)
 
