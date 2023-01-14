@@ -5,7 +5,6 @@
 #' @param target Target variable (must be 0/1 or FALSE/TRUE)
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
 #' @return Plot that shows if difference is significant
-#' @importFrom("stats", "chisq.test", "fisher.test")
 #' @examples
 #' data <- create_data_buy(obs = 100)
 #' abtest(data, female_ind == 1, target = buy)
@@ -65,14 +64,14 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   # test for significance
   if (any(m <= 5)) {
     test_used <- "Fisher's Exact"
-    result <- fisher.test(
+    result <- stats::fisher.test(
       matrix(c(
         a_grp$target1_sum, b_grp$target1_sum,
         a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2))
 
   } else {
     test_used <- "Chi2"
-    result <- chisq.test(
+    result <- stats::chisq.test(
       matrix(c(
         a_grp$target1_sum, b_grp$target1_sum,
         a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2))
