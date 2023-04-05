@@ -25,7 +25,6 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
   assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
   assertthat::assert_that(!missing(expr), msg = "expect an logical expression to abtest")
   assertthat::assert_that(!missing(target), msg = "expect a target variable to abtest")
-  assertthat::assert_that(!missing(sign_level), msg = "expect a sign_level to abtest")
   assertthat::assert_that(is.numeric(sign_level), msg = "expect numeric value for sign_level")
   assertthat::assert_that(sign_level <= 1, msg = "expect sign_level between 0 and 1")
   assertthat::assert_that(sign_level > 0, msg = "expect sign_level between 0 and 1")
@@ -130,7 +129,7 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
   names(data_ab)[1] <- "expression"
 
   # slice A/B groups
-  a_val <- data %>% dplyr::filter(!!enquo(expr)) %>% dplyr::pull({{ target }})
+  a_val <- data %>% dplyr::filter(!{{ expr }}) %>% dplyr::pull({{ target }})
   b_val <- data %>% dplyr::filter({{ expr }}) %>% dplyr::pull({{ target }})
 
   # t test
@@ -141,18 +140,15 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
     na.action = "na.omit",
     alternative = "two.sided")
 
-  result
-  result$p.value
-
   # result text
   if (result$p.value <= sign_level)  {
     result_txt <- paste0(
-      "SIGNIFICANT, p value = ", round(result$p.value, 2),
+      "SIGNIFICANT, p value = ", round(result$p.value, 3),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- TRUE
   } else  {
     result_txt <- paste0(
-      "NOT significant, p value = ", round(result$p.value, 2),
+      "NOT significant, p value = ", round(result$p.value, 3),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- FALSE
   }
@@ -284,12 +280,12 @@ abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
   # result text
   if (result$p.value <= sign_level)  {
     result_txt <- paste0(
-      "SIGNIFICANT, p value = ", round(result$p.value, 2),
+      "SIGNIFICANT, p value = ", round(result$p.value, 3),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- TRUE
   } else  {
     result_txt <- paste0(
-      "NOT significant, p value = ", round(result$p.value, 2),
+      "NOT significant, p value = ", round(result$p.value, 3),
       " (max ", round(sign_level, 2), ")")
     result_lgl <- FALSE
   }
