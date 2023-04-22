@@ -237,7 +237,7 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 } # explain_logreg
 
 
-#' Explain a binary target using Random Forest.
+#' Explain a target using Random Forest.
 #'
 #' @param data A dataset
 #' @param target Target variable (binary)

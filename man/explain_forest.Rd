@@ -2,7 +2,7 @@
 % Please edit documentation in R/explain.R
 \name{explain_forest}
 \alias{explain_forest}
-\title{Explain a binary target using Random Forest.}
+\title{Explain a target using Random Forest.}
 \usage{
 explain_forest(data, target, ntree = 50, out = "plot", ...)
 }
@@ -21,7 +21,7 @@ explain_forest(data, target, ntree = 50, out = "plot", ...)
 Plot of importance (if out = "plot")
 }
 \description{
-Explain a binary target using Random Forest.
+Explain a target using Random Forest.
 }
 \examples{
 data <- create_data_buy()
