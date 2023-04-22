@@ -270,10 +270,16 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
     return(NA)
   }
 
-  data[[target_txt]] <- as.factor(data[[target_txt]])
-  formula_txt <- as.formula(paste(target_txt, "~ ."))
+  # classification or regression
+  # use factor for classification
+  target_values <- data[[target_txt]]
+  guess <- guess_cat_num(target_values)
+  if (guess == "cat" & !is.factor(target_values)) {
+    data[[target_txt]] <- as.factor(target_values)
+  }
 
   # train random forest
+  formula_txt <- as.formula(paste(target_txt, "~ ."))
   rf <- randomForest::randomForest(formula_txt, data=data, ntree = ntree, ...)
 
   # minimize memory usage
@@ -285,8 +291,9 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   # convert importance into data frame
   importance <- as.data.frame(rf$importance)
   importance$variable <- row.names(importance)
-  importance$importance <- importance$MeanDecreaseGini
-  importance$MeanDecreaseGini <- NULL
+  importance$importance <- importance[[1]]
+  importance$MeanDecreaseGini <- NULL           # used if classification
+  importance$IncNodePurity <- NULL              # used if regression
   importance <- importance %>% arrange(-importance)
 
   # plot importance
