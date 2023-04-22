@@ -235,3 +235,85 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 
 
 } # explain_logreg
+
+
+#' Explain a binary target using Random Forest.
+#'
+#' @param data A dataset
+#' @param target Target variable (binary)
+#' @param ntree Number of trees used for Random Forest
+#' @param out Output of the function: "plot" | "model" | "importance" | all"
+#' @param ... Further arguments (passed to randomForest function)
+#' @return Plot of importance (if out = "plot")
+#' @importFrom magrittr "%>%"
+#' @import dplyr
+#' @importFrom randomForest randomForest
+#' @importFrom forcats fct_reorder
+#' @examples
+#' data <- create_data_buy()
+#' explain_forest(data, target = buy)
+#' @export
+
+explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
+
+  # parameter data
+  if(missing(data))  {
+    stop(paste0("data missing"))
+  }
+
+  # parameter target
+  if(!missing(target))  {
+    target_quo <- enquo(target)
+    target_txt <- quo_name(target_quo)[[1]]
+  } else {
+    stop("parameter target is missing")
+    return(NA)
+  }
+
+  data[[target_txt]] <- as.factor(data[[target_txt]])
+  formula_txt <- as.formula(paste(target_txt, "~ ."))
+
+  # train random forest
+  rf <- randomForest::randomForest(formula_txt, data=data, ntree = ntree, ...)
+
+  # minimize memory usage
+  rf$votes <- NULL
+  rf$predicted <- NULL
+  rf$oob.times <- NULL
+  rf$y <- NULL
+
+  # convert importance into data frame
+  importance <- as.data.frame(rf$importance)
+  importance$variable <- row.names(importance)
+  importance$importance <- importance$MeanDecreaseGini
+  importance$MeanDecreaseGini <- NULL
+  importance <- importance %>% arrange(-importance)
+
+  # plot importance
+  p <- importance %>%
+    head(30) %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = forcats::fct_reorder(variable, importance),
+      y = importance)) +
+    ggplot2::geom_col(color = "white", fill = "grey") +
+    ggplot2::xlab("variable") +
+    ggplot2::ggtitle("ML-feature-importance") +
+    ggplot2::coord_flip() +
+    ggplot2::theme_minimal()
+
+  # output
+  model <- list(rf = rf, importance = importance, plot = p)
+
+  # output
+  if (out %in% c("all", "list")) {
+    return(model)
+  } else if(out == "model") {
+    return(rf)
+  } else if(out == "importance") {
+    return(importance)
+  }
+
+  # default output
+  p
+
+} # explain_forest

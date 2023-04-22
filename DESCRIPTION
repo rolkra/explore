@@ -22,6 +22,7 @@ Imports:
     gridExtra, 
     magrittr, 
     MASS, 
+    randomForest,
     rlang, 
     rmarkdown, 
     rpart, 
