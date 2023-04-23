@@ -1,7 +1,8 @@
 ## explore 1.1
 
 * abtest() now supports numeric target (t-test)
-* add explain_forest() for binary target
+* add explain_forest()
+* add predict_target()
 
 ## explore 1.0.2 (2023-01-14)
 

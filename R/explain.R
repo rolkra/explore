@@ -167,8 +167,8 @@ explain_tree <- function(data, target, n,
     plot_text("can't grow decision tree")
   } # if tree exists
 
-  # output
-  if (out == "model") {
+  # what to return
+  if(out == "model") {
     return(mod)
   }
 
@@ -324,3 +324,70 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   p
 
 } # explain_forest
+
+
+#' Explain a target using Random Forest.
+#'
+#' @param data A dataset (data.frame or tbl)
+#' @param model A model created with explain_*() function
+#' @param ... Further arguments (passed to predict function)
+#' @return data containing predicted probabilities for target values
+#' @importFrom magrittr "%>%"
+#' @importFrom stringr str_trim str_replace_all
+#' @examples
+#' data_train <- create_data_buy(seed = 1)
+#' data_test <- create_data_buy(seed = 2)
+#' model <- explain_tree(data_test, target = buy, out = "model")
+#' data <- predict_target(data = data_test, model = model)
+#' explore_targetpct(data, target_val_1, target = buy)
+#' @export
+
+predict_target <- function(data, model, ...) {
+
+  # check parameter
+  if(missing(data)) { stop("data missing") }
+  if(!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
+
+  result <- data
+  values <- NA
+
+  if ("randomForest" %in% class(model) && model$type == "classification") {
+
+    values <- predict(model, newdata = data_test, type = "prob", ...)
+    var_names <- paste0("target_val", "_", colnames(values))
+
+  } else if ("randomForest" %in% class(model) && model$type == "regression") {
+
+    values <- predict(model, newdata = data_test, ...)
+    var_names <- paste0("target_val")
+
+  } else if ("rpart" %in% class(model) && model$method == "class") {
+
+    values <- predict(model, data = data_test, type = "prob", ...)
+    var_names <- paste0("target_val", "_", colnames(values))
+
+  } else if ("rpart" %in% class(model) && model$method == "anova") {
+
+    values <- predict(model, data = data_test, ...)
+    var_names <- paste0("target_val")
+
+  }
+
+  if (any(is.na(values))) {
+    warning("Predicting target not possible")
+    return(result)
+  }
+
+  # add predicted target values to data
+  var_names <- var_names %>%
+    stringr::str_trim() %>%
+    stringr::str_replace_all("[ ]", "_")
+
+  df <- as.data.frame(values)
+  names(df) <- var_names
+  result <- cbind(data, df)
+
+  # return data
+  result
+
+}
