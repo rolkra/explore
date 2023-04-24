@@ -4,14 +4,14 @@
 \alias{predict_target}
 \title{Explain a target using Random Forest.}
 \usage{
-predict_target(data, model, ...)
+predict_target(data, model, name = "prediction")
 }
 \arguments{
 \item{data}{A dataset (data.frame or tbl)}
 
 \item{model}{A model created with explain_*() function}
 
-\item{...}{Further arguments (passed to predict function)}
+\item{name}{Prefix of variable-name for prediction}
 }
 \value{
 data containing predicted probabilities for target values

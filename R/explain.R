@@ -330,7 +330,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #'
 #' @param data A dataset (data.frame or tbl)
 #' @param model A model created with explain_*() function
-#' @param ... Further arguments (passed to predict function)
+#' @param name Prefix of variable-name for prediction
 #' @return data containing predicted probabilities for target values
 #' @importFrom magrittr "%>%"
 #' @importFrom stringr str_trim str_replace_all
@@ -342,7 +342,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' explore_targetpct(data, target_val_1, target = buy)
 #' @export
 
-predict_target <- function(data, model, ...) {
+predict_target <- function(data, model, name = "prediction") {
 
   # check parameter
   if(missing(data)) { stop("data missing") }
@@ -353,23 +353,28 @@ predict_target <- function(data, model, ...) {
 
   if ("randomForest" %in% class(model) && model$type == "classification") {
 
-    values <- predict(model, newdata = data_test, type = "prob", ...)
-    var_names <- paste0("target_val", "_", colnames(values))
+    values <- predict(model, newdata = data_test, type = "prob")
+    var_names <- paste0(name, "_", colnames(values))
 
   } else if ("randomForest" %in% class(model) && model$type == "regression") {
 
-    values <- predict(model, newdata = data_test, ...)
-    var_names <- paste0("target_val")
+    values <- predict(model, newdata = data_test)
+    var_names <- paste0(name)
+
+  } else if ("glm" %in% class(model)) {
+
+    values <- predict(model, newdata = data_test, type = "response")
+    var_names <- paste0(name)
 
   } else if ("rpart" %in% class(model) && model$method == "class") {
 
-    values <- predict(model, data = data_test, type = "prob", ...)
-    var_names <- paste0("target_val", "_", colnames(values))
+    values <- predict(model, data = data_test, type = "prob")
+    var_names <- paste0(name, "_", colnames(values))
 
   } else if ("rpart" %in% class(model) && model$method == "anova") {
 
-    values <- predict(model, data = data_test, ...)
-    var_names <- paste0("target_val")
+    values <- predict(model, data = data_test)
+    var_names <- paste0(name)
 
   }
 
