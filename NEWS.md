@@ -3,6 +3,7 @@
 * abtest() now supports numeric target (t-test)
 * add explain_forest()
 * add predict_target()
+* add create_data_newsletter()
 
 ## explore 1.0.2 (2023-01-14)
 

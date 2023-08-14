@@ -466,6 +466,75 @@ create_data_churn = function(obs = 1000,
 
 } # create_data_churn
 
+
+#' Create data newsletter
+#'
+#' Artificial data that can be used for unit-testing or teaching
+#' (fairness & AI bias)
+#' @param obs Number of observations
+#' @param add_id Add an id-variable to data?
+#' @param seed Seed for randomization (integer)
+#'
+#' @return A dataframe
+#' @export
+
+create_data_newsletter = function(obs = 1000,
+                              add_id = FALSE,
+                              seed = 123) {
+  # checks
+  assertthat::assert_that(is.numeric(obs))
+  assertthat::assert_that(obs > 0)
+  assertthat::assert_that(is.logical(add_id))
+  assertthat::assert_that(is.numeric(seed))
+
+  # randomize
+  set.seed(seed)
+
+  # create dataframe and variables
+  data <- create_data_empty(obs) %>%
+      add_var_random_int("sending_h", min_val = 12, max_val = 16) %>%
+      add_var_random_cat("message", c("voucher", "news")) %>%
+      add_var_random_int("age", min_val = 16, max_val = 80) %>%
+      add_var_random_01("send", prob = c(0.05, 0.95)) %>%
+      add_var_random_01("click", prob = c(0.3, 0.7)) %>%
+      add_var_random_01("buy", prob = c(0.1, 0.9))
+
+  # click only if send, buy only if click
+  data <- data %>%
+      mutate(click = ifelse(send == 1, click, 0)) %>%
+      mutate(buy = ifelse(click == 1, buy, 0))
+
+  # higher age, higher click
+  data <- data %>%
+      mutate(click = ifelse(runif(obs, min = 1, max = 100) + age > 80,
+                            click, 0))
+  # message news (not voucher), lower click
+  data <- data %>%
+    mutate(click = ifelse(runif(obs, min = 1, max = 100) > 80 &
+                          message == "news",
+                          0, click))
+
+  # lower age, higher buy
+  data <- data %>%
+    mutate(buy = ifelse(runif(obs, min = 1, max = 100) + age < 80,
+                        buy, 0))
+
+  # click only if send, buy only if click
+  data <- data %>%
+    mutate(click = ifelse(send == 1, click, 0)) %>%
+    mutate(buy = ifelse(click == 1, buy, 0))
+
+  # add an id?
+  if (add_id)  {
+    data <- data %>% add_var_id()
+  }
+
+  # return data
+  data
+
+} # create_data_newsletter
+
+
 #' Create data unfair
 #'
 #' Artificial data that can be used for unit-testing or teaching

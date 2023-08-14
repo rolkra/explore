@@ -2,7 +2,7 @@
 % Please edit documentation in R/explain.R
 \name{predict_target}
 \alias{predict_target}
-\title{Explain a target using Random Forest.}
+\title{Predict target using a trained model.}
 \usage{
 predict_target(data, model, name = "prediction")
 }
@@ -17,7 +17,7 @@ predict_target(data, model, name = "prediction")
 data containing predicted probabilities for target values
 }
 \description{
-Explain a target using Random Forest.
+Predict target using a trained model.
 }
 \examples{
 data_train <- create_data_buy(seed = 1)

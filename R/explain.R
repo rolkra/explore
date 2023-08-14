@@ -326,7 +326,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 } # explain_forest
 
 
-#' Explain a target using Random Forest.
+#' Predict target using a trained model.
 #'
 #' @param data A dataset (data.frame or tbl)
 #' @param model A model created with explain_*() function
