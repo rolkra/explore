@@ -4,6 +4,7 @@
 * add explain_forest()
 * add predict_target()
 * add create_data_newsletter()
+* add use_data_*() functions
 
 ## explore 1.0.2 (2023-01-14)
 
