@@ -22,6 +22,7 @@ Imports:
     gridExtra, 
     magrittr, 
     MASS, 
+    palmerpenguins,
     randomForest,
     rlang, 
     rmarkdown, 
@@ -36,6 +37,5 @@ RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    palmerpenguins,
     testthat
 VignetteBuilder: knitr

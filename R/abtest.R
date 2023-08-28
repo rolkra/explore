@@ -133,7 +133,7 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
   b_val <- data %>% dplyr::filter({{ expr }}) %>% dplyr::pull({{ target }})
 
   # t test
-  result <- t.test(
+  result <- stats::t.test(
     x = a_val,
     y = b_val,
     var.equal = FALSE,

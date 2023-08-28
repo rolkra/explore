@@ -5,6 +5,7 @@
 * add predict_target()
 * add create_data_newsletter()
 * add use_data_*() functions
+* drop use of fct_explicit_na() (deprecated)
 
 ## explore 1.0.2 (2023-01-14)
 

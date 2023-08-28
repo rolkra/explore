@@ -337,9 +337,9 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' @examples
 #' data_train <- create_data_buy(seed = 1)
 #' data_test <- create_data_buy(seed = 2)
-#' model <- explain_tree(data_test, target = buy, out = "model")
+#' model <- explain_tree(data_train, target = buy, out = "model")
 #' data <- predict_target(data = data_test, model = model)
-#' explore_targetpct(data, target_val_1, target = buy)
+#' describe(data)
 #' @export
 
 predict_target <- function(data, model, name = "prediction") {
@@ -353,27 +353,27 @@ predict_target <- function(data, model, name = "prediction") {
 
   if ("randomForest" %in% class(model) && model$type == "classification") {
 
-    values <- predict(model, newdata = data_test, type = "prob")
+    values <- stats::predict(model, newdata = data_test, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
   } else if ("randomForest" %in% class(model) && model$type == "regression") {
 
-    values <- predict(model, newdata = data_test)
+    values <- stats::predict(model, newdata = data_test)
     var_names <- paste0(name)
 
   } else if ("glm" %in% class(model)) {
 
-    values <- predict(model, newdata = data_test, type = "response")
+    values <- stats::predict(model, newdata = data_test, type = "response")
     var_names <- paste0(name)
 
   } else if ("rpart" %in% class(model) && model$method == "class") {
 
-    values <- predict(model, data = data_test, type = "prob")
+    values <- stats::predict(model, data = data_test, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
   } else if ("rpart" %in% class(model) && model$method == "anova") {
 
-    values <- predict(model, data = data_test)
+    values <- stats::predict(model, data = data_test)
     var_names <- paste0(name)
 
   }

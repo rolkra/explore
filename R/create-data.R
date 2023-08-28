@@ -487,6 +487,14 @@ create_data_newsletter = function(obs = 1000,
   assertthat::assert_that(is.logical(add_id))
   assertthat::assert_that(is.numeric(seed))
 
+  # define variables for CRAN-package check
+  sending_h <- NULL
+  message <- NULL
+  age <- NULL
+  send <- NULL
+  click <- NULL
+  buy <- NULL
+
   # randomize
   set.seed(seed)
 
@@ -506,17 +514,17 @@ create_data_newsletter = function(obs = 1000,
 
   # higher age, higher click
   data <- data %>%
-      mutate(click = ifelse(runif(obs, min = 1, max = 100) + age > 80,
+      mutate(click = ifelse(stats::runif(obs, min = 1, max = 100) + age > 80,
                             click, 0))
   # message news (not voucher), lower click
   data <- data %>%
-    mutate(click = ifelse(runif(obs, min = 1, max = 100) > 80 &
+    mutate(click = ifelse(stats::runif(obs, min = 1, max = 100) > 80 &
                           message == "news",
                           0, click))
 
   # lower age, higher buy
   data <- data %>%
-    mutate(buy = ifelse(runif(obs, min = 1, max = 100) + age < 80,
+    mutate(buy = ifelse(stas::runif(obs, min = 1, max = 100) + age < 80,
                         buy, 0))
 
   # click only if send, buy only if click

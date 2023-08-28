@@ -6,6 +6,9 @@
 \usage{
 use_data_titanic(count = FALSE)
 }
+\arguments{
+\item{count}{use count data}
+}
 \value{
 Dataset
 }

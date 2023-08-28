@@ -10,6 +10,7 @@
 #' @export
 
 use_data_iris <- function() {
+  data(iris)
   return(iris)
 }
 
@@ -19,12 +20,13 @@ use_data_iris <- function() {
 #' the 1974 Motor Trend US magazine, and comprises fuel consumption and
 #' 10 aspects of automobile design and performance for 32 automobiles
 #' (1973–74 models).
-#' #' @return Dataset
+#' @return Dataset
 #' @examples
 #' use_data_mtcars()
 #' @export
 
 use_data_mtcars <- function() {
+  data(mtcars)
   return(mtcars)
 }
 
@@ -77,6 +79,7 @@ use_data_penguins <- function() {
 #' This data set comes with base R.
 #' Survival of passengers on the Titanic.
 #'
+#' @param count use count data
 #' @return Dataset
 #' @examples
 #' use_data_titanic()
@@ -91,5 +94,3 @@ use_data_titanic <- function(count = FALSE) {
   }
   return(data)
 }
-
-

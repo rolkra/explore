@@ -822,7 +822,10 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
     n_var_cat <- length(levels(data[[var_txt]]))
 
     # add level for NA (if in data)
-    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
+    if (any(is.na(data[[var_txt]])))  {
+      levels(data[[var_txt]]) <- c(levels(data[[var_txt]]), ".NA")
+      data[[var_txt]] <- ifelse(is.na(data[[var_txt]]), ".NA", data[[var_txt]])
+    }
 
     # keep max. different levels
     if (n_var_cat > max_cat)  {

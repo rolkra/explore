@@ -22,7 +22,7 @@ Predict target using a trained model.
 \examples{
 data_train <- create_data_buy(seed = 1)
 data_test <- create_data_buy(seed = 2)
-model <- explain_tree(data_test, target = buy, out = "model")
+model <- explain_tree(data_train, target = buy, out = "model")
 data <- predict_target(data = data_test, model = model)
-explore_targetpct(data, target_val_1, target = buy)
+describe(data)
 }
