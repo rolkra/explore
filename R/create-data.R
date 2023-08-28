@@ -524,7 +524,7 @@ create_data_newsletter = function(obs = 1000,
 
   # lower age, higher buy
   data <- data %>%
-    mutate(buy = ifelse(stas::runif(obs, min = 1, max = 100) + age < 80,
+    mutate(buy = ifelse(stats::runif(obs, min = 1, max = 100) + age < 80,
                         buy, 0))
 
   # click only if send, buy only if click

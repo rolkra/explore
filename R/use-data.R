@@ -10,7 +10,7 @@
 #' @export
 
 use_data_iris <- function() {
-  data(iris)
+  utils::data("iris")
   return(iris)
 }
 
@@ -26,7 +26,7 @@ use_data_iris <- function() {
 #' @export
 
 use_data_mtcars <- function() {
-  data(mtcars)
+  utils::data("mtcars")
   return(mtcars)
 }
 
@@ -86,6 +86,7 @@ use_data_penguins <- function() {
 #' @export
 
 use_data_titanic <- function(count = FALSE) {
+  utils::data(Titanic)
   if (count) {
     data <- tibble::as_tibble(Titanic)
   } else {

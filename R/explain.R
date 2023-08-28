@@ -256,6 +256,9 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 
 explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 
+  # undefined variables to pass CRAN check
+  variable <- NULL
+
   # parameter data
   if(missing(data))  {
     stop(paste0("data missing"))
@@ -353,27 +356,27 @@ predict_target <- function(data, model, name = "prediction") {
 
   if ("randomForest" %in% class(model) && model$type == "classification") {
 
-    values <- stats::predict(model, newdata = data_test, type = "prob")
+    values <- stats::predict(model, newdata = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
   } else if ("randomForest" %in% class(model) && model$type == "regression") {
 
-    values <- stats::predict(model, newdata = data_test)
+    values <- stats::predict(model, newdata = data)
     var_names <- paste0(name)
 
   } else if ("glm" %in% class(model)) {
 
-    values <- stats::predict(model, newdata = data_test, type = "response")
+    values <- stats::predict(model, newdata = data, type = "response")
     var_names <- paste0(name)
 
   } else if ("rpart" %in% class(model) && model$method == "class") {
 
-    values <- stats::predict(model, data = data_test, type = "prob")
+    values <- stats::predict(model, data = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
   } else if ("rpart" %in% class(model) && model$method == "anova") {
 
-    values <- stats::predict(model, data = data_test)
+    values <- stats::predict(model, data = data)
     var_names <- paste0(name)
 
   }
