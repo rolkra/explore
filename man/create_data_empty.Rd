@@ -14,7 +14,7 @@ create_data_empty(obs = 1000, add_id = FALSE, seed = 123)
 \item{seed}{Seed for randomization (integer)}
 }
 \value{
-Dataset
+Dataset as tibble
 }
 \description{
 Create an empty dataset

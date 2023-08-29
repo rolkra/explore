@@ -31,7 +31,7 @@ create_data_random(
 \item{seed}{Seed for randomization}
 }
 \value{
-A dataframe
+A dataset as tibble
 }
 \description{
 Random data that can be used for unit-testing or teaching

@@ -34,7 +34,7 @@ create_data_buy(
 \item{seed}{Seed for randomization}
 }
 \value{
-A dataframe
+A dataset as tibble
 }
 \description{
 Artificial data that can be used for unit-testing or teaching

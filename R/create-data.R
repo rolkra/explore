@@ -3,7 +3,7 @@
 #' @param obs Number of observations
 #' @param add_id Add an id
 #' @param seed Seed for randomization (integer)
-#' @return Dataset
+#' @return Dataset as tibble
 #' @examples
 #' create_data_empty()
 #' @export
@@ -30,7 +30,7 @@ create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_empty
 
@@ -42,7 +42,7 @@ create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_app = function(obs = 1000,
@@ -136,7 +136,7 @@ create_data_app = function(obs = 1000,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_app
 
@@ -148,7 +148,7 @@ create_data_app = function(obs = 1000,
 #' @param add_id Add an id
 #' @param seed Seed for randomization (integer)
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
@@ -208,7 +208,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } #create_data_person
 
@@ -244,7 +244,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_buy = function(obs = 1000,
@@ -354,7 +354,7 @@ create_data_buy = function(obs = 1000,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_buy
 
@@ -370,7 +370,7 @@ create_data_buy = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_churn = function(obs = 1000,
@@ -462,7 +462,7 @@ create_data_churn = function(obs = 1000,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_churn
 
@@ -475,7 +475,7 @@ create_data_churn = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_newsletter = function(obs = 1000,
@@ -538,7 +538,7 @@ create_data_newsletter = function(obs = 1000,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_newsletter
 
@@ -554,7 +554,7 @@ create_data_newsletter = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_unfair = function(obs = 1000,
@@ -637,7 +637,7 @@ create_data_unfair = function(obs = 1000,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_unfair()
 
@@ -661,7 +661,7 @@ create_data_unfair = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
 #'
-#' @return A dataframe
+#' @return A dataset as tibble
 #' @export
 
 create_data_random = function(obs = 1000, vars = 10,
@@ -716,7 +716,7 @@ create_data_random = function(obs = 1000, vars = 10,
   }
 
   # return data
-  data
+  tibble::as_tibble(data)
 
 } # create_data_random
 

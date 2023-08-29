@@ -4,14 +4,15 @@
 #' in centimeters of the variables sepal length and width and petal length and
 #' width, respectively, for 50 flowers from each of 3 species of iris.
 #' The species are Iris setosa, versicolor, and virginica.
-#' @return Dataset
+#' @return Dataset as tibble
 #' @examples
 #' use_data_iris()
 #' @export
 
 use_data_iris <- function() {
-  utils::data("iris")
-  return(iris)
+  file <- system.file("extdata", "iris.rds", package="explore")
+  data <- readRDS(file = file)
+  return(tibble::as_tibble(data))
 }
 
 #' Use the mtcars data set
@@ -26,8 +27,9 @@ use_data_iris <- function() {
 #' @export
 
 use_data_mtcars <- function() {
-  utils::data("mtcars")
-  return(mtcars)
+  file <- system.file("extdata", "mtcars.rds", package="explore")
+  data <- readRDS(file = file)
+  return(tibble::as_tibble(data))
 }
 
 #' Use the mpg data set
@@ -86,11 +88,13 @@ use_data_penguins <- function() {
 #' @export
 
 use_data_titanic <- function(count = FALSE) {
-  utils::data(Titanic)
+  n <- NULL
+  file <- system.file("extdata", "titanic.rds", package="explore")
+  data <- readRDS(file = file)
   if (count) {
-    data <- tibble::as_tibble(Titanic)
+    data <- tibble::as_tibble(data)
   } else {
-    data <- tibble::as_tibble(Titanic)
+    data <- tibble::as_tibble(data)
     data <- tidyr::uncount(data = data, weights = n)
   }
   return(data)

@@ -7,7 +7,7 @@
 use_data_iris()
 }
 \value{
-Dataset
+Dataset as tibble
 }
 \description{
 This data set comes with base R. The data set gives the measurements
