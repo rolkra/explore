@@ -10,29 +10,18 @@
 #' @param split Alternative to targetpct (split = !targetpct)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
-#' @examples
-#' if (rmarkdown::pandoc_available("1.12.3"))   {
-#'   report(iris, output_dir = tempdir())
-#' }
+#' @examplesIf rmarkdown::pandoc_available("1.12.3")
+#' report(iris, output_dir = tempdir())
 #' @export
 
 report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
 
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
-  if (!rmarkdown::pandoc_available())  {
-    stop("no report generated because pandoc is not available")
-  }
-
-  # pandoc version 1.12.3 or higher must be available
-  if (!rmarkdown::pandoc_version() >= "1.12.3")  {
-    stop("no report generated because pandoc version >= 1.12.3 needed")
-  }
+  rmarkdown::pandoc_available(version = "1.12.3", error = TRUE)
 
   # output_dir must be defined
-  if(missing(output_dir)) {
-    stop("output_dir must be defined")
-  }
+  rlang::check_required(output_dir)
 
   # parameter target
   if(!missing(target))  {

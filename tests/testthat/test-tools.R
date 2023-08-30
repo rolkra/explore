@@ -1,7 +1,3 @@
-context("tools")
-library(explore)
-
-
 # balance target ----------------------------------------------------------
 
 # result should be reproducible if same seed is used

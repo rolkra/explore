@@ -1,6 +1,3 @@
-context("create_data")
-library(explore)
-
 # create_data_empty -------------------------------------------------------
 
 # create empty dataset with obs

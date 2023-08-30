@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @aliases explore-package
 "_PACKAGE"
 
 ## usethis namespace: start

@@ -1,7 +1,3 @@
-context("describe")
-library(explore)
-
-
 # describe ----------------------------------------------------------------
 
 # describe returns a data frame

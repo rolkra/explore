@@ -1,6 +1,3 @@
-context("explore")
-library(explore)
-
 # data contains no NA -----------------------------------------------------
 
 # num variable

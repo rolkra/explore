@@ -827,7 +827,7 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
   # rename variable
   if (!is.na(name))  {
     var_names <- colnames(data)
-    if (name %in% var_names & name != var_txt)  {
+    if (name %in% var_names && name != var_txt)  {
       warning("variable ", name, " already exists in data. Did not rename, select other name!")
     } else {
       colnames(data)[colnames(data) == var_txt] <- name

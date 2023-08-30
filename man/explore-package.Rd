@@ -2,8 +2,8 @@
 % Please edit documentation in R/explore-package.R
 \docType{package}
 \name{explore-package}
-\alias{explore}
 \alias{explore-package}
+\alias{_PACKAGE}
 \title{explore: Simplifies Exploratory Data Analysis}
 \description{
 Interactive data exploration with one line of code or use an easy to remember set of tidy functions for exploratory data analysis. Introduces three main verbs. explore() to graphically explore a variable or table, describe() to describe a variable or table and report() to create an automated report.
@@ -11,7 +11,8 @@ Interactive data exploration with one line of code or use an easy to remember se
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/rolkra/explore/}
+  \item \url{https://github.com/rolkra/explore}
+  \item Report bugs at \url{https://github.com/rolkra/explore/issues}
 }
 
 }

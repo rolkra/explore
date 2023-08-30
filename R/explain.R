@@ -101,7 +101,7 @@ explain_tree <- function(data, target, n,
     # convert target to factor if necessary
     if (!is.factor(data[[target_txt]]))  {
       data[[target_txt]] <- factor(data[[target_txt]])
-      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]], max_target_cat, other_level = ".OTHER")
+      data[[target_txt]] <- forcats::fct_lump_n(data[[target_txt]], n =max_target_cat, other_level = ".OTHER")
     }
 
     # get prior probabilities
@@ -185,28 +185,25 @@ explain_tree <- function(data, target, n,
 #' @export
 
 explain_logreg <- function(data, target, out = "tibble", ...)  {
-
+  rlang::check_required(data)
   # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
     target_txt = NA
   }
 
-  if(sum(complete.cases(data)) < nrow(data))  {
+  if (sum(complete.cases(data)) < nrow(data))  {
     warning("can't calculate logreg, drop rows with NA first")
     return()
   }
 
-  if(length(unique(data[[target_txt]])) != 2)  {
+  if (length(unique(data[[target_txt]])) != 2)  {
     warning("target must be binary (e.g. 0/1, TRUE/FALSE, 'yes'/'no')")
-    return()
+    return(invisible())
   }
 
   # convert target into formula
@@ -249,18 +246,11 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   variable <- NULL
 
   # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
-
+  rlang::check_required(data)
+  rlang::check_required(target)
   # parameter target
-  if(!missing(target))  {
-    target_quo <- enquo(target)
-    target_txt <- quo_name(target_quo)[[1]]
-  } else {
-    stop("parameter target is missing")
-    return(NA)
-  }
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
 
   # classification or regression
   # use factor for classification
@@ -286,18 +276,18 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   importance$importance <- importance[[1]]
   importance$MeanDecreaseGini <- NULL           # used if classification
   importance$IncNodePurity <- NULL              # used if regression
-  importance <- importance %>% dplyr::arrange(-importance)
+  importance <- importance %>% dplyr::arrange(desc(importance))
 
   # plot importance
   p <- importance %>%
     utils::head(30) %>%
-    ggplot2::ggplot(ggplot2::aes(
-      x = forcats::fct_reorder(variable, importance),
-      y = importance)) +
+    ggplot2::ggplot(aes(
+      x = importance,
+      y = forcats::fct_reorder(variable, importance)
+      )) +
     ggplot2::geom_col(color = "white", fill = "grey") +
-    ggplot2::xlab("variable") +
+    ggplot2::ylab("variable") +
     ggplot2::ggtitle("ML-feature-importance") +
-    ggplot2::coord_flip() +
     ggplot2::theme_minimal()
 
   # output
@@ -335,47 +325,46 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 predict_target <- function(data, model, name = "prediction") {
 
   # check parameter
-  if(missing(data)) { stop("data missing") }
-  if(!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
+  rlang::check_required(data)
+  if (!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
 
   result <- data
   values <- NA
 
-  if ("randomForest" %in% class(model) && model$type == "classification") {
+  if (inherits(model, "randomForest") && model$type == "classification") {
 
     values <- stats::predict(model, newdata = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
-  } else if ("randomForest" %in% class(model) && model$type == "regression") {
+  } else if (inherits(model, "randomForest") && model$type == "regression") {
 
     values <- stats::predict(model, newdata = data)
     var_names <- paste0(name)
 
-  } else if ("glm" %in% class(model)) {
+  } else if (inherits(model, "glm")) {
 
     values <- stats::predict(model, newdata = data, type = "response")
     var_names <- paste0(name)
 
-  } else if ("rpart" %in% class(model) && model$method == "class") {
+  } else if (inherits(model, "rpart") && model$method == "class") {
 
     values <- stats::predict(model, data = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
-  } else if ("rpart" %in% class(model) && model$method == "anova") {
+  } else if (inherits(model, "rpart") && model$method == "anova") {
 
     values <- stats::predict(model, data = data)
     var_names <- paste0(name)
 
   }
 
-  if (any(is.na(values))) {
+  if (anyNA(values)) {
     warning("Predicting target not possible")
     return(result)
   }
 
   # add predicted target values to data
-  var_names <- var_names %>%
-    stringr::str_trim() %>%
+  var_names <- stringr::str_trim(var_names) %>%
     stringr::str_replace_all("[ ]", "_")
 
   df <- as.data.frame(values)
@@ -384,5 +373,4 @@ predict_target <- function(data, model, name = "prediction") {
 
   # return data
   result
-
 }

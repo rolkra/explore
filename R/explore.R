@@ -347,7 +347,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   } else if ((!missing(numeric) & numeric == FALSE) |
              guess_cat_num(data[[var_txt]]) == "cat") {
     data[[var_txt]] <- factor(data[[var_txt]])
-    data[[var_txt]] <- forcats::fct_explicit_na(data[[var_txt]], na_level = ".NA")
+    data[[var_txt]] <- forcats::fct_na_value_to_level(data[[var_txt]], level = ".NA")
     if (missing(flip)) {
       flip <- TRUE
     }
@@ -356,11 +356,11 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   # use a factor for target so that fill works
   if (n_target_cat > 1 && !is.factor(data[[target_txt]]))  {
     data[[target_txt]] <- factor(data[[target_txt]])
-    data[[target_txt]] <- forcats::fct_explicit_na(data[[target_txt]], na_level = ".NA")
+    data[[target_txt]] <- forcats::fct_na_value_to_level(data[[target_txt]], level = ".NA")
 
     # keep max. different levels
     if (n_target_cat > max_target_cat)  {
-      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
+      data[[target_txt]] <- forcats::fct_lump_n(data[[target_txt]], n = max_target_cat, other_level = ".OTHER")
     }
     # recalculate number of levels in target
     n_target_cat <- length(levels(data[[target_txt]]))
@@ -611,7 +611,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
       if ((auto_scale == FALSE) | (mean_var <= max_val)) {
         p <- p + geom_vline(xintercept = mean_var,
                             color = "#7f7f7f", alpha = 0.5,
-                            linetype = "dashed", size = 1)
+                            linetype = "dashed", lwd = 1)
       }
     }
 
@@ -683,7 +683,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 explore_all <- function(data, n, target, ncol = 2, targetpct, split = TRUE)  {
 
   # check parameter data
-  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
+  rlang::check_required(data)
   assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
   assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 

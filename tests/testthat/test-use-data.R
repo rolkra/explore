@@ -1,117 +1,25 @@
-context("use_data")
-library(explore)
+# use_data returns data.frame --------------
+test_that("use_data returns a data frame.", {
+  expect_s3_class(use_data_iris(), "data.frame")
+  expect_s3_class(use_data_mtcars(), "data.frame")
+  expect_s3_class(use_data_mpg(), "data.frame")
+  expect_s3_class(use_data_diamonds(), "data.frame")
+  expect_s3_class(use_data_penguins(), "data.frame")
+  expect_s3_class(use_data_titanic(), "data.frame")
+})
 
-
-# use data iris -----------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_iris()", {
-  expect_equal(
-    is.data.frame(use_data_iris()),
-    TRUE
-  )
+# use_data returns data.frame with >0 rows ----------
+test_that("use_data returns data frames with >0 rows", {
+  expect_gt(nrow(use_data_iris()), 0)
+  expect_gt(nrow(use_data_mtcars()), 0)
+  expect_gt(nrow(use_data_mpg()), 0)
+  expect_gt(nrow(use_data_diamonds()), 0)
+  expect_gt(nrow(use_data_penguins()), 0)
+  expect_gt(nrow(use_data_titanic()), 0)
 })
 
 # use_data returns data.frame with >0 rows
-test_that("use_data_iris()", {
-  expect_equal(
-    nrow(use_data_iris()) > 0,
-    TRUE
-  )
-})
-
-# use data mtcars -----------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_mtcars()", {
-  expect_equal(
-    is.data.frame(use_data_mtcars()),
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_mtcars()", {
-  expect_equal(
-    nrow(use_data_mtcars()) > 0,
-    TRUE
-  )
-})
-
-# use data mpg -----------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_mpg()", {
-  expect_equal(
-    is.data.frame(use_data_mpg()),
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_mpg()", {
-  expect_equal(
-    nrow(use_data_mpg()) > 0,
-    TRUE
-  )
-})
-
-# use data diamonds -----------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_diamonds()", {
-  expect_equal(
-    is.data.frame(use_data_diamonds()),
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_diamonds()", {
-  expect_equal(
-    nrow(use_data_diamonds()) > 0,
-    TRUE
-  )
-})
-
-# use data penguins -------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_penguins()", {
-  expect_equal(
-    is.data.frame(use_data_penguins()),
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_penguins()", {
-  expect_equal(
-    nrow(use_data_penguins()) > 0,
-    TRUE
-  )
-})
-
-# use data titanic -------------------------------------------------------
-
-# use_data returns data.frame
-test_that("use_data_titanic()", {
-  expect_equal(
-    is.data.frame(use_data_titanic()),
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_titanic()", {
-  expect_equal(
-    nrow(use_data_titanic()) > 0,
-    TRUE
-  )
-})
-
-# use_data returns data.frame with >0 rows
-test_that("use_data_titanic()", {
+test_that("use_data_titanic() has the correct number of columns", {
   expect_equal(
     ncol(use_data_titanic(count = FALSE)) + 1,
     ncol(use_data_titanic(count = TRUE))
