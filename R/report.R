@@ -51,73 +51,81 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
 
   # check if output-file has .html extension
   # if not, add it!
-  if (!missing(output_file)) {
-    len <- nchar(output_file)
-    if (tolower(substr(output_file, len-4, len)) != ".html")  {
-      output_file <- paste0(output_file, ".html")
+  output_file <- if (!missing(output_file)) {
+    if (!identical(tools::file_ext(output_file), "html"))  {
+      paste0(output_file, ".html")
+    } else {
+      output_file
     }
-  } # if
+    } else if (is.na(target_text)) {
+    "report_variable.html"
+    } else {
+    "report_target_split.html"
+    }
 
-  # report variables
-  if(is.na(target_text) & is.na(n_txt))  {
-    input_file <- system.file("extdata", "template_report_variable.Rmd", package="explore")
-    if (missing(output_file)) {output_file = "report_variable.html"}
-      rmarkdown::render(input = input_file,
+
+  report <- if (is.na(target_text) && is.na(n_txt))  {
+    # report variables
+    input_file <- system.file("extdata", "template_report_variable.Rmd", package = "explore")
+    rmarkdown::render(input = input_file,
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
+                        quiet = TRUE,
                         clean = TRUE
     )
 
-  # report variables + n
-  } else if(is.na(target_text) & !is.na(n_txt))  {
+  } else if(is.na(target_text) && !is.na(n_txt))  {
+    # report variables + n
     input_file <- system.file("extdata", "template_report_variable_n.Rmd", package="explore")
-    if (missing(output_file)) {output_file = "report_variable.html"}
-      var_name_n <- n_txt
-      rmarkdown::render(input = input_file,
+    var_name_n <- n_txt
+    rmarkdown::render(input = input_file,
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
+                        quiet = TRUE,
                         clean = TRUE
-      )
+                      )
 
-      # report target + n
-  } else if(!is.na(target_text) & !is.na(n_txt))  {
+  } else if(!is.na(target_text) && !is.na(n_txt))  {
+    # report target + n
     input_file <- system.file("extdata", "template_report_target_split_n.Rmd", package="explore")
-    if (missing(output_file)) {output_file = "report_target_split.html"}
-      var_name_n <- n_txt
-      var_name_target <- target_text  # needed in report template
-      rmarkdown::render(input = input_file,
+    var_name_n <- n_txt
+    var_name_target <- target_text  # needed in report template
+    rmarkdown::render(input = input_file,
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
+                        quiet = TRUE,
                         clean = TRUE
     )
 
     # report target with split
-  } else if(split == TRUE)  {
-    input_file <- system.file("extdata", "template_report_target_split.Rmd", package="explore")
-    if (missing(output_file)) {output_file = "report_target_split.html"}
+  } else if(split)  {
+    input_file <- system.file("extdata", "template_report_target_split.Rmd", package = "explore")
     var_name_target <- target_text  # needed in report template
     rmarkdown::render(input = input_file,
                       output_file = output_file,
                       output_dir = output_dir,
                       intermediates_dir = output_dir,
+                      quiet = TRUE,
                       clean = TRUE
     )
 
     # report target with percent
   } else {
-    input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
+    input_file <- system.file("extdata", "template_report_target_pct.Rmd", package = "explore")
     if (missing(output_file)) {output_file = "report_target.html"}
     var_name_target <- target_text # needed in report template
     rmarkdown::render(input = input_file,
                       output_file = output_file,
                       output_dir = output_dir,
                       intermediates_dir = output_dir,
+                      quiet = TRUE,
                       clean = TRUE
     )
-  } # if
+  }
+  invisible(report)# if
 } # report
 
 #' Generate a notebook
@@ -128,16 +136,14 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
 #'
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
-#' @examples
+#' @examplesIf rmarkdown::pandoc_available()
 #' create_notebook_explore(output_file = "explore.Rmd", output_dir = tempdir())
 #' @export
 
 create_notebook_explore <- function(output_file = "notebook-explore.Rmd", output_dir) {
 
   # output_dir must be defined
-  if(missing(output_dir)) {
-    stop("output_dir must be defined")
-  }
+  rlang::check_required(output_dir)
 
   # check if output-file has .Rmd extension
   # if not, add it!
