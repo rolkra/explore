@@ -12,6 +12,7 @@ Description: Interactive data exploration with one line of code or use an easy
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/rolkra/explore
+Depends: R (>= 3.5.0)
 Imports: 
     assertthat,
     broom,
