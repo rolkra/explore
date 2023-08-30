@@ -12,7 +12,7 @@ format_num_kMB(number = 0, digits = 1)
 \item{digits}{Number of digits}
 }
 \value{
-Formated number as text
+Formatted number as text
 }
 \description{
 Formats a big number as k (1 000), M (1 000 000) or B (1 000 000 000)

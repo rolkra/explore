@@ -12,7 +12,7 @@ format_num_space(number = 0, digits = 1)
 \item{digits}{Number of digits}
 }
 \value{
-Formated number as text
+Formatted number as text
 }
 \description{
 Formats a big number using space as big.mark (1000 = 1 000)

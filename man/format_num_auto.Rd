@@ -12,7 +12,7 @@ format_num_auto(number = 0, digits = 1)
 \item{digits}{Number of digits}
 }
 \value{
-Formated number as text
+Formatted number as text
 }
 \description{
 Formats a number depending on the value as number with space, scientific or

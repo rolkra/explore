@@ -2,7 +2,7 @@
 #'
 #' @param data A dataset
 #' @param target Target variable
-#' @param n weigths variable (for count data)
+#' @param n weights variable (for count data)
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
@@ -10,7 +10,7 @@
 #' @param cp Complexity parameter (rpart-parameter)
 #' @param weights Vector containing weight of each observation (rpart-parameter). Can
 #' not be used in combination with parameter n (variable containing weight for count-data)
-#' @param size Textsize of plot
+#' @param size Text size of plot
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
 #' @return Plot or additional the model (if out = "model")

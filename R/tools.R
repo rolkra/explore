@@ -49,13 +49,8 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 balance_target <- function(data, target, min_prop = 0.1, seed) {
 
   # check if parameters are missing
-  if (missing(data))  {
-    stop("data is missing")
-  }
-
-  if (missing(target))  {
-    stop("target is missing")
-  }
+  rlang::check_required(data)
+  rlang::check_required(target)
 
   # check if min_prop has a meaningful value
   if (min_prop < 0 | min_prop > 1)  {
@@ -110,7 +105,7 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 #' Weight target variable
 #'
 #' Create weights for the target variable in your dataset
-#' so that are equal weiths for target = 0 and target = 1.
+#' so that are equal weights for target = 0 and target = 1.
 #' Target must be 0/1, FALSE/TRUE ore no/yes
 #'
 #' @param data A dataset
@@ -147,7 +142,7 @@ weight_target <- function(data, target) {
   weights = ifelse(data[[target_txt]] == names(minClass),
                    max(observed_prop)/min(observed_prop), 1)
 
-  # return weigthts
+  # return weights
   return(weights)
 
 } # weight_target
@@ -234,7 +229,7 @@ plot_legend_targetpct <- function(border = TRUE) {
 #'
 #' @param number A number (integer or real)
 #' @param digits Number of digits
-#' @return Formated number as text
+#' @return Formatted number as text
 #' @examples
 #' format_num_space(5500, digits = 2)
 #' @export
@@ -260,7 +255,7 @@ format_num_space <- function(number = 0, digits = 1)   {
 #'
 #' @param number A number (integer or real)
 #' @param digits Number of digits
-#' @return Formated number as text
+#' @return Formatted number as text
 #' @examples
 #' format_num_kMB(5500, digits = 2)
 #' @export
@@ -294,7 +289,7 @@ format_num_kMB <- function(number = 0, digits = 1)   {
 #'
 #' @param number A number (integer or real)
 #' @param digits Number of digits
-#' @return Formated number as text
+#' @return Formatted number as text
 #' @examples
 #' format_num_kMB(5500, digits = 2)
 #' @export
@@ -372,10 +367,10 @@ replace_na_with <- function(data, var_name, with)  {
 
 #' Format type description
 #'
-#' Format type description of varable to 3 letters (int|dbl|lgl|chr|dat)
+#' Format type description of variable to 3 letters (int|dbl|lgl|chr|dat)
 #'
 #' @param type Type description ("integer", "double", "logical", character", "date")
-#' @return Formated type description (int|dbl|lgl|chr|dat)
+#' @return Formatted type description (int|dbl|lgl|chr|dat)
 #' @examples
 #' format_type(typeof(iris$Species))
 #' @export
@@ -439,13 +434,13 @@ get_type <- function(var)  {
 } # get_type
 
 
-#' Return if variable is categorial or nomerical
+#' Return if variable is categorical or numerical
 #'
-#' Guess if variable is categorial or numerical based on name, type and values of variable
+#' Guess if variable is categorical or numerical based on name, type and values of variable
 #'
 #' @param var A vector (dataframe column)
 #' @param descr A description of the variable (optional)
-#' @return "cat" (categorial), "num" (numerical) or "oth" (other)
+#' @return "cat" (categorical), "num" (numerical) or "oth" (other)
 #' @examples
 #' guess_cat_num(iris$Species)
 #' @export

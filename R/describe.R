@@ -345,7 +345,7 @@ describe_all <- function(data = NA, out = "large") {
 #' Describe table (e.g. number of rows and columns of dataset)
 #'
 #' @param data A dataset
-#' @param n Weigts variable for count-data
+#' @param n Weights variable for count-data
 #' @param target Target variable (binary)
 #' @param out Output format ("text"|"list")
 #' @return Description as text or list

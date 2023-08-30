@@ -48,7 +48,7 @@
 
 * rename create_x_data() to create_data_x()
 * rename add_x_var() to add_var_x()
-* extend create_data funtions
+* extend create_data functions
 * extend add_var functions
 * explain_tree(): set default minsplit to 20
 * explain_tree(): set prior probabilities
@@ -151,10 +151,10 @@ Maintenance update:
 
 ## explore 0.5.2 (2019-11-21)
 
-* split scource-code file into multiple files
+* split source-code file into multiple files
 * format_num_auto without brackets
 * treat Date variables as cat
-* report() fix automatic file extentison .html
+* report() fix automatic file extension .html
 * add simplify_text()
 * add parameter simplify_text to clean_var()
 * fix link in README.md
@@ -216,7 +216,7 @@ Many functions now accept categorical and numerical targets (next to a binary ta
 * parameter split: default = FALSE
 * allow numeric (num) target in explore_all & report
 * describe_tbl() -> fix target if not bin
-* desribe(): change out="vector" to out="list"
+* describe(): change out="vector" to out="list"
 
 ## explore 0.4.3 (2019-06-20)
 

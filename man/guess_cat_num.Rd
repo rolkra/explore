@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{guess_cat_num}
 \alias{guess_cat_num}
-\title{Return if variable is categorial or nomerical}
+\title{Return if variable is categorical or numerical}
 \usage{
 guess_cat_num(var, descr)
 }
@@ -12,10 +12,10 @@ guess_cat_num(var, descr)
 \item{descr}{A description of the variable (optional)}
 }
 \value{
-"cat" (categorial), "num" (numerical) or "oth" (other)
+"cat" (categorical), "num" (numerical) or "oth" (other)
 }
 \description{
-Guess if variable is categorial or numerical based on name, type and values of variable
+Guess if variable is categorical or numerical based on name, type and values of variable
 }
 \examples{
 guess_cat_num(iris$Species)

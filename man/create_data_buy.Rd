@@ -21,11 +21,11 @@ create_data_buy(
 \item{target_name}{Variable name of target}
 
 \item{factorise_target}{Should target variable be factorised?
-(from 0/1 to facotr no/yes)?}
+(from 0/1 to factor no/yes)?}
 
 \item{target1_prob}{Probability that target = 1}
 
-\item{add_extreme}{Add an obervation with extreme values?}
+\item{add_extreme}{Add an observation with extreme values?}
 
 \item{flip_gender}{Should Male/Female be flipped in data?}
 
@@ -48,7 +48,7 @@ Variables in dataset:
 \item female_ind = Gender of customer is female (1 = yes, 0 = no)
 \item fixedvoice_ind = Customer has a fixed voice product (1 = yes, 0 = no)
 \item fixeddata_ind = Customer has a fixed data product (1 = yes, 0 = no)
-\item fixedtv_ind = Customer has a fixed tv product (1 = yes, 0 = no)
+\item fixedtv_ind = Customer has a fixed TV product (1 = yes, 0 = no)
 \item mobilevoice_ind = Customer has a mobile voice product (1 = yes, 0 = no)
 \item mobiledata_prd = Customer has a mobile data product (NO/MOBILE STICK/BUSINESS)
 \item bbi_speed_ind = Customer has a Broadband Internet (BBI) with extra speed
