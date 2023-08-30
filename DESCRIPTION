@@ -33,7 +33,7 @@ Imports:
     stringr, 
     tibble, 
     tidyr 
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
