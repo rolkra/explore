@@ -64,10 +64,11 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
   # calculate percentage
   data_bar <- data_bar %>%
     group_by(cat) %>%
-    summarise(n = n(), n_target = sum(target)) %>%
-    ungroup() %>%
-    mutate(n_pct = n / sum(n)*100) %>%
-    mutate(target_pct = n_target/n*100)
+    summarise(n = n(), n_target = sum(target), .groups = "drop") %>%
+    mutate(
+      n_pct = n / sum(n)*100,
+      target_pct = n_target/n*100
+      )
 
   # calculate mean
   target_mean <- sum(data_bar$n_target) / sum(data_bar$n) * 100
@@ -89,7 +90,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
   # limit number of categories
   if(nrow(data_bar) > max_cat)  {
-    data_bar <- utils::head(data_bar, max_cat)
+    data_bar <- utils::head(data_bar, n = max_cat)
   }
 
   # maximum percent value to be displayed
@@ -1022,7 +1023,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' @export
 
 explore_tbl <- function(data, n)  {
-
+  rlang::check_required(data)
   # define variables to pass CRAN-checks
   type <- NULL
   na <- NULL
@@ -1030,7 +1031,6 @@ explore_tbl <- function(data, n)  {
   group <- NULL
 
   # check parameter data
-  assertthat::assert_that(!missing(data), msg = "expect a data table to explore")
   assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
   assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
 
@@ -1078,8 +1078,7 @@ explore_tbl <- function(data, n)  {
 
   bar_all = bar %>%
     group_by(group) %>%
-    summarise(n = sum(n)) %>%
-    ungroup() %>%
+    summarise(n = sum(n), .groups = "drop") %>%
     mutate(type = "variables (all)")
 
   # prepare plot
@@ -1093,18 +1092,17 @@ explore_tbl <- function(data, n)  {
                      "ok" = "grey")
   # plot
   bar %>%
-    ggplot(aes(type, n, fill = group)) +
+    ggplot(aes(n, type, fill = group)) +
     geom_col() +
     scale_fill_manual(values = color_mapping) +
     #geom_text(aes(measure, n, group = type, label = as.character(n)), size = 2.5) +
-    geom_text(aes(label = n, hjust = ifelse(n == 0, 0, 1)),
+    geom_text(aes(label = dplyr::na_if(n, 0)),na.rm = TRUE,
               position = "stack"
               ) +
     labs(title = paste(ncol(data), "variables"),
          subtitle = info_obs,
-         y = "variables",
-         x = "") +
-    coord_flip() +
+         x = "variables",
+         y = "") +
     theme(
       panel.background = element_rect("white"),
       panel.grid.major = element_line("grey85"),
@@ -1129,7 +1127,10 @@ explore_tbl <- function(data, n)  {
 explore_shiny <- function(data, target)  {
 
   # check if interactive session
-  if (!interactive()) stop("This function can only be used in an interactive R session")
+  if (!interactive()) {
+    warning("This function can only be used in an interactive R session")
+    return(invisible())
+  }
 
   # parameter target
   if(!missing(target))  {

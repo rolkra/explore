@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("Reports can be created", {
   skip_on_ci()
   skip_if_not(rmarkdown::pandoc_available("1.12.3"), message = "Pandoc is not available")
   report_file <- report(iris, output_dir = tempdir())

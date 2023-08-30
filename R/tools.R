@@ -93,14 +93,14 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 
     # sampling
     data_minClass <- tmp_min %>%
-      dplyr::sample_n(minClass)
+      dplyr::slice_sample(n = minClass)
     data_maxClass <- tmp_max %>%
-      dplyr::sample_n(maxClass)
+      dplyr::slice_sample(n = maxClass)
 
     # mix it up
     data <- rbind(data_minClass, data_maxClass)
     if (!missing(seed)) {set.seed(seed)}
-    data <- data %>% dplyr::sample_n(nrow(data))
+    data <- data %>% dplyr::slice_sample(n = nrow(data))
 
     # return
     data
