@@ -20,25 +20,22 @@
 abtest <- function(data, expr, target, sign_level = 0.05) {
 
   # check parameter
-  assertthat::assert_that(!missing(data), msg = "expect data to abtest")
+  rlang::check_required(data)
+  rlang::check_required(expr)
+  rlang::check_required(target)
+
   assertthat::assert_that(is.data.frame(data), msg = "expect data of type data.frame")
   assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
-  assertthat::assert_that(!missing(expr), msg = "expect an logical expression to abtest")
-  assertthat::assert_that(!missing(target), msg = "expect a target variable to abtest")
   assertthat::assert_that(is.numeric(sign_level), msg = "expect numeric value for sign_level")
   assertthat::assert_that(sign_level <= 1, msg = "expect sign_level between 0 and 1")
   assertthat::assert_that(sign_level > 0, msg = "expect sign_level between 0 and 1")
 
 
   # parameter target
-  if (!missing(target))  {
-    target_quo <- enquo(target)
-    target_txt <- quo_name(target_quo)[[1]]
-    if (!target_txt %in% names(data)) {
-      stop(paste0("target variable '", target_txt, "' not found in data"))
-    }
-  } else {
-    target_txt <- NA
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
+  if (!target_txt %in% names(data)) {
+    stop(paste0("target variable '", target_txt, "' not found in data"))
   }
 
   # check if target is cat/num
@@ -75,14 +72,10 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
 
 abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
 
+  rlang::check_required(target)
   # parameter target
-  if (!missing(target)) {
-    target_quo <- enquo(target)
-    target_txt <- quo_name(target_quo)[[1]]
-  } else {
-    stop("parameter target is missing")
-    return(NA)
-  }
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
 
   # define variables for CRAN-package check
   target_mean <- NULL
@@ -210,15 +203,10 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
 #' abtest(data, age >= 40, target = buy)
 
 abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
-
   # parameter target
-  if (!missing(target))  {
-    target_quo <- enquo(target)
-    target_txt <- quo_name(target_quo)[[1]]
-  } else {
-    stop("parameter target is missing")
-    return(NA)
-  }
+  rlang::check_required(target)
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
 
   # define variables for CRAN-package check
   target1_sum <- NULL

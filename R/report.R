@@ -10,7 +10,6 @@
 #' @param split Alternative to targetpct (split = !targetpct)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
-#' @import rmarkdown
 #' @examples
 #' if (rmarkdown::pandoc_available("1.12.3"))   {
 #'   report(iris, output_dir = tempdir())

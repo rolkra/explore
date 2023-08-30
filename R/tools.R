@@ -40,8 +40,6 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' @param min_prop Minimum proportion of one of the target categories
 #' @param seed Seed for random number generator
 #' @return Data
-#' @import rlang
-#' @import dplyr
 #' @examples
 #' iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 #' balanced <- balance_target(iris, target = is_versicolor, min_prop = 0.5)
@@ -118,8 +116,6 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 #' @param data A dataset
 #' @param target Target variable (0/1, TRUE/FALSE, yes/no)
 #' @return Weights for each observation (as a vector)
-#' @import rlang
-#' @import dplyr
 #' @examples
 #' iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 #' weights <- weight_target(iris, target = is_versicolor)
@@ -127,15 +123,9 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 #' @export
 
 weight_target <- function(data, target) {
-
   # check if parameters are missing
-  if (missing(data))  {
-    stop("data is missing")
-  }
-
-  if (missing(target))  {
-    stop("target is missing")
-  }
+  rlang::check_required(data)
+  rlang::check_required(target)
 
   # tidy eval for target
   target_quo <- enquo(target)
@@ -171,7 +161,6 @@ weight_target <- function(data, target) {
 #' @param size Text-size
 #' @param color Text-color
 #' @return Plot
-#' @importFrom graphics plot text
 #' @examples
 #' plot_text("hello", size = 2, color = "red")
 #' @export
@@ -189,9 +178,6 @@ plot_text <- function(text="hello world", size=1.2, color="black")  {
 #' @param var Variable
 #' @param info Text to plot
 #' @return Plot (ggplot)
-#' @import rlang
-#' @import dplyr
-#' @import ggplot2
 
 plot_var_info <- function(data, var, info = "")  {
 
@@ -222,7 +208,6 @@ plot_var_info <- function(data, var, info = "")  {
 #'
 #' @param border Draw a border?
 #' @return Base plot
-#''@importFrom graphics legend par plot
 #' @examples
 #' plot_legend_targetpct(border = TRUE)
 #' @export
@@ -710,7 +695,6 @@ data_dict_md <- function(data, title = "", description = NA, output_file = "data
 #'
 #' @param text text string
 #' @return text string
-#' @import dplyr
 #' @examples
 #' simplify_text(" Hello  World !, ")
 #' @export
@@ -738,7 +722,6 @@ simplify_text <- function(text)  {
 #'
 #' @param x numeric vector (to be rescaled)
 #' @return vector with values between 0 and 1
-#' @import dplyr
 #' @examples
 #' rescale01(0:10)
 #' @export
@@ -767,8 +750,6 @@ rescale01 <- function(x)  {
 #' @param simplify_text if TRUE, a character variable is simplified (trim, upper, ...)
 #' @param name New name of variable (as string)
 #' @return Dataset
-#' @import rlang
-#' @import dplyr
 #' @examples
 #' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
 #' @export
@@ -865,7 +846,6 @@ clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = 
 #' @param data A dataset
 #' @param ... Other parameters passed to count()
 #' @return Dataset
-#' @import dplyr
 #' @examples
 #' count_pct(iris, Species)
 #' @export

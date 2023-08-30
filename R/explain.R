@@ -14,7 +14,6 @@
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
 #' @return Plot or additional the model (if out = "model")
-#' @importFrom tidyr uncount
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -26,15 +25,10 @@ explain_tree <- function(data, target, n,
                          max_cat = 10, max_target_cat = 5, maxdepth = 3,
                          minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
-
+  rlang::check_required(data)
   # define variables to pass CRAN-checks
   type <- NULL
   variable <- NULL
-
-  # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
 
   # parameter n, uncount
   if(!missing(n))  {
@@ -102,7 +96,7 @@ explain_tree <- function(data, target, n,
   # convert target into formula
   formula_txt <- as.formula(paste(target_txt, "~ ."))
 
-  if(guess_cat_num(data[[target_txt]]) == "cat")  {
+  if (guess_cat_num(data[[target_txt]]) == "cat")  {
 
     # convert target to factor if necessary
     if (!is.factor(data[[target_txt]]))  {
@@ -183,7 +177,6 @@ explain_tree <- function(data, target, n,
 #' @param ... Further arguments
 #' @return Dataset with results (term, estimate, std.error, z.value, p.value)
 #' or the model (if out = "model")
-#' @importFrom stats complete.cases as.formula glm
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -245,10 +238,6 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #' @param ... Further arguments (passed to randomForest function)
 #' @return Plot of importance (if out = "plot")
-#' @importFrom magrittr "%>%"
-#' @import dplyr
-#' @importFrom randomForest randomForest
-#' @importFrom forcats fct_reorder
 #' @examples
 #' data <- create_data_buy()
 #' explain_forest(data, target = buy)
@@ -297,11 +286,11 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   importance$importance <- importance[[1]]
   importance$MeanDecreaseGini <- NULL           # used if classification
   importance$IncNodePurity <- NULL              # used if regression
-  importance <- importance %>% arrange(-importance)
+  importance <- importance %>% dplyr::arrange(-importance)
 
   # plot importance
   p <- importance %>%
-    head(30) %>%
+    utils::head(30) %>%
     ggplot2::ggplot(ggplot2::aes(
       x = forcats::fct_reorder(variable, importance),
       y = importance)) +
@@ -335,8 +324,6 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' @param model A model created with explain_*() function
 #' @param name Prefix of variable-name for prediction
 #' @return data containing predicted probabilities for target values
-#' @importFrom magrittr "%>%"
-#' @importFrom stringr str_trim str_replace_all
 #' @examples
 #' data_train <- create_data_buy(seed = 1)
 #' data_test <- create_data_buy(seed = 2)
