@@ -71,7 +71,6 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
-                        quiet = TRUE,
                         clean = TRUE
     )
 
@@ -83,7 +82,6 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
-                        quiet = TRUE,
                         clean = TRUE
                       )
 
@@ -96,7 +94,6 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
                         output_file = output_file,
                         output_dir = output_dir,
                         intermediates_dir = output_dir,
-                        quiet = TRUE,
                         clean = TRUE
     )
 
@@ -108,7 +105,6 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
                       output_file = output_file,
                       output_dir = output_dir,
                       intermediates_dir = output_dir,
-                      quiet = TRUE,
                       clean = TRUE
     )
 
@@ -121,7 +117,6 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
                       output_file = output_file,
                       output_dir = output_dir,
                       intermediates_dir = output_dir,
-                      quiet = TRUE,
                       clean = TRUE
     )
   }
