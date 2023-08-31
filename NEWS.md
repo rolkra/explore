@@ -5,7 +5,7 @@
 * add predict_target()
 * add create_data_newsletter()
 * add use_data_*() functions
-* drop use of fct_explicit_na() (deprecated) (#2)
+* drop use of `fct_explicit_na()` (deprecated) (#15)
 * create_data use_data return datasets as tibble 
 
 ## explore 1.0.2 (2023-01-14)
