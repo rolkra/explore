@@ -1,12 +1,13 @@
-context("explore")
-library(explore)
-
 # data contains no NA -----------------------------------------------------
 
 # num variable
 test_that("explore()", {
-data <- iris
-expect_no_error(explore(data, Sepal.Length))
+  data <- iris
+  expect_no_error(explore(data, Sepal.Length))
+})
+
+test_that("explore_tbl()", {
+  expect_no_error(explore_tbl(iris))
 })
 
 # cat variable
@@ -67,5 +68,5 @@ test_that("explore()", {
 test_that("explore()", {
   data <- iris
   data[1, ] <- NA
-  expect_no_error(explore(data, Sepal.Length, Sepal.Width))
+  expect_no_error(explore(data, Sepal.Length, Sepal.Width, targetpct = 0.7))
 })

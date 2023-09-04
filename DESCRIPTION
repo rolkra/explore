@@ -11,31 +11,34 @@ Description: Interactive data exploration with one line of code or use an easy
     automated report.
 License: GPL-3
 Encoding: UTF-8
-URL: https://github.com/rolkra/explore/
+URL: https://github.com/rolkra/explore
+Depends: R (>= 3.5.0)
 Imports: 
-    assertthat, 
-    broom, 
-    dplyr, 
-    DT (>= 0.3.0), 
-    forcats, 
-    ggplot2 (>= 3.0.0), 
-    gridExtra, 
-    magrittr, 
-    MASS, 
+    assertthat,
+    broom,
+    dplyr,
+    DT (>= 0.3.0),
+    forcats,
+    ggplot2 (>= 3.4.0),
+    gridExtra,
+    magrittr,
+    MASS,
     palmerpenguins,
     randomForest,
-    rlang, 
-    rmarkdown, 
-    rpart, 
-    rpart.plot, 
-    shiny, 
+    rlang,
+    rmarkdown,
+    rpart,
+    rpart.plot,
+    shiny,
     stats,
-    stringr, 
-    tibble, 
-    tidyr 
-RoxygenNote: 7.2.1
+    stringr,
+    tibble,
+    tidyr
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    testthat
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3
+BugReports: https://github.com/rolkra/explore/issues

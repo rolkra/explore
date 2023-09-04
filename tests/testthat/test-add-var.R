@@ -1,7 +1,3 @@
-context("add_var")
-library(explore)
-
-
 # add_var_id --------------------------------------------------------------
 
 # add new random variable (default name "id")

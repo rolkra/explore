@@ -11,7 +11,6 @@ plot_legend_targetpct(border = TRUE)
 }
 \value{
 Base plot
-'@importFrom graphics legend par plot
 }
 \description{
 Plots a legend that can be used for explore_all with a binary target

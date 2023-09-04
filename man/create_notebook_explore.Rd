@@ -17,5 +17,7 @@ output-directory (parameter output_dir). The default file-name is
 "notebook-explore.Rmd" (may overwrite existing file with same name)
 }
 \examples{
+\dontshow{if (rmarkdown::pandoc_available()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 create_notebook_explore(output_file = "explore.Rmd", output_dir = tempdir())
+\dontshow{\}) # examplesIf}
 }

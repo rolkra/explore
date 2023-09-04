@@ -16,7 +16,7 @@ Weights for each observation (as a vector)
 }
 \description{
 Create weights for the target variable in your dataset
-so that are equal weiths for target = 0 and target = 1.
+so that are equal weights for target = 0 and target = 1.
 Target must be 0/1, FALSE/TRUE ore no/yes
 }
 \examples{

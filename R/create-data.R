@@ -224,7 +224,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' * female_ind = Gender of customer is female (1 = yes, 0 = no)
 #' * fixedvoice_ind = Customer has a fixed voice product (1 = yes, 0 = no)
 #' * fixeddata_ind = Customer has a fixed data product (1 = yes, 0 = no)
-#' * fixedtv_ind = Customer has a fixed tv product (1 = yes, 0 = no)
+#' * fixedtv_ind = Customer has a fixed TV product (1 = yes, 0 = no)
 #' * mobilevoice_ind = Customer has a mobile voice product (1 = yes, 0 = no)
 #' * mobiledata_prd = Customer has a mobile data product (NO/MOBILE STICK/BUSINESS)
 #' * bbi_speed_ind = Customer has a Broadband Internet (BBI) with extra speed
@@ -237,9 +237,9 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param obs Number of observations
 #' @param target_name Variable name of target
 #' @param factorise_target Should target variable be factorised?
-#' (from 0/1 to facotr no/yes)?
+#' (from 0/1 to factor no/yes)?
 #' @param target1_prob Probability that target = 1
-#' @param add_extreme Add an obervation with extreme values?
+#' @param add_extreme Add an observation with extreme values?
 #' @param flip_gender Should Male/Female be flipped in data?
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization

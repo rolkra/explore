@@ -2,7 +2,7 @@
 #'
 #' @param data A dataset
 #' @param target Target variable
-#' @param n weigths variable (for count data)
+#' @param n weights variable (for count data)
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
 #' @param maxdepth Maximal depth of the tree (rpart-parameter)
@@ -10,11 +10,10 @@
 #' @param cp Complexity parameter (rpart-parameter)
 #' @param weights Vector containing weight of each observation (rpart-parameter). Can
 #' not be used in combination with parameter n (variable containing weight for count-data)
-#' @param size Textsize of plot
+#' @param size Text size of plot
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
 #' @return Plot or additional the model (if out = "model")
-#' @importFrom tidyr uncount
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -26,15 +25,10 @@ explain_tree <- function(data, target, n,
                          max_cat = 10, max_target_cat = 5, maxdepth = 3,
                          minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
-
+  rlang::check_required(data)
   # define variables to pass CRAN-checks
   type <- NULL
   variable <- NULL
-
-  # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
 
   # parameter n, uncount
   if(!missing(n))  {
@@ -102,12 +96,12 @@ explain_tree <- function(data, target, n,
   # convert target into formula
   formula_txt <- as.formula(paste(target_txt, "~ ."))
 
-  if(guess_cat_num(data[[target_txt]]) == "cat")  {
+  if (guess_cat_num(data[[target_txt]]) == "cat")  {
 
     # convert target to factor if necessary
     if (!is.factor(data[[target_txt]]))  {
       data[[target_txt]] <- factor(data[[target_txt]])
-      data[[target_txt]] <- forcats::fct_lump(data[[target_txt]], max_target_cat, other_level = ".OTHER")
+      data[[target_txt]] <- forcats::fct_lump_n(data[[target_txt]], n =max_target_cat, other_level = ".OTHER")
     }
 
     # get prior probabilities
@@ -183,7 +177,6 @@ explain_tree <- function(data, target, n,
 #' @param ... Further arguments
 #' @return Dataset with results (term, estimate, std.error, z.value, p.value)
 #' or the model (if out = "model")
-#' @importFrom stats complete.cases as.formula glm
 #' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
@@ -192,28 +185,25 @@ explain_tree <- function(data, target, n,
 #' @export
 
 explain_logreg <- function(data, target, out = "tibble", ...)  {
-
+  rlang::check_required(data)
   # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
     target_txt = NA
   }
 
-  if(sum(complete.cases(data)) < nrow(data))  {
+  if (sum(complete.cases(data)) < nrow(data))  {
     warning("can't calculate logreg, drop rows with NA first")
     return()
   }
 
-  if(length(unique(data[[target_txt]])) != 2)  {
+  if (length(unique(data[[target_txt]])) != 2)  {
     warning("target must be binary (e.g. 0/1, TRUE/FALSE, 'yes'/'no')")
-    return()
+    return(invisible())
   }
 
   # convert target into formula
@@ -245,10 +235,6 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #' @param ... Further arguments (passed to randomForest function)
 #' @return Plot of importance (if out = "plot")
-#' @importFrom magrittr "%>%"
-#' @import dplyr
-#' @importFrom randomForest randomForest
-#' @importFrom forcats fct_reorder
 #' @examples
 #' data <- create_data_buy()
 #' explain_forest(data, target = buy)
@@ -260,18 +246,11 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   variable <- NULL
 
   # parameter data
-  if(missing(data))  {
-    stop(paste0("data missing"))
-  }
-
+  rlang::check_required(data)
+  rlang::check_required(target)
   # parameter target
-  if(!missing(target))  {
-    target_quo <- enquo(target)
-    target_txt <- quo_name(target_quo)[[1]]
-  } else {
-    stop("parameter target is missing")
-    return(NA)
-  }
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
 
   # classification or regression
   # use factor for classification
@@ -297,18 +276,18 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   importance$importance <- importance[[1]]
   importance$MeanDecreaseGini <- NULL           # used if classification
   importance$IncNodePurity <- NULL              # used if regression
-  importance <- importance %>% arrange(-importance)
+  importance <- importance %>% dplyr::arrange(desc(importance))
 
   # plot importance
   p <- importance %>%
-    head(30) %>%
-    ggplot2::ggplot(ggplot2::aes(
-      x = forcats::fct_reorder(variable, importance),
-      y = importance)) +
+    utils::head(30) %>%
+    ggplot2::ggplot(aes(
+      x = importance,
+      y = forcats::fct_reorder(variable, importance)
+      )) +
     ggplot2::geom_col(color = "white", fill = "grey") +
-    ggplot2::xlab("variable") +
+    ggplot2::ylab("variable") +
     ggplot2::ggtitle("ML-feature-importance") +
-    ggplot2::coord_flip() +
     ggplot2::theme_minimal()
 
   # output
@@ -335,8 +314,6 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' @param model A model created with explain_*() function
 #' @param name Prefix of variable-name for prediction
 #' @return data containing predicted probabilities for target values
-#' @importFrom magrittr "%>%"
-#' @importFrom stringr str_trim str_replace_all
 #' @examples
 #' data_train <- create_data_buy(seed = 1)
 #' data_test <- create_data_buy(seed = 2)
@@ -348,47 +325,46 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 predict_target <- function(data, model, name = "prediction") {
 
   # check parameter
-  if(missing(data)) { stop("data missing") }
-  if(!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
+  rlang::check_required(data)
+  if (!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
 
   result <- data
   values <- NA
 
-  if ("randomForest" %in% class(model) && model$type == "classification") {
+  if (inherits(model, "randomForest") && model$type == "classification") {
 
     values <- stats::predict(model, newdata = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
-  } else if ("randomForest" %in% class(model) && model$type == "regression") {
+  } else if (inherits(model, "randomForest") && model$type == "regression") {
 
     values <- stats::predict(model, newdata = data)
     var_names <- paste0(name)
 
-  } else if ("glm" %in% class(model)) {
+  } else if (inherits(model, "glm")) {
 
     values <- stats::predict(model, newdata = data, type = "response")
     var_names <- paste0(name)
 
-  } else if ("rpart" %in% class(model) && model$method == "class") {
+  } else if (inherits(model, "rpart") && model$method == "class") {
 
     values <- stats::predict(model, data = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
-  } else if ("rpart" %in% class(model) && model$method == "anova") {
+  } else if (inherits(model, "rpart") && model$method == "anova") {
 
     values <- stats::predict(model, data = data)
     var_names <- paste0(name)
 
   }
 
-  if (any(is.na(values))) {
+  if (anyNA(values)) {
     warning("Predicting target not possible")
     return(result)
   }
 
   # add predicted target values to data
-  var_names <- var_names %>%
-    stringr::str_trim() %>%
+  var_names <- stringr::str_trim(var_names) %>%
     stringr::str_replace_all("[ ]", "_")
 
   df <- as.data.frame(values)
@@ -397,5 +373,4 @@ predict_target <- function(data, model, name = "prediction") {
 
   # return data
   result
-
 }

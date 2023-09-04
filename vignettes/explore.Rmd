@@ -20,7 +20,7 @@ The explore package simplifies Exploratory Data Analysis (EDA). Get faster insig
 
 There are three ways to use the package:
 
-* **Interactive data exploration** (univariat, bivariat, multivariat)
+* **Interactive data exploration** (univariat, bivariate, multivariate)
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric. 
 
@@ -47,7 +47,7 @@ A shiny app is launched, you can inspect individual variable, explore their rela
  
 ![](../man/figures/explore-shiny-iris-target-species.png){width=600px}
 
-You can choose each variable containng as a target, that is binary (0/1, FALSE/TRUE or "no"/"yes"), categorical or numeric.
+You can choose each variable containing as a target, that is binary (0/1, FALSE/TRUE or "no"/"yes"), categorical or numeric.
 
 
 ### Report variables
@@ -73,7 +73,7 @@ iris %>%
 
 ```
 
-If you use a binary tharget, the parameter ***split = FALSE*** (or targetpct = TRUE) will give you a different view on the data.
+If you use a binary target, the parameter ***split = FALSE*** (or `targetpct = TRUE`) will give you a different view on the data.
 
 ![](../man/figures/report-target.png){width=600px}
 

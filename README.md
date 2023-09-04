@@ -1,8 +1,12 @@
 # explore  <img src="man/figures/hex_explore.png" align="right" width="130" height="150"/>
 
-[![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
-[![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
-[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml)
+  [![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
+  [![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
+  [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
+  <!-- badges: end -->
+
 
 Simplifies Exploratory Data Analysis. 
 
@@ -16,7 +20,7 @@ Simplifies Exploratory Data Analysis.
 
 There are three ways to use the package:
 
-* **Interactive data exploration** (univariat, bivariat, multivariat). A target can be defined (binary / categorical / numerical). 
+* **Interactive data exploration** (univariate, bivariate, multivariate). A target can be defined (binary / categorical / numerical). 
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
 
@@ -30,7 +34,7 @@ There are three ways to use the package:
 
   * **report** - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)
 
-The explore package automatically checks if an attribute is categorial or numerical, chooses the best plot-type and handles outliers (autosacling).
+The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autosacling).
 
 You can use {explore} with **tidy data** (each row is an observation) or with **count data** (each row is a group of observations with same attributes, one variable stores the number of observations). To use count data, you need to add the n parameter (variable containing the number of observations). Not all functions support count data.
 

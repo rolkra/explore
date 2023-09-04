@@ -73,7 +73,7 @@ data %>%
   explore_all(target = species)
 ```
 
-We already see some strong patterns in the data. flipper_length_mm seperates species Gentoo, bill_length_mm seperates species Adelie from Chinstrap. And we see that Chinstrap and Gentoo are located on seperate islands.
+We already see some strong patterns in the data. `flipper_length_mm` separates species Gentoo, `bill_length_mm` separates species Adelie from Chinstrap. And we see that Chinstrap and Gentoo are located on separate islands.
 
 Now we explain species using a decision tree:
 
@@ -83,9 +83,9 @@ data %>% explain_tree(target = species)
 
 We found an easy explanation how to find out the species by just using flipper_length_mm and bill_length_mm.
 
-* If flipper_legnth_mm >= 207, it is a Gentoo penguin (95% right)
-* If flipper_length_mm < 207 and bill_length_mm < 43, it is a Adelie penguin (97% right)
-* If flipper_length_mm < 207 and bill_length_mm >= 43, it is a Chinstrap penguin (92% right)
+* If `flipper_legnth_mm >= 207`, it is a Gentoo penguin (95% right)
+* If `flipper_length_mm < 207` and `bill_length_mm < 43`, it is a Adelie penguin (97% right)
+* If `flipper_length_mm < 207` and `bill_length_mm >= 43`, it is a Chinstrap penguin (92% right)
 
 Now let's take a closer look to these variables:
 
@@ -93,4 +93,4 @@ Now let's take a closer look to these variables:
 data %>% explore(flipper_length_mm, bill_length_mm, target = species)
 ```
 
-The plot shows a not perfect but good seperation between the 3 species!
+The plot shows a not perfect but good separation between the 3 species!

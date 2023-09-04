@@ -24,7 +24,7 @@ explain_tree(
 
 \item{target}{Target variable}
 
-\item{n}{weigths variable (for count data)}
+\item{n}{weights variable (for count data)}
 
 \item{max_cat}{Drop categorical variables with higher number of levels}
 
@@ -39,7 +39,7 @@ explain_tree(
 \item{weights}{Vector containing weight of each observation (rpart-parameter). Can
 not be used in combination with parameter n (variable containing weight for count-data)}
 
-\item{size}{Textsize of plot}
+\item{size}{Text size of plot}
 
 \item{out}{Output of function: "plot" | "model"}
 
