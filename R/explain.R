@@ -25,7 +25,7 @@ explain_tree <- function(data, target, n,
                          max_cat = 10, max_target_cat = 5, maxdepth = 3,
                          minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   # define variables to pass CRAN-checks
   type <- NULL
   variable <- NULL
@@ -185,7 +185,7 @@ explain_tree <- function(data, target, n,
 #' @export
 
 explain_logreg <- function(data, target, out = "tibble", ...)  {
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   # parameter data
 
   # parameter target
@@ -246,7 +246,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   variable <- NULL
 
   # parameter data
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(target)
   # parameter target
   target_quo <- enquo(target)
@@ -325,8 +325,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 predict_target <- function(data, model, name = "prediction") {
 
   # check parameter
-  rlang::check_required(data)
-  if (!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
+  check_data_frame_non_empty(data)
 
   result <- data
   values <- NA

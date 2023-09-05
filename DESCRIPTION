@@ -14,18 +14,17 @@ Encoding: UTF-8
 URL: https://github.com/rolkra/explore
 Depends: R (>= 3.5.0)
 Imports: 
-    assertthat,
     broom,
     dplyr,
     DT (>= 0.3.0),
-    forcats,
+    forcats (>= 1.0.0),
     ggplot2 (>= 3.4.0),
     gridExtra,
     magrittr,
     MASS,
     palmerpenguins,
     randomForest,
-    rlang,
+    rlang (>= 1.1.0),
     rmarkdown,
     rpart,
     rpart.plot,

@@ -1,7 +1,7 @@
 #' A/B testing
 #'
 #' @param data A dataset
-#' @param expr Expression, that results in a FALSE/TRUE
+#' @param expr Logical expression, that return in a FALSE/TRUE
 #' @param target Target variable
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
 #' @return Plot that shows if difference is significant
@@ -20,16 +20,10 @@
 abtest <- function(data, expr, target, sign_level = 0.05) {
 
   # check parameter
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(expr)
   rlang::check_required(target)
-
-  assertthat::assert_that(is.data.frame(data), msg = "expect data of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
-  assertthat::assert_that(is.numeric(sign_level), msg = "expect numeric value for sign_level")
-  assertthat::assert_that(sign_level <= 1, msg = "expect sign_level between 0 and 1")
-  assertthat::assert_that(sign_level > 0, msg = "expect sign_level between 0 and 1")
-
+  check_number_decimal(sign_level, min = 0, max = 1)
 
   # parameter target
   target_quo <- enquo(target)

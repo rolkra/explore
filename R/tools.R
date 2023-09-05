@@ -8,7 +8,7 @@
 #' encrypt("hello world")
 #' @export
 
-encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
+encrypt <- function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
   old=paste(codeletters,collapse="")
   new=paste(c(codeletters[(shift+1):nchar(old)],codeletters[1:shift]),collapse="")
   return (chartr(old,new,text))
@@ -24,7 +24,7 @@ encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' decrypt("zw336 E693v")
 #' @export
 
-decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
+decrypt <- function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
   old=paste(codeletters,collapse="")
   new=paste(c(codeletters[(shift+1):nchar(old)],codeletters[1:shift]),collapse="")
   return (chartr(new,old,text))
@@ -49,13 +49,11 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 balance_target <- function(data, target, min_prop = 0.1, seed) {
 
   # check if parameters are missing
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(target)
 
   # check if min_prop has a meaningful value
-  if (min_prop < 0 | min_prop > 1)  {
-    stop("min_prop must be a value between 0 and 1")
-  }
+  check_number_decimal(min_prop, min = 0, max = 1)
 
   # tidy eval for target
   target_quo <- enquo(target)
@@ -119,7 +117,7 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 
 weight_target <- function(data, target) {
   # check if parameters are missing
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(target)
 
   # tidy eval for target
@@ -630,9 +628,7 @@ get_var_buckets <- function(data, bucket_size = 100,
 data_dict_md <- function(data, title = "", description = NA, output_file = "data_dict.md", output_dir)  {
 
   # output_dir must be defined
-  if(missing(output_dir)) {
-    stop("output_dir must be defined")
-  }
+  check_string(output_dir)
 
   # describe data
   d <- data %>% describe()

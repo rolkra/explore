@@ -22,11 +22,7 @@ add_var_random_cat <- function(data,
                                seed) {
 
   # data table available?
-  rlang::check_required(data)
-
-  if (!is.data.frame(data)) {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame_non_empty(data)
 
   # check if var already exists
   if (name %in% names(data) & !overwrite) {
@@ -105,11 +101,7 @@ add_var_random_int <- function(data, name = "random_int",
                                seed) {
 
   # data table available?
-  rlang::check_required(data)
-
-  if (!is.data.frame(data)) {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame_non_empty(data)
 
   if (name %in% names(data) & !overwrite) {
     stop("Variable ", name, " already exists!")
@@ -154,14 +146,7 @@ add_var_random_dbl <- function(data, name = "random_dbl",
                                seed) {
 
   # data table available?
-  if (missing(data))  {
-    stop("data is missing")
-  }
-
-  # is it a data.frame?
-  if (!is.data.frame(data)) {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame_non_empty(data)
 
   # check variable name
   if (name %in% names(data) & !overwrite) {
@@ -260,16 +245,8 @@ add_var_random_starsign <- function(data, name = "random_starsign", lang = "en",
 #' @export
 
 add_var_id <- function(data, name = "id", overwrite = FALSE)  {
-
   # data table available?
-  if (missing(data))  {
-    stop("data is missing")
-  }
-
-  # is it a data.frame?
-  if (!is.data.frame(data)) {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame(data)
 
   # check variable name
   if (name %in% names(data) & !overwrite) {

@@ -9,7 +9,7 @@ abtest(data, expr, target, sign_level = 0.05)
 \arguments{
 \item{data}{A dataset}
 
-\item{expr}{Expression, that results in a FALSE/TRUE}
+\item{expr}{Logical expression, that return in a FALSE/TRUE}
 
 \item{target}{Target variable}
 

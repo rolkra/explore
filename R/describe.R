@@ -11,11 +11,8 @@
 #' @export
 
 describe_num <- function(data, var, n, out = "text", margin = 0) {
-  rlang::check_required(data)
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame_non_empty(data)
 
   # parameter var
   rlang::check_required(var)
@@ -109,7 +106,7 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
 #' @param var Variable or variable name
 #' @param n Weights variable for count-data
 #' @param max_cat Maximum number of categories displayed
-#' @param out Output format ("text"|"list")
+#' @param out Output format ("text"|"list"|"tibble"|"df")
 #' @param margin Left margin for text output (number of spaces)
 #' @return Description as text or list
 #' @examples
@@ -118,18 +115,14 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
 
 describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # var
   rlang::check_required(var)
-  if(!missing(var))  {
-    var_quo <- enquo(var)
-    var_txt <- quo_name(var_quo)[[1]]
-  }
+  # non-standard evaluation.
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
 
   # check if var in data
   if(!var_txt %in% names(data)) {
@@ -247,14 +240,9 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 #' describe_all(iris)
 #' @export
 
-describe_all <- function(data = NA, out = "large") {
-  # data table available?
-  rlang::check_required(data)
-
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
+describe_all <- function(data, out = "large") {
+  # data table available?  data type data.frame?
+  check_data_frame_non_empty(data)
 
   # define variables for package check
   variable <- NULL
@@ -359,12 +347,9 @@ describe_all <- function(data = NA, out = "large") {
 describe_tbl <- function(data, n, target, out = "text")  {
 
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
 
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # parameter target
   if(!missing(target))  {
@@ -502,12 +487,8 @@ describe_tbl <- function(data, n, target, out = "text")  {
 
 describe <- function(data, var, n, target, out = "text", ...)  {
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
 
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # parameter var
   if(!missing(var))  {

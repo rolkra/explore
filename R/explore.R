@@ -18,6 +18,7 @@
 
 target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, legend_position = "bottom") {
 
+  rlang::check_required(data)
   # definitions for CRAN package check
   n_target <- NULL
   n_pct <- NULL
@@ -34,7 +35,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
   }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
@@ -80,7 +81,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
   # convert to character
   if(num2char)  {
-    data_bar <- data_bar %>% mutate(cat = as.character(cat))
+    data_bar$cat <- as.character(data_bar$cat)
   }
 
   # define colors
@@ -170,7 +171,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
   explore_cat <- NULL
 
   # parameter var
-  if(!missing(var))  {
+  if (!missing(var))  {
     var_quo <- enquo(var)
     var_txt <- quo_name(var_quo)[[1]]
   } else {
@@ -178,7 +179,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
   }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target)) {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
@@ -271,26 +272,20 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 
 explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, legend_position = "right", label, label_size = 2.7, ...)  {
 
-  rlang::check_required(data)
   # define variables for CRAN-package check
   na_ind <- NULL
   target_n <- NULL
   pct <- NULL
 
   # check parameter data
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
-
+  check_data_frame_non_empty(data)
+  rlang::check_required(var)
   # parameter var
-  if(!missing(var))  {
-    var_quo <- enquo(var)
-    var_txt <- quo_name(var_quo)[[1]]
-    if (!var_txt %in% names(data)) {
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
+  if (!var_txt %in% names(data)) {
       stop(paste0("variable '", var_txt, "' not found"))
     }
-  } else {
-    stop(paste0("variable missing"))
-  }
 
   if(nrow(data) == 0) {
     p <- data %>% plot_var_info(!!var_quo, "no observations")
@@ -527,9 +522,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # check parameter data
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter var
   rlang::check_required(var)
@@ -584,7 +577,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
   na_pct <- na_check[1,2]
 
   # autoscale (if mni_val and max_val not used)
-  if (auto_scale == TRUE & is.na(min_val) & is.na(max_val))  {
+  if (auto_scale && is.na(min_val) && is.na(max_val))  {
     r <- quantile(data[[var_txt]], c(0.02, 0.98), na.rm = TRUE)
     min_val = r[1]
     max_val = r[2]
@@ -684,9 +677,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 explore_all <- function(data, n, target, ncol = 2, targetpct, split = TRUE)  {
 
   # check parameter data
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter target
   if(!missing(target))  {
@@ -831,9 +822,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, split = TRUE)  {
 explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "grey", ...)  {
 
   # check parameter data
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter x
   if(!missing(x))  {
@@ -1023,7 +1012,6 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 #' @export
 
 explore_tbl <- function(data, n)  {
-  rlang::check_required(data)
   # define variables to pass CRAN-checks
   type <- NULL
   na <- NULL
@@ -1031,8 +1019,7 @@ explore_tbl <- function(data, n)  {
   group <- NULL
 
   # check parameter data
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter n
   if (!missing(n)) {
@@ -1350,9 +1337,7 @@ explore_shiny <- function(data, target)  {
 explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
   # check parameter data
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter var
   if (!missing(var)) {
@@ -1535,9 +1520,7 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
 explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, flip = NA, ...) {
 
   # check parameter data
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
+  check_data_frame_non_empty(data)
 
   # parameter var
   if (!missing(var)) {
@@ -1652,10 +1635,10 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   plot_n_tot <- NULL
 
   # check parameters
-  rlang::check_required(data)
-  assertthat::assert_that(is.data.frame(data), msg = "expect a table of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
-  assertthat::assert_that(ncol(data) >= 2, msg = "explect at least 2 variables in data")
+  check_data_frame_non_empty(data)
+  if (ncol(data) < 2) {
+    stop("data must contain at least 2 variables.")
+  }
 
   # parameter var
   if(!missing(cat))  {
