@@ -15,7 +15,7 @@ describe_cat(data, var, n, max_cat = 10, out = "text", margin = 0)
 
 \item{max_cat}{Maximum number of categories displayed}
 
-\item{out}{Output format ("text"|"list")}
+\item{out}{Output format ("text"|"list"|"tibble"|"df")}
 
 \item{margin}{Left margin for text output (number of spaces)}
 }
