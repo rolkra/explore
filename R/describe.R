@@ -30,12 +30,13 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
   }
 
   # check for count data
-  if(!missing(n))  {
+  if (!missing(n))  {
     n_quo <- enquo(n)
     n_txt <- quo_name(n_quo)[[1]]
+
     data <- data %>%
-      select(!!var_quo, !!n_quo) %>%
-      tidyr::uncount(weights = !!n_quo)
+      dplyr::select(!!var_quo, !!n_quo) %>%
+      uncount_compat(wt = !!n_quo)
   }
 
   var_name = var_txt
@@ -134,8 +135,8 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
     n_quo <- enquo(n)
     n_txt <- quo_name(n_quo)[[1]]
     data <- data %>%
-      select(!!var_quo, !!n_quo) %>%
-      tidyr::uncount(weights = !!n_quo)
+      dplyr::select(!!var_quo, !!n_quo) %>%
+      uncount_compat(wt = !!n_quo)
   }
 
   # out = tibble

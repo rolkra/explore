@@ -9,7 +9,7 @@ predict_target(data, model, name = "prediction")
 \arguments{
 \item{data}{A dataset (data.frame or tbl)}
 
-\item{model}{A model created with explain_*() function}
+\item{model}{A model created with \verb{explain_*()} function}
 
 \item{name}{Prefix of variable-name for prediction}
 }
@@ -20,9 +20,12 @@ data containing predicted probabilities for target values
 Predict target using a trained model.
 }
 \examples{
+\dontshow{if (rlang::is_installed(c("rpart", "randomForest"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 data_train <- create_data_buy(seed = 1)
 data_test <- create_data_buy(seed = 2)
 model <- explain_tree(data_train, target = buy, out = "model")
 data <- predict_target(data = data_test, model = model)
 describe(data)
+\dontshow{\}) # examplesIf}
 }

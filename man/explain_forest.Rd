@@ -15,7 +15,11 @@ explain_forest(data, target, ntree = 50, out = "plot", ...)
 
 \item{out}{Output of the function: "plot" | "model" | "importance" | all"}
 
-\item{...}{Further arguments (passed to randomForest function)}
+\item{...}{
+  Arguments passed on to \code{\link[randomForest:randomForest]{randomForest::randomForest}}
+  \describe{
+    \item{\code{}}{}
+  }}
 }
 \value{
 Plot of importance (if out = "plot")
@@ -24,6 +28,9 @@ Plot of importance (if out = "plot")
 Explain a target using Random Forest.
 }
 \examples{
+\dontshow{if (rlang::is_installed("randomForest")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 data <- create_data_buy()
 explain_forest(data, target = buy)
+\dontshow{\}) # examplesIf}
 }

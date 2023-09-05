@@ -3,7 +3,7 @@
 \name{explain_logreg}
 \alias{explain_logreg}
 \title{Explain a binary target using a logistic regression (glm).
-Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).}
+Model chosen by AIC in a Stepwise Algorithm (\code{MASS::stepAIC()}).}
 \usage{
 explain_logreg(data, target, out = "tibble", ...)
 }
@@ -18,15 +18,16 @@ explain_logreg(data, target, out = "tibble", ...)
 }
 \value{
 Dataset with results (term, estimate, std.error, z.value, p.value)
-or the model (if out = "model")
 }
 \description{
 Explain a binary target using a logistic regression (glm).
-Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).
+Model chosen by AIC in a Stepwise Algorithm (\code{MASS::stepAIC()}).
 }
 \examples{
+\dontshow{if (rlang::is_installed("MASS")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data <- iris
 data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 data$Species <- NULL
 explain_logreg(data, target = is_versicolor)
+\dontshow{\}) # examplesIf}
 }

@@ -6,11 +6,16 @@
 \usage{
 use_data_starwars()
 }
+\value{
+Dataset
+}
 \description{
 This data set comes with the dplyr package.
 It contains data of 87 star war characters
-#' @return Dataset
 }
 \examples{
 use_data_starwars()
+}
+\seealso{
+\code{\link[dplyr:starwars]{dplyr::starwars}}
 }

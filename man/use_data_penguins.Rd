@@ -17,3 +17,6 @@ size (flipper length, body mass, bill dimensions), and sex.
 \examples{
 use_data_penguins()
 }
+\seealso{
+\code{\link[palmerpenguins:penguins]{palmerpenguins::penguins}}
+}

@@ -1,11 +1,13 @@
 # explore  <img src="man/figures/logo.png" align="right" width="130" height="150"/>
 
-  <!-- badges: start -->
-  [![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml)
-  [![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
-  [![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
-  [![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
-  <!-- badges: end -->
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml)
+[![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
+[![Downloads](http://cranlogs.r-pkg.org/badges/explore)](https://cran.r-project.org/package=explore)
+[![Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/explore)](https://cran.r-project.org/package=explore)
+
+<!-- badges: end -->
 
 
 Simplifies Exploratory Data Analysis. 
@@ -30,11 +32,11 @@ There are three ways to use the package:
 
   * **describe** - if you want to describe a dataset or a variable (number of na, unique values, ...) The output of these functions is a text.
 
-  * **explain** - to create a simple model that explains a target. explain_tree() for a decision tree, explain_logreg() for a logistic regression.
+  * **explain** - to create a simple model that explains a target. `explain_tree()` for a decision tree, `explain_logreg()` for a logistic regression.
 
   * **report** - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)
 
-The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autosacling).
+The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autoscaling).
 
 You can use {explore} with **tidy data** (each row is an observation) or with **count data** (each row is a group of observations with same attributes, one variable stores the number of observations). To use count data, you need to add the n parameter (variable containing the number of observations). Not all functions support count data.
 

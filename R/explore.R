@@ -1305,7 +1305,8 @@ explore_shiny <- function(data, target)  {
 #' @param na Value to replace NA
 #' @param ... Further arguments (like flip = TRUE/FALSE)
 #' @return Plot object
-#' @examples
+#' @examplesIf rlang::is_installed(c("shiny", "DT"))
+#'
 #' ## Launch Shiny app (in interactive R sessions)
 #' if (interactive())  {
 #'    explore(iris)

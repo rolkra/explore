@@ -51,6 +51,8 @@ Plot object
 Explore a dataset or variable
 }
 \examples{
+\dontshow{if (rlang::is_installed(c("shiny", "DT"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 ## Launch Shiny app (in interactive R sessions)
 if (interactive())  {
    explore(iris)
@@ -77,5 +79,5 @@ iris \%>\% explore(Sepal.Length, Petal.Length)
 
 # Explore correlation between two variables and split by target
 iris \%>\% explore(Sepal.Length, Petal.Length, target = is_virginica)
-
+\dontshow{\}) # examplesIf}
 }
