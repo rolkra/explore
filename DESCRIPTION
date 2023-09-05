@@ -21,7 +21,6 @@ Imports:
     magrittr,
     palmerpenguins,
     rlang (>= 1.1.0),
-    rmarkdown,
     stats,
     stringr,
     tibble
@@ -32,6 +31,7 @@ Suggests:
     knitr,
     MASS,
     randomForest,
+    rmarkdown,
     rpart,
     rpart.plot,
     shiny,

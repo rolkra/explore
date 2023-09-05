@@ -1,5 +1,6 @@
 test_that("Reports can be created", {
   skip_on_ci()
+  skip_if_not_installed("rmarkdown")
   skip_if_not(rmarkdown::pandoc_available("1.12.3"), message = "Pandoc is not available")
   expect_rmd_messages <- function(object) {
     expect_output(object) %>%
