@@ -1,10 +1,10 @@
 ---
-title: "explore_mtcars"
+title: "Explore mtcars"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{explore_mtcars}
+  %\VignetteIndexEntry{Explore mtcars}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
 
-The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for mtcars, select, mutate and the %>% operator).
+The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for `mtcars`, `select()`, `mutate()` and the` %>%` operator).
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
@@ -159,7 +159,7 @@ mtcars %>%
   explain_tree(target = hp, minsplit=15)
 ```
 
-All cars have an average hp of 147 (shown in the top node). Then the data is split by cyl. Cars with cyl<7 (56% of all cars) have an average hp of 98 and cars with cp>=7 (44% of all cars) have an average hp of 209. 
+All cars have an average hp of 147 (shown in the top node). Then the data is split by cyl. Cars with cyl<7 (56% of all cars) have an average hp of 98 and cars with `cp>=7` (44% of all cars) have an average hp of 209. 
 
 The variables cyl and mpg can explain hp. The bottom nodes are showing an average hp of 80, 121 and 209.
 
@@ -170,10 +170,6 @@ model <- mtcars %>%
   explain_tree(target = hp, minsplit=15, out = "model")
 ```
 
-```
-model <- mtcars %>% 
-  explain_tree(target = hp, minsplit=15, out = "model")
-```
 ```{r echo=TRUE, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
 model
 ```
@@ -190,4 +186,4 @@ mtcars %>%
 
 Cars with 8 cylinders have higher horsepower.
 
-Cars with low miles per gallon (mgp) have higher horsepower!
+Cars with low miles per gallon (mpg) have higher horsepower!
