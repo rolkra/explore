@@ -11,7 +11,7 @@ Dataset
 }
 \description{
 This data set comes with the ggplot2 package.
-It containing the prices and other attributes of almost 54,000 diamonds.
+It contains the prices and other attributes of almost 54,000 diamonds.
 }
 \examples{
 use_data_diamonds()
