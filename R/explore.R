@@ -44,7 +44,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
-    select(!!var_quo, !!target_quo)
+    dplyr::select(!!var_quo, !!target_quo)
   names(data_bar) <- c("cat", "target")
 
   # replace na value
@@ -188,7 +188,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 
   # rename variables, to use it (lazy evaluation)
   data_bar <- data %>%
-    select(!!var_quo, !!target_quo)
+    dplyr::select(!!var_quo, !!target_quo)
   names(data_bar) <- c("num", "target")
 
   if (!is.na(na)) {
@@ -221,17 +221,17 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 
   # cut only when more then 1 different value in data
   if (min_val != max_val)  {
-    data_bar <- data_bar %>% mutate(explore_cat  = cut(num, 10))
+    data_bar <- dplyr::mutate(data_bar, explore_cat = cut(num, 10))
   } else {
     data_bar <- data_bar %>% mutate(explore_cat = min_val)
   }
 
   cat_labels <- data_bar %>%
-    group_by(explore_cat) %>%
-    summarize(cat_label = max(num), n = n())
+    dplyr::group_by(explore_cat) %>%
+    dplyr::summarize(cat_label = max(num), n = n())
 
   data_bar <- data_bar %>%
-    inner_join(y = cat_labels, by = "explore_cat")
+    dplyr::inner_join(y = cat_labels, by = "explore_cat")
 
   #result <- data_bar
 
@@ -1120,7 +1120,7 @@ explore_shiny <- function(data, target)  {
   }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target))  {
     target_quo <- enquo(target)
     target_text <- quo_name(target_quo)[[1]]
   } else {
@@ -1132,6 +1132,7 @@ explore_shiny <- function(data, target)  {
   type <- NULL
   variable <- NULL
 
+  check_installed(c("shiny", "DT (>= 0.3.0)"), reason = "for creating a report as a shiny App.")
   # get variable types
   # tbl_guesstarget <- describe(data) %>%
   #   filter(unique <= 2) %>%
@@ -1143,8 +1144,8 @@ explore_shiny <- function(data, target)  {
   # guesstarget <- as.character(tbl_guesstarget[[1]])
 
    tbl_guesstarget <- describe(data) %>%
-     filter(type %in% c("lgl","int","dbl","num","fct","chr")) %>%
-     select(variable)
+     dplyr::filter(type %in% c("lgl","int","dbl","num","fct","chr")) %>%
+     dplyr::select(variable)
   guesstarget <- as.character(tbl_guesstarget[[1]])
 
   # check all variables if usable
@@ -1197,7 +1198,7 @@ explore_shiny <- function(data, target)  {
   # server: calculate statistics and generate plot
   server <- function(input, output, session) {
 
-    observeEvent(input$report, {
+    shiny::observeEvent(input$report, {
 
       # get name of selected target
       # rmarkdown templates uses variables data and var_name_target
@@ -1208,7 +1209,7 @@ explore_shiny <- function(data, target)  {
       output_file <- "report_explore.html"
 
       # show waiting-window
-      shiny::showModal(modalDialog("Generating report ... (this may take a while)", footer = NULL))
+      shiny::showModal(shiny::modalDialog("Generating report ... (this may take a while)", footer = NULL))
 
       # report only variables
       if(input$target == "<no target>")  {
@@ -1234,7 +1235,7 @@ explore_shiny <- function(data, target)  {
     })
 
     output$graph_target <- shiny::renderPlot({
-      if(input$target != "<no target>" & input$var != input$target)  {
+      if (input$target != "<no target>" & input$var != input$target)  {
         data %>% explore(!!sym(input$var), target = !!sym(input$target), auto_scale = input$auto_scale, split = !input$targetpct)
       }
     }) # renderPlot graph_target
@@ -1243,7 +1244,7 @@ explore_shiny <- function(data, target)  {
       if(input$target != "<no target>") {
         if (ncol(data) > 20) {
           # show waiting-window
-          shiny::showModal(modalDialog("Growing tree ... (this may take a while)", footer = NULL))
+          shiny::showModal(shiny::modalDialog("Growing tree ... (this may take a while)", footer = NULL))
           # grow decision tree
           data %>% explain_tree(target = !!sym(input$target), size=0.9)
           # ready
@@ -1412,15 +1413,15 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
     explore_shiny(data)
 
     # count data
-  } else if (!is.na(n_text) & is.na(target_text))  {
+  } else if (!is.na(n_text) && is.na(target_text))  {
     explore_count(data[unique(c(var_text, n_text))], cat = !!var_quo, n = !!n_quo, split = split, pct = TRUE, ...)
 
     # count data + target
-  } else if (!is.na(n_text)  & !is.na(target_text))  {
+  } else if (!is.na(n_text)  && !is.na(target_text))  {
     explore_count(data[unique(c(var_text, n_text, target_text))], cat = !!var_quo, n = !!n_quo, target = !!target_quo, split = split, ...)
 
     # var + var2 -> correlation
-  } else if (!is.na(var_text) & !is.na(var2_text) & is.na(target_text))  {
+  } else if (!is.na(var_text) && !is.na(var2_text) & is.na(target_text))  {
     explore_cor(data[unique(c(var_text, var2_text))],
                 x = !!var_quo, y = !!var2_quo,
                 min_val = min_val, max_val = max_val,
@@ -1463,11 +1464,11 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
                     auto_scale = auto_scale, na = na, ...)
 
     # no target, cat
-  } else if (is.na(target_text) & (var_type == "cat")) {
+  } else if (is.na(target_text) && var_type == "cat") {
     explore_bar(data[var_text], !!var_quo, ...)
 
     # target, num, split
-  } else if (!is.na(target_text) & (var_type == "num") & (split == TRUE)) {
+  } else if (!is.na(target_text) && (var_type == "num") && (split == TRUE)) {
     explore_density(data[unique(c(var_text, target_text))],
                     var = !!var_quo, target = !!target_quo,
                     min_val = min_val, max_val = max_val,
@@ -1481,7 +1482,7 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
                        auto_scale = auto_scale, na = na, ...)
 
     # target, cat, split
-  } else if (!is.na(target_text) & (var_type == "cat") & (split == TRUE)) {
+  } else if (!is.na(target_text) && (var_type == "cat") && (split == TRUE)) {
     explore_bar(data[unique(c(var_text, target_text))],
                        !!var_quo, target = !!target_quo,
                        ...)
@@ -1641,7 +1642,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   }
 
   # parameter var
-  if(!missing(cat))  {
+  if (!missing(cat))  {
     cat_quo <- enquo(cat)
     cat_txt <- quo_name(cat_quo)[[1]]
     if (!cat_txt %in% names(data)) {

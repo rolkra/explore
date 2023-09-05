@@ -16,8 +16,7 @@
 #' @importFrom stringr str_trim str_replace_all
 #' @importFrom utils browseURL head
 ## Report specific functions
-#' @importFrom DT DTOutput renderDT
 #' @import rmarkdown
-#' @import shiny
+# #' @import shiny # maybe uncomment when dev?
 ## usethis namespace: end
 NULL
