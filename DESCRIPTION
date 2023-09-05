@@ -17,7 +17,7 @@ Imports:
     broom,
     dplyr,
     DT (>= 0.3.0),
-    forcats,
+    forcats (>= 1.0.0),
     ggplot2 (>= 3.4.0),
     gridExtra,
     magrittr,
