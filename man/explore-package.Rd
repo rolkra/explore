@@ -6,11 +6,14 @@
 \alias{_PACKAGE}
 \title{explore: Simplifies Exploratory Data Analysis}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Interactive data exploration with one line of code or use an easy to remember set of tidy functions for exploratory data analysis. Introduces three main verbs. explore() to graphically explore a variable or table, describe() to describe a variable or table and report() to create an automated report.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://rolkra.github.io/explore/}
   \item \url{https://github.com/rolkra/explore}
   \item Report bugs at \url{https://github.com/rolkra/explore/issues}
 }
