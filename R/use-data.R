@@ -51,7 +51,7 @@ use_data_mpg <- function() {
 #' Use the diamonds data set
 #'
 #' This data set comes with the ggplot2 package.
-#' It containing the prices and other attributes of almost 54,000 diamonds.
+#' It contains the prices and other attributes of almost 54,000 diamonds.
 #' @return Dataset
 #' @examples
 #' use_data_diamonds()
@@ -59,6 +59,19 @@ use_data_mpg <- function() {
 
 use_data_diamonds <- function() {
   return(ggplot2::diamonds)
+}
+
+#' Use the starwars data set
+#'
+#' This data set comes with the dplyr package.
+#' It contains data of 87 star war characters
+#' #' @return Dataset
+#' @examples
+#' use_data_starwars()
+#' @export
+
+use_data_starwars <- function() {
+  return(dplyr::starwars)
 }
 
 #' Use the penguins data set
