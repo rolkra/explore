@@ -25,7 +25,7 @@ Imports:
     MASS,
     palmerpenguins,
     randomForest,
-    rlang,
+    rlang (>= 1.1.0),
     rmarkdown,
     rpart,
     rpart.plot,
