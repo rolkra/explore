@@ -1,4 +1,4 @@
-# explore  <img src="man/figures/hex_explore.png" align="right" width="130" height="150"/>
+# explore  <img src="man/figures/logo.png" align="right" width="130" height="150"/>
 
   <!-- badges: start -->
   [![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml)
