@@ -20,12 +20,9 @@
 abtest <- function(data, expr, target, sign_level = 0.05) {
 
   # check parameter
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(expr)
   rlang::check_required(target)
-
-  assertthat::assert_that(is.data.frame(data), msg = "expect data of type data.frame")
-  assertthat::assert_that(nrow(data) > 0, msg = "data has 0 observations")
   assertthat::assert_that(is.numeric(sign_level), msg = "expect numeric value for sign_level")
   assertthat::assert_that(sign_level <= 1, msg = "expect sign_level between 0 and 1")
   assertthat::assert_that(sign_level > 0, msg = "expect sign_level between 0 and 1")

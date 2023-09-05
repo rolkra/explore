@@ -16,6 +16,7 @@
 
 report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
 
+  check_data_frame_non_empty(data)
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
   rmarkdown::pandoc_available(version = "1.12.3", error = TRUE)

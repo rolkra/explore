@@ -11,11 +11,8 @@
 #' @export
 
 describe_num <- function(data, var, n, out = "text", margin = 0) {
-  rlang::check_required(data)
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
+  check_data_frame_non_empty(data)
 
   # parameter var
   rlang::check_required(var)
@@ -118,11 +115,8 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
 
 describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # var
   rlang::check_required(var)
@@ -248,13 +242,8 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 #' @export
 
 describe_all <- function(data = NA, out = "large") {
-  # data table available?
+  # data table available?  data type data.frame?
   rlang::check_required(data)
-
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # define variables for package check
   variable <- NULL
@@ -359,12 +348,9 @@ describe_all <- function(data = NA, out = "large") {
 describe_tbl <- function(data, n, target, out = "text")  {
 
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
 
   # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # parameter target
   if(!missing(target))  {
@@ -502,12 +488,8 @@ describe_tbl <- function(data, n, target, out = "text")  {
 
 describe <- function(data, var, n, target, out = "text", ...)  {
   # data table available?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
 
-  # data type data.frame?
-  if (!is.data.frame(data))  {
-    stop("expect a table of type data.frame")
-  }
 
   # parameter var
   if(!missing(var))  {

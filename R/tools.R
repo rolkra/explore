@@ -8,7 +8,7 @@
 #' encrypt("hello world")
 #' @export
 
-encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
+encrypt <- function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
   old=paste(codeletters,collapse="")
   new=paste(c(codeletters[(shift+1):nchar(old)],codeletters[1:shift]),collapse="")
   return (chartr(old,new,text))
@@ -24,7 +24,7 @@ encrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 #' decrypt("zw336 E693v")
 #' @export
 
-decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
+decrypt <- function (text, codeletters=c(toupper(letters),letters,0:9), shift=18)  {
   old=paste(codeletters,collapse="")
   new=paste(c(codeletters[(shift+1):nchar(old)],codeletters[1:shift]),collapse="")
   return (chartr(new,old,text))
@@ -49,7 +49,7 @@ decrypt<-function (text, codeletters=c(toupper(letters),letters,0:9), shift=18) 
 balance_target <- function(data, target, min_prop = 0.1, seed) {
 
   # check if parameters are missing
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(target)
 
   # check if min_prop has a meaningful value
@@ -119,7 +119,7 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 
 weight_target <- function(data, target) {
   # check if parameters are missing
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
   rlang::check_required(target)
 
   # tidy eval for target
