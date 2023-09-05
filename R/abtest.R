@@ -21,8 +21,8 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
 
   # check parameter
   check_data_frame_non_empty(data)
-  rlang::check_required(target)
   rlang::check_required(expr)
+  rlang::check_required(target)
   check_number_decimal(sign_level, min = 0, max = 1)
 
   # parameter target
