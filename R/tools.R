@@ -53,9 +53,7 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
   rlang::check_required(target)
 
   # check if min_prop has a meaningful value
-  if (min_prop < 0 | min_prop > 1)  {
-    stop("min_prop must be a value between 0 and 1")
-  }
+  check_number_decimal(min_prop, min = 0, max = 1)
 
   # tidy eval for target
   target_quo <- enquo(target)
@@ -630,9 +628,7 @@ get_var_buckets <- function(data, bucket_size = 100,
 data_dict_md <- function(data, title = "", description = NA, output_file = "data_dict.md", output_dir)  {
 
   # output_dir must be defined
-  if(missing(output_dir)) {
-    stop("output_dir must be defined")
-  }
+  check_string(output_dir)
 
   # describe data
   d <- data %>% describe()

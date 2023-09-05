@@ -326,7 +326,6 @@ predict_target <- function(data, model, name = "prediction") {
 
   # check parameter
   check_data_frame_non_empty(data)
-  if (!is.data.frame(data)) { stop("data must be of class data.frame or tbl") }
 
   result <- data
   values <- NA

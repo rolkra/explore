@@ -106,7 +106,7 @@ describe_num <- function(data, var, n, out = "text", margin = 0) {
 #' @param var Variable or variable name
 #' @param n Weights variable for count-data
 #' @param max_cat Maximum number of categories displayed
-#' @param out Output format ("text"|"list")
+#' @param out Output format ("text"|"list"|"tibble"|"df")
 #' @param margin Left margin for text output (number of spaces)
 #' @return Description as text or list
 #' @examples
@@ -120,10 +120,9 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 
   # var
   rlang::check_required(var)
-  if(!missing(var))  {
-    var_quo <- enquo(var)
-    var_txt <- quo_name(var_quo)[[1]]
-  }
+  # non-standard evaluation.
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
 
   # check if var in data
   if(!var_txt %in% names(data)) {

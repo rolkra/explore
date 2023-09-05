@@ -11,22 +11,21 @@
 create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
 
   # reproducible random numbers
   set.seed(seed)
 
   # create empty data frame
   data <- data.frame(
-    row.names = seq(1, obs)
+    row.names = seq_len(obs)
   )
 
   # add if
   if (add_id)  {
-    data[["id"]] <- seq(1, obs)
+    data[["id"]] <- seq_len(obs)
   }
 
   # return data
@@ -49,10 +48,9 @@ create_data_app = function(obs = 1000,
                            add_id = FALSE,
                            seed = 123) {
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
 
   # set seed (randomization)
   set.seed(seed)
@@ -154,10 +152,9 @@ create_data_app = function(obs = 1000,
 create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
 
   # reproducible random numbers
   set.seed(seed)
@@ -169,7 +166,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
   data <- tibble::tibble(
     age = sample(16:95, nobs, replace = TRUE),
     gender = sample(c("Male","Female", "X"), prob = c(0.49, 0.49, 0.02), nobs, replace = TRUE),
-    eye_color = sample(c("Blue","Green","Brown"), nobs, replace = TRUE),
+    eye_color = sample(c("Blue","Green","Brown"), size = nobs, replace = TRUE),
     shoe_size = trunc(stats::rnorm(nobs, mean = 43, sd = 3)),
     iq = trunc(stats::rnorm(nobs, mean = 100, sd = 20)),
     education = sample(c(0:100), nobs, replace = TRUE),
@@ -179,7 +176,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 
     pet = sample(c("Dog","Cat","Other","No"),
                  prob = c(0.23,0.22,0.11,0.35),
-                 nobs, replace = TRUE),
+                nobs, replace = TRUE),
 
     favorite_pizza = sample(c("Margaritha", "Carciofi","Pepperoni", "Hawai", "Quattro Statgioni", "Provenciale"), nobs, replace = TRUE),
     favorite_icecream = sample(c("Vanilla", "Chocolate","Strawberry", "Lemon", "Cookie", "Hazelnut","Apple"),
@@ -257,12 +254,10 @@ create_data_buy = function(obs = 1000,
                            seed = 123) {
 
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.numeric(target1_prob))
-  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
+  check_number_decimal(target1_prob, min = 0, max = 1)
 
   # define variables for CRAN-package check
   target_ind <- NULL
@@ -381,12 +376,10 @@ create_data_churn = function(obs = 1000,
                              seed = 123) {
 
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.numeric(target1_prob))
-  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
+  check_number_decimal(target1_prob, min = 0, max = 1)
 
   # set seed (randomization)
   set.seed(seed)
@@ -482,10 +475,9 @@ create_data_newsletter = function(obs = 1000,
                               add_id = FALSE,
                               seed = 123) {
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
 
   # define variables for CRAN-package check
   sending_h <- NULL
@@ -564,12 +556,10 @@ create_data_unfair = function(obs = 1000,
                               add_id = FALSE,
                               seed = 123) {
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.numeric(target1_prob))
-  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
+  check_number_decimal(target1_prob, min = 0, max = 1)
 
   # set seed (randomization)
   set.seed(seed)
@@ -671,12 +661,10 @@ create_data_random = function(obs = 1000, vars = 10,
                               add_id = TRUE,
                               seed = 123) {
   # checks
-  assertthat::assert_that(is.numeric(obs))
-  assertthat::assert_that(obs > 0)
-  assertthat::assert_that(is.numeric(target1_prob))
-  assertthat::assert_that(target1_prob >= 0 & target1_prob <= 1)
-  assertthat::assert_that(is.logical(add_id))
-  assertthat::assert_that(is.numeric(seed))
+  check_number_whole(obs, min = 1)
+  check_bool(add_id)
+  check_number_decimal(seed)
+  check_number_decimal(target1_prob, min = 0, max = 1)
 
   # set seed (randomization)
   set.seed(seed)

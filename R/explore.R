@@ -179,6 +179,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
   }
 
   # parameter target
+  if (!missing(target)) {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
@@ -278,17 +279,13 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 
   # check parameter data
   check_data_frame_non_empty(data)
-
+  rlang::check_required(var)
   # parameter var
-  if(!missing(var))  {
-    var_quo <- enquo(var)
-    var_txt <- quo_name(var_quo)[[1]]
-    if (!var_txt %in% names(data)) {
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
+  if (!var_txt %in% names(data)) {
       stop(paste0("variable '", var_txt, "' not found"))
     }
-  } else {
-    stop(paste0("variable missing"))
-  }
 
   if(nrow(data) == 0) {
     p <- data %>% plot_var_info(!!var_quo, "no observations")
