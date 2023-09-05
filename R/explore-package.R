@@ -14,7 +14,7 @@
 #' @importFrom stringr str_trim str_replace_all
 #' @importFrom utils browseURL head
 ## Report specific functions
-#' @import rmarkdown
+# #' @import rmarkdown
 # #' @import shiny # maybe uncomment when dev?
 ## usethis namespace: end
 NULL

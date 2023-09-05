@@ -1,5 +1,6 @@
-# To avoid importing tidyr. here is tidyr::uncount inlined.
-# simplified version.
+# To avoid importing tidyr. here is a simplified tidyr::uncount
+# As tidyr::uncount is only used in internal code with the n variable in the data
+# We can use a simplified logic.
 uncount_compat <- function(dat, wt) {
   rlang::check_required(wt)
 
@@ -7,7 +8,7 @@ uncount_compat <- function(dat, wt) {
   res <- dplyr::reframe(
     dat,
     dplyr::across(
-      .cols =everything(),
+      .cols = dplyr::everything(),
       .fns = ~ rep.int(.x, times = .data$wt_variable_intermediate[1])
     ),
     .by = "wt_variable_intermediate"

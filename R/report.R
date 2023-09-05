@@ -5,18 +5,21 @@
 #'
 #' @param data A dataset
 #' @param n Weights variable for count data
-#' @param target Target variable (0/1 or FALSE/TRUE)
-#' @param targetpct Plot variable as target% (FALSE/TRUE)
+#' @param target Target variable (0/1 or `FALSE`/`TRUE`)
+#' @param targetpct Plot variable as target% (`FALSE`/`TRUE`)
 #' @param split Alternative to targetpct (split = !targetpct)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
-#' @examplesIf rmarkdown::pandoc_available("1.12.3")
-#' report(iris, output_dir = tempdir())
+#' @examplesIf rlang::is_installed("rmarkdown")
+#' if (rmarkdown::pandoc_available("1.12.3")) {
+#'  report(iris, output_dir = tempdir())
+#'  }
 #' @export
 
 report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
 
   check_data_frame_non_empty(data)
+  rlang::check_installed("rmarkdown", reason = "for creating html reports.")
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
   rmarkdown::pandoc_available(version = "1.12.3", error = TRUE)

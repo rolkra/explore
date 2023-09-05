@@ -11,9 +11,9 @@ report(data, n, target, targetpct, split, output_file, output_dir)
 
 \item{n}{Weights variable for count data}
 
-\item{target}{Target variable (0/1 or FALSE/TRUE)}
+\item{target}{Target variable (0/1 or \code{FALSE}/\code{TRUE})}
 
-\item{targetpct}{Plot variable as target\% (FALSE/TRUE)}
+\item{targetpct}{Plot variable as target\% (\code{FALSE}/\code{TRUE})}
 
 \item{split}{Alternative to targetpct (split = !targetpct)}
 
@@ -26,7 +26,9 @@ Generate a report of all variables
 If target is defined, the relation to the target is reported
 }
 \examples{
-\dontshow{if (rmarkdown::pandoc_available("1.12.3")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-report(iris, output_dir = tempdir())
+\dontshow{if (rlang::is_installed("rmarkdown")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+if (rmarkdown::pandoc_available("1.12.3")) {
+ report(iris, output_dir = tempdir())
+ }
 \dontshow{\}) # examplesIf}
 }
