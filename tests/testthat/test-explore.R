@@ -1,7 +1,6 @@
 # data contains no NA -----------------------------------------------------
 
-# num variable
-test_that("explore()", {
+test_that("explore() works with numeric variables", {
   data <- iris
   expect_no_error(explore(data, Sepal.Length))
 })
@@ -10,8 +9,7 @@ test_that("explore_tbl()", {
   expect_no_error(explore_tbl(iris))
 })
 
-# cat variable
-test_that("explore()", {
+test_that("explore() works with categorical variables", {
   data <- iris
   expect_no_error(explore(data, Species))
 })
@@ -57,15 +55,15 @@ test_that("explore()", {
   expect_no_error(explore(data, Sepal.Length, target = Species))
 })
 
-# cat variable, num target (boxplots)
-test_that("explore()", {
+test_that("explore() works with cat variables and num targets.", {
+  # Creates a boxplot
   data <- iris
   data[1, ] <- NA
-  expect_no_error(explore(data, Species, target = Sepal.Length))
+  expect_no_error(p <- explore(data, Species, target = Sepal.Length))
+  expect_s3_class(p$layers[[1]]$geom, "GeomBoxplot")
 })
 
-# points xy
-test_that("explore()", {
+test_that("explore() works with xy points", {
   data <- iris
   data[1, ] <- NA
   expect_no_error(explore(data, Sepal.Length, Sepal.Width, targetpct = 0.7))
