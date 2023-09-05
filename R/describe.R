@@ -240,9 +240,9 @@ describe_cat <- function(data, var, n, max_cat = 10, out = "text", margin = 0) {
 #' describe_all(iris)
 #' @export
 
-describe_all <- function(data = NA, out = "large") {
+describe_all <- function(data, out = "large") {
   # data table available?  data type data.frame?
-  rlang::check_required(data)
+  check_data_frame_non_empty(data)
 
   # define variables for package check
   variable <- NULL

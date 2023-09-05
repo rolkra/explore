@@ -4,7 +4,7 @@
 \alias{describe_all}
 \title{Describe all variables of a dataset}
 \usage{
-describe_all(data = NA, out = "large")
+describe_all(data, out = "large")
 }
 \arguments{
 \item{data}{A dataset}
