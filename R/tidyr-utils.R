@@ -3,6 +3,9 @@
 # We can use a simplified logic.
 uncount_compat <- function(dat, wt) {
   rlang::check_required(wt)
+  if (anyNA(dat)) {
+    dat <- dplyr::filter(dat, !is.na({{ wt }}))
+  }
 
   res <- dplyr::reframe(
     dat,

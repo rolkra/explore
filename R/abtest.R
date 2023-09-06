@@ -98,8 +98,8 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
   }
 
   # expression
-  data_ab <- data |>
-    dplyr::group_by({{ expr }}) |>
+  data_ab <- data %>%
+    dplyr::group_by({{ expr }}) %>%
     dplyr::summarise(
       target_mean = mean({{ target }}),
       target_median = median({{ target }}),
