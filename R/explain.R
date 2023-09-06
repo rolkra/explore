@@ -11,7 +11,7 @@
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
 #' @return Plot or additional the model (if out = "model")
-#' @examplesIf rlang::is_installed("rpart")
+#' @examples
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 #' data$Species <- NULL
@@ -22,7 +22,6 @@ explain_tree <- function(data, target, n,
                          max_cat = 10, max_target_cat = 5, maxdepth = 3,
                          minsplit = 20, cp = 0, weights = NA,
                          size = 0.7, out = "plot", ...)  {
-  rlang::check_installed("rpart")
   check_data_frame_non_empty(data)
   # define variables to pass CRAN-checks
   type <- NULL
@@ -140,7 +139,6 @@ explain_tree <- function(data, target, n,
 
   # check if tree was created. If not just plot info-text
   if(nrow(mod$frame) > 1)  {
-    rlang::check_installed("rpart.plot", reason = "for plotting decision trees.")
 
     # plot tree
     rpart.plot::rpart.plot(mod,

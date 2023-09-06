@@ -1104,7 +1104,7 @@ explore_tbl <- function(data, n)  {
 #'
 #' @param data A dataset
 #' @param target Target variable (0/1 or FALSE/TRUE)
-#' @examplesIf rlang::is_installed(c("shiny", "DT", "rmarkdown"))
+#' @examples
 #'
 #' # Only run examples in interactive R sessions
 #' if (interactive())  {
@@ -1133,7 +1133,6 @@ explore_shiny <- function(data, target)  {
   type <- NULL
   variable <- NULL
 
-  check_installed(c("shiny", "DT (>= 0.3.0)", "rmarkdown"), reason = "for creating a report as a shiny App.")
   # get variable types
   # tbl_guesstarget <- describe(data) %>%
   #   filter(unique <= 2) %>%
@@ -1306,8 +1305,7 @@ explore_shiny <- function(data, target)  {
 #' @param na Value to replace NA
 #' @param ... Further arguments (like flip = TRUE/FALSE)
 #' @return Plot object
-#' @examplesIf rlang::is_installed(c("shiny", "DT"))
-#'
+#' @examples
 #' ## Launch Shiny app (in interactive R sessions)
 #' if (interactive())  {
 #'    explore(iris)

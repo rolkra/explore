@@ -15,11 +15,9 @@ explore_shiny(data, target)
 Launches a shiny app to explore a dataset
 }
 \examples{
-\dontshow{if (rlang::is_installed(c("shiny", "DT", "rmarkdown"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Only run examples in interactive R sessions
 if (interactive())  {
    explore_shiny(iris)
 }
-\dontshow{\}) # examplesIf}
 }

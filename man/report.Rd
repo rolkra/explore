@@ -26,9 +26,7 @@ Generate a report of all variables
 If target is defined, the relation to the target is reported
 }
 \examples{
-\dontshow{if (rlang::is_installed("rmarkdown")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 if (rmarkdown::pandoc_available("1.12.3")) {
  report(iris, output_dir = tempdir())
  }
-\dontshow{\}) # examplesIf}
 }

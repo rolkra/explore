@@ -68,10 +68,8 @@ Plot or additional the model (if out = "model")
 Explain a target using a simple decision tree (classification or regression)
 }
 \examples{
-\dontshow{if (rlang::is_installed("rpart")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data <- iris
 data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 data$Species <- NULL
 explain_tree(data, target = is_versicolor)
-\dontshow{\}) # examplesIf}
 }

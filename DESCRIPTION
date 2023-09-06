@@ -15,26 +15,26 @@ URL: https://rolkra.github.io/explore/, https://github.com/rolkra/explore
 Depends: R (>= 3.5.0)
 Imports: 
     dplyr (>= 1.1.0),
+    DT (>= 0.3.0),
     forcats (>= 1.0.0),
     ggplot2 (>= 3.4.0),
     gridExtra,
     magrittr,
     palmerpenguins,
     rlang (>= 1.1.0),
+    rmarkdown,
+    rpart,
+    rpart.plot,
+    shiny,
     stats,
     stringr,
     tibble
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    DT (>= 0.3.0),
     knitr,
     MASS,
     randomForest,
-    rmarkdown,
-    rpart,
-    rpart.plot,
-    shiny,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

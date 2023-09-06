@@ -10,7 +10,7 @@
 #' @param split Alternative to targetpct (split = !targetpct)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
-#' @examplesIf rlang::is_installed("rmarkdown")
+#' @examples
 #' if (rmarkdown::pandoc_available("1.12.3")) {
 #'  report(iris, output_dir = tempdir())
 #'  }
@@ -19,7 +19,6 @@
 report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
 
   check_data_frame_non_empty(data)
-  rlang::check_installed("rmarkdown", reason = "for creating html reports.")
   # pandoc must be available to generate report
   # if RStudio is used, pandoc should be available
   rmarkdown::pandoc_available(version = "1.12.3", error = TRUE)
