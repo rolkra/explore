@@ -59,9 +59,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/explore_mtcars.html">explore_mtcars</a>
-    <a class="dropdown-item" href="articles/explore_penguins.html">explore_penguins</a>
-    <a class="dropdown-item" href="articles/explore_titanic.html">explore_titanic</a>
+    <a class="dropdown-item" href="articles/explore_mtcars.html">Explore mtcars</a>
+    <a class="dropdown-item" href="articles/explore_penguins.html">Explore penguins</a>
+    <a class="dropdown-item" href="articles/explore_titanic.html">Explore Titanic</a>
   </div>
 </li>
 <li class="nav-item">
@@ -91,7 +91,9 @@
 <img src="logo.png" class="logo" alt=""><h1 id="explore-">explore <a class="anchor" aria-label="anchor" href="#explore-"></a>
 </h1>
 </div>
-<p><!-- badges: start --> <a href="https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://www.r-pkg.org/badges/version/explore" alt="CRAN Version"></a> <a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/explore" alt="Downloads"></a> <a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/explore" alt="Total Downloads"></a> <!-- badges: end --></p>
+<!-- badges: start -->
+
+<!-- badges: end -->
 <p>Simplifies Exploratory Data Analysis.</p>
 <div class="section level2">
 <h2 id="why-this-package">Why this package?<a class="anchor" aria-label="anchor" href="#why-this-package"></a>
@@ -113,12 +115,12 @@
 <ul>
 <li><p><strong>explore</strong> - if you want to explore a table, a variable or the relationship between a variable and a target (binary, categorical or numeric). The output of these functions is a plot.</p></li>
 <li><p><strong>describe</strong> - if you want to describe a dataset or a variable (number of na, unique values, …) The output of these functions is a text.</p></li>
-<li><p><strong>explain</strong> - to create a simple model that explains a target. explain_tree() for a decision tree, explain_logreg() for a logistic regression.</p></li>
+<li><p><strong>explain</strong> - to create a simple model that explains a target. <code><a href="reference/explain_tree.html">explain_tree()</a></code> for a decision tree, <code><a href="reference/explain_logreg.html">explain_logreg()</a></code> for a logistic regression.</p></li>
 <li><p><strong>report</strong> - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)</p></li>
 </ul>
 </li>
 </ul>
-<p>The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autosacling).</p>
+<p>The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autoscaling).</p>
 <p>You can use {explore} with <strong>tidy data</strong> (each row is an observation) or with <strong>count data</strong> (each row is a group of observations with same attributes, one variable stores the number of observations). To use count data, you need to add the n parameter (variable containing the number of observations). Not all functions support count data.</p>
 </div>
 <div class="section level2">
@@ -345,7 +347,15 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://www.r-pkg.org/badges/version/explore" alt="CRAN Version"></a></li>
+<li><a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/explore" alt="Downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=explore" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/explore" alt="Total Downloads"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>

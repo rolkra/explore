@@ -27,9 +27,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/explore_mtcars.html">explore_mtcars</a>
-    <a class="dropdown-item" href="../articles/explore_penguins.html">explore_penguins</a>
-    <a class="dropdown-item" href="../articles/explore_titanic.html">explore_titanic</a>
+    <a class="dropdown-item" href="../articles/explore_mtcars.html">Explore mtcars</a>
+    <a class="dropdown-item" href="../articles/explore_penguins.html">Explore penguins</a>
+    <a class="dropdown-item" href="../articles/explore_titanic.html">Explore Titanic</a>
   </div>
 </li>
 <li class="nav-item">
@@ -101,20 +101,30 @@
 
 
 <dt>maxdepth</dt>
-<dd><p>Maximal depth of the tree (rpart-parameter)</p></dd>
+<dd><p>Set the maximum depth of any node of the final tree, with the root
+    node counted as depth 0.  Values greater than  30 <code>rpart</code> will
+    give nonsense results on 32-bit machines.</p></dd>
 
 
 <dt>minsplit</dt>
-<dd><p>The minimum number of observations that must exist in a node to split.</p></dd>
+<dd><p>the minimum number of observations that must exist in a node in order for 
+    a split to be attempted.</p></dd>
 
 
 <dt>cp</dt>
-<dd><p>Complexity parameter (rpart-parameter)</p></dd>
+<dd><p>complexity parameter.  Any split that does not decrease the overall
+    lack of fit by a factor of <code>cp</code> is not attempted.  For instance,
+    with <code>anova</code> splitting, this means that the overall R-squared must
+    increase by <code>cp</code> at each step. The main role of this parameter
+    is to save computing time by pruning off splits that are obviously
+    not worthwhile. Essentially,the user informs the program that any
+    split which does not improve the fit by <code>cp</code> will likely be
+    pruned off by cross-validation, and that hence the program need
+    not pursue it.</p></dd>
 
 
 <dt>weights</dt>
-<dd><p>Vector containing weight of each observation (rpart-parameter). Can
-not be used in combination with parameter n (variable containing weight for count-data)</p></dd>
+<dd><p>optional case weights.</p></dd>
 
 
 <dt>size</dt>

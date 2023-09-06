@@ -29,9 +29,9 @@ If target is defined, the relation to the target is reported"><meta property="og
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/explore_mtcars.html">explore_mtcars</a>
-    <a class="dropdown-item" href="../articles/explore_penguins.html">explore_penguins</a>
-    <a class="dropdown-item" href="../articles/explore_titanic.html">explore_titanic</a>
+    <a class="dropdown-item" href="../articles/explore_mtcars.html">Explore mtcars</a>
+    <a class="dropdown-item" href="../articles/explore_penguins.html">Explore penguins</a>
+    <a class="dropdown-item" href="../articles/explore_titanic.html">Explore Titanic</a>
   </div>
 </li>
 <li class="nav-item">
@@ -79,11 +79,11 @@ If target is defined, the relation to the target is reported</p>
 
 
 <dt>target</dt>
-<dd><p>Target variable (0/1 or FALSE/TRUE)</p></dd>
+<dd><p>Target variable (0/1 or <code>FALSE</code>/<code>TRUE</code>)</p></dd>
 
 
 <dt>targetpct</dt>
-<dd><p>Plot variable as target% (FALSE/TRUE)</p></dd>
+<dd><p>Plot variable as target% (<code>FALSE</code>/<code>TRUE</code>)</p></dd>
 
 
 <dt>split</dt>
@@ -101,7 +101,9 @@ If target is defined, the relation to the target is reported</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">report</span><span class="op">(</span><span class="va">iris</span>, output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html" class="external-link">pandoc_available</a></span><span class="op">(</span><span class="st">"1.12.3"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="fu">report</span><span class="op">(</span><span class="va">iris</span>, output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> processing file: template_report_variable.Rmd</span>
@@ -114,10 +116,10 @@ If target is defined, the relation to the target is reported</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7/9                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8/9 [unnamed-chunk-4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9/9                  </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> output file: /tmp/Rtmpf7Mm00/template_report_variable.knit.md</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> /usr/bin/pandoc +RTS -K512m -RTS /tmp/Rtmpf7Mm00/template_report_variable.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmpf7Mm00/report_variable.html --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmpf7Mm00/rmarkdown-str17fd4ce38bbb.html </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> output file: /tmp/RtmpmgEr4N/template_report_variable.knit.md</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> /usr/bin/pandoc +RTS -K512m -RTS /tmp/RtmpmgEr4N/template_report_variable.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/RtmpmgEr4N/report_variable.html --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --template /home/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/RtmpmgEr4N/rmarkdown-str17f825606557.html </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Output created: /tmp/Rtmpf7Mm00/report_variable.html</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output created: /tmp/RtmpmgEr4N/report_variable.html</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
