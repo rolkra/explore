@@ -15,6 +15,7 @@ explore_shiny(data, target)
 Launches a shiny app to explore a dataset
 }
 \examples{
+
 # Only run examples in interactive R sessions
 if (interactive())  {
    explore_shiny(iris)

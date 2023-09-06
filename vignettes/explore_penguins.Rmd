@@ -1,10 +1,10 @@
 ---
-title: "explore_penguins"
+title: "Explore penguins"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{explore_penguins}
+  %\VignetteIndexEntry{Explore penguins}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,23 +20,25 @@ knitr::opts_chunk$set(
 
 The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! We will use < 10 lines of code and just 6 function names to explore penguins:
 
-| function       | package   | description                             |
-|----------------|-----------|-----------------------------------------|
-| library        | {base}    | load a package                          |
-| filter()       | {dplyr}   | subset rows using column values         |
-| describe()     | {explore} | describe variables of the table         |
-| explore()      | {explore} | explore graphically a variable          |
-| explore_all()  | {explore} | explore all variables of the table      |
-| explain_tree() | {explore} | explain a target using a decision tree  |
+| function         | package   | description                             |
+|------------------|-----------|-----------------------------------------|
+| `library()`      | {base}    | load a package                          |
+| `filter()`       | {dplyr}   | subset rows using column values         |
+| `describe()`     | {explore} | describe variables of the table         |
+| `explore()`      | {explore} | explore graphically a variable          |
+| `explore_all()`  | {explore} | explore all variables of the table      |
+| `explain_tree()` | {explore} | explain a target using a decision tree  |
 
-The penguins dataset comes with the palmerpenguins package. It has 344 observations and 8 variables. (https://github.com/allisonhorst/palmerpenguins)
+The `penguins` dataset comes with the palmerpenguins package. It has 344 observations and 8 variables. (<https://github.com/allisonhorst/palmerpenguins>)
 
-So we have to load the palmerpenguins package. Furthermore, we use the packages {dplyr} for filter() and %>% and {explore} for data exploration.
+Furthermore, we use the packages {dplyr} for `filter()` and `%>%` and {explore} for data exploration.
 
 ```{r message=FALSE, warning=FALSE}
-library(palmerpenguins)
 library(dplyr)
 library(explore)
+penguins <- explore::use_data_penguins()
+# equivalent to 
+# penguins <- palmerpenguins::penguins
 ```
 
 ### Describe variables
@@ -44,7 +46,7 @@ library(explore)
 ```{r message=FALSE, warning=FALSE}
 penguins %>% describe()
 ```
-There are some NA-values (unknown values) in the data. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
+There are some `NA`-values (unknown values) in the data. The variable containing the most NAs is sex. flipper_length_mm and others contain only 2 observations with NAs.
 
 ### Data cleaning
 

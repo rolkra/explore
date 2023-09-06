@@ -30,14 +30,30 @@ explain_tree(
 
 \item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
 
-\item{maxdepth}{Maximal depth of the tree (rpart-parameter)}
+\item{maxdepth}{
+    Set the maximum depth of any node of the final tree, with the root
+    node counted as depth 0.  Values greater than  30 \code{rpart} will
+    give nonsense results on 32-bit machines.
+  }
 
-\item{minsplit}{The minimum number of observations that must exist in a node to split.}
+\item{minsplit}{
+    the minimum number of observations that must exist in a node in order for 
+    a split to be attempted. 
+  }
 
-\item{cp}{Complexity parameter (rpart-parameter)}
+\item{cp}{
+    complexity parameter.  Any split that does not decrease the overall
+    lack of fit by a factor of \code{cp} is not attempted.  For instance,
+    with \code{anova} splitting, this means that the overall R-squared must
+    increase by \code{cp} at each step. The main role of this parameter
+    is to save computing time by pruning off splits that are obviously
+    not worthwhile. Essentially,the user informs the program that any
+    split which does not improve the fit by \code{cp} will likely be
+    pruned off by cross-validation, and that hence the program need
+    not pursue it.
+  }
 
-\item{weights}{Vector containing weight of each observation (rpart-parameter). Can
-not be used in combination with parameter n (variable containing weight for count-data)}
+\item{weights}{optional case weights.}
 
 \item{size}{Text size of plot}
 

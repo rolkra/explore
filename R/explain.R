@@ -5,11 +5,8 @@
 #' @param n weights variable (for count data)
 #' @param max_cat Drop categorical variables with higher number of levels
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
-#' @param maxdepth Maximal depth of the tree (rpart-parameter)
-#' @param minsplit The minimum number of observations that must exist in a node to split.
-#' @param cp Complexity parameter (rpart-parameter)
-#' @param weights Vector containing weight of each observation (rpart-parameter). Can
-#' not be used in combination with parameter n (variable containing weight for count-data)
+#' @inheritParams rpart::rpart.control
+#' @inheritParams rpart::rpart
 #' @param size Text size of plot
 #' @param out Output of function: "plot" | "model"
 #' @param ... Further arguments
@@ -31,20 +28,20 @@ explain_tree <- function(data, target, n,
   variable <- NULL
 
   # parameter n, uncount
-  if(!missing(n))  {
+  if (!missing(n))  {
     n_quo <- enquo(n)
     n_txt <- quo_name(n_quo)[[1]]
     # convert all character to factor
     data[sapply(data, is.character)] <- lapply(
       data[sapply(data, is.character)], as.factor)
     # uncount data
-    data <- data %>% tidyr::uncount(weights = !!n_quo)
+    data <- uncount_compat(data, wt = !!n_quo)
   } else {
     n_txt = NA
   }
 
   # parameter target
-  if(!missing(target))  {
+  if (!missing(target))  {
     target_quo <- enquo(target)
     target_txt <- quo_name(target_quo)[[1]]
   } else {
@@ -169,15 +166,14 @@ explain_tree <- function(data, target, n,
 } # explain_tree
 
 #' Explain a binary target using a logistic regression (glm).
-#' Model chosen by AIC in a Stepwise Algorithm (MASS::stepAIC).
+#' Model chosen by AIC in a Stepwise Algorithm (`MASS::stepAIC()`).
 #'
 #' @param data A dataset
 #' @param target Target variable (binary)
 #' @param out Output of the function: "tibble" | "model"
 #' @param ... Further arguments
 #' @return Dataset with results (term, estimate, std.error, z.value, p.value)
-#' or the model (if out = "model")
-#' @examples
+#' @examplesIf rlang::is_installed("MASS")
 #' data <- iris
 #' data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 #' data$Species <- NULL
@@ -185,6 +181,8 @@ explain_tree <- function(data, target, n,
 #' @export
 
 explain_logreg <- function(data, target, out = "tibble", ...)  {
+
+  rlang::check_installed("MASS", reason = "to create a model with AIC.")
   check_data_frame_non_empty(data)
   # parameter data
 
@@ -209,13 +207,14 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
   # convert target into formula
   formula_txt <- as.formula(paste(target_txt, "~ ."))
 
-  mod <- suppressWarnings(glm(formula_txt, data = data, family = "binomial"))
+  mod <- suppressWarnings(stats::glm(formula_txt, data = data, family = "binomial"))
   mod_stepwise <- suppressWarnings(MASS::stepAIC(mod, trace = FALSE))
 
-  #summary(mod)
+  mod_step_summary <- suppressMessages(summary(mod_stepwise))
 
-  df_model <- broom::tidy(mod_stepwise)
-
+  df_model_raw <- tibble::as_tibble(mod_step_summary$coefficients, rownames = "term")
+  names(df_model_raw) <- c("term", "estimate", "std.error", "statistic", "p.value")
+  df_model <- df_model_raw
   # output
   if (out == "tibble") {
     df_model
@@ -229,19 +228,22 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 
 #' Explain a target using Random Forest.
 #'
+#'
+#'
 #' @param data A dataset
 #' @param target Target variable (binary)
 #' @param ntree Number of trees used for Random Forest
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
-#' @param ... Further arguments (passed to randomForest function)
+#' @inheritDotParams randomForest::randomForest
 #' @return Plot of importance (if out = "plot")
-#' @examples
+#' @examplesIf rlang::is_installed("randomForest")
+#'
 #' data <- create_data_buy()
 #' explain_forest(data, target = buy)
 #' @export
 
 explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
-
+  rlang::check_installed("randomForest", reason = "to create a random forest model.")
   # undefined variables to pass CRAN check
   variable <- NULL
 
@@ -256,7 +258,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   # use factor for classification
   target_values <- data[[target_txt]]
   guess <- guess_cat_num(target_values)
-  if (guess == "cat" & !is.factor(target_values)) {
+  if (guess == "cat" && !is.factor(target_values)) {
     data[[target_txt]] <- as.factor(target_values)
   }
 
@@ -276,7 +278,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
   importance$importance <- importance[[1]]
   importance$MeanDecreaseGini <- NULL           # used if classification
   importance$IncNodePurity <- NULL              # used if regression
-  importance <- importance %>% dplyr::arrange(desc(importance))
+  importance <- importance %>% dplyr::arrange(dplyr::desc(importance))
 
   # plot importance
   p <- importance %>%
@@ -311,10 +313,11 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' Predict target using a trained model.
 #'
 #' @param data A dataset (data.frame or tbl)
-#' @param model A model created with explain_*() function
+#' @param model A model created with `explain_*()` function
 #' @param name Prefix of variable-name for prediction
 #' @return data containing predicted probabilities for target values
-#' @examples
+#' @examplesIf rlang::is_installed(c("rpart", "randomForest"))
+#'
 #' data_train <- create_data_buy(seed = 1)
 #' data_test <- create_data_buy(seed = 2)
 #' model <- explain_tree(data_train, target = buy, out = "model")

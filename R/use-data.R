@@ -12,7 +12,7 @@
 use_data_iris <- function() {
   file <- system.file("extdata", "iris.rds", package="explore")
   data <- readRDS(file = file)
-  return(tibble::as_tibble(data))
+  tibble::as_tibble(data)
 }
 
 #' Use the mtcars data set
@@ -40,6 +40,7 @@ use_data_mtcars <- function() {
 #' release every year between 1999 and 2008 - this was used as a proxy for the
 #' popularity of the car.
 #' @return Dataset
+#' @seealso [`ggplot2::mpg`]
 #' @examples
 #' use_data_mpg()
 #' @export
@@ -53,6 +54,7 @@ use_data_mpg <- function() {
 #' This data set comes with the ggplot2 package.
 #' It contains the prices and other attributes of almost 54,000 diamonds.
 #' @return Dataset
+#' @seealso [`ggplot2::diamonds`]
 #' @examples
 #' use_data_diamonds()
 #' @export
@@ -65,7 +67,8 @@ use_data_diamonds <- function() {
 #'
 #' This data set comes with the dplyr package.
 #' It contains data of 87 star war characters
-#' #' @return Dataset
+#' @return Dataset
+#' @seealso [`dplyr::starwars`]
 #' @examples
 #' use_data_starwars()
 #' @export
@@ -81,6 +84,7 @@ use_data_starwars <- function() {
 #' size (flipper length, body mass, bill dimensions), and sex.
 #'
 #' @return Dataset
+#' @seealso [`palmerpenguins::penguins`]
 #' @examples
 #' use_data_penguins()
 #' @export
@@ -102,13 +106,14 @@ use_data_penguins <- function() {
 
 use_data_titanic <- function(count = FALSE) {
   n <- NULL
-  file <- system.file("extdata", "titanic.rds", package="explore")
+  file <- system.file("extdata", "titanic.rds", package = "explore")
   data <- readRDS(file = file)
-  if (count) {
-    data <- tibble::as_tibble(data)
-  } else {
-    data <- tibble::as_tibble(data)
-    data <- tidyr::uncount(data = data, weights = n)
+
+  data <- tibble::as_tibble(data)
+
+  if (!count) {
+    data <- uncount_compat(dat = data, wt = n)
   }
+
   return(data)
 }

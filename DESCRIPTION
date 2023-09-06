@@ -14,16 +14,13 @@ Encoding: UTF-8
 URL: https://rolkra.github.io/explore/, https://github.com/rolkra/explore
 Depends: R (>= 3.5.0)
 Imports: 
-    broom,
-    dplyr,
+    dplyr (>= 1.1.0),
     DT (>= 0.3.0),
     forcats (>= 1.0.0),
     ggplot2 (>= 3.4.0),
     gridExtra,
     magrittr,
-    MASS,
     palmerpenguins,
-    randomForest,
     rlang (>= 1.1.0),
     rmarkdown,
     rpart,
@@ -31,12 +28,13 @@ Imports:
     shiny,
     stats,
     stringr,
-    tibble,
-    tidyr
+    tibble
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
+    MASS,
+    randomForest,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3

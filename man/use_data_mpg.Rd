@@ -19,3 +19,6 @@ popularity of the car.
 \examples{
 use_data_mpg()
 }
+\seealso{
+\code{\link[ggplot2:mpg]{ggplot2::mpg}}
+}

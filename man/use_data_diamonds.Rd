@@ -16,3 +16,6 @@ It contains the prices and other attributes of almost 54,000 diamonds.
 \examples{
 use_data_diamonds()
 }
+\seealso{
+\code{\link[ggplot2:diamonds]{ggplot2::diamonds}}
+}
