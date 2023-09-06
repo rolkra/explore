@@ -4,15 +4,11 @@
 uncount_compat <- function(dat, wt) {
   rlang::check_required(wt)
 
-  dat <- dplyr::rename(dat, "wt_variable_intermediate" = {{ wt }})
   res <- dplyr::reframe(
     dat,
-    dplyr::across(
-      .cols = dplyr::everything(),
-      .fns = ~ rep.int(.x, times = .data$wt_variable_intermediate[1])
-    ),
-    .by = "wt_variable_intermediate"
+    var_wt = rep.int(1, times = sum({{ wt }})),
+    .by = !{{ wt }}
   )
-  res <- dplyr::select(res, -"wt_variable_intermediate")
+  res <- dplyr::select(res, -"var_wt")
   res
 }
