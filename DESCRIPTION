@@ -9,7 +9,7 @@ Description: Interactive data exploration with one line of code or use an easy
     Introduces three main verbs. explore() to graphically explore a variable or 
     table, describe() to describe a variable or table and report() to create an 
     automated report.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://rolkra.github.io/explore/, https://github.com/rolkra/explore
 Depends: R (>= 3.5.0)
