@@ -117,3 +117,19 @@ use_data_titanic <- function(count = FALSE) {
 
   return(data)
 }
+
+#' Use the beer data set
+#'
+#' This data set is an incomplete collection of popular beers in
+#' Austria, Germany and Swizerland.
+#'
+#' @return Dataset as tibble
+#' @examples
+#' use_data_beer()
+#' @export
+
+use_data_beer <- function() {
+  file <- system.file("extdata", "beer.rds", package="explore")
+  data <- readRDS(file = file)
+  tibble::as_tibble(data)
+}
