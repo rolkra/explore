@@ -66,5 +66,5 @@ test_that("explore() works with cat variables and num targets.", {
 test_that("explore() works with xy points", {
   data <- iris
   data[1, ] <- NA
-  expect_no_error(explore(data, Sepal.Length, Sepal.Width, targetpct = 0.7))
+  expect_no_error(explore(data, Sepal.Length, Sepal.Width))
 })
