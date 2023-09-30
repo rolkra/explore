@@ -121,7 +121,8 @@ use_data_titanic <- function(count = FALSE) {
 #' Use the beer data set
 #'
 #' This data set is an incomplete collection of popular beers in
-#' Austria, Germany and Swizerland.
+#' Austria, Germany and Switzerland. Data are collected from various
+#' websites in 2003. Some of the collected data may be incorrect.
 #'
 #' @return Dataset as tibble
 #' @examples
