@@ -1338,7 +1338,12 @@ explore_shiny <- function(data, target)  {
 explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, ...)  {
 
   # check parameter data
-  check_data_frame_non_empty(data)
+  if (missing(data) && missing(var) ) {
+    message("Demo: explore the palmer penguins dataset!")
+    data <- use_data_penguins()
+  } else {
+    check_data_frame_non_empty(data)
+  }
 
   # parameter var
   if (!missing(var)) {
