@@ -4,16 +4,20 @@
 \alias{abtest_targetpct}
 \title{A/B testing}
 \usage{
-abtest_targetpct(data, expr, target, sign_level = 0.05)
+abtest_targetpct(data, expr, n, target, sign_level = 0.05, group_label)
 }
 \arguments{
 \item{data}{A dataset}
 
 \item{expr}{Expression, that results in a FALSE/TRUE}
 
+\item{n}{A Variable for number of observations (count data)}
+
 \item{target}{Target variable (must be 0/1 or FALSE/TRUE)}
 
 \item{sign_level}{Significance Level (typical 0.01/0.05/0.10)}
+
+\item{group_label}{Label of groups (default = expr)}
 }
 \value{
 Plot that shows if difference is significant

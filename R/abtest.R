@@ -188,19 +188,32 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
 #'
 #' @param data A dataset
 #' @param expr Expression, that results in a FALSE/TRUE
+#' @param n A Variable for number of observations (count data)
 #' @param target Target variable (must be 0/1 or FALSE/TRUE)
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
+#' @param group_label Label of groups (default = expr)
 #' @return Plot that shows if difference is significant
 #' @examples
 #' data <- create_data_buy(obs = 100)
 #' abtest(data, female_ind == 1, target = buy)
 #' abtest(data, age >= 40, target = buy)
+#' @export
 
-abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
+abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_label) {
+
   # parameter target
   rlang::check_required(target)
   target_quo <- enquo(target)
   target_txt <- quo_name(target_quo)[[1]]
+
+  # parameter n
+  if (!missing(n)) {
+    n_quo <- enquo(n)
+    n_text <- quo_name(n_quo)[[1]]
+    if (!n_text %in% names(data))  {
+      stop(paste0("variable '", n_text, "' not found"))
+    }
+  } # if
 
   # define variables for CRAN-package check
   target1_sum <- NULL
@@ -217,13 +230,24 @@ abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
   }
 
   # create table
-  data_ab <- data %>%
-    dplyr::group_by({{expr}}) %>%
-    dplyr::summarise(
-      n = dplyr::n(),
-      target1_sum = sum({{target}}),
-      target1_pct = mean({{target}} * 100)
-    )
+  if (missing(n)) {
+    data_ab <- data %>%
+      dplyr::group_by({{ expr }}) %>%
+      dplyr::summarise(
+        n = dplyr::n(),
+        target1_sum = sum({{ target }}),
+        target1_pct = mean({{ target }} * 100)
+      )
+  } else {
+    data_ab <- data %>%
+      dplyr::mutate(success_n = {{ target }} * {{ n }}) %>%
+      dplyr::group_by({{ expr }}) %>%
+      dplyr::summarise(
+        n = sum({{ n }}),
+        target1_sum = sum(success_n),
+        target1_pct = sum(success_n) / sum( {{n}} ) * 100
+      )
+  }
 
   # return if less than 2 groups!
   if (nrow(data_ab) < 2) {
@@ -231,8 +255,11 @@ abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
     return(NA)
   }
 
-  # rename expression
+  # define group label (default = expression)
   expression_txt <- names(data_ab)[1]
+  if(!missing(group_label)) {
+    expression_txt <- group_label
+  }
   names(data_ab)[1] <- "expression"
 
   # slice A/B groups
@@ -307,3 +334,122 @@ abtest_targetpct <- function(data, expr, target, sign_level = 0.05) {
   p
 
 } # abtest_targetpct
+
+
+#' A/B testing interactive
+#'
+#' Launches a shiny app to A/B test
+#'
+#' @param size_a Size of Group A
+#' @param size_b Size of Group B
+#' @param success_a Success of Group A
+#' @param success_b Success of Group B
+#' @param success_unit "count" | "percent"
+#' @param sign_level  Significance Level (typical 0.01/0.05/0.10)
+#' @examples
+#'
+#' # Only run examples in interactive R sessions
+#' if (interactive())  {
+#'    abtest_shiny()
+#' }
+#' @export
+
+abtest_shiny <- function(size_a = 100, size_b = 100,
+                         success_a = 10, success_b = 20,
+                         success_unit = "percent",
+                         sign_level = 0.05)  {
+
+  # check if interactive session
+  if (!interactive()) {
+    warning("This function can only be used in an interactive R session")
+    return(invisible())
+  }
+
+  # define ui
+  ui <- shiny::fluidPage(
+    shiny::sidebarLayout(
+      shiny::sidebarPanel(
+        shiny::h3("A/B test"),
+        shiny::hr(),
+        shiny::numericInput(inputId = "size_a",
+                           label = "Size A",
+                           value = size_a,
+                           min = 0),
+        shiny::numericInput(inputId = "size_b",
+                            label = "Size B",
+                            value = size_b,
+                            min = 0),
+        shiny::radioButtons(inputId = "success_unit",
+                            label = "Success unit",
+                            c("Count" = "count", "Percent" = "percent"),
+                            selected = tolower(success_unit),
+                            inline = FALSE,
+                            width = NULL),
+        shiny::numericInput(inputId = "success_a",
+                            label = "Success A",
+                            value = success_a,
+                            min = 0),
+        shiny::numericInput(inputId = "success_b",
+                            label = "Success B",
+                            value = success_b,
+                            min = 0),
+        shiny::radioButtons(inputId = "sign_level",
+                            label = "Significance level",
+                            c("1%" = 0.01, "5%" = 0.05, "10%" = 0.10, "20%" = 0.20),
+                            selected = sign_level,
+                            inline = FALSE,
+                            width = NULL)
+
+        , width = 3),  #sidebarPanel
+
+      shiny::mainPanel(
+        shiny::tabsetPanel(
+          shiny::tabPanel("Plot",
+                          shiny::plotOutput("graph", height = 300),
+                          shiny::verbatimTextOutput("text")
+          )) # tabsetPanel
+        , width = 9) # mainPanel
+    ) # sidebarLayout
+  ) # fluidPage
+
+  # server: calculate statistics and generate plot
+  server <- function(input, output, session) {
+
+    output$graph <- shiny::renderPlot({
+
+      if(input$success_unit == "percent") {
+        success_a <- input$size_a * input$success_a / 100
+        success_b <- input$size_b * input$success_b / 100
+      } else {
+        success_a <- input$success_a
+        success_b <- input$success_b
+      }
+
+      data_ab <- data.frame(
+        group = c("A", "B", "A", "B"),
+        success = c(0, 0, 1, 1),
+        n = c(input$size_a - success_a,
+              input$size_b - success_b,
+              success_a,
+              success_b)
+      )
+
+      abtest_targetpct(data = data_ab,
+                       expr = group == "B",
+                       n = n,
+                       target = success,
+                       sign_level = as.numeric(input$sign_level),
+                       group_label = "Group")
+    }) # renderPlot graph_target
+
+    output$text <- shiny::renderPrint({
+      cat("\n")
+    }) # renderText
+
+  } # server
+
+  # run shiny app
+  shiny::shinyApp(ui = ui, server = server)
+
+} # abtest_shiny
+
