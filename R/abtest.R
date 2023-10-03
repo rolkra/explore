@@ -48,14 +48,23 @@ abtest <- function(data, expr, n, target, sign_level = 0.05) {
 
   if (type == "cat") {
     # chi2 test, fishers exact test
-    p <- abtest_targetpct(data,
-                          expr = {{ expr }},
-                          n = {{ n }},
-                          target = {{ target }},
-                          sign_level = sign_level)
+    if (missing(n)) {
+      p <- abtest_targetpct(data = data,
+                            expr = {{ expr }},
+                            target = {{ target }},
+                            sign_level = sign_level)
+    } else {
+      p <- abtest_targetpct(data = data,
+                            expr = {{ expr }},
+                            n = {{ n }},
+                            target = {{ target }},
+                            sign_level = sign_level)
+
+    } # missing(n)
+
   } else {
     # t test
-    p <- abtest_targetnum(data,
+    p <- abtest_targetnum(data = data,
                           expr = {{ expr }},
                           target = {{ target }},
                           sign_level = sign_level)
@@ -333,7 +342,7 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
     ), position = ggplot2::position_stack(vjust = 0.5),
     size = 3, color = "white") +
     ggplot2::geom_text(ggplot2::aes(
-      label = round(target1_pct, 2),
+      label = paste0(round(target1_pct, 2), "%"),
       vjust = ifelse(target1_pct == 0, 0, 1.2)
     ), position = "stack", size = 3) +
     ggplot2::labs(
