@@ -1,7 +1,8 @@
 #' A/B testing
 #'
-#' @param data A dataset
+#' @param data A dataset. If no data is provided, a shiny app is launched
 #' @param expr Logical expression, that return in a FALSE/TRUE
+#' @param n A Variable for number of observations (count data)
 #' @param target Target variable
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
 #' @return Plot that shows if difference is significant
@@ -17,7 +18,13 @@
 #' abtest(data, female_ind == 1, target = buy)  # Fisher's Exact test
 #' @export
 
-abtest <- function(data, expr, target, sign_level = 0.05) {
+abtest <- function(data, expr, n, target, sign_level = 0.05) {
+
+  # if not data is provided, start shiny app
+  if (missing(data)) {
+    abtest_shiny()
+    #return("hallo welt")
+  } else {
 
   # check parameter
   check_data_frame_non_empty(data)
@@ -41,15 +48,23 @@ abtest <- function(data, expr, target, sign_level = 0.05) {
 
   if (type == "cat") {
     # chi2 test, fishers exact test
-    p <- abtest_targetpct(data, {{ expr }}, {{ target }}, sign_level)
+    p <- abtest_targetpct(data,
+                          expr = {{ expr }},
+                          n = {{ n }},
+                          target = {{ target }},
+                          sign_level = sign_level)
   } else {
     # t test
-    p <- abtest_targetnum(data, {{ expr }}, {{ target }}, sign_level)
+    p <- abtest_targetnum(data,
+                          expr = {{ expr }},
+                          target = {{ target }},
+                          sign_level = sign_level)
   }
 
   # plot output
   p
 
+  } # missing data
 } # abtest
 
 
@@ -192,14 +207,14 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
 #' @param target Target variable (must be 0/1 or FALSE/TRUE)
 #' @param sign_level Significance Level (typical 0.01/0.05/0.10)
 #' @param group_label Label of groups (default = expr)
+#' @param ab_label Label Groups as A and B (default = FALSE)
 #' @return Plot that shows if difference is significant
 #' @examples
 #' data <- create_data_buy(obs = 100)
 #' abtest(data, female_ind == 1, target = buy)
 #' abtest(data, age >= 40, target = buy)
-#' @export
 
-abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_label) {
+abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_label, ab_label = FALSE) {
 
   # parameter target
   rlang::check_required(target)
@@ -301,6 +316,11 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
 
   # cat(result_txt, "\n")
 
+  # use label A/B instead of FALSE/TRUE
+  if (ab_label) {
+    data_ab[[1]] <- c("A","B")
+  }
+
   # plot result
   p <- data_ab %>%
     ggplot2::ggplot(ggplot2::aes(x = expression, y = target1_pct)) +
@@ -352,7 +372,6 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
 #' if (interactive())  {
 #'    abtest_shiny()
 #' }
-#' @export
 
 abtest_shiny <- function(size_a = 100, size_b = 100,
                          success_a = 10, success_b = 20,
@@ -439,7 +458,8 @@ abtest_shiny <- function(size_a = 100, size_b = 100,
                        n = n,
                        target = success,
                        sign_level = as.numeric(input$sign_level),
-                       group_label = "Group")
+                       group_label = "Group",
+                       ab_label = TRUE)
     }) # renderPlot graph_target
 
     output$text <- shiny::renderPrint({

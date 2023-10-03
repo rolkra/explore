@@ -4,12 +4,14 @@
 \alias{abtest}
 \title{A/B testing}
 \usage{
-abtest(data, expr, target, sign_level = 0.05)
+abtest(data, expr, n, target, sign_level = 0.05)
 }
 \arguments{
-\item{data}{A dataset}
+\item{data}{A dataset. If no data is provided, a shiny app is launched}
 
 \item{expr}{Logical expression, that return in a FALSE/TRUE}
+
+\item{n}{A Variable for number of observations (count data)}
 
 \item{target}{Target variable}
 
