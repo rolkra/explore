@@ -8,6 +8,8 @@
 * drop use of `fct_explicit_na()` (deprecated) (#15)
 * create_data use_data return datasets as tibble 
 * allowed to run explore() without data 
+* allowed to run abtest() without data (shiny app)
+* abtest_targetpct() with count data (parameter n)
 
 ## explore 1.0.2 (2023-01-14)
 
