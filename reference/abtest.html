@@ -62,17 +62,21 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abtest</span><span class="op">(</span><span class="va">data</span>, <span class="va">expr</span>, <span class="va">target</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abtest</span><span class="op">(</span><span class="va">data</span>, <span class="va">expr</span>, <span class="va">n</span>, <span class="va">target</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A dataset</p></dd>
+<dd><p>A dataset. If no data is provided, a shiny app is launched</p></dd>
 
 
 <dt>expr</dt>
 <dd><p>Logical expression, that return in a FALSE/TRUE</p></dd>
+
+
+<dt>n</dt>
+<dd><p>A Variable for number of observations (count data)</p></dd>
 
 
 <dt>target</dt>

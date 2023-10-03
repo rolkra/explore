@@ -62,7 +62,15 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abtest_targetpct</span><span class="op">(</span><span class="va">data</span>, <span class="va">expr</span>, <span class="va">target</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">abtest_targetpct</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">expr</span>,</span>
+<span>  <span class="va">n</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  sign_level <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  <span class="va">group_label</span>,</span>
+<span>  ab_label <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,12 +83,24 @@
 <dd><p>Expression, that results in a FALSE/TRUE</p></dd>
 
 
+<dt>n</dt>
+<dd><p>A Variable for number of observations (count data)</p></dd>
+
+
 <dt>target</dt>
 <dd><p>Target variable (must be 0/1 or FALSE/TRUE)</p></dd>
 
 
 <dt>sign_level</dt>
 <dd><p>Significance Level (typical 0.01/0.05/0.10)</p></dd>
+
+
+<dt>group_label</dt>
+<dd><p>Label of groups (default = expr)</p></dd>
+
+
+<dt>ab_label</dt>
+<dd><p>Label Groups as A and B (default = FALSE)</p></dd>
 
 </dl></div>
     <div class="section level2">
