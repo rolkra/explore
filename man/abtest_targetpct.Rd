@@ -2,7 +2,7 @@
 % Please edit documentation in R/abtest.R
 \name{abtest_targetpct}
 \alias{abtest_targetpct}
-\title{A/B testing}
+\title{A/B testing comparing percent per group}
 \usage{
 abtest_targetpct(
   data,
@@ -33,7 +33,7 @@ abtest_targetpct(
 Plot that shows if difference is significant
 }
 \description{
-A/B testing
+A/B testing comparing percent per group
 }
 \examples{
 data <- create_data_buy(obs = 100)

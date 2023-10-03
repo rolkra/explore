@@ -1,0 +1,84 @@
+---
+title: "A/B Test"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A/B Test}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## A/B testing simplified
+
+The explore package offers an easy way to do basic A/B testing.
+
+### Interactive A/B test
+
+For interactive A/B testing simply call `abtest()` without any parameters.
+
+![](../man/figures/abtest-shiny.png){width=600px}
+
+### A/B test with data
+
+If you want to A/B test your own data, pass them into the ´abtest()´ function.
+
+In this example we are using synthetic data using one of the `create_data_()` functions of `{explore}` 
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+data <- create_data_buy(obs = 1000)
+```
+
+#### Explore dataset
+
+```{r}
+data %>% describe_tbl()
+```
+
+```{r message=FALSE, warning=FALSE}
+data %>% describe()
+```
+
+Each observation is a customer. The ´buy´ variable contains 0/1 values (1 = the customer did buy a product)
+
+#### Hypothesis age > 50
+
+We want to test the hypothesis, that customer with age > 50 are more likely to buy
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+data %>% explore(age, target = buy)
+```
+
+We see a clear pattern, that people who buy differ in age from people who don´t buy. But is this difference statistically significant?
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+data %>% abtest(age > 50, target = buy)
+```
+
+The A/B test shows a statistically significant difference!
+
+#### Hypothesis Mobile Voice vs Broadband Usage
+
+We would like to test the hypothesis, that customer with a mobile voice product (mobilevoice_ind == 1) have more bbi_usg_gb (broadband usage in GB)
+
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+data %>% explore(mobilevoice_ind, target = bbi_usg_gb)
+```
+
+The boxplot shows a small difference in Broadband Usage between customers with/without Mobile Voice product. But is this difference statistically significant?
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+data %>% abtest(mobilevoice_ind == 1, target = bbi_usg_gb)
+```
+
+The A/B test shows a NOT statistcally significant difference!

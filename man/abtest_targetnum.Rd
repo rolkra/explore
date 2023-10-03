@@ -2,7 +2,7 @@
 % Please edit documentation in R/abtest.R
 \name{abtest_targetnum}
 \alias{abtest_targetnum}
-\title{A/B testing}
+\title{A/B testing comparing two mean}
 \usage{
 abtest_targetnum(data, expr, target, sign_level = 0.05)
 }
@@ -19,7 +19,7 @@ abtest_targetnum(data, expr, target, sign_level = 0.05)
 Plot that shows if difference is significant
 }
 \description{
-A/B testing
+A/B testing comparing two mean
 }
 \examples{
 data <- create_data_buy(obs = 100)
