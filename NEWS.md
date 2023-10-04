@@ -1,4 +1,4 @@
-## explore 1.1
+## explore 1.1.0
 
 * abtest() now supports numeric target (t-test)
 * add explain_forest()
@@ -10,6 +10,7 @@
 * allowed to run explore() without data 
 * allowed to run abtest() without data (shiny app)
 * abtest_targetpct() with count data (parameter n)
+* new vignettes
 
 ## explore 1.0.2 (2023-01-14)
 

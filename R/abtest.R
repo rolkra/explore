@@ -77,7 +77,7 @@ abtest <- function(data, expr, n, target, sign_level = 0.05) {
 } # abtest
 
 
-#' A/B testing
+#' A/B testing comparing two mean
 #'
 #' @param data A dataset
 #' @param expr Expression, that results in a FALSE/TRUE
@@ -208,7 +208,7 @@ abtest_targetnum <- function(data, expr, target, sign_level = 0.05) {
 } # abtest_targetnum
 
 
-#' A/B testing
+#' A/B testing comparing percent per group
 #'
 #' @param data A dataset
 #' @param expr Expression, that results in a FALSE/TRUE

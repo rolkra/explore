@@ -1,0 +1,64 @@
+---
+title: "Describe"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Describe}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The explore package offers a simplified way to describe data.
+
+* `describe_tbl()` describes the table (number of rows, columns, ...)
+* `describe_all()` returns a description of all variables as data frame
+* `describe()` returns a description of of a specific variable (or a description of all variables if no specific variable is passed to the function)
+* `describe_cat()` returns a description of of a specific variable (forcing to handle the variable as categorical)
+* `describe_num()` returns a description of of a specific variable (forcing to handle the variable as numerical)
+
+We use synthetic data in this example
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+
+data <- create_data_buy(obs = 100)
+glimpse(data)
+```
+
+### Describe table
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% describe_tbl()
+```
+
+### Describe all variables
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% describe_all()
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% 
+  describe_all() %>%
+  filter(unique == 1)
+```
+
+
+### Describe one variable
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% describe(age)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% describe(buy)
+```
