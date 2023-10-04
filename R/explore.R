@@ -1523,7 +1523,7 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
 #' explore_targetpct(iris)
 #' @export
 
-explore_targetpct <- function(data, var, target = NULL, title = NULL, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, flip = NA, ...) {
+explore_targetpct <- function(data, var, target = NULL, title = NA, min_val = NA, max_val = NA, auto_scale = TRUE, na = NA, flip = NA, ...) {
 
   # check parameter data
   check_data_frame_non_empty(data)

@@ -8,7 +8,7 @@ explore_targetpct(
   data,
   var,
   target = NULL,
-  title = NULL,
+  title = NA,
   min_val = NA,
   max_val = NA,
   auto_scale = TRUE,
