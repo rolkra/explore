@@ -1,0 +1,59 @@
+---
+title: "Explain"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explain}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The explore package offers a simplified way to use machine learning to understand and explain patterns in the data.
+
+* `explain_tree()` creates a decision tree. The target can be binary, categorical or numerical
+* `explain_forrest()` creates a random forest. The target can be binary, categorical or numerical
+* `explain_logreg()` creates a logistic regression. The target must be binary
+
+We use synthetic data in this example
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+
+data <- create_data_buy(obs = 100)
+glimpse(data)
+```
+
+### Decision Tree
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explain_tree(target = buy)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explain_tree(target = mobiledata_prd)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explain_tree(target = age)
+```
+
+#### Random Forrest
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>% explain_forest(target = buy, ntree = 100)
+```
+
+#### Logistic Regression
+
+```{r message=FALSE, warning=FALSE}
+data %>% explain_logreg(target = buy)
+```

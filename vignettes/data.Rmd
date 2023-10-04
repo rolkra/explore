@@ -1,0 +1,171 @@
+---
+title: "Data"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The explore package offers a simplified way to use popular data sets or to create synthetic data for experimenting/teaching/training.
+
+### Use data
+
+#### Penguins
+
+This data set comes with the palmerpenguins package. It contains measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+
+data <- use_data_penguins()
+glimpse(data)
+```
+
+#### Starwars
+
+This data set comes with the dplyr package. It contains data of 87 star war characters.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_starwars()
+glimpse(data)
+```
+
+#### Diamonds
+
+This data set comes with the ggplot2 package. It contains the prices and other attributes of almost 54,000 diamonds.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_diamonds()
+glimpse(data)
+```
+
+#### Iris
+
+This data set comes with base R. The data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_iris()
+glimpse(data)
+```
+
+#### mpg
+
+This data set comes with the ggplot2 package. It contains a subset of the fuel economy data that the EPA makes available on https://fueleconomy.gov/. It contains only models which had a new release every year between 1999 and 2008 - this was used as a proxy for the popularity of the car.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_mpg()
+glimpse(data)
+```
+
+#### mtcars
+
+This data set comes with base R. The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_mtcars()
+glimpse(data)
+```
+
+#### Titanic
+
+This data set comes with base R. Survival of passengers on the Titanic.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_titanic(count = FALSE)
+glimpse(data)
+```
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_titanic(count = TRUE)
+glimpse(data)
+```
+
+#### Beer
+
+This data set is an incomplete collection of popular beers in Austria, Germany and Switzerland. Data are collected from various websites in 2023. Some of the collected data may be incorrect.
+
+```{r message=FALSE, warning=FALSE}
+data <- use_data_beer()
+glimpse(data)
+```
+ 
+### Create data
+
+Artificial data that can be used for unit-testing or teaching.
+
+#### App
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_app(obs = 1000)
+glimpse(data)
+```
+
+#### Buy
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_buy(obs = 1000)
+glimpse(data)
+```
+
+#### Churn
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_churn(obs = 1000)
+glimpse(data)
+```
+
+#### Newsletter
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_newsletter(obs = 1000)
+glimpse(data)
+```
+
+#### Person
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_person(obs = 1000)
+glimpse(data)
+```
+
+#### Random
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_random(obs = 1000)
+glimpse(data)
+```
+
+#### Unfair
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_unfair(obs = 1000)
+glimpse(data)
+```
+
+#### Empty
+
+Create an empty data set and add random variables.
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_empty(obs = 1000) %>%
+  add_var_random_01("smoking", prob = c(0.8, 0.2)) %>%
+  add_var_random_cat("gender", 
+                     cat = c("female", "male", "diverse"), 
+                     prob = c(0.45, 0.45, 0.1)) %>%
+  add_var_random_dbl("internet_usage", min_val = 0, max_val = 1000) %>%
+  add_var_random_int("age", min_val = 18, max_val = 100) %>%
+  add_var_random_moon() %>%
+  add_var_random_starsign()
+glimpse(data)
+```
