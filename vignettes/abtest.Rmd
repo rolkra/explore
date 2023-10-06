@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-## A/B testing simplified
-
 The explore package offers an easy way to do basic A/B testing.
 
 ### Interactive A/B testing
@@ -77,7 +75,7 @@ The boxplot shows a small difference in Broadband Usage between customers with/w
 data %>% abtest(mobilevoice_ind == 1, target = bbi_usg_gb, sign_level = 0.05)
 ```
 
-The A/B test shows a NOT statistcally significant difference! The p-value is 0.09, but should be max. 0.05 (as we defined sign_level = 0.05)
+The A/B test shows a NOT statistically significant difference! The p-value is 0.09, but should be max. 0.05 (as we defined sign_level = 0.05)
 
 ### A/B testing with count data
 

@@ -1,0 +1,77 @@
+---
+title: "Report target"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Report target}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Automated Exploratory Analysis (auto EDA) using the `report()` function of the explore package.
+
+In this example we use synthetic data created by the `create_data_churn()`function of the explore package.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+data <- create_data_churn()
+```
+
+Then we generate the report.
+
+```{r eval=FALSE}
+data %>% report(target = churn, output_dir = tempdir())
+```
+
+# Explore
+
+## Describe Data
+
+```{r fig.height=3, fig.width=6, echo=FALSE, message=FALSE, warning=FALSE}
+data %>% explore_tbl()
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data  %>%  describe_tbl()
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+describe(data)
+```
+
+## Describe Target
+
+```{r fig.height=3, echo=FALSE, fig.height=3, fig.width=5, message=FALSE, warning=FALSE}
+data %>% explore(churn)
+```
+
+## Explore Variables
+
+```{r include=FALSE}
+# create buckets of variables
+buckets <- data  %>%  
+  explore::get_var_buckets(
+    bucket_size = 100
+  )
+
+# height of each plot
+fig_height <- data[buckets[[1]]]  %>%  
+  explore::total_fig_height(size = 2)
+
+```
+
+```{r echo=FALSE, fig.height=fig_height, fig.width=7, message=FALSE, warning=FALSE}
+for (i in seq_along(buckets)) {
+  data[buckets[[i]]]  %>%  
+    explore_all(target = churn, ncol = 2)
+} 
+```
