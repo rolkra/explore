@@ -58,6 +58,9 @@
     <a class="dropdown-item" href="../articles/explore_mtcars.html">Explore mtcars</a>
     <a class="dropdown-item" href="../articles/explore_penguins.html">Explore penguins</a>
     <a class="dropdown-item" href="../articles/explore_titanic.html">Explore Titanic</a>
+    <a class="dropdown-item" href="../articles/report-target.html">Report target</a>
+    <a class="dropdown-item" href="../articles/report-targetpct.html">Report targetpct</a>
+    <a class="dropdown-item" href="../articles/report.html">Report</a>
   </div>
 </li>
 <li class="nav-item">
@@ -91,7 +94,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2023-10-04</h4>
+            <h4 data-toc-skip class="date">2023-10-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/HEAD/vignettes/abtest.Rmd" class="external-link"><code>vignettes/abtest.Rmd</code></a></small>
       <div class="d-none name"><code>abtest.Rmd</code></div>
@@ -99,9 +102,6 @@ Krasser</h4>
 
     
     
-<div class="section level2">
-<h2 id="ab-testing-simplified">A/B testing simplified<a class="anchor" aria-label="anchor" href="#ab-testing-simplified"></a>
-</h2>
 <p>The explore package offers an easy way to do basic A/B testing.</p>
 <div class="section level3">
 <h3 id="interactive-ab-testing">Interactive A/B testing<a class="anchor" aria-label="anchor" href="#interactive-ab-testing"></a>
@@ -175,7 +175,7 @@ statistically significant?</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span><span class="va">mobilevoice_ind</span> <span class="op">==</span> <span class="fl">1</span>, target <span class="op">=</span> <span class="va">bbi_usg_gb</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
 <p><img src="abtest_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
-<p>The A/B test shows a NOT statistcally significant difference! The
+<p>The A/B test shows a NOT statistically significant difference! The
 p-value is 0.09, but should be max. 0.05 (as we defined sign_level =
 0.05)</p>
 </div>
@@ -218,7 +218,6 @@ significant?</p>
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span><span class="va">Sex</span> <span class="op">==</span> <span class="st">"Female"</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
 <p><img src="abtest_files/figure-html/unnamed-chunk-10-1.png" width="480"></p>
 <p>The A/B test shows a statistically significant difference!</p>
-</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

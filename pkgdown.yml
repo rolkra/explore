@@ -10,5 +10,8 @@ articles:
   explore_mtcars: explore_mtcars.html
   explore_penguins: explore_penguins.html
   explore_titanic: explore_titanic.html
-last_built: 2023-10-04T12:04Z
+  report-target: report-target.html
+  report-targetpct: report-targetpct.html
+  report: report.html
+last_built: 2023-10-06T08:36Z
 
