@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 The explore package offers a simplified way to use machine learning to understand and explain patterns in the data.
 
 * `explain_tree()` creates a decision tree. The target can be binary, categorical or numerical
-* `explain_forrest()` creates a random forest. The target can be binary, categorical or numerical
+* `explain_forest()` creates a random forest. The target can be binary, categorical or numerical
 * `explain_logreg()` creates a logistic regression. The target must be binary
 
 We use synthetic data in this example
