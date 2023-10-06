@@ -140,19 +140,23 @@ and make a prediction.</p>
 <div class="section level3">
 <h3 id="train-model">Train model<a class="anchor" aria-label="anchor" href="#train-model"></a>
 </h3>
-<p>We train a random forest model, using <code>buy</code> as target
-(<code>buy</code> contains only 0 and 1 values)</p>
+<p>First we create a decision tree model, using <code>buy</code> as
+target (<code>buy</code> contains only 0 and 1 values)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">train</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_forest.html">explain_forest</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">train</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
-<p>To get the model itself, use parameter <code>out = "model"</code></p>
+<p>We see some clear patterns. Now we create a random forest model (as
+it is more accurate). To get the model itself, use parameter
+<code>out = "model"</code></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">train</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_forest.html">explain_forest</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span>, out <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="predict">Predict<a class="anchor" aria-label="anchor" href="#predict"></a>
 </h3>
 <p>Now we create test data and use the model for a prediction. We use a
 different seed so we get different data.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span>, seed <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -170,7 +174,7 @@ different seed so we get different data.</p>
 <span><span class="co">#&gt; $ bbi_speed_ind   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, …</span></span>
 <span><span class="co">#&gt; $ bbi_usg_gb      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 77, 68, 8, 63, 49, 75, 66, 45, 82, 55, 45, 53, 49, 53,…</span></span>
 <span><span class="co">#&gt; $ hh_single       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, …</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="va">test</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/predict_target.html">predict_target</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -188,18 +192,17 @@ different seed so we get different data.</p>
 <span><span class="co">#&gt; $ bbi_speed_ind   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, …</span></span>
 <span><span class="co">#&gt; $ bbi_usg_gb      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 77, 68, 8, 63, 49, 75, 66, 45, 82, 55, 45, 53, 49, 53,…</span></span>
 <span><span class="co">#&gt; $ hh_single       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, …</span></span>
-<span><span class="co">#&gt; $ prediction_0    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.08, 0.30, 1.00, 0.00, 0.84, 0.46, 0.04, 0.98, 0.04, …</span></span>
-<span><span class="co">#&gt; $ prediction_1    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.92, 0.70, 0.00, 1.00, 0.16, 0.54, 0.96, 0.02, 0.96, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ prediction_0    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.06, 0.40, 1.00, 0.00, 0.74, 0.40, 0.04, 1.00, 0.00, …</span></span>
+<span><span class="co">#&gt; $ prediction_1    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.94, 0.60, 0.00, 1.00, 0.26, 0.60, 0.96, 0.00, 1.00, …</span></span></code></pre></div>
 <p>Now we got 2 new variables <code>prediction_0</code> (the probability
 of <code>buy == 0</code>) and <code>prediction_1</code> (the probability
-of <code>buy == 1</code>)</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+of <code>buy == 1</code>). We can check the predictions by comparing
+<code>prediction_1</code> with real values of buy.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">prediction_1</span>, target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
 <p><img src="predict_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
-<p>We can check the predictions by comparing <code>prediction_1</code>
-with real values of buy. There is a clear difference between
-<code>buy == 0</code> and <code>buy == 1</code>. So the prediction
-works.</p>
+<p>There is a clear difference between <code>buy == 0</code> and
+<code>buy == 1</code>. So the prediction works.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
