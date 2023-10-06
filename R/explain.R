@@ -350,12 +350,12 @@ predict_target <- function(data, model, name = "prediction") {
 
   } else if (inherits(model, "rpart") && model$method == "class") {
 
-    values <- stats::predict(model, data = data, type = "prob")
+    values <- stats::predict(model, newdata = data, type = "prob")
     var_names <- paste0(name, "_", colnames(values))
 
   } else if (inherits(model, "rpart") && model$method == "anova") {
 
-    values <- stats::predict(model, data = data)
+    values <- stats::predict(model, newdata = data)
     var_names <- paste0(name)
 
   }
