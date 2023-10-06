@@ -1,0 +1,72 @@
+---
+title: "Predict"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Predict}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The explore package offers a simplified way to use machine learning and make a prediction.
+
+* `explain_tree()` creates a decision tree
+* `explain_forest()` creates a random forest
+* `explain_logreg()` creates a logistic regression
+* `predict_target()` uses a model to make a prediction
+
+We use synthetic data in this example
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+
+train <- create_data_buy(obs = 1000, seed = 1)
+glimpse(train)
+```
+
+### Train model
+
+We train a random forest model, using `buy` as target (`buy` contains only 0 and 1 values)
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+train %>% explain_forest(target = buy)
+```
+
+To get the model itself, use parameter `out = "model"`
+
+```{r fig.height=4, fig.width=6, message=FALSE, warning=FALSE, include=FALSE}
+model <- train %>% explain_forest(target = buy, out = "model")
+```
+
+### Predict
+
+Now we create test data and use the model for a prediction. We use a different seed so we get different data.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+test <- create_data_buy(obs = 1000, seed = 2)
+glimpse(test)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+test <- test %>% predict_target(model = model)
+glimpse(test)
+```
+
+Now we got 2 new variables `prediction_0` (the probability of `buy == 0`) and 
+`prediction_1` (the probability of `buy == 1`)
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+test %>% explore(prediction_1, target = buy)
+```
+
+We can check the predictions by comparing `prediction_1` with real values of buy.
+There is a clear difference between `buy == 0` and `buy == 1`. So the prediction works.
