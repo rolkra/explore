@@ -5,11 +5,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Interactive data exploration with one line of code or use an easy 
-    to remember set of tidy functions for exploratory data analysis. 
-    Introduces three main verbs. explore() to graphically explore a variable or 
-    table, describe() to describe a variable or table and report() to create an 
-    automated report.">
+<meta name="description" content="Interactive data exploration with one line of code, automated
+    reporting or use an easy to remember set of tidy functions for low code
+    exploratory data analysis.">
 <title>Simplifies Exploratory Data Analysis • explore</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -22,11 +20,9 @@
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Simplifies Exploratory Data Analysis">
-<meta property="og:description" content="Interactive data exploration with one line of code or use an easy 
-    to remember set of tidy functions for exploratory data analysis. 
-    Introduces three main verbs. explore() to graphically explore a variable or 
-    table, describe() to describe a variable or table and report() to create an 
-    automated report.">
+<meta property="og:description" content="Interactive data exploration with one line of code, automated
+    reporting or use an easy to remember set of tidy functions for low code
+    exploratory data analysis.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -120,12 +116,13 @@
 <li><p><strong>Interactive data exploration</strong> (univariate, bivariate, multivariate). A target can be defined (binary / categorical / numerical).</p></li>
 <li><p>Generate an <strong>Automated Report</strong> with one line of code. The target can be binary, categorical or numeric.</p></li>
 <li>
-<p><strong>Manual exploration</strong> using a easy to remember set of tidy functions. There are basically four “verbs” to remember:</p>
+<p><strong>Manual exploration</strong> using a easy to remember set of tidy functions. There are basically five “verbs” to remember:</p>
 <ul>
 <li><p><strong>explore</strong> - if you want to explore a table, a variable or the relationship between a variable and a target (binary, categorical or numeric). The output of these functions is a plot.</p></li>
 <li><p><strong>describe</strong> - if you want to describe a dataset or a variable (number of na, unique values, …) The output of these functions is a text.</p></li>
 <li><p><strong>explain</strong> - to create a simple model that explains a target. <code><a href="reference/explain_tree.html">explain_tree()</a></code> for a decision tree, <code><a href="reference/explain_logreg.html">explain_logreg()</a></code> for a logistic regression.</p></li>
 <li><p><strong>report</strong> - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)</p></li>
+<li><p><strong>abtest</strong> - to test if a difference is statistically significant</p></li>
 </ul>
 </li>
 </ul>
@@ -284,21 +281,23 @@
 <span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, target <span class="op">=</span> <span class="va">Survived</span><span class="op">)</span></span></code></pre></div>
 <p>Some other useful functions:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># create dataset and explore it</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_app.html">create_data_app</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># use data set and explore it</span></span>
+<span><span class="fu"><a href="reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_starwars.html">use_data_starwars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_diamonds.html">use_data_diamonds</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_iris.html">use_data_iris</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_mpg.html">use_data_mpg</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_mtcars.html">use_data_mtcars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_titanic.html">use_data_titanic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_churn.html">create_data_churn</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_person.html">create_data_person</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_unfair.html">create_data_unfair</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co"># create data set and explore it</span></span>
+<span><span class="fu"><a href="reference/create_data_app.html">create_data_app</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_data_churn.html">create_data_churn</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_data_newsletter.html">create_data_newsletter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_data_person.html">create_data_person</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_data_unfair.html">create_data_unfair</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create random dataset with 100 observarions and 5 random variables</span></span>
 <span><span class="co"># and explore it</span></span>

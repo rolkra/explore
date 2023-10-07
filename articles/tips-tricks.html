@@ -164,12 +164,22 @@ observations.</p>
 <span><span class="co">#&gt; $ year              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="user-defined-report">User defined report<a class="anchor" aria-label="anchor" href="#user-defined-report"></a>
+</h2>
+<p>Create a user defined report (RMarkdown template) to explore your own
+data.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_notebook_explore.html">create_notebook_explore</a></span><span class="op">(</span></span>
+<span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="st">"notebook-explore.Rmd"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="basic-data-cleaning">Basic data cleaning<a class="anchor" aria-label="anchor" href="#basic-data-cleaning"></a>
 </h2>
 <div class="section level3">
 <h3 id="rename-variable">Rename variable<a class="anchor" aria-label="anchor" href="#rename-variable"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/use_data_titanic.html">use_data_titanic</a></span><span class="op">(</span>count <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 2,201</span></span>
@@ -178,7 +188,7 @@ observations.</p>
 <span><span class="co">#&gt; $ Sex      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Male", "Male", "Male", "Male", "Male", "Male", "Male", "Male…</span></span>
 <span><span class="co">#&gt; $ Age      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Child", "Child", "Child", "Child", "Child", "Child", "Child"…</span></span>
 <span><span class="co">#&gt; $ Survived <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "No", "No", "No", "No", "No", "No", "No", "No", "No", "No", "…</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">Age</span>, name <span class="op">=</span> <span class="st">"age"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 2,201</span></span>
@@ -191,7 +201,7 @@ observations.</p>
 <div class="section level3">
 <h3 id="replace-na-values">Replace NA values<a class="anchor" aria-label="anchor" href="#replace-na-values"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = energy_kcal_100ml</span></span>
@@ -203,7 +213,7 @@ observations.</p>
 <span><span class="co">#&gt; q25|q75  = 37 | 44</span></span>
 <span><span class="co">#&gt; median   = 42</span></span>
 <span><span class="co">#&gt; mean     = 39.89333</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span>, na <span class="op">=</span> <span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = energy_kcal_100ml</span></span>
@@ -219,7 +229,7 @@ observations.</p>
 <div class="section level3">
 <h3 id="set-min-max-values">Set min max values<a class="anchor" aria-label="anchor" href="#set-min-max-values"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_person.html">create_data_person</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = age</span></span>
@@ -231,7 +241,7 @@ observations.</p>
 <span><span class="co">#&gt; q25|q75  = 37 | 76</span></span>
 <span><span class="co">#&gt; median   = 55</span></span>
 <span><span class="co">#&gt; mean     = 55.845</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">age</span>, min_val <span class="op">=</span> <span class="fl">20</span>, max_val <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = age</span></span>
@@ -247,7 +257,7 @@ observations.</p>
 <div class="section level3">
 <h3 id="rescale-0-to-1">Rescale 0 to 1<a class="anchor" aria-label="anchor" href="#rescale-0-to-1"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = income</span></span>
 <span><span class="co">#&gt; type     = double</span></span>
@@ -258,7 +268,7 @@ observations.</p>
 <span><span class="co">#&gt; q25|q75  = 35 | 88.625</span></span>
 <span><span class="co">#&gt; median   = 62</span></span>
 <span><span class="co">#&gt; mean     = 61.5875</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">income</span>, rescale01 <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = income</span></span>
@@ -274,7 +284,7 @@ observations.</p>
 <div class="section level3">
 <h3 id="cleaning-text">Cleaning text<a class="anchor" aria-label="anchor" href="#cleaning-text"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"handset"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">" android "</span></span>
 <span><span class="va">data</span><span class="op">[</span><span class="fl">2</span>, <span class="st">"handset"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ANDROID"</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">handset</span><span class="op">)</span></span>
@@ -287,7 +297,7 @@ observations.</p>
 <span><span class="co">#&gt;  Android   = 471 (47.1%)</span></span>
 <span><span class="co">#&gt;  Apple     = 430 (43%)</span></span>
 <span><span class="co">#&gt;  Other     = 97 (9.7%)</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">handset</span>, simplify_text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">handset</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = handset</span></span>

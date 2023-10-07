@@ -105,21 +105,12 @@ Krasser</h4>
     
     
 <p>The explore package simplifies Exploratory Data Analysis (EDA). Get
-faster insights with less code!</p>
-<p>There are three ways to use the package:</p>
-<ul>
-<li><p><strong>Interactive data exploration</strong> (univariat,
-bivariate, multivariate)</p></li>
-<li><p>Generate an <strong>Automated Report</strong> with one line of
-code. The target can be binary, categorical or numeric.</p></li>
-<li><p><strong>Manual exploration</strong> using a easy to remember set
-of tidy functions. Introduces four main verbs.
-<strong>explore()</strong> to grafically explore a variable or table,
-<strong>describe()</strong> to describe a variable or table,
-<strong>explain_tree() </strong>to create a simple decision tree that
-explains a target. <strong>report()</strong> to generate an automated
-report of all variables.</p></li>
-</ul>
+faster insights with less code! There are three ways to use the package:
+<strong>Interactive data exploration</strong>, generate an
+<strong>Automated Report</strong> or use low code for <strong>Manual
+exploration</strong> (<code><a href="../reference/explore.html">explore()</a></code>, <code><a href="../reference/describe.html">describe()</a></code>,
+<code>explain_*()</code>, <code><a href="../reference/report.html">report()</a></code> , <code><a href="../reference/abtest.html">abtest()</a></code>,
+…)</p>
 <p>explore package on Github: <a href="https://github.com/rolkra/explore" class="external-link">https://github.com/rolkra/explore</a></p>
 <p>As the explore-functions fits well into the tidyverse, we load the
 dplyr-package as well.</p>
@@ -129,14 +120,14 @@ dplyr-package as well.</p>
 <div class="section level3">
 <h3 id="interactive-data-exploration">Interactive data exploration<a class="anchor" aria-label="anchor" href="#interactive-data-exploration"></a>
 </h3>
-<p>Explore your dataset (in this case the iris dataset) in one line of
+<p>Explore your data set (in this case the iris data set) in one line of
 code:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p>A shiny app is launched, you can inspect individual variable, explore
 their relation to a target (binary / categorical / numerical), grow a
 decision tree or create a fully automated report of all variables with a
-few “mouseclicks”.</p>
+few “mouse clicks”.</p>
 <p><img src="../reference/figures/explore-shiny-iris-target-species.png" width="600"></p>
 <p>You can choose each variable containing as a target, that is binary
 (0/1, FALSE/TRUE or “no”/“yes”), categorical or numeric.</p>

@@ -116,29 +116,34 @@ can be binary, categorical or numerical</li>
 <li>
 <code><a href="../reference/explain_logreg.html">explain_logreg()</a></code> creates a logistic regression. The
 target must be binary</li>
+<li>
+<code><a href="../reference/balance_target.html">balance_target()</a></code> to balance a target</li>
+<li>
+<code><a href="../reference/weight_target.html">weight_target()</a></code> to create weights for the decision
+tree</li>
 </ul>
 <p>We use synthetic data in this example</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 100</span></span>
+<span><span class="co">#&gt; Rows: 1,000</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ period          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 202012, 202012, 202012, 202012, 202012, 202012, 202012…</span></span>
 <span><span class="co">#&gt; $ buy             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ age             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 48, 68, 45, 50, 59, 60, 66, 56, 70, 47, 71, 40, 47, 92…</span></span>
-<span><span class="co">#&gt; $ city_ind        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, …</span></span>
-<span><span class="co">#&gt; $ female_ind      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ fixedvoice_ind  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ age             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 39, 57, 55, 66, 71, 44, 64, 51, 70, 44, 58, 47, 68, 71…</span></span>
+<span><span class="co">#&gt; $ city_ind        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, …</span></span>
+<span><span class="co">#&gt; $ female_ind      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, …</span></span>
+<span><span class="co">#&gt; $ fixedvoice_ind  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, …</span></span>
 <span><span class="co">#&gt; $ fixeddata_ind   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ fixedtv_ind     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, …</span></span>
-<span><span class="co">#&gt; $ mobilevoice_ind <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, …</span></span>
-<span><span class="co">#&gt; $ mobiledata_prd  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "NO", "NO", "NO", "NO", "NO", "MOBILE STICK", "MOBILE …</span></span>
-<span><span class="co">#&gt; $ bbi_speed_ind   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, …</span></span>
-<span><span class="co">#&gt; $ bbi_usg_gb      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 79, 60, 82, 52, 54, 64, 52, 73, 36, 90, 78, 103, 52, 2…</span></span>
-<span><span class="co">#&gt; $ hh_single       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ fixedtv_ind     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, …</span></span>
+<span><span class="co">#&gt; $ mobilevoice_ind <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, …</span></span>
+<span><span class="co">#&gt; $ mobiledata_prd  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "NO", "NO", "MOBILE STICK", "NO", "BUSINESS", "BUSINES…</span></span>
+<span><span class="co">#&gt; $ bbi_speed_ind   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, …</span></span>
+<span><span class="co">#&gt; $ bbi_usg_gb      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 77, 49, 53, 44, 55, 93, 50, 64, 63, 87, 45, 45, 70, 79…</span></span>
+<span><span class="co">#&gt; $ hh_single       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, …</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="decision-tree">Decision Tree<a class="anchor" aria-label="anchor" href="#decision-tree"></a>
 </h3>
@@ -163,15 +168,40 @@ target must be binary</li>
 </h4>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_logreg.html">explain_logreg</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
-<span><span class="co">#&gt;   term           estimate std.error statistic   p.value</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)       8.16     2.46     3.32    0.000<span style="text-decoration: underline;">902</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> age              -<span style="color: #BB0000;">0.182</span>    0.046<span style="text-decoration: underline;">7</span>  -<span style="color: #BB0000;">3.90</span>    0.000<span style="text-decoration: underline;">097</span>3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> female_ind        2.34     0.694    3.37    0.000<span style="text-decoration: underline;">758</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> fixedvoice_ind  -<span style="color: #BB0000;">16.5</span>   <span style="text-decoration: underline;">1</span>939.      -<span style="color: #BB0000;">0.008</span><span style="color: #BB0000; text-decoration: underline;">48</span> 0.993    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> fixedtv_ind       1.59     0.695    2.28    0.022<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   term          estimate std.error statistic  p.value</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)  5.87      0.544        10.8   3.88<span style="color: #949494;">e</span><span style="color: #BB0000;">-27</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> age         -<span style="color: #BB0000;">0.146</span>     0.010<span style="text-decoration: underline;">6</span>      -<span style="color: #BB0000;">13.8</span>   3.49<span style="color: #949494;">e</span><span style="color: #BB0000;">-43</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> city_ind     0.711     0.183         3.89  1.02<span style="color: #949494;">e</span><span style="color: #BB0000;">- 4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> female_ind   1.75      0.186         9.38  6.91<span style="color: #949494;">e</span><span style="color: #BB0000;">-21</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> fixedtv_ind  1.51      0.190         7.93  2.14<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> bbi_usg_gb  -<span style="color: #BB0000;">0.000</span><span style="color: #BB0000; text-decoration: underline;">072</span><span style="color: #BB0000;">4</span> 0.000<span style="text-decoration: underline;">090</span>4    -<span style="color: #BB0000;">0.801</span> 4.23<span style="color: #949494;">e</span><span style="color: #BB0000;">- 1</span></span></span></code></pre></div>
 </div>
+</div>
+<div class="section level3">
+<h3 id="balance-target">Balance Target<a class="anchor" aria-label="anchor" href="#balance-target"></a>
+</h3>
+<p>If you have a data set with a very unbalanced target (in this case
+only 5% of all observations have <code>buy == 1</code>) it may be
+difficult to create a decision tree.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">2000</span>, target1_prob <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">buy</span><span class="op">)</span></span>
+<span><span class="co">#&gt; variable = buy</span></span>
+<span><span class="co">#&gt; type     = integer</span></span>
+<span><span class="co">#&gt; na       = 0 of 2 000 (0%)</span></span>
+<span><span class="co">#&gt; unique   = 2</span></span>
+<span><span class="co">#&gt;        0 = 1 899 (95%)</span></span>
+<span><span class="co">#&gt;        1 = 101 (5.1%)</span></span></code></pre></div>
+<p>It may help to balance the target before growing the decision tree
+(or use weighs as alternative). In this example we down sample the data
+so buy has 10% of <code>target == 1</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/balance_target.html">balance_target</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span>, min_prop <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
+<p><img src="explain_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
