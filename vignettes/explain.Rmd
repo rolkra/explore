@@ -21,6 +21,9 @@ The explore package offers a simplified way to use machine learning to understan
 * `explain_tree()` creates a decision tree. The target can be binary, categorical or numerical
 * `explain_forest()` creates a random forest. The target can be binary, categorical or numerical
 * `explain_logreg()` creates a logistic regression. The target must be binary
+* `balance_target()` to balance a target
+* `weight_target()` to create weights for the decision tree
+
 
 We use synthetic data in this example
 
@@ -28,7 +31,7 @@ We use synthetic data in this example
 library(dplyr)
 library(explore)
 
-data <- create_data_buy(obs = 100)
+data <- create_data_buy(obs = 1000)
 glimpse(data)
 ```
 
@@ -57,3 +60,21 @@ data %>% explain_forest(target = buy, ntree = 100)
 ```{r message=FALSE, warning=FALSE}
 data %>% explain_logreg(target = buy)
 ```
+
+### Balance Target
+
+If you have a data set with a very unbalanced target (in this case only 5% of all observations have `buy == 1`) it may be difficult to create a decision tree.
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_buy(obs = 2000, target1_prob = 0.05)
+data %>% describe(buy)
+```
+
+It may help to balance the target before growing the decision tree (or use weighs as alternative). In this example we down sample the data so buy has 10% of `target == 1`.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>%
+  balance_target(target = buy, min_prop = 0.10) %>%
+  explain_tree(target = buy)
+```
+

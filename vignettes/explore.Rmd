@@ -16,15 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
-
-There are three ways to use the package:
-
-* **Interactive data exploration** (univariat, bivariate, multivariate)
-
-* Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric. 
-
-* **Manual exploration** using a easy to remember set of tidy functions. Introduces four main verbs. **explore()** to grafically explore a variable or table, **describe()** to describe a variable or table, **explain_tree() **to create a simple decision tree that explains a target. **report()** to generate an automated report of all variables.
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! There are three ways to use the package: **Interactive data exploration**, generate an **Automated Report** or use low code for **Manual exploration** (`explore()`, `describe()`, `explain_*()`, `report()` , `abtest()`, ...)  
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
@@ -37,13 +29,13 @@ library(explore)
 
 ### Interactive data exploration
 
-Explore your dataset (in this case the iris dataset) in one line of code:
+Explore your data set (in this case the iris data set) in one line of code:
 
 ```{R eval=FALSE, echo=TRUE}
 explore(iris)
 ```
 
-A shiny app is launched, you can inspect individual variable, explore their relation to a target (binary / categorical / numerical), grow a decision tree or create a fully automated report of all variables with a few "mouseclicks".
+A shiny app is launched, you can inspect individual variable, explore their relation to a target (binary / categorical / numerical), grow a decision tree or create a fully automated report of all variables with a few "mouse clicks".
  
 ![](../man/figures/explore-shiny-iris-target-species.png){width=600px}
 

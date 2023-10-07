@@ -26,7 +26,7 @@ There are three ways to use the package:
 
 * Generate an **Automated Report** with one line of code. The target can be binary, categorical or numeric.
 
-* **Manual exploration** using a easy to remember set of tidy functions. There are basically four "verbs" to remember:
+* **Manual exploration** using a easy to remember set of tidy functions. There are basically five "verbs" to remember:
 
   * **explore** - if you want to explore a table, a variable or the relationship between a variable and a target (binary, categorical or numeric). The output of these functions is a plot.
 
@@ -35,6 +35,8 @@ There are three ways to use the package:
   * **explain** - to create a simple model that explains a target. `explain_tree()` for a decision tree, `explain_logreg()` for a logistic regression.
 
   * **report** - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)
+  
+  * **abtest** - to test if a difference is statistically significant
 
 The explore package automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers (autoscaling).
 
@@ -209,21 +211,23 @@ titanic |> explain_tree(n = n, target = Survived)
 Some other useful functions:
 
 ```r
-# create dataset and explore it
-data <- create_data_app(obs = 1000)
-explore(data)
+# use data set and explore it
+use_data_penguins() |> explore()
+use_data_starwars() |> explore()
+use_data_diamonds() |> explore()
+use_data_iris() |> explore()
+use_data_mpg() |> explore()
+use_data_mtcars() |> explore()
+use_data_titanic() |> explore()
+use_data_beer() |> explore()
 
-data <- create_data_buy(obs = 1000)
-explore(data)
-
-data <- create_data_churn(obs = 1000)
-explore(data)
-
-data <- create_data_person(obs = 1000)
-explore(data)
-
-data <- create_data_unfair(obs = 1000)
-explore(data)
+# create data set and explore it
+create_data_app() |> explore()
+create_data_buy() |> explore()
+create_data_churn() |> explore()
+create_data_newsletter() |> explore()
+create_data_person() |> explore()
+create_data_unfair() |> explore()
 
 # create random dataset with 100 observarions and 5 random variables
 # and explore it
