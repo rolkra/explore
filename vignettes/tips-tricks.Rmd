@@ -4,7 +4,7 @@ author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Tips and tricks}
+  %\VignetteIndexEntry{Tips & tricks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -46,6 +46,16 @@ To add an id variable, simply use `add_var_id()` from {explore}.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 data %>% add_var_id() %>% glimpse()
+```
+
+## User defined report
+
+Create a user defined report (RMarkdown template) to explore your own data.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+create_notebook_explore(
+  output_dir = tempdir(),
+  output_file = "notebook-explore.Rmd")
 ```
 
 ## Basic data cleaning

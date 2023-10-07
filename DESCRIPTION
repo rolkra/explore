@@ -4,11 +4,9 @@ Title: Simplifies Exploratory Data Analysis
 Version: 1.1.0
 Author: Roland Krasser
 Maintainer: Roland Krasser <roland.krasser@gmail.com>
-Description: Interactive data exploration with one line of code or use an easy 
-    to remember set of tidy functions for exploratory data analysis. 
-    Introduces three main verbs. explore() to graphically explore a variable or 
-    table, describe() to describe a variable or table and report() to create an 
-    automated report.
+Description: Interactive data exploration with one line of code, automated
+    reporting or use an easy to remember set of tidy functions for low code
+    exploratory data analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://rolkra.github.io/explore/, https://github.com/rolkra/explore
