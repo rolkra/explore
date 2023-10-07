@@ -1,10 +1,10 @@
 ---
-title: "Report"
+title: "Report variables"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Report}
+  %\VignetteIndexEntry{Report variables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

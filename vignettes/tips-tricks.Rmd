@@ -1,0 +1,110 @@
+---
+title: "Tips and tricks"
+author: "Roland Krasser"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tips and tricks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(explore)
+```
+
+## Count with percent
+
+A classic `count()` returns the number of observations.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_penguins()
+data %>% count(island)
+```
+
+To add percent values, simply use `count_pct()` from {explore}.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data |> count_pct(island)
+```
+
+## Add id
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>% glimpse()
+```
+
+To add an id variable, simply use `add_var_id()` from {explore}.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>% add_var_id() %>% glimpse()
+```
+
+## Basic data cleaning
+
+### Rename variable
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_titanic(count = FALSE)
+glimpse(data)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(Age, name = "age")
+glimpse(data)
+```
+
+### Replace NA values
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_beer()
+data %>% describe(energy_kcal_100ml)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(energy_kcal_100ml, na = 42)
+data %>% describe(energy_kcal_100ml)
+```
+
+### Set min max values
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- create_data_person()
+data %>% describe(age)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(age, min_val = 20, max_val = 80)
+data %>% describe(age)
+```
+
+### Rescale 0 to 1
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>% describe(income)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(income, rescale01 = TRUE)
+data %>% describe(income)
+```
+
+### Cleaning text
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data[1, "handset"] <- " android "
+data[2, "handset"] <- "ANDROID"
+data %>% describe(handset)
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(handset, simplify_text = TRUE)
+data %>% describe(handset)
+```
