@@ -230,6 +230,9 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
   target_quo <- enquo(target)
   target_txt <- quo_name(target_quo)[[1]]
 
+  # define variables for CRAN-package check
+  success_n <- NULL
+
   # parameter n
   if (!missing(n)) {
     n_quo <- enquo(n)
@@ -392,6 +395,10 @@ abtest_shiny <- function(size_a = 100, size_b = 100,
     warning("This function can only be used in an interactive R session")
     return(invisible())
   }
+
+  # define variables for CRAN-package check
+  group <- NULL
+  success <- NULL
 
   # define ui
   ui <- shiny::fluidPage(

@@ -33,7 +33,7 @@ data %>% count(island)
 To add percent values, simply use `count_pct()` from {explore}.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data |> count_pct(island)
+data %>% count_pct(island)
 ```
 
 ## Add id
@@ -58,7 +58,7 @@ create_notebook_explore(
   output_file = "notebook-explore.Rmd")
 ```
 
-### Data Dictionary
+## Data Dictionary
 
 Create a Data Dictionary of a data set (Markdown File data_dict.md)
 
