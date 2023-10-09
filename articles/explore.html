@@ -51,7 +51,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/abtest.html">A/B Test</a>
+    <a class="dropdown-item" href="../articles/abtest.html">A/B test</a>
     <a class="dropdown-item" href="../articles/data.html">Data</a>
     <a class="dropdown-item" href="../articles/describe.html">Describe</a>
     <a class="dropdown-item" href="../articles/explain.html">Explain</a>
@@ -62,7 +62,7 @@
     <a class="dropdown-item" href="../articles/report-target.html">Report target</a>
     <a class="dropdown-item" href="../articles/report-targetpct.html">Report targetpct</a>
     <a class="dropdown-item" href="../articles/report.html">Report variables</a>
-    <a class="dropdown-item" href="../articles/tips-tricks.html">Tips and tricks</a>
+    <a class="dropdown-item" href="../articles/tips-tricks.html">Tips &amp; tricks</a>
   </div>
 </li>
 <li class="nav-item">
@@ -96,7 +96,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2023-10-07</h4>
+            <h4 data-toc-skip class="date">2023-10-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/HEAD/vignettes/explore.Rmd" class="external-link"><code>vignettes/explore.Rmd</code></a></small>
       <div class="d-none name"><code>explore.Rmd</code></div>
@@ -106,8 +106,8 @@ Krasser</h4>
     
 <p>The explore package simplifies Exploratory Data Analysis (EDA). Get
 faster insights with less code! There are three ways to use the package:
-<strong>Interactive data exploration</strong>, generate an
-<strong>Automated Report</strong> or use low code for <strong>Manual
+<strong>interactive data exploration</strong>, generate an
+<strong>automated report</strong> or use low code for <strong>manual
 exploration</strong> (<code><a href="../reference/explore.html">explore()</a></code>, <code><a href="../reference/describe.html">describe()</a></code>,
 <code>explain_*()</code>, <code><a href="../reference/report.html">report()</a></code> , <code><a href="../reference/abtest.html">abtest()</a></code>,
 …)</p>
@@ -285,7 +285,7 @@ columns of the plots) and size (height of 1 plot)</p>
 <p><img src="explore_files/figure-html/unnamed-chunk-25-1.png" width="576"></p>
 </div>
 <div class="section level3">
-<h3 id="other-options">Other options<a class="anchor" aria-label="anchor" href="#other-options"></a>
+<h3 id="explore-options">Explore options<a class="anchor" aria-label="anchor" href="#explore-options"></a>
 </h3>
 <p>If you use explore to explore a variable and want to set lower and
 upper limits for values, you can use the <code>min_val</code> and
@@ -422,30 +422,12 @@ functions:</p>
 <p><img src="explore_files/figure-html/unnamed-chunk-36-1.png" width="576"></p>
 </div>
 <div class="section level3">
-<h3 id="data-dictionary">Data Dictionary<a class="anchor" aria-label="anchor" href="#data-dictionary"></a>
-</h3>
-<p>Create a Data Dictionary of a dataset (Markdown File
-data_dict.md)</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  <span class="fu"><a href="../reference/data_dict_md.html">data_dict_md</a></span><span class="op">(</span>output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Add title, detailed descriptions and change default filename</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">description</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>                  variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span><span class="op">)</span>, </span>
-<span>                  description <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species of Iris flower"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/data_dict_md.html">data_dict_md</a></span><span class="op">(</span><span class="va">iris</span>, </span>
-<span>             title <span class="op">=</span> <span class="st">"iris flower data set"</span>, </span>
-<span>             description <span class="op">=</span>  <span class="va">description</span>, </span>
-<span>             output_file <span class="op">=</span> <span class="st">"data_dict_iris.md"</span>,</span>
-<span>             output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
 <h3 id="basic-data-cleaning">Basic data cleaning<a class="anchor" aria-label="anchor" href="#basic-data-cleaning"></a>
 </h3>
 <p>To clean a variable you can use <code>clean_var</code>. With one line
 of code you can rename a variable, replace NA-values and set a minimum
 and maximum for the value.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, </span>
 <span>            min_val <span class="op">=</span> <span class="fl">4.5</span>, </span>
@@ -467,7 +449,7 @@ and maximum for the value.</p>
 </h3>
 <p>Create an RMarkdown template to explore your own data. Set output_dir
 (existing file may be overwritten)</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_notebook_explore.html">create_notebook_explore</a></span><span class="op">(</span></span>
 <span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"notebook-explore.Rmd"</span><span class="op">)</span></span></code></pre></div>
