@@ -1,4 +1,51 @@
 url: ~
 template:
   bootstrap: 5
+reference:
+  - title: Explore
+    - explore
+    - explore_bar
+    - explore_density
+    - explore_targetpct
+    - explore_tbl
+  - title: Describe
+    contents:
+    - starts_with("describe_")
+  - title: Explain
+    contents:
+    - starts_with("explain_")
+    - balance_target
+    - weight_target
+    - predict_target
+  - title: Report
+    contents:
+    - report
+    - get_var_buckets
+    - get_nrow
+    - total_fig_height
+    - plot_legend_targetpct
+  - title: A/B test
+    contents:
+    - abtest
+  - title: Data
+    contents:
+    - starts_with("add_var_")
+    - starts_with("create_data_")
+    - starts_with("use_data_")
+  - title: Tools
+    contents:
+    - clean_var
+    - count_pct
+    - data_dict_md
+    - decrypt
+    - encrypt
+    - get_type
+    - guess_cat_num
+    - plot_text
+    - plot_var_info
+    - replace_na_with
+    - rescale01
+    - simplify_text
+    - starts_with("format_")
+
 
