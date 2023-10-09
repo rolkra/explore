@@ -1,5 +1,5 @@
 ---
-title: "Tips and tricks"
+title: "Tips & tricks"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -56,6 +56,27 @@ Create a user defined report (RMarkdown template) to explore your own data.
 create_notebook_explore(
   output_dir = tempdir(),
   output_file = "notebook-explore.Rmd")
+```
+
+### Data Dictionary
+
+Create a Data Dictionary of a data set (Markdown File data_dict.md)
+
+```{R eval=FALSE, echo=TRUE}
+iris  %>%  data_dict_md(output_dir = tempdir())
+```
+
+Add title, detailed descriptions and change default filename
+
+```{R eval=FALSE, echo=TRUE}
+description <- data.frame(
+                  variable = c("Species"), 
+                  description = c("Species of Iris flower"))
+data_dict_md(iris, 
+             title = "iris flower data set", 
+             description =  description, 
+             output_file = "data_dict_iris.md",
+             output_dir = tempdir())
 ```
 
 ## Basic data cleaning

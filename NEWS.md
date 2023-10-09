@@ -6,6 +6,7 @@
 * add create_data_newsletter()
 * add use_data_*() functions
 * drop use of `fct_explicit_na()` (deprecated) (#15)
+* reduce package dependencies
 * create_data use_data return datasets as tibble 
 * allowed to run explore() without data 
 * allowed to run abtest() without data (shiny app)
