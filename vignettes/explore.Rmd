@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! There are three ways to use the package: **Interactive data exploration**, generate an **Automated Report** or use low code for **Manual exploration** (`explore()`, `describe()`, `explain_*()`, `report()` , `abtest()`, ...)  
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! There are three ways to use the package: **interactive data exploration**, generate an **automated report** or use low code for **manual exploration** (`explore()`, `describe()`, `explain_*()`, `report()` , `abtest()`, ...)  
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 
@@ -209,7 +209,7 @@ You can add a target too:
 iris %>% explore(Sepal.Length, Petal.Length, target = Species)
 ```
 
-### Other options
+### Explore options
 
 If you use explore to explore a variable and want to set lower and upper limits for values, you can use the `min_val` and `max_val` parameters. All values below min_val will be set to min_val. All values above max_val will be set to max_val.
 
@@ -295,27 +295,6 @@ describe(data)
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 data %>% select(random_starsign, random_moon) %>% explore_all()
-```
-
-### Data Dictionary
-
-Create a Data Dictionary of a dataset (Markdown File data_dict.md)
-
-```{R eval=FALSE, echo=TRUE}
-iris  %>%  data_dict_md(output_dir = tempdir())
-```
-
-Add title, detailed descriptions and change default filename
-
-```{R eval=FALSE, echo=TRUE}
-description <- data.frame(
-                  variable = c("Species"), 
-                  description = c("Species of Iris flower"))
-data_dict_md(iris, 
-             title = "iris flower data set", 
-             description =  description, 
-             output_file = "data_dict_iris.md",
-             output_dir = tempdir())
 ```
 
 ### Basic data cleaning
