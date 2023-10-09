@@ -124,7 +124,7 @@ observations.</p>
 <p>To add percent values, simply use <code><a href="../reference/count_pct.html">count_pct()</a></code> from
 {explore}.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/count_pct.html">count_pct</a></span><span class="op">(</span><span class="va">island</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/count_pct.html">count_pct</a></span><span class="op">(</span><span class="va">island</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
 <span><span class="co">#&gt;   island        n total   pct</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -172,9 +172,10 @@ data.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_notebook_explore.html">create_notebook_explore</a></span><span class="op">(</span></span>
 <span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"notebook-explore.Rmd"</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="data-dictionary">Data Dictionary<a class="anchor" aria-label="anchor" href="#data-dictionary"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="data-dictionary">Data Dictionary<a class="anchor" aria-label="anchor" href="#data-dictionary"></a>
+</h2>
 <p>Create a Data Dictionary of a data set (Markdown File
 data_dict.md)</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -189,7 +190,6 @@ data_dict.md)</p>
 <span>             description <span class="op">=</span>  <span class="va">description</span>, </span>
 <span>             output_file <span class="op">=</span> <span class="st">"data_dict_iris.md"</span>,</span>
 <span>             output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 id="basic-data-cleaning">Basic data cleaning<a class="anchor" aria-label="anchor" href="#basic-data-cleaning"></a>

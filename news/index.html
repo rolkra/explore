@@ -66,17 +66,17 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="explore-110">explore 1.1.0<a class="anchor" aria-label="anchor" href="#explore-110"></a></h2>
-<ul><li>abtest() now supports numeric target (t-test)</li>
+<ul><li>add create_data_newsletter()</li>
+<li>add use_data_*() functions</li>
 <li>add explain_forest()</li>
 <li>add predict_target()</li>
-<li>add create_data_newsletter()</li>
-<li>add use_data_*() functions</li>
+<li>abtest() now supports numeric target (t-test)</li>
+<li>abtest_targetpct() with count data (parameter n)</li>
+<li>allowed to run abtest() without data (shiny app)</li>
+<li>allowed to run explore() without data</li>
 <li>drop use of <code>fct_explicit_na()</code> (deprecated) (<a href="https://github.com/rolkra/explore/issues/15" class="external-link">#15</a>)</li>
 <li>reduce package dependencies</li>
-<li>create_data use_data return datasets as tibble</li>
-<li>allowed to run explore() without data</li>
-<li>allowed to run abtest() without data (shiny app)</li>
-<li>abtest_targetpct() with count data (parameter n)</li>
+<li>create_data use_data return data sets as tibble</li>
 <li>new vignettes</li>
 </ul></div>
     <div class="section level2">
@@ -130,7 +130,7 @@
 <li>using md in roxygen</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8.0" id="explore-080-2022-01-29">explore 0.8.0 (2022-01-29)<a class="anchor" aria-label="anchor" href="#explore-080-2022-01-29"></a></h2><p class="text-muted">CRAN release: 2022-01-30</p>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="explore-080-2022-01-30">explore 0.8.0 (2022-01-30)<a class="anchor" aria-label="anchor" href="#explore-080-2022-01-30"></a></h2><p class="text-muted">CRAN release: 2022-01-30</p>
 <ul><li>all dwh_ functions are no longer included in {explore} Alternative: source <a href="https://github.com/rolkra/dwh" class="external-link uri">https://github.com/rolkra/dwh</a>
 </li>
 <li>add create_fake_data()</li>
@@ -142,7 +142,7 @@
 <li>report templates: add var buckets (to plot large number of variables)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.1" id="explore-071-2021-06-03">explore 0.7.1 (2021-06-03)<a class="anchor" aria-label="anchor" href="#explore-071-2021-06-03"></a></h2><p class="text-muted">CRAN release: 2021-06-04</p>
+<h2 class="pkg-version" data-toc-text="0.7.1" id="explore-071-2021-06-04">explore 0.7.1 (2021-06-04)<a class="anchor" aria-label="anchor" href="#explore-071-2021-06-04"></a></h2><p class="text-muted">CRAN release: 2021-06-04</p>
 <ul><li>change theme_light() into individual theme() so that set_theme works.</li>
 <li>add rmarkdown to Suggests in DESCRIPTION</li>
 <li>fix URL in DESCRIPTION</li>
@@ -160,7 +160,7 @@
 <li>add unit testing (testthat)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.2" id="explore-062-2020-10-13">explore 0.6.2 (2020-10-13)<a class="anchor" aria-label="anchor" href="#explore-062-2020-10-13"></a></h2><p class="text-muted">CRAN release: 2020-10-14</p>
+<h2 class="pkg-version" data-toc-text="0.6.2" id="explore-062-2020-10-14">explore 0.6.2 (2020-10-14)<a class="anchor" aria-label="anchor" href="#explore-062-2020-10-14"></a></h2><p class="text-muted">CRAN release: 2020-10-14</p>
 <ul><li>Bugfix explore_bar(): NA in plot</li>
 <li>explore_count(): convert target into factor</li>
 <li>explore_count(): add default title (cat name)</li>
@@ -194,7 +194,7 @@
 <ul><li>fix breaking changes tibble 3.0.0</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.4" id="explore-054-2020-02-10">explore 0.5.4 (2020-02-10)<a class="anchor" aria-label="anchor" href="#explore-054-2020-02-10"></a></h2><p class="text-muted">CRAN release: 2020-02-09</p>
+<h2 class="pkg-version" data-toc-text="0.5.4" id="explore-054-2020-02-09">explore 0.5.4 (2020-02-09)<a class="anchor" aria-label="anchor" href="#explore-054-2020-02-09"></a></h2><p class="text-muted">CRAN release: 2020-02-09</p>
 <p>Maintenance update:</p>
 <ul><li>fix param … in description (PR#16223, see <a href="https://bugs.r-project.org/show_bug.cgi?id=16223" class="external-link uri">https://bugs.r-project.org/show_bug.cgi?id=16223</a>)</li>
 </ul></div>
@@ -211,7 +211,7 @@
 <li>add function explore_targetpct()</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.2" id="explore-052-2019-11-21">explore 0.5.2 (2019-11-21)<a class="anchor" aria-label="anchor" href="#explore-052-2019-11-21"></a></h2><p class="text-muted">CRAN release: 2019-11-22</p>
+<h2 class="pkg-version" data-toc-text="0.5.2" id="explore-052-2019-11-22">explore 0.5.2 (2019-11-22)<a class="anchor" aria-label="anchor" href="#explore-052-2019-11-22"></a></h2><p class="text-muted">CRAN release: 2019-11-22</p>
 <ul><li>split source-code file into multiple files</li>
 <li>format_num_auto without brackets</li>
 <li>treat Date variables as cat</li>
@@ -221,7 +221,7 @@
 <li>fix link in README.md</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.1" id="explore-051-2019-10-07">explore 0.5.1 (2019-10-07)<a class="anchor" aria-label="anchor" href="#explore-051-2019-10-07"></a></h2><p class="text-muted">CRAN release: 2019-10-08</p>
+<h2 class="pkg-version" data-toc-text="0.5.1" id="explore-051-2019-10-08">explore 0.5.1 (2019-10-08)<a class="anchor" aria-label="anchor" href="#explore-051-2019-10-08"></a></h2><p class="text-muted">CRAN release: 2019-10-08</p>
 <p>Prepare for new dplyr 0.8.4 Bug Fixes</p>
 <ul><li>prepare explore_tbl() for dplyr 0.8.4</li>
 <li>describe_num() with default digits=6</li>
@@ -251,7 +251,7 @@
 <li>add hex sticker</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.4" id="explore-044-2019-08-30">explore 0.4.4 (2019-08-30)<a class="anchor" aria-label="anchor" href="#explore-044-2019-08-30"></a></h2><p class="text-muted">CRAN release: 2019-08-27</p>
+<h2 class="pkg-version" data-toc-text="0.4.4" id="explore-044-2019-08-27">explore 0.4.4 (2019-08-27)<a class="anchor" aria-label="anchor" href="#explore-044-2019-08-27"></a></h2><p class="text-muted">CRAN release: 2019-08-27</p>
 <p>Many functions now accept categorical and numerical targets (next to a binary target). If you want to force which geom is used for visualisation, you can use explore_bar() and explore_density(). New function explore_tbl() to visualise a dataframe/table (type of variables, number of NA, …)</p>
 <ul><li>add function explore_bar()</li>
 <li>explore_density() now using correct tidy eval, target cat &gt; 2 possible</li>
@@ -276,7 +276,7 @@
 <li>describe(): change out=“vector” to out=“list”</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.3" id="explore-043-2019-06-20">explore 0.4.3 (2019-06-20)<a class="anchor" aria-label="anchor" href="#explore-043-2019-06-20"></a></h2><p class="text-muted">CRAN release: 2019-06-17</p>
+<h2 class="pkg-version" data-toc-text="0.4.3" id="explore-043-2019-06-17">explore 0.4.3 (2019-06-17)<a class="anchor" aria-label="anchor" href="#explore-043-2019-06-17"></a></h2><p class="text-muted">CRAN release: 2019-06-17</p>
 <ul><li>fix parameter in explore: auto_scale, na</li>
 <li>fix number of NA in explore (move code before auto_scale)</li>
 <li>explore_density() with target: drop plot title “propensity by”</li>
