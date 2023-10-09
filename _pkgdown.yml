@@ -3,6 +3,7 @@ template:
   bootstrap: 5
 reference:
   - title: Explore
+    contents:
     - explore
     - explore_bar
     - explore_density
