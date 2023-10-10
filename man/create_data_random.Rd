@@ -32,6 +32,7 @@ create_data_random(
 }
 \value{
 A dataset as tibble
+create_data_random()
 }
 \description{
 Random data that can be used for unit-testing or teaching

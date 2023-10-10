@@ -35,6 +35,7 @@ create_data_buy(
 }
 \value{
 A dataset as tibble
+create_data_buy()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching

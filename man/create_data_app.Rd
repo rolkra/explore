@@ -15,6 +15,7 @@ create_data_app(obs = 1000, add_id = FALSE, seed = 123)
 }
 \value{
 A dataset as tibble
+create_data_app()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching

@@ -42,6 +42,7 @@ create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param seed Seed for randomization (integer)
 #'
 #' @return A dataset as tibble
+#' create_data_app()
 #' @export
 
 create_data_app = function(obs = 1000,
@@ -147,6 +148,7 @@ create_data_app = function(obs = 1000,
 #' @param seed Seed for randomization (integer)
 #'
 #' @return A dataset as tibble
+#' create_data_person()
 #' @export
 
 create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
@@ -242,6 +244,7 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param seed Seed for randomization
 #'
 #' @return A dataset as tibble
+#' create_data_buy()
 #' @export
 
 create_data_buy = function(obs = 1000,
@@ -366,6 +369,7 @@ create_data_buy = function(obs = 1000,
 #' @param seed Seed for randomization (integer)
 #'
 #' @return A dataset as tibble
+#' create_data_churn()
 #' @export
 
 create_data_churn = function(obs = 1000,
@@ -469,6 +473,7 @@ create_data_churn = function(obs = 1000,
 #' @param seed Seed for randomization (integer)
 #'
 #' @return A dataset as tibble
+#' create_data_newsletter()
 #' @export
 
 create_data_newsletter = function(obs = 1000,
@@ -545,8 +550,8 @@ create_data_newsletter = function(obs = 1000,
 #' @param target1_prob Probability that target = 1
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
-#'
 #' @return A dataset as tibble
+#' create_data_unfair()
 #' @export
 
 create_data_unfair = function(obs = 1000,
@@ -650,8 +655,8 @@ create_data_unfair = function(obs = 1000,
 #' @param target1_prob Probability that target = 1
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
-#'
 #' @return A dataset as tibble
+#' create_data_random()
 #' @export
 
 create_data_random = function(obs = 1000, vars = 10,

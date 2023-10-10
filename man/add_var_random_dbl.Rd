@@ -33,8 +33,9 @@ Dataset containing new random variable
 Add a random double variable to dataset
 }
 \examples{
-add_var_random_dbl(iris)
-add_var_random_dbl(iris, name = "random_var")
-add_var_random_dbl(iris, min_val = 1, max_val = 10)
-add_var_random_dbl(iris, min_val = 1, max_val = 100, overwrite = FALSE)
+library(magrittr)
+iris \%>\% add_var_random_dbl() \%>\% head()
+iris \%>\% add_var_random_dbl(name = "random_var") \%>\% head()
+iris \%>\% add_var_random_dbl(min_val = 1, max_val = 10) \%>\% head()
+iris \%>\% add_var_random_dbl(min_val = 1, max_val = 100, overwrite = FALSE) \%>\% head()
 }

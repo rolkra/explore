@@ -33,8 +33,10 @@ Dataset containing new random variable
 Add a random integer variable to dataset
 }
 \examples{
-add_var_random_int(iris)
-add_var_random_int(iris, name = "random_var")
-add_var_random_int(iris, min_val = 1, max_val = 10)
-add_var_random_int(iris, min_val = 1, max_val = 100, overwrite = FALSE)
+library(magrittr)
+iris \%>\% add_var_random_01() \%>\% head()
+iris \%>\% add_var_random_int() \%>\% head()
+iris \%>\% add_var_random_int(name = "random_var") \%>\% head()
+iris \%>\% add_var_random_int(min_val = 1, max_val = 10) \%>\% head()
+iris \%>\% add_var_random_int(min_val = 1, max_val = 100, overwrite = FALSE) \%>\% head()
 }

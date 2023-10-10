@@ -15,6 +15,7 @@ create_data_newsletter(obs = 1000, add_id = FALSE, seed = 123)
 }
 \value{
 A dataset as tibble
+create_data_newsletter()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching
