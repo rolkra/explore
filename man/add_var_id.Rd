@@ -14,11 +14,12 @@ add_var_id(data, name = "id", overwrite = FALSE)
 \item{overwrite}{Can new id variable overwrite an existing variable in dataset?}
 }
 \value{
-Dataset containing new id variable
+Data set containing new id variable
 }
 \description{
 Add a variable id at first column in dataset
 }
 \examples{
-add_var_id(iris)
+library(magrittr)
+iris \%>\% add_var_id() \%>\% head()
 }

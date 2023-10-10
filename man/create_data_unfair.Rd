@@ -28,6 +28,7 @@ create_data_unfair(
 }
 \value{
 A dataset as tibble
+create_data_unfair()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching

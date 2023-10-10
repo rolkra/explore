@@ -30,6 +30,7 @@ Dataset containing new random variable
 Add a random 0/1 variable to dataset
 }
 \examples{
-add_var_random_01(iris)
-add_var_random_01(iris, name = "my_var")
+library(magrittr)
+iris \%>\% add_var_random_01() \%>\% head()
+iris \%>\% add_var_random_01(name = "my_var") \%>\% head()
 }

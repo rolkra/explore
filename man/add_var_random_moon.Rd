@@ -22,5 +22,6 @@ Dataset containing new random variable
 Add a random moon variable to dataset
 }
 \examples{
-add_var_random_moon(iris)
+library(magrittr)
+iris \%>\% add_var_random_moon() \%>\% head()
 }
