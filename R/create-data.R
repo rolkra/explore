@@ -40,8 +40,8 @@ create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param obs Number of observations
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
-#'
 #' @return A dataset as tibble
+#' @examples
 #' create_data_app()
 #' @export
 
@@ -146,8 +146,8 @@ create_data_app = function(obs = 1000,
 #' @param obs Number of observations
 #' @param add_id Add an id
 #' @param seed Seed for randomization (integer)
-#'
 #' @return A dataset as tibble
+#' @examples
 #' create_data_person()
 #' @export
 
@@ -242,8 +242,8 @@ create_data_person <- function(obs = 1000, add_id = FALSE, seed = 123) {
 #' @param flip_gender Should Male/Female be flipped in data?
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
-#'
 #' @return A dataset as tibble
+#' @examples
 #' create_data_buy()
 #' @export
 
@@ -367,8 +367,8 @@ create_data_buy = function(obs = 1000,
 #' @param target1_prob Probability that target = 1
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
-#'
 #' @return A dataset as tibble
+#' @examples
 #' create_data_churn()
 #' @export
 
@@ -471,8 +471,8 @@ create_data_churn = function(obs = 1000,
 #' @param obs Number of observations
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
-#'
 #' @return A dataset as tibble
+#' @examples
 #' create_data_newsletter()
 #' @export
 
@@ -551,6 +551,7 @@ create_data_newsletter = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization (integer)
 #' @return A dataset as tibble
+#' @examples
 #' create_data_unfair()
 #' @export
 
@@ -656,6 +657,7 @@ create_data_unfair = function(obs = 1000,
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
 #' @return A dataset as tibble
+#' @examples
 #' create_data_random()
 #' @export
 

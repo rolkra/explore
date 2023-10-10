@@ -28,8 +28,10 @@ create_data_churn(
 }
 \value{
 A dataset as tibble
-create_data_churn()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching
+}
+\examples{
+create_data_churn()
 }
