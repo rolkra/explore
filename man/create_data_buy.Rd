@@ -35,7 +35,6 @@ create_data_buy(
 }
 \value{
 A dataset as tibble
-create_data_buy()
 }
 \description{
 Artificial data that can be used for unit-testing or teaching
@@ -62,4 +61,7 @@ Target in dataset:
 \item buy (may be renamed) = Did customer buy a new product in next month?
 (1 = yes, 0 = no)
 }
+}
+\examples{
+create_data_buy()
 }

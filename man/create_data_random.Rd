@@ -32,7 +32,6 @@ create_data_random(
 }
 \value{
 A dataset as tibble
-create_data_random()
 }
 \description{
 Random data that can be used for unit-testing or teaching
@@ -48,4 +47,7 @@ Target in dataset:
 \itemize{
 \item target_ind (may be renamed) = random values (1 = yes, 0 = no)
 }
+}
+\examples{
+create_data_random()
 }
