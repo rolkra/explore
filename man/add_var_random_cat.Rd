@@ -35,7 +35,7 @@ Add a random categorical variable to dataset
 \examples{
 library(magrittr)
 iris \%>\% add_var_random_cat() \%>\% head()
-iris \%>\% add_var_random_cat(iris, name = "my_cat") \%>\% head()
-iris \%>\% add_var_random_cat(iris, cat = c("Version A", "Version B")) \%>\% head()
-iris \%>\% add_var_random_cat(iris, cat = c(1,2,3,4,5)) \%>\% head()
+iris \%>\% add_var_random_cat(name = "my_cat") \%>\% head()
+iris \%>\% add_var_random_cat(cat = c("Version A", "Version B")) \%>\% head()
+iris \%>\% add_var_random_cat(cat = c(1,2,3,4,5)) \%>\% head()
 }
