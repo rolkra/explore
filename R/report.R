@@ -66,63 +66,51 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
     "report_target_split.html"
     }
 
-
-  report <- if (is.na(target_text) && is.na(n_txt))  {
+  if (is.na(target_text) && is.na(n_txt))  {
     # report variables
-    input_file <- system.file("extdata", "template_report_variable.Rmd", package = "explore")
-    rmarkdown::render(input = input_file,
-                        output_file = output_file,
-                        output_dir = output_dir,
-                        intermediates_dir = output_dir,
-                        clean = TRUE
-    )
+    input_template <- "template_report_variable.Rmd"
 
-  } else if(is.na(target_text) && !is.na(n_txt))  {
+  } else if (is.na(target_text) && !is.na(n_txt)) {
     # report variables + n
-    input_file <- system.file("extdata", "template_report_variable_n.Rmd", package="explore")
+    input_template <- "template_report_variable_n.Rmd"
     var_name_n <- n_txt
-    rmarkdown::render(input = input_file,
-                        output_file = output_file,
-                        output_dir = output_dir,
-                        intermediates_dir = output_dir,
-                        clean = TRUE
-                      )
 
-  } else if(!is.na(target_text) && !is.na(n_txt))  {
+  } else if (!is.na(target_text) && !is.na(n_txt)) {
     # report target + n
-    input_file <- system.file("extdata", "template_report_target_split_n.Rmd", package="explore")
+    input_template <- "template_report_target_split_n.Rmd"
     var_name_n <- n_txt
     var_name_target <- target_text  # needed in report template
-    rmarkdown::render(input = input_file,
-                        output_file = output_file,
-                        output_dir = output_dir,
-                        intermediates_dir = output_dir,
-                        clean = TRUE
-    )
 
+  } else if (split) {
     # report target with split
-  } else if(split)  {
-    input_file <- system.file("extdata", "template_report_target_split.Rmd", package = "explore")
+    input_template <- "template_report_target_split.Rmd"
     var_name_target <- target_text  # needed in report template
-    rmarkdown::render(input = input_file,
-                      output_file = output_file,
-                      output_dir = output_dir,
-                      intermediates_dir = output_dir,
-                      clean = TRUE
+
+  } else {
+    # report target with percent
+    input_template <- "template_report_target_pct.Rmd"
+
+    if (output_file == "report_target_split.html") {
+      # correct the generic output_file name.
+      output_file <- "report_target.html"
+    }
+    var_name_target <- target_text # needed in report template
+
+  }
+
+  input_file <- system.file("extdata", input_template, package = "explore")
+
+  cli::cli_alert_info("Processing template: {.val {input_template}}")
+  report <- rmarkdown::render(
+    input             = input_file,
+    output_file       = output_file,
+    output_dir        = output_dir,
+    intermediates_dir = output_dir,
+    clean = TRUE,
+    quiet = TRUE
     )
 
-    # report target with percent
-  } else {
-    input_file <- system.file("extdata", "template_report_target_pct.Rmd", package = "explore")
-    if (missing(output_file)) {output_file = "report_target.html"}
-    var_name_target <- target_text # needed in report template
-    rmarkdown::render(input = input_file,
-                      output_file = output_file,
-                      output_dir = output_dir,
-                      intermediates_dir = output_dir,
-                      clean = TRUE
-    )
-  }
+  cli::cli_alert_success("Report created at {.file file://{report}}")
   invisible(report)# if
 } # report
 
