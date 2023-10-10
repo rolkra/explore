@@ -11,20 +11,18 @@
 * add `create_data_newsletter()`.
 * add `use_data_beer()` and `use_data_starwars()` functions (#20, #23)
 * explore now has a [website](https://rolkra.github.io/explore/). (#17, #19, @olivroy)
-
 * `abtest()` now supports numeric target (t-test).
 * `abtest_targetpct()` with count data (parameter `n`).
 * `abtest()` and `explore()` can now run without data (shiny app). If no data are provided, `palmerpenguins::penguins` is used. (#25)
 * New vignettes were added. (#27, #28, #29, #31)
-
-* Documentation and examples were enhanced. (#37, @olivroy, #32, #33, #36)
+* Documentation and examples were enhanced. (#38, @olivroy, #32, #33, #36, #37)
+* `create_data_()` `use_data_*()` return data sets as tibble.
 
 ## Bug fixes / internal
 
-* drop use of `fct_explicit_na()` (deprecated) (#15, @olivroy)
+* drop use of `fct_explicit_na()` (forcats >= 1.0.0) and use `linewidth` for ggplot2 (>= 3.4.0) (deprecated) (#15, @olivroy)
 * explore no longer depends on assertthat, tidyr, and broom. (#16, #21, @olivroy).
 * Error messages are now more informative (#18, @olivroy)
-* `create_data_()` `use_data_*()` return data sets as tibble.
 * explore now uses testthat 3rd edition and GitHub actions (#16, @olivroy)
 * explore has been re-licensed as MIT (#22)
 
