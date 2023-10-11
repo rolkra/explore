@@ -341,8 +341,8 @@ describe_all <- function(data, out = "large") {
 #' @examples
 #' describe_tbl(iris)
 #'
-#' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-#' describe_tbl(iris, is_virginica)
+#' iris[1,1] <- NA
+#' describe_tbl(iris)
 #' @export
 
 describe_tbl <- function(data, n, target, out = "text")  {

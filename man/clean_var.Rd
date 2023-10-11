@@ -29,9 +29,9 @@ clean_var(
 
 \item{max_cat}{Maximum number of different factor levels for categorical variable (if more, .OTHER is added)}
 
-\item{rescale01}{Rescale into value between 0 and 1 (var must be numeric)}
+\item{rescale01}{IF TRUE, value is rescaled between 0 and 1 (var must be numeric)}
 
-\item{simplify_text}{if TRUE, a character variable is simplified (trim, upper, ...)}
+\item{simplify_text}{If TRUE, a character variable is simplified (trim, upper, ...)}
 
 \item{name}{New name of variable (as string)}
 }
@@ -42,5 +42,7 @@ Dataset
 Clean variable (replace NA values, set min_val and max_val)
 }
 \examples{
-clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
+library(magrittr)
+iris \%>\% clean_var(Sepal.Width, max_val = 3.5, name = "sepal_width") \%>\% head()
+iris \%>\% clean_var(Sepal.Width, rescale01 = TRUE) \%>\% head()
 }

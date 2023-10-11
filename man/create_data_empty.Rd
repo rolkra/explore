@@ -20,5 +20,6 @@ Dataset as tibble
 Create an empty dataset
 }
 \examples{
-create_data_empty()
+create_data_empty(obs = 100)
+create_data_empty(obs = 100, add_id = TRUE)
 }

@@ -22,5 +22,6 @@ Target must be 0/1, FALSE/TRUE ore no/yes
 \examples{
 iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 weights <- weight_target(iris, target = is_versicolor)
-summary(weights)
+versicolor <- iris$is_versicolor
+table(versicolor, weights)
 }

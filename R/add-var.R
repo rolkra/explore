@@ -92,11 +92,9 @@ add_var_random_01 <- function(data, name = "random_01", prob = c(0.5, 0.5), over
 #' @return Dataset containing new random variable
 #' @examples
 #' library(magrittr)
-#' iris %>% add_var_random_01() %>% head()
 #' iris %>% add_var_random_int() %>% head()
 #' iris %>% add_var_random_int(name = "random_var") %>% head()
 #' iris %>% add_var_random_int(min_val = 1, max_val = 10) %>% head()
-#' iris %>% add_var_random_int(min_val = 1, max_val = 100, overwrite = FALSE) %>% head()
 #' @export
 
 add_var_random_int <- function(data, name = "random_int",
@@ -142,7 +140,6 @@ add_var_random_int <- function(data, name = "random_int",
 #' iris %>% add_var_random_dbl() %>% head()
 #' iris %>% add_var_random_dbl(name = "random_var") %>% head()
 #' iris %>% add_var_random_dbl(min_val = 1, max_val = 10) %>% head()
-#' iris %>% add_var_random_dbl(min_val = 1, max_val = 100, overwrite = FALSE) %>% head()
 #' @export
 
 add_var_random_dbl <- function(data, name = "random_dbl",
@@ -209,6 +206,7 @@ add_var_random_moon <- function(data, name = "random_moon", overwrite = TRUE, se
 #' @examples
 #' library(magrittr)
 #' iris %>% add_var_random_starsign() %>% head()
+#' iris %>% add_var_random_starsign(lang = "de") %>% head()
 #' @export
 
 add_var_random_starsign <- function(data, name = "random_starsign", lang = "en", overwrite = TRUE, seed) {
@@ -250,6 +248,7 @@ add_var_random_starsign <- function(data, name = "random_starsign", lang = "en",
 #' @examples
 #' library(magrittr)
 #' iris %>% add_var_id() %>% head()
+#' iris %>% add_var_id(name = "iris_nr") %>% head()
 #' @export
 
 add_var_id <- function(data, name = "id", overwrite = FALSE)  {

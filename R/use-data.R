@@ -101,7 +101,8 @@ use_data_penguins <- function() {
 #' @param count use count data
 #' @return Dataset
 #' @examples
-#' use_data_titanic()
+#' use_data_titanic(count = TRUE)
+#' use_data_titanic(count = FALSE)
 #' @export
 
 use_data_titanic <- function(count = FALSE) {
@@ -130,7 +131,14 @@ use_data_titanic <- function(count = FALSE) {
 #' @export
 
 use_data_beer <- function() {
+
+  # read data from RDS
   file <- system.file("extdata", "beer.rds", package="explore")
   data <- readRDS(file = file)
+
+  # drop variable use (if exists)
+  data["use"] <- NULL
+
+  # return data as tibble
   tibble::as_tibble(data)
 }

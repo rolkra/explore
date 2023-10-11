@@ -24,6 +24,6 @@ Describe table (e.g. number of rows and columns of dataset)
 \examples{
 describe_tbl(iris)
 
-iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
-describe_tbl(iris, is_virginica)
+iris[1,1] <- NA
+describe_tbl(iris)
 }

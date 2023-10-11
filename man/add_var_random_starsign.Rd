@@ -32,4 +32,5 @@ Add a random starsign variable to dataset
 \examples{
 library(magrittr)
 iris \%>\% add_var_random_starsign() \%>\% head()
+iris \%>\% add_var_random_starsign(lang = "de") \%>\% head()
 }

@@ -112,7 +112,8 @@ balance_target <- function(data, target, min_prop = 0.1, seed) {
 #' @examples
 #' iris$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 #' weights <- weight_target(iris, target = is_versicolor)
-#' summary(weights)
+#' versicolor <- iris$is_versicolor
+#' table(versicolor, weights)
 #' @export
 
 weight_target <- function(data, target) {
@@ -737,12 +738,14 @@ rescale01 <- function(x)  {
 #' @param min_val All values < min_val are converted to min_val (var numeric or character)
 #' @param max_val All values > max_val are converted to max_val (var numeric or character)
 #' @param max_cat Maximum number of different factor levels for categorical variable (if more, .OTHER is added)
-#' @param rescale01 Rescale into value between 0 and 1 (var must be numeric)
-#' @param simplify_text if TRUE, a character variable is simplified (trim, upper, ...)
+#' @param rescale01 IF TRUE, value is rescaled between 0 and 1 (var must be numeric)
+#' @param simplify_text If TRUE, a character variable is simplified (trim, upper, ...)
 #' @param name New name of variable (as string)
 #' @return Dataset
 #' @examples
-#' clean_var(iris, Sepal.Width, max_val = 3.5, name = "sepal_width")
+#' library(magrittr)
+#' iris %>% clean_var(Sepal.Width, max_val = 3.5, name = "sepal_width") %>% head()
+#' iris %>% clean_var(Sepal.Width, rescale01 = TRUE) %>% head()
 #' @export
 
 clean_var <- function(data, var, na = NA, min_val = NA, max_val = NA, max_cat = NA, rescale01 = FALSE, simplify_text = FALSE, name = NA)  {
