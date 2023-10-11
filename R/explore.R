@@ -1296,14 +1296,14 @@ explore_shiny <- function(data, target)  {
 #' @param var A variable
 #' @param var2 A variable for checking correlation
 #' @param n A Variable for number of observations (count data)
-#' @param target Target variable (0/1 or FALSE/TRUE)
-#' @param targetpct Plot variable as target% (FALSE/TRUE)
+#' @param target Target variable (0/1 or `FALSE`/`TRUE`)
+#' @param targetpct Plot variable as target% (`FALSE`/`TRUE`)
 #' @param split Alternative to targetpct (split = !targetpct)
-#' @param min_val All values < min_val are converted to min_val
-#' @param max_val All values > max_val are converted to max_val
-#' @param auto_scale Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
-#' @param na Value to replace NA
-#' @param ... Further arguments (like flip = TRUE/FALSE)
+#' @param min_val All values < min_val are converted to `min_val`
+#' @param max_val All values > max_val are converted to `max_val`
+#' @param auto_scale Use 0.2 and 0.98 quantile for `min_val` and `max_val` (if `min_val` and `max_val` are not defined)
+#' @param na Value to replace `NA`
+#' @param ... Further arguments (like flip = `TRUE`/`FALSE`)
 #' @return Plot object
 #' @examples
 #' ## Launch Shiny app (in interactive R sessions)

@@ -28,21 +28,21 @@ explore(
 
 \item{n}{A Variable for number of observations (count data)}
 
-\item{target}{Target variable (0/1 or FALSE/TRUE)}
+\item{target}{Target variable (0/1 or \code{FALSE}/\code{TRUE})}
 
-\item{targetpct}{Plot variable as target\% (FALSE/TRUE)}
+\item{targetpct}{Plot variable as target\% (\code{FALSE}/\code{TRUE})}
 
 \item{split}{Alternative to targetpct (split = !targetpct)}
 
-\item{min_val}{All values < min_val are converted to min_val}
+\item{min_val}{All values < min_val are converted to \code{min_val}}
 
-\item{max_val}{All values > max_val are converted to max_val}
+\item{max_val}{All values > max_val are converted to \code{max_val}}
 
-\item{auto_scale}{Use 0.2 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
+\item{auto_scale}{Use 0.2 and 0.98 quantile for \code{min_val} and \code{max_val} (if \code{min_val} and \code{max_val} are not defined)}
 
-\item{na}{Value to replace NA}
+\item{na}{Value to replace \code{NA}}
 
-\item{...}{Further arguments (like flip = TRUE/FALSE)}
+\item{...}{Further arguments (like flip = \code{TRUE}/\code{FALSE})}
 }
 \value{
 Plot object

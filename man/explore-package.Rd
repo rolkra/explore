@@ -19,4 +19,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Roland Krasser \email{roland.krasser@gmail.com}
+
+}
 \keyword{internal}
