@@ -49,5 +49,5 @@ Target in dataset:
 }
 }
 \examples{
-create_data_random()
+create_data_random(obs = 100, vars = 5)
 }

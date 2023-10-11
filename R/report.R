@@ -147,7 +147,7 @@ create_notebook_explore <- function(output_file = "notebook-explore.Rmd", output
   # if not, add it!
   if (!missing(output_file)) {
     len <- nchar(output_file)
-    if (tolower(substr(output_file, len-4, len)) != ".rmd")  {
+    if (tolower(substr(output_file, len-3, len)) != ".rmd")  {
       output_file <- paste0(output_file, ".Rmd")
     }
   } # if

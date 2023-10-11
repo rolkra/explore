@@ -17,5 +17,6 @@ This data set comes with base R.
 Survival of passengers on the Titanic.
 }
 \examples{
-use_data_titanic()
+use_data_titanic(count = TRUE)
+use_data_titanic(count = FALSE)
 }

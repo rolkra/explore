@@ -22,4 +22,5 @@ Add a variable id at first column in dataset
 \examples{
 library(magrittr)
 iris \%>\% add_var_id() \%>\% head()
+iris \%>\% add_var_id(name = "iris_nr") \%>\% head()
 }

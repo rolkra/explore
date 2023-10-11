@@ -5,7 +5,8 @@
 #' @param seed Seed for randomization (integer)
 #' @return Dataset as tibble
 #' @examples
-#' create_data_empty()
+#' create_data_empty(obs = 100)
+#' create_data_empty(obs = 100, add_id = TRUE)
 #' @export
 
 create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
@@ -658,7 +659,7 @@ create_data_unfair = function(obs = 1000,
 #' @param seed Seed for randomization
 #' @return A dataset as tibble
 #' @examples
-#' create_data_random()
+#' create_data_random(obs = 100, vars = 5)
 #' @export
 
 create_data_random = function(obs = 1000, vars = 10,
