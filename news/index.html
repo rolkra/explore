@@ -65,85 +65,130 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0" id="explore-110">explore 1.1.0<a class="anchor" aria-label="anchor" href="#explore-110"></a></h2>
-<ul><li>add create_data_newsletter()</li>
-<li>add use_data_*() functions</li>
-<li>add explain_forest()</li>
-<li>add predict_target()</li>
-<li>abtest() now supports numeric target (t-test)</li>
-<li>abtest_targetpct() with count data (parameter n)</li>
-<li>allowed to run abtest() without data (shiny app)</li>
-<li>allowed to run explore() without data</li>
-<li>drop use of <code>fct_explicit_na()</code> (deprecated) (<a href="https://github.com/rolkra/explore/issues/15" class="external-link">#15</a>)</li>
-<li>reduce package dependencies</li>
-<li>create_data use_data return data sets as tibble</li>
-<li>new vignettes</li>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="explore-110">explore 1.1.0<a class="anchor" aria-label="anchor" href="#explore-110"></a></h2><p class="text-muted">CRAN release: 2023-10-11</p>
+<div class="section level3">
+<h3 id="breaking-changes-1-1-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-1-0"></a></h3>
+<ul><li>explore no longer imports MASS and RandomForest. for <code><a href="../reference/explain_logreg.html">explain_logreg()</a></code> and <code><a href="../reference/explain_forest.html">explain_forest()</a></code>, you will receive a prompt to install these packages in interactive sessions. (<a href="https://github.com/rolkra/explore/issues/21" class="external-link">#21</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>)</li>
 </ul></div>
+<div class="section level3">
+<h3 id="new-features-1-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
+<ul><li>add <code><a href="../reference/explain_forest.html">explain_forest()</a></code>.</li>
+<li>add <code><a href="../reference/predict_target.html">predict_target()</a></code>.</li>
+<li>add <code><a href="../reference/create_data_newsletter.html">create_data_newsletter()</a></code>.</li>
+<li>add <code><a href="../reference/use_data_beer.html">use_data_beer()</a></code> and <code><a href="../reference/use_data_starwars.html">use_data_starwars()</a></code> functions (<a href="https://github.com/rolkra/explore/issues/20" class="external-link">#20</a>, <a href="https://github.com/rolkra/explore/issues/23" class="external-link">#23</a>)</li>
+<li>explore now has a <a href="https://rolkra.github.io/explore/" class="external-link">website</a>. (<a href="https://github.com/rolkra/explore/issues/17" class="external-link">#17</a>, <a href="https://github.com/rolkra/explore/issues/19" class="external-link">#19</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>)</li>
+<li>
+<code><a href="../reference/abtest.html">abtest()</a></code> now supports numeric target (t-test).</li>
+<li>
+<code><a href="../reference/abtest_targetpct.html">abtest_targetpct()</a></code> with count data (parameter <code>n</code>).</li>
+<li>
+<code><a href="../reference/abtest.html">abtest()</a></code> and <code><a href="../reference/explore.html">explore()</a></code> can now run without data (shiny app). If no data are provided, <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html" class="external-link">palmerpenguins::penguins</a></code> is used. (<a href="https://github.com/rolkra/explore/issues/25" class="external-link">#25</a>)</li>
+<li>New vignettes were added. (<a href="https://github.com/rolkra/explore/issues/27" class="external-link">#27</a>, <a href="https://github.com/rolkra/explore/issues/28" class="external-link">#28</a>, <a href="https://github.com/rolkra/explore/issues/29" class="external-link">#29</a>, <a href="https://github.com/rolkra/explore/issues/31" class="external-link">#31</a>)</li>
+<li>Documentation and examples were enhanced. (<a href="https://github.com/rolkra/explore/issues/38" class="external-link">#38</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/rolkra/explore/issues/32" class="external-link">#32</a>, <a href="https://github.com/rolkra/explore/issues/33" class="external-link">#33</a>, <a href="https://github.com/rolkra/explore/issues/36" class="external-link">#36</a>, <a href="https://github.com/rolkra/explore/issues/37" class="external-link">#37</a>)</li>
+<li>
+<code>create_data_()</code> <code>use_data_*()</code> return data sets as tibble.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes--internal-1-1-0">Bug fixes / internal<a class="anchor" aria-label="anchor" href="#bug-fixes--internal-1-1-0"></a></h3>
+<ul><li>drop use of <code>fct_explicit_na()</code> (forcats &gt;= 1.0.0) and use <code>linewidth</code> for ggplot2 (&gt;= 3.4.0) (deprecated) (<a href="https://github.com/rolkra/explore/issues/15" class="external-link">#15</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>)</li>
+<li>explore no longer depends on assertthat, tidyr, and broom. (<a href="https://github.com/rolkra/explore/issues/16" class="external-link">#16</a>, <a href="https://github.com/rolkra/explore/issues/21" class="external-link">#21</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>).</li>
+<li>Error messages are now more informative (<a href="https://github.com/rolkra/explore/issues/18" class="external-link">#18</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>)</li>
+<li>explore now uses testthat 3rd edition and GitHub actions (<a href="https://github.com/rolkra/explore/issues/16" class="external-link">#16</a>, <a href="https://github.com/olivroy" class="external-link">@olivroy</a>)</li>
+<li>explore has been re-licensed as MIT (<a href="https://github.com/rolkra/explore/issues/22" class="external-link">#22</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.2" id="explore-102-2023-01-14">explore 1.0.2 (2023-01-14)<a class="anchor" aria-label="anchor" href="#explore-102-2023-01-14"></a></h2><p class="text-muted">CRAN release: 2023-01-14</p>
-<ul><li>add_var_random_01() creates variable of type integer</li>
-<li>add target_name &amp; factorise_target parameter to more create_data_*()</li>
-<li>add target1_prob parameter to more create_data_*()</li>
-<li>add checks to create_data_*()</li>
+<ul><li>
+<code><a href="../reference/add_var_random_01.html">add_var_random_01()</a></code> creates variable of type integer</li>
+<li>add <code>target_name</code> &amp; <code>factorise_target</code> parameter to more <code>create_data_*()</code>
+</li>
+<li>add <code>target1_prob</code> parameter to more <code>create_data_*()</code>
+</li>
+<li>add checks to <code>create_data_*()</code>
+</li>
 <li>format variable random_moon</li>
-<li>add abtest()</li>
-<li>remove native pipe in explore_tbl()</li>
-<li>fix error in explore() median if NA values</li>
-<li>add tests for explore (no error if data contains NA)</li>
+<li>add <code><a href="../reference/abtest.html">abtest()</a></code>
+</li>
+<li>remove native pipe in <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code>
+</li>
+<li>fix error in <code><a href="../reference/explore.html">explore()</a></code> median if <code>NA</code> values</li>
+<li>add tests for <code><a href="../reference/explore.html">explore()</a></code> (no error if data contains <code>NA</code>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="explore-101-2022-12-20">explore 1.0.1 (2022-12-20)<a class="anchor" aria-label="anchor" href="#explore-101-2022-12-20"></a></h2><p class="text-muted">CRAN release: 2022-12-20</p>
-<ul><li>Switch back to %&gt;% in vignettes (compatibility R &lt; 4.1)</li>
+<ul><li>Switch back to <code>%&gt;%</code> in vignettes (compatibility R &lt; 4.1) (<a href="https://github.com/rolkra/explore/issues/6" class="external-link">#6</a>)</li>
 <li>No hard coded path for markdown-templates</li>
-<li>Add create_data_unfair()</li>
-<li>Add screen_size to create_data_app()</li>
+<li>Add <code><a href="../reference/create_data_unfair.html">create_data_unfair()</a></code>
+</li>
+<li>
+<code><a href="../reference/create_data_app.html">create_data_app()</a></code> gains a <code>screen_size</code> argument.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="explore-100-2022-11-11">explore 1.0.0 (2022-11-11)<a class="anchor" aria-label="anchor" href="#explore-100-2022-11-11"></a></h2><p class="text-muted">CRAN release: 2022-11-11</p>
 <ul><li>Dependency DT (&gt;= 0.3.0)</li>
-<li>Use native pipe in README.md</li>
+<li>Improve and use native pipe in README.</li>
 <li>Improve documentation</li>
-<li>Add function create_data_app()</li>
+<li>Add function <code><a href="../reference/create_data_app.html">create_data_app()</a></code>
+</li>
 <li>Add support for integer64</li>
-<li>Bugfix report() &gt;100 variables</li>
-<li>No warning-message in explore_count()</li>
-<li>Redesign explore_tbl()</li>
-<li>Add mean to explore_density() plot</li>
-<li>Enrich README.md</li>
-<li>Add create_data_churn()</li>
-<li>Add add_var_random_moon()</li>
-<li>Vignettes: switch from %&gt;% to |&gt;</li>
-<li>Add create_notebook_explore()</li>
+<li>Bugfix <code><a href="../reference/report.html">report()</a></code> &gt;100 variables</li>
+<li>No warning-message in <code><a href="../reference/explore_count.html">explore_count()</a></code>
+</li>
+<li>Redesign <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code>
+</li>
+<li>Add mean to <code><a href="../reference/explore_density.html">explore_density()</a></code> plot</li>
+<li>Add <code><a href="../reference/create_data_churn.html">create_data_churn()</a></code>
+</li>
+<li>Add <code><a href="../reference/add_var_random_moon.html">add_var_random_moon()</a></code>
+</li>
+<li>Vignettes: switch from <code>%&gt;%</code> to <code>|&gt;</code>
+</li>
+<li>Add <code><a href="../reference/create_notebook_explore.html">create_notebook_explore()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.0" id="explore-090-2022-08-31">explore 0.9.0 (2022-08-31)<a class="anchor" aria-label="anchor" href="#explore-090-2022-08-31"></a></h2><p class="text-muted">CRAN release: 2022-08-31</p>
-<ul><li>rename create_x_data() to create_data_x()</li>
-<li>rename add_x_var() to add_var_x()</li>
-<li>extend create_data functions</li>
-<li>extend add_var functions</li>
-<li>explain_tree(): set default minsplit to 20</li>
-<li>explain_tree(): set prior probabilities</li>
-<li>explore(): targetpct as alternative to split parameter</li>
-<li>report(): targetpct as alternative to split parameter</li>
-<li>balance_target(): add parameter seed</li>
-<li>fix variable type for create_data_x()</li>
+<ul><li>rename create_x_data() to <code>create_data_x()</code>
+</li>
+<li>rename add_x_var() to <code>add_var_x()</code>
+</li>
+<li>extend <code>create_data_*()</code> functions</li>
+<li>extend <code>add_var_*()</code> functions</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: set default <code>minsplit = 20</code>
+</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: set prior probabilities</li>
+<li>
+<code><a href="../reference/explore.html">explore()</a></code> and <code><a href="../reference/report.html">report()</a></code>: <code>targetpct</code> as alternative to <code>split</code> parameter</li>
+<li>
+<code><a href="../reference/balance_target.html">balance_target()</a></code>: add parameter seed</li>
+<li>fix variable type for <code>create_data_x()</code>
+</li>
 <li>using md in roxygen</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="explore-080-2022-01-30">explore 0.8.0 (2022-01-30)<a class="anchor" aria-label="anchor" href="#explore-080-2022-01-30"></a></h2><p class="text-muted">CRAN release: 2022-01-30</p>
-<ul><li>all dwh_ functions are no longer included in {explore} Alternative: source <a href="https://github.com/rolkra/dwh" class="external-link uri">https://github.com/rolkra/dwh</a>
+<ul><li>all <code>dwh_*()</code> functions are no longer included in {explore} Alternative: source <a href="https://github.com/rolkra/dwh" class="external-link uri">https://github.com/rolkra/dwh</a>
 </li>
-<li>add create_fake_data()</li>
-<li>add create_random_data()</li>
-<li>add add_random_var()</li>
-<li>add get_var_buckets()</li>
-<li>total_fig_height(): parameters var_name_target, var_name_n</li>
+<li>add <code>create_fake_data()</code>
+</li>
+<li>add <code>create_random_data()</code>
+</li>
+<li>add <code>add_random_var()</code>
+</li>
+<li>add <code><a href="../reference/get_var_buckets.html">get_var_buckets()</a></code>
+</li>
+<li>
+<code><a href="../reference/total_fig_height.html">total_fig_height()</a></code>: parameters <code>var_name_target</code>, <code>var_name_n</code>
+</li>
 <li>code styling</li>
 <li>report templates: add var buckets (to plot large number of variables)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.1" id="explore-071-2021-06-04">explore 0.7.1 (2021-06-04)<a class="anchor" aria-label="anchor" href="#explore-071-2021-06-04"></a></h2><p class="text-muted">CRAN release: 2021-06-04</p>
-<ul><li>change theme_light() into individual theme() so that set_theme works.</li>
+<ul><li>change <code>theme_light()</code> into <code>individual theme()</code> so that <code>set_theme</code> works.</li>
 <li>add rmarkdown to Suggests in DESCRIPTION</li>
 <li>fix URL in DESCRIPTION</li>
 <li>drop LazyData in DESCRIPTION</li>
@@ -151,25 +196,36 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="explore-070-2021-01-21">explore 0.7.0 (2021-01-21)<a class="anchor" aria-label="anchor" href="#explore-070-2021-01-21"></a></h2><p class="text-muted">CRAN release: 2021-01-21</p>
-<ul><li>add weights parameter to explain_tree()</li>
+<ul><li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code> gains a <code>weights</code> parameter.</li>
 <li>flip no/yes label in rpart.plot</li>
-<li>fix minsplit for count-data</li>
-<li>add weight_target()</li>
-<li>add plot_legend_targetpct()</li>
+<li>fix <code>minsplit</code> for count-data</li>
+<li>add <code><a href="../reference/weight_target.html">weight_target()</a></code>
+</li>
+<li>add <code><a href="../reference/plot_legend_targetpct.html">plot_legend_targetpct()</a></code>
+</li>
 <li>add legend in targetpct rmarkdown-template</li>
 <li>add unit testing (testthat)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.2" id="explore-062-2020-10-14">explore 0.6.2 (2020-10-14)<a class="anchor" aria-label="anchor" href="#explore-062-2020-10-14"></a></h2><p class="text-muted">CRAN release: 2020-10-14</p>
-<ul><li>Bugfix explore_bar(): NA in plot</li>
-<li>explore_count(): convert target into factor</li>
-<li>explore_count(): add default title (cat name)</li>
-<li>explore_count(): add parameter numeric, max_cat, max_target_cat</li>
-<li>explain_tree(): convert character variables into factors (count data)</li>
-<li>explain_tree(): parameter out (“plot” | “model”)</li>
-<li>explain_logreg(): parameter out (“tibble” | “model”)</li>
-<li>vignette “explore_titanic”: change to tibble</li>
-<li>vignette “explore_mtcars”: add explanations</li>
+<ul><li>Bugfix <code><a href="../reference/explore_bar.html">explore_bar()</a></code>: <code>NA</code> in plot</li>
+<li>
+<code><a href="../reference/explore_count.html">explore_count()</a></code>: convert target into factor</li>
+<li>
+<code><a href="../reference/explore_count.html">explore_count()</a></code>: add default title (cat name)</li>
+<li>
+<code><a href="../reference/explore_count.html">explore_count()</a></code>: add parameter numeric, max_cat, max_target_cat</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: convert character variables into factors (count data)</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: parameter out (“plot” | “model”)</li>
+<li>
+<code><a href="../reference/explain_logreg.html">explain_logreg()</a></code>: parameter out (“tibble” | “model”)</li>
+<li>
+<code><a href="../articles/explore_titanic.html">vignette("explore_titanic")</a></code>: change to tibble</li>
+<li>
+<code><a href="../articles/explore_mtcars.html">vignette("explore_mtcars")</a></code>: add explanations</li>
 <li>change theme_minimal to theme_light</li>
 <li>dwh_fastload(): add parameters overwrite and append</li>
 <li>update README.md</li>
@@ -177,16 +233,27 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="explore-061-2020-09-04">explore 0.6.1 (2020-09-04)<a class="anchor" aria-label="anchor" href="#explore-061-2020-09-04"></a></h2><p class="text-muted">CRAN release: 2020-09-04</p>
 <ul><li>Fix Github URL</li>
-<li>new Vignette “explore_penguins”</li>
-<li>new Vignette “explore_titanic” (count data)</li>
-<li>explore_count(): plot count() output</li>
-<li>add default parameter n for count data: explore(), explore_all(), explore_tbl(), explain_tree(), report(), describe(), describe_cat, describe_num(), describe_tbl(), total_fig_height()</li>
-<li>explore_tree(): default value for minsplit = 10% of obs</li>
-<li>explore_cor(): use geom_point for small datasets</li>
-<li>explore_shiny(): use browseURL() with parameter browser=NULL</li>
-<li>describe_tbl(): add observations containing NA</li>
-<li>guess_cat_num(): parameter description (optional)</li>
-<li>count_pct(): no renaming of variables</li>
+<li>new Vignette <code><a href="../articles/explore_penguins.html">vignette("explore_penguins")</a></code>
+</li>
+<li>new Vignette <code><a href="../articles/explore_titanic.html">vignette("explore_titanic")</a></code> (count data)</li>
+<li>
+<code><a href="../reference/explore_count.html">explore_count()</a></code>: plot count() output</li>
+<li>add default parameter <code>n</code> for count data: <code><a href="../reference/explore.html">explore()</a></code>, <code><a href="../reference/explore_all.html">explore_all()</a></code>, <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code>, <code><a href="../reference/explain_tree.html">explain_tree()</a></code>, <code><a href="../reference/report.html">report()</a></code>, <code><a href="../reference/describe.html">describe()</a></code>, <code><a href="../reference/describe_cat.html">describe_cat()</a></code>, <code><a href="../reference/describe_num.html">describe_num()</a></code>, <code><a href="../reference/describe_tbl.html">describe_tbl()</a></code>, <code><a href="../reference/total_fig_height.html">total_fig_height()</a></code>
+</li>
+<li>
+<code>explore_tree()</code>: default value for minsplit = 10% of obs</li>
+<li>
+<code><a href="../reference/explore_cor.html">explore_cor()</a></code>: use <code>geom_point()</code> for small datasets</li>
+<li>
+<code><a href="../reference/explore_shiny.html">explore_shiny()</a></code>: use <code><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL()</a></code> with parameter <code>browser=NULL</code>
+</li>
+<li>
+<code><a href="../reference/describe_tbl.html">describe_tbl()</a></code>: add observations containing <code>NA</code>
+</li>
+<li>
+<code><a href="../reference/guess_cat_num.html">guess_cat_num()</a></code>: parameter description (optional)</li>
+<li>
+<code><a href="../reference/count_pct.html">count_pct()</a></code>: no renaming of variables.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.5" id="explore-055-2020-04-06">explore 0.5.5 (2020-04-06)<a class="anchor" aria-label="anchor" href="#explore-055-2020-04-06"></a></h2><p class="text-muted">CRAN release: 2020-04-06</p>
@@ -196,55 +263,84 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.4" id="explore-054-2020-02-09">explore 0.5.4 (2020-02-09)<a class="anchor" aria-label="anchor" href="#explore-054-2020-02-09"></a></h2><p class="text-muted">CRAN release: 2020-02-09</p>
 <p>Maintenance update:</p>
-<ul><li>fix param … in description (PR#16223, see <a href="https://bugs.r-project.org/show_bug.cgi?id=16223" class="external-link uri">https://bugs.r-project.org/show_bug.cgi?id=16223</a>)</li>
+<ul><li>fix param <code>...</code> in description (PR#16223, see <a href="https://bugs.r-project.org/show_bug.cgi?id=16223" class="external-link uri">https://bugs.r-project.org/show_bug.cgi?id=16223</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.3" id="explore-053-2020-01-17">explore 0.5.3 (2020-01-17)<a class="anchor" aria-label="anchor" href="#explore-053-2020-01-17"></a></h2><p class="text-muted">CRAN release: 2020-01-17</p>
-<ul><li>explore_bar(): add parameter numeric</li>
-<li>describe_all() returns a tibble</li>
-<li>describe_all(): column ‘variable’ is character (not factor)</li>
-<li>report() split = TRUE as default</li>
-<li>add rescale01()</li>
-<li>add parameter rescale01 to clean_var()</li>
-<li>add function count_pct()</li>
-<li>add out=‘tibble’ to describe_cat()</li>
-<li>add function explore_targetpct()</li>
+<ul><li>
+<code><a href="../reference/explore_bar.html">explore_bar()</a></code>: add parameter numeric</li>
+<li>
+<code><a href="../reference/describe_all.html">describe_all()</a></code> returns a tibble</li>
+<li>
+<code><a href="../reference/describe_all.html">describe_all()</a></code>: column ‘variable’ is character (not factor)</li>
+<li>
+<code><a href="../reference/report.html">report()</a></code> split = TRUE as default</li>
+<li>add <code><a href="../reference/rescale01.html">rescale01()</a></code>
+</li>
+<li>add parameter <code>rescale01</code> to <code><a href="../reference/clean_var.html">clean_var()</a></code>
+</li>
+<li>add function <code><a href="../reference/count_pct.html">count_pct()</a></code>
+</li>
+<li>add <code>out='tibble'</code> to <code><a href="../reference/describe_cat.html">describe_cat()</a></code>
+</li>
+<li>add function <code><a href="../reference/explore_targetpct.html">explore_targetpct()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.2" id="explore-052-2019-11-22">explore 0.5.2 (2019-11-22)<a class="anchor" aria-label="anchor" href="#explore-052-2019-11-22"></a></h2><p class="text-muted">CRAN release: 2019-11-22</p>
 <ul><li>split source-code file into multiple files</li>
-<li>format_num_auto without brackets</li>
+<li>
+<code><a href="../reference/format_num_auto.html">format_num_auto()</a></code> without brackets</li>
 <li>treat Date variables as cat</li>
-<li>report() fix automatic file extension .html</li>
-<li>add simplify_text()</li>
-<li>add parameter simplify_text to clean_var()</li>
+<li>
+<code><a href="../reference/report.html">report()</a></code> fix automatic file extension .html</li>
+<li>add <code><a href="../reference/simplify_text.html">simplify_text()</a></code>
+</li>
+<li>add parameter <code>simplify_text</code> to <code><a href="../reference/clean_var.html">clean_var()</a></code>
+</li>
 <li>fix link in README.md</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="explore-051-2019-10-08">explore 0.5.1 (2019-10-08)<a class="anchor" aria-label="anchor" href="#explore-051-2019-10-08"></a></h2><p class="text-muted">CRAN release: 2019-10-08</p>
-<p>Prepare for new dplyr 0.8.4 Bug Fixes</p>
-<ul><li>prepare explore_tbl() for dplyr 0.8.4</li>
-<li>describe_num() with default digits=6</li>
-<li>describe_cat() bugfix variable with all NA</li>
-<li>describe_all() bugfix variable with all NA</li>
-<li>explain_tree() bugfix dataframe with 0 rows</li>
-<li>improve speed describe() text output (RMarkdown)</li>
-<li>explore() now checks if data is a data.frame</li>
+<p>Prepare for new dplyr 0.8.4 (<a href="https://github.com/rolkra/explore/issues/2" class="external-link">#2</a>, <a href="https://github.com/romainfrancois" class="external-link">@romainfrancois</a>)</p>
+<div class="section level3">
+<h3 id="bug-fixes-0-5-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-1"></a></h3>
+<ul><li>prepare <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code> for dplyr 0.8.4</li>
+<li>
+<code><a href="../reference/describe_num.html">describe_num()</a></code> with default digits=6</li>
+<li>
+<code><a href="../reference/describe_cat.html">describe_cat()</a></code> bugfix variable with all NA</li>
+<li>
+<code><a href="../reference/describe_all.html">describe_all()</a></code> bugfix variable with all NA</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code> bugfix dataframe with 0 rows</li>
+<li>improve speed <code><a href="../reference/describe.html">describe()</a></code> text output (RMarkdown)</li>
+<li>
+<code><a href="../reference/explore.html">explore()</a></code> now checks if data is a data.frame</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="explore-050-2019-09-19">explore 0.5.0 (2019-09-19)<a class="anchor" aria-label="anchor" href="#explore-050-2019-09-19"></a></h2><p class="text-muted">CRAN release: 2019-09-19</p>
 <p>Interactive data exploration now accept categorical and numerical targets (next to a binary target).</p>
-<ul><li>explain_tree(): target can be bin/num/cat</li>
-<li>explain_tree(): add parameter max_target_cat</li>
-<li>explore_shiny(): target can be bin/num/cat</li>
-<li>add function format_num_auto()</li>
-<li>add function total_fig_height()</li>
-<li>get_nrow() deprecated, use total_fig_height() instead</li>
-<li>add parameter title to explore_cor()</li>
-<li>add support for POSIXct in describe()</li>
+<ul><li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: target can be bin/num/cat</li>
+<li>
+<code><a href="../reference/explain_tree.html">explain_tree()</a></code>: add parameter max_target_cat</li>
+<li>
+<code><a href="../reference/explore_shiny.html">explore_shiny()</a></code>: target can be bin/num/cat</li>
+<li>add function <code><a href="../reference/format_num_auto.html">format_num_auto()</a></code>
+</li>
+<li>
+<code><a href="../reference/total_fig_height.html">total_fig_height()</a></code> replaces the now deprecated <code><a href="../reference/get_nrow.html">get_nrow()</a></code>.</li>
+<li>add parameter title to <code><a href="../reference/explore_cor.html">explore_cor()</a></code>
+</li>
+<li>add support for POSIXct in <code><a href="../reference/describe.html">describe()</a></code>
+</li>
 <li>improved handling of dataframes with no observations</li>
-<li>add parameter title to explore_density()</li>
-<li>add parameter nvar to total_fig_height()</li>
+<li>add parameter <code>title</code> to <code><a href="../reference/explore_density.html">explore_density()</a></code>
+</li>
+<li>add parameter <code>nvar</code> to <code><a href="../reference/total_fig_height.html">total_fig_height()</a></code>
+</li>
 <li>update README.md</li>
 <li>update Vignettes</li>
 <li>add NEWS.md</li>
@@ -252,35 +348,55 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.4" id="explore-044-2019-08-27">explore 0.4.4 (2019-08-27)<a class="anchor" aria-label="anchor" href="#explore-044-2019-08-27"></a></h2><p class="text-muted">CRAN release: 2019-08-27</p>
-<p>Many functions now accept categorical and numerical targets (next to a binary target). If you want to force which geom is used for visualisation, you can use explore_bar() and explore_density(). New function explore_tbl() to visualise a dataframe/table (type of variables, number of NA, …)</p>
-<ul><li>add function explore_bar()</li>
-<li>explore_density() now using correct tidy eval, target cat &gt; 2 possible</li>
-<li>target_explore_cat() now using correct tidy eval</li>
-<li>target_explore_num() now using correct tidy eval</li>
-<li>add plot_var_info() - plots a info-text to a variable as ggplot obj.</li>
-<li>plot_var_info() used in explore/explore_all if <oth></oth></li>
-<li>plot_var_info() used if explore empty data</li>
-<li>add parameter max_cat in explore_bar(), explore_density() and explain_tree()</li>
-<li>add explore_tbl()</li>
-<li>drop explore_cat() &amp; explore_num()</li>
+<p>Many functions now accept categorical and numerical targets (next to a binary target). If you want to force which geom is used for visualisation, you can use explore_bar() and <code><a href="../reference/explore_density.html">explore_density()</a></code>. New function <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code> to visualise a dataframe/table (type of variables, number of NA, …)</p>
+<ul><li>add function <code><a href="../reference/explore_bar.html">explore_bar()</a></code>
+</li>
+<li>
+<code><a href="../reference/explore_density.html">explore_density()</a></code> now using correct tidy eval, target cat &gt; 2 possible</li>
+<li>
+<code><a href="../reference/target_explore_cat.html">target_explore_cat()</a></code> now using correct tidy eval</li>
+<li>
+<code><a href="../reference/target_explore_num.html">target_explore_num()</a></code> now using correct tidy eval</li>
+<li>
+<code>add plot_var_info()</code> - plots a info-text to a variable as ggplot obj.</li>
+<li>
+<code><a href="../reference/plot_var_info.html">plot_var_info()</a></code> used in explore/explore_all if <oth></oth></li>
+<li>
+<code><a href="../reference/plot_var_info.html">plot_var_info()</a></code> used if explore empty data</li>
+<li>add parameter <code>max_cat</code> in <code><a href="../reference/explore_bar.html">explore_bar()</a></code>, <code><a href="../reference/explore_density.html">explore_density()</a></code> and <code><a href="../reference/explain_tree.html">explain_tree()</a></code>
+</li>
+<li>add <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code>
+</li>
+<li>drop <code>explore_cat()</code> &amp; <code>explore_num()</code>
+</li>
 <li>rename template_report_target_den.html &gt; _split.html</li>
 <li>intelligent placing of labels in plots</li>
-<li>add info window “generating report …” in explore_shiny</li>
-<li>format_num() -&gt; format_num_kMB(), format_num_space()</li>
-<li>format_target -&gt; if numeric split 0/1 by mean</li>
-<li>report() -&gt; default .html file extension</li>
+<li>add info window “generating report …” in <code><a href="../reference/explore_shiny.html">explore_shiny()</a></code>
+</li>
+<li>
+<code>format_num()</code> -&gt; format_num_kMB(), format_num_space()</li>
+<li>
+<code><a href="../reference/format_target.html">format_target()</a></code> -&gt; if numeric split 0/1 by mean</li>
+<li>
+<code><a href="../reference/report.html">report()</a></code> -&gt; default .html file extension</li>
 <li>consistency showing NA info in explore-title</li>
 <li>parameter split: default = FALSE</li>
 <li>allow numeric (num) target in explore_all &amp; report</li>
-<li>describe_tbl() -&gt; fix target if not bin</li>
-<li>describe(): change out=“vector” to out=“list”</li>
+<li>
+<code><a href="../reference/describe_tbl.html">describe_tbl()</a></code> -&gt; fix target if not bin</li>
+<li>
+<code><a href="../reference/describe.html">describe()</a></code>: change out=“vector” to out=“list”</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.3" id="explore-043-2019-06-17">explore 0.4.3 (2019-06-17)<a class="anchor" aria-label="anchor" href="#explore-043-2019-06-17"></a></h2><p class="text-muted">CRAN release: 2019-06-17</p>
-<ul><li>fix parameter in explore: auto_scale, na</li>
-<li>fix number of NA in explore (move code before auto_scale)</li>
-<li>explore_density() with target: drop plot title “propensity by”</li>
-<li>explore_shiny(): use output_dir / tempdir()</li>
+<ul><li>fix parameter in <code><a href="../reference/explore.html">explore()</a></code>: <code>auto_scale</code>, <code>na</code>
+</li>
+<li>fix number of <code>NA</code> in <code><a href="../reference/explore.html">explore()</a></code> (move code before <code>auto_scale</code>)</li>
+<li>
+<code><a href="../reference/explore_density.html">explore_density()</a></code> with target: drop plot title “propensity by”</li>
+<li>
+<code><a href="../reference/explore_shiny.html">explore_shiny()</a></code>: use output_dir / <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir()</a></code>
+</li>
 <li>change naming “attribute” to “variable” (consistent)</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
