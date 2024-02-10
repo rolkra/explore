@@ -500,7 +500,9 @@ guess_cat_num <- function(var, descr)  {
 #' @return Number of rows
 #' @keywords internal
 #' @examples
+#' \dontrun{
 #' get_nrow(names(iris), ncol = 2)
+#' }
 #' @export
 
 get_nrow <- function(varnames, exclude = 0, ncol = 2)  {

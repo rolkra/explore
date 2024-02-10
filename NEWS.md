@@ -1,3 +1,7 @@
+# explore 1.1.1
+
+* Fix CRAN check warning in running example `get_nrow()`
+
 # explore 1.1.0
 
 ## Breaking changes

@@ -20,6 +20,8 @@ Number of rows
 This function is deprecated, please use \code{\link[=total_fig_height]{total_fig_height()}} instead.
 }
 \examples{
+\dontrun{
 get_nrow(names(iris), ncol = 2)
+}
 }
 \keyword{internal}
