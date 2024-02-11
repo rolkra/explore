@@ -151,6 +151,18 @@
     <loc>/reference/describe_tbl.html</loc>
   </url>
   <url>
+    <loc>/reference/drop_obs_with_na.html</loc>
+  </url>
+  <url>
+    <loc>/reference/drop_var_no_variance.html</loc>
+  </url>
+  <url>
+    <loc>/reference/drop_var_not_numeric.html</loc>
+  </url>
+  <url>
+    <loc>/reference/drop_var_with_na.html</loc>
+  </url>
+  <url>
     <loc>/reference/encrypt.html</loc>
   </url>
   <url>
@@ -224,6 +236,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/log_info_if.html</loc>
   </url>
   <url>
     <loc>/reference/plot_legend_targetpct.html</loc>
