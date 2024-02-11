@@ -49,6 +49,7 @@ reference:
     - encrypt
     - get_type
     - guess_cat_num
+    - log_info_if
     - plot_text
     - plot_var_info
     - replace_na_with
