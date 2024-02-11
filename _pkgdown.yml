@@ -42,6 +42,10 @@ reference:
     - count_pct
     - data_dict_md
     - decrypt
+    - drop_obs_with_na
+    - drop_var_no_variance
+    - drop_var_not_numeric
+    - drop_var_with_na
     - encrypt
     - get_type
     - guess_cat_num

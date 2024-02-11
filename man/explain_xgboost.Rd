@@ -2,7 +2,7 @@
 % Please edit documentation in R/explain-xgboost.R
 \name{explain_xgboost}
 \alias{explain_xgboost}
-\title{Explain xgboost}
+\title{Explain a binary target using xgboost}
 \usage{
 explain_xgboost(
   data,
@@ -27,11 +27,17 @@ but should not contain any customer-IDs or date/period columns}
 \item{out}{Output of the function: "plot" | "model" | "importance" | all"}
 }
 \value{
-model as list
+Plot of importance (if out = "plot")
 }
 \description{
 Based on the hyperparameters defined in the config.yml, XGBoost hyperparameter-tuning is
 carried out using cross-validation. The best model is chosen and returned.
 If defined/necessary, downsampling will be performed as part of the hyperparameter-tuning.
 The results of the hyperparameter will be plotted and exported as a dataframe.
+}
+\examples{
+data <- use_data_iris()
+data$is_versicolor <- ifelse(data$Species == "versicolor", 1, 0)
+data$Species <- NULL
+explain_xgboost(data, target = is_versicolor, log = FALSE)
 }

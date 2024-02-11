@@ -15,3 +15,7 @@ Data frame
 \description{
 Drop all variables with NA-values
 }
+\examples{
+data <- data.frame(a = 1:10, b = rep(NA,10))
+drop_var_with_na(data)
+}

@@ -1,9 +1,28 @@
-#' Drop all non numeric variables
+#' Drop all variables with no variance
 #'
 #' @param data Data frame
 #' @return Data frame
+#' @examples
+#' data <- data.frame(a = 1:10, b = rep(1,10))
+#' drop_var_no_variance(data)
+#' @export
 
-drop_var_non_numeric <- function(data) {
+drop_var_no_variance <- function(data) {
+  out <- lapply(data, function(x) length(unique(x)))
+  want <- which(!out > 1)
+  dplyr::select(data, -all_of(names(data)[want]))
+}
+
+#' Drop all not numeric variables
+#'
+#' @param data Data frame
+#' @return Data frame
+#' @examples
+#' data <- data.frame(a = 1:10, b = rep("A",10))
+#' drop_var_not_numeric(data)
+#' @export
+
+drop_var_not_numeric <- function(data) {
   dplyr::select(data, dplyr::where(is.numeric))
 }
 
@@ -11,20 +30,29 @@ drop_var_non_numeric <- function(data) {
 #'
 #' @param data Data frame
 #' @return Data frame
+#' @examples
+#' data <- data.frame(a = 1:10, b = rep(NA,10))
+#' drop_var_with_na(data)
+#' @export
 
 drop_var_with_na <- function(data) {
-  data[ , colSums(is.na(data))==0]
+  sel <- colSums(is.na(data))==0
+  dplyr::select(data, which(sel))
 }
 
 #' Drop all observations with NA-values
 #'
 #' @param data Data frame
 #' @return Data frame
+#' @examples
+#' data <- data.frame(a = 1:10, b = rep("A",10))
+#' data[1,1] <- NA
+#' drop_obs_with_na(data)
+#' @export
 
 drop_obs_with_na <- function(data) {
   data[rowSums(is.na(data))==0 , ]
 }
-
 
 #' Log conditional
 #'
@@ -36,7 +64,7 @@ log_info_if <- function(log = TRUE, text = "log") {
   if (log) {message(text)}
 }
 
-#' Explain xgboost
+#' Explain a binary target using xgboost
 #'
 #' Based on the hyperparameters defined in the config.yml, XGBoost hyperparameter-tuning is
 #' carried out using cross-validation. The best model is chosen and returned.
@@ -49,8 +77,12 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' @param log Log?
 #' @param setup Setup of model
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
-#'
-#' @return model as list
+#' @return Plot of importance (if out = "plot")
+#' @examples
+#' data <- use_data_iris()
+#' data$is_versicolor <- ifelse(data$Species == "versicolor", 1, 0)
+#' data$Species <- NULL
+#' explain_xgboost(data, target = is_versicolor, log = FALSE)
 #' @export
 
 explain_xgboost <- function(data, target, log = TRUE,

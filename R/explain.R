@@ -237,7 +237,6 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 #' @inheritDotParams randomForest::randomForest
 #' @return Plot of importance (if out = "plot")
 #' @examplesIf rlang::is_installed("randomForest")
-#'
 #' data <- create_data_buy()
 #' explain_forest(data, target = buy)
 #' @export

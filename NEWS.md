@@ -1,6 +1,12 @@
 # explore 1.2.0
 
-* new explain_xgboost()
+## New features
+
+* add explain_xgboost()
+* add drop_var_not_numeric()
+* add drop_var_no_variance()
+* add drop_var_with_na()
+* add drop_obs_with_na()
 
 # explore 1.1.1
 
