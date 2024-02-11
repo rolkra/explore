@@ -1,4 +1,32 @@
-#' log conditional
+#' Drop all non numeric variables
+#'
+#' @param data Data frame
+#' @return Data frame
+
+drop_var_non_numeric <- function(data) {
+  dplyr::select(data, dplyr::where(is.numeric))
+}
+
+#' Drop all variables with NA-values
+#'
+#' @param data Data frame
+#' @return Data frame
+
+drop_var_with_na <- function(data) {
+  data[ , colSums(is.na(data))==0]
+}
+
+#' Drop all observations with NA-values
+#'
+#' @param data Data frame
+#' @return Data frame
+
+drop_obs_with_na <- function(data) {
+  data[rowSums(is.na(data))==0 , ]
+}
+
+
+#' Log conditional
 #'
 #' @param log log (TRUE|FALSE)
 #' @param text text string to be logged
@@ -15,16 +43,18 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' If defined/necessary, downsampling will be performed as part of the hyperparameter-tuning.
 #' The results of the hyperparameter will be plotted and exported as a dataframe.
 #'
-#' @param data data frame, must contain variable target_ind,
+#' @param data Data frame, must contain variable defined in target,
 #' but should not contain any customer-IDs or date/period columns
+#' @param target Target variable (must be binary 0/1, FALSE/TRUE, no/yes)
 #' @param log Log?
 #' @param log_details If set to FALSE (default), no logging of xgb.cv
 #' @param setup Setup of model
+#' @param out Output of the function: "plot" | "model" | "importance" | all"
 #'
 #' @return model as list
 #' @export
 
-explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
+explain_xgboost <- function(data, target, log = TRUE,
                                setup = list(
                                  cv_nfold = 2, # Nr. of folds used for cross-validation during model training
                                  max_nrounds = 1000,
@@ -37,10 +67,30 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
                                    subsample = 0.8,
                                    min_child_weight = 1,
                                    scale_pos_weight = 1
-                               ))) {
+                               )),
+                            out = "plot") {
 
   # check if xgboost is installed
   rlang::check_installed("xgboost", reason = "to create a xgboost model.")
+
+  # chech data & target
+  check_data_frame_non_empty(data)
+  rlang::check_required(target)
+
+  # tidy eval for target
+  target_quo <- enquo(target)
+  target_txt <- quo_name(target_quo)[[1]]
+  if (!target_txt %in% names(data)) {
+    warning("target must be a variable of data")
+    return(invisible())
+  }
+
+  # check if target is binary
+  if (length(unique(data[[target_txt]])) != 2)  {
+    warning("target must be binary (e.g. 0/1, TRUE/FALSE, 'yes'/'no')")
+    return(invisible())
+  }
+
 
   # undefined variables to check CRAN tests
   variable <- NULL
@@ -58,12 +108,15 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
   )
 
   # log details?
-  verbose <- ifelse(log_details, log, 0)
+  verbose <- FALSE
 
   # prepare to remember
   all_auc <- vector(mode = "numeric")
   all_nrounds <- vector(mode = "numeric")
   hp_tuning_log <- NULL
+
+
+  # train with cross validation ---------------------------------------------
 
   # xgb.cv loop
   k <- 1
@@ -76,8 +129,8 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
 
     # prepare target
     dtrain <- xgboost::xgb.DMatrix(
-      as.matrix(data[ ,names(data) !="target_ind"]),
-      label = data[["target_ind"]])
+      as.matrix(data[ ,names(data) != target_txt]),
+      label = data[[target_txt]])
 
     t1 <- Sys.time()
 
@@ -85,7 +138,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
     log_str <- paste0(paste0(names(current_params), "=", current_params), collapse=", ")
     log_info_if(log, paste0("", log_str))
 
-    # training ----
+    # training
     set.seed(42)
     cv <- xgboost::xgb.cv(
       objective = "binary:logistic",
@@ -134,7 +187,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
 
   } #end xgb.cv loop
 
-  # Plot & Save Hy-Param Tuning Runs ----
+  # Plot & Save Hy-Param Tuning Runs
   suppressWarnings({
     suppressMessages({
       plot_hp_tuning <- hp_tuning_log %>%  #nolint
@@ -147,7 +200,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
     })
   })
 
-  # Store Hy-Param Tuning Run Results as df ----
+  # Store Hy-Param Tuning Run Results as df
   hp_tuning_best <- hp_tuning_log %>%
     dplyr::filter(best_iter_ind == 1)
 
@@ -163,7 +216,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
     dplyr::select(-dplyr::one_of(drop))
 
 
-  # FINAL MODEL SELECTION & TRAINING ---------------------------------------------------------------
+# final model selection & training ----------------------------------------
 
   # Select best params
   best_idx <- which(all_auc == max(all_auc))[1]
@@ -181,6 +234,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
   log_info_if(log, paste0("\ntrain final model..."))
 
   # train final model, no cross validation
+  t1 <- Sys.time()
   model <- xgboost::xgb.train(
     data = dtrain,
     nrounds = best_nrounds,
@@ -191,6 +245,8 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
     verbose = verbose,
     print_every_n = 100
   )
+  t2 <- Sys.time()
+  runtime_curr <- round(difftime(t2, t1, units = "mins"), 1)
 
   # feature importance
   importance = xgboost::xgb.importance(colnames(dtrain), model = model)
@@ -212,9 +268,11 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
 
 
   # log
-  log_info_if(log, "done")
+  log_info_if(log, paste0("done, ", "training time=", runtime_curr, " min"))
 
-  # return model, hy-param result table & plot as list
+
+  # return result -----------------------------------------------------------
+
   model <- list(
     model = model,
     importance = importance,
@@ -223,6 +281,16 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
     tune_plot = plot_hp_tuning
   )
 
-  return(model)
+  # output
+  if (out %in% c("all", "list")) {
+    return(model)
+  } else if(out == "model") {
+    return(model$model)
+  } else if(out == "importance") {
+    return(model$importance)
+  }
 
-} # train_xgboost_pure
+  # default output
+  model$plot
+
+} # explain_xgboost

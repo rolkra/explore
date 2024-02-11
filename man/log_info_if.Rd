@@ -2,7 +2,7 @@
 % Please edit documentation in R/explain-xgboost.R
 \name{log_info_if}
 \alias{log_info_if}
-\title{log conditional}
+\title{Log conditional}
 \usage{
 log_info_if(log = TRUE, text = "log")
 }
@@ -15,5 +15,5 @@ log_info_if(log = TRUE, text = "log")
 prints log on screen (if log == TRUE).
 }
 \description{
-log conditional
+Log conditional
 }

@@ -6,22 +6,27 @@
 \usage{
 explain_xgboost(
   data,
+  target,
   log = TRUE,
-  log_details = FALSE,
   setup = list(cv_nfold = 2, max_nrounds = 1000, early_stopping_rounds = 50, grid_xgboost
     = list(eta = c(0.3, 0.1, 0.01), max_depth = c(3, 5), gamma = 0, colsample_bytree =
-    0.8, subsample = 0.8, min_child_weight = 1, scale_pos_weight = 1))
+    0.8, subsample = 0.8, min_child_weight = 1, scale_pos_weight = 1)),
+  out = "plot"
 )
 }
 \arguments{
-\item{data}{data frame, must contain variable target_ind,
+\item{data}{Data frame, must contain variable defined in target,
 but should not contain any customer-IDs or date/period columns}
+
+\item{target}{Target variable (must be binary 0/1, FALSE/TRUE, no/yes)}
 
 \item{log}{Log?}
 
-\item{log_details}{If set to FALSE (default), no logging of xgb.cv}
-
 \item{setup}{Setup of model}
+
+\item{out}{Output of the function: "plot" | "model" | "importance" | all"}
+
+\item{log_details}{If set to FALSE (default), no logging of xgb.cv}
 }
 \value{
 model as list
