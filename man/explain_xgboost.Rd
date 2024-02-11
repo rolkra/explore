@@ -25,8 +25,6 @@ but should not contain any customer-IDs or date/period columns}
 \item{setup}{Setup of model}
 
 \item{out}{Output of the function: "plot" | "model" | "importance" | all"}
-
-\item{log_details}{If set to FALSE (default), no logging of xgb.cv}
 }
 \value{
 model as list

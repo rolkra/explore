@@ -47,7 +47,6 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' but should not contain any customer-IDs or date/period columns
 #' @param target Target variable (must be binary 0/1, FALSE/TRUE, no/yes)
 #' @param log Log?
-#' @param log_details If set to FALSE (default), no logging of xgb.cv
 #' @param setup Setup of model
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #'
