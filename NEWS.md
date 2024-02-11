@@ -1,12 +1,16 @@
+# explore 1.2.0
+
+* new explain_xgboost()
+
 # explore 1.1.1
 
-* Fix CRAN check warning in running example `get_nrow()`
+* Fix CRAN check warning in running example `get_nrow()` (#41)
 
 # explore 1.1.0
 
 ## Breaking changes
 
-* explore no longer imports MASS and RandomForest. for `explain_logreg()` and `explain_forest()`, you will receive a prompt to install these packages in interactive sessions. (#21, @olivroy)
+* explore no longer imports MASS and RandomForest. for `explain_logreg()` and `explain_forest()`, you will receive a prompt to install these packages in interactive sessions. (#2 1, @olivroy)
 
 ## New features
 
