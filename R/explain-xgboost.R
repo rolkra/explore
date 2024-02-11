@@ -1,3 +1,9 @@
+#' log conditional
+#'
+#' @param log log (TRUE|FALSE)
+#' @param text text string to be logged
+#' @return prints log on screen (if log == TRUE).
+
 log_info_if <- function(log = TRUE, text = "log") {
   if (log) {message(text)}
 }
@@ -9,18 +15,15 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' If defined/necessary, downsampling will be performed as part of the hyperparameter-tuning.
 #' The results of the hyperparameter will be plotted and exported as a dataframe.
 #'
-#' @param data data.frame/data.table, must contain variable target_ind,
+#' @param data data frame, must contain variable target_ind,
 #' but should not contain any customer-IDs or date/period columns
 #' @param log Log?
-#' @param log_details If set to FALSE (default), no xgb.cv
+#' @param log_details If set to FALSE (default), no logging of xgb.cv
 #' @param setup Setup of model
 #'
-#' @return model List with elements: model (xgb.Booster),
-#' hp_tuning_best (df with hyper-parameter tuning results),
-#' file_plot_hp_tuning (plot of hyper-parameter tuning results),
-#' and data_train_properties (df with final training set properties).
+#' @return model as list
 #' @export
-#'
+
 explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
                                setup = list(
                                  cv_nfold = 2, # Nr. of folds used for cross-validation during model training
@@ -35,6 +38,12 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
                                    min_child_weight = 1,
                                    scale_pos_weight = 1
                                ))) {
+
+  # check if xgboost is installed
+  rlang::check_installed("xgboost", reason = "to create a xgboost model.")
+
+  # undefined variables to check CRAN tests
+  variable <- NULL
 
   # define hy-param grid
   param_grid <- expand.grid(
@@ -187,6 +196,20 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
   importance = xgboost::xgb.importance(colnames(dtrain), model = model)
   names(importance) <- c("variable", "gain", "cover", "frequency")
   importance$importance <- importance$gain
+  importance <- importance %>% dplyr::arrange(dplyr::desc(importance))
+
+  # plot importance
+  p <- importance %>%
+    utils::head(30) %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = importance,
+      y = forcats::fct_reorder(variable, importance)
+    )) +
+    ggplot2::geom_col(color = "white", fill = "grey") +
+    ggplot2::ylab("variable") +
+    ggplot2::ggtitle("ML-feature-importance") +
+    ggplot2::theme_minimal()
+
 
   # log
   log_info_if(log, "done")
@@ -195,6 +218,7 @@ explain_xgboost <- function(data, log = TRUE, log_details = FALSE,
   model <- list(
     model = model,
     importance = importance,
+    plot = p,
     tune_data = hp_tuning_best,
     tune_plot = plot_hp_tuning
   )

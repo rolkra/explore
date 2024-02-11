@@ -14,20 +14,17 @@ explain_xgboost(
 )
 }
 \arguments{
-\item{data}{data.frame/data.table, must contain variable target_ind,
+\item{data}{data frame, must contain variable target_ind,
 but should not contain any customer-IDs or date/period columns}
 
 \item{log}{Log?}
 
-\item{log_details}{If set to FALSE (default), no xgb.cv}
+\item{log_details}{If set to FALSE (default), no logging of xgb.cv}
 
 \item{setup}{Setup of model}
 }
 \value{
-model List with elements: model (xgb.Booster),
-hp_tuning_best (df with hyper-parameter tuning results),
-file_plot_hp_tuning (plot of hyper-parameter tuning results),
-and data_train_properties (df with final training set properties).
+model as list
 }
 \description{
 Based on the hyperparameters defined in the config.yml, XGBoost hyperparameter-tuning is
