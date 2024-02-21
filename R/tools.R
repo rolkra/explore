@@ -921,7 +921,6 @@ show_color <- function(color) {
 #' @param color2 Color 2
 #' @param n Number of different colors that should be generated
 #' @return Vector of color-codes
-#' @importFrom("grDevices", "colorRampPalette")
 #' @export
 #' @examples
 #' mix_color("blue", n = 10)
@@ -930,11 +929,11 @@ show_color <- function(color) {
 mix_color <- function(color1, color2 = NA, n = 5) {
 
   if (is.na(color2)) {
-    colors <- colorRampPalette(c("black", color1, "white"))(n + 2)
+    colors <- grDevices::colorRampPalette(c("black", color1, "white"))(n + 2)
     colors <- colors[-1]  # drop first color (black)
     colors <- colors[-length(colors)]  # drop last color (white)
   } else {
-    colors <- colorRampPalette(c(color1, color2))(n)
+    colors <- grDevices::colorRampPalette(c(color1, color2))(n)
   }
 
   # return colors as vector

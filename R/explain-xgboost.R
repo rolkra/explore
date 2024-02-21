@@ -22,7 +22,6 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' @param setup Setup of model
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #' @return Plot of importance (if out = "plot")
-#' @importFrom("stats", "setNames")
 #' @examples
 #' data <- use_data_iris()
 #' data$is_versicolor <- ifelse(data$Species == "versicolor", 1, 0)
@@ -104,7 +103,7 @@ explain_xgboost <- function(data, target, log = TRUE,
   k <- 1
   for (k in seq_len(nrow(param_grid))) {
 
-    current_params <- setNames(
+    current_params <- stats::setNames(
       as.list(t(param_grid[k, ])),
       names(param_grid)
     )
@@ -204,7 +203,7 @@ explain_xgboost <- function(data, target, log = TRUE,
   best_idx <- which(all_auc == max(all_auc))[1]
   best_auc <- all_auc[best_idx]
   best_nrounds <- all_nrounds[best_idx]
-  best_params <- setNames(
+  best_params <- stats::setNames(
     as.list(t(param_grid[best_idx, ])),
     names(param_grid)
   )

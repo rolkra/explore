@@ -7,9 +7,11 @@
 mix_color(color1, color2 = NA, n = 5)
 }
 \arguments{
-\item{n}{Number of different colors that should be generated}
+\item{color1}{Color 1}
 
-\item{color}{Color that is used to generate the palette}
+\item{color2}{Color 2}
+
+\item{n}{Number of different colors that should be generated}
 }
 \value{
 Vector of color-codes
