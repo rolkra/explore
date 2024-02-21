@@ -97,6 +97,9 @@
     <loc>/reference/balance_target.html</loc>
   </url>
   <url>
+    <loc>/reference/check_vec_low_variance.html</loc>
+  </url>
+  <url>
     <loc>/reference/clean_var.html</loc>
   </url>
   <url>
@@ -152,6 +155,12 @@
   </url>
   <url>
     <loc>/reference/drop_obs_with_na.html</loc>
+  </url>
+  <url>
+    <loc>/reference/drop_var_by_names.html</loc>
+  </url>
+  <url>
+    <loc>/reference/drop_var_low_variance.html</loc>
   </url>
   <url>
     <loc>/reference/drop_var_no_variance.html</loc>
@@ -241,6 +250,9 @@
     <loc>/reference/log_info_if.html</loc>
   </url>
   <url>
+    <loc>/reference/mix_color.html</loc>
+  </url>
+  <url>
     <loc>/reference/plot_legend_targetpct.html</loc>
   </url>
   <url>
@@ -260,6 +272,9 @@
   </url>
   <url>
     <loc>/reference/rescale01.html</loc>
+  </url>
+  <url>
+    <loc>/reference/show_color.html</loc>
   </url>
   <url>
     <loc>/reference/simplify_text.html</loc>
