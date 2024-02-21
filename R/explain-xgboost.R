@@ -22,6 +22,7 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' @param setup Setup of model
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #' @return Plot of importance (if out = "plot")
+#' @importFrom("stats", "setNames")
 #' @examples
 #' data <- use_data_iris()
 #' data$is_versicolor <- ifelse(data$Species == "versicolor", 1, 0)
@@ -69,6 +70,12 @@ explain_xgboost <- function(data, target, log = TRUE,
 
   # undefined variables to check CRAN tests
   variable <- NULL
+  iter <- NULL
+  train_auc_mean <- NULL
+  test_auc_mean <- NULL
+  model_nr <- NULL
+  best_iter_ind <- NULL
+  runtime <- NULL
 
   # define hy-param grid
   param_grid <- expand.grid(

@@ -62,7 +62,6 @@ drop_obs_with_na <- function(data) {
 #' @examples
 #' vec <- c(1, rep(0 ,1000))
 #' check_vec_low_variance(vec, max_prop = 0.9)
-#' @export
 
 check_vec_low_variance <- function(vec, max_prop = 0.99) {
 

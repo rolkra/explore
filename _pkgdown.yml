@@ -38,21 +38,22 @@ reference:
     - starts_with("use_data_")
   - title: Tools
     contents:
+    - check_vec_low_variance
     - clean_var
     - count_pct
     - data_dict_md
     - decrypt
-    - drop_obs_with_na
-    - drop_var_no_variance
-    - drop_var_not_numeric
-    - drop_var_with_na
+    - starts_with("drop_obs_")
+    - starts_with("drop_var_")
     - encrypt
     - get_type
     - guess_cat_num
     - log_info_if
+    - mix_color
     - plot_text
     - plot_var_info
     - replace_na_with
     - rescale01
     - simplify_text
+    - show_color
     - starts_with("format_")

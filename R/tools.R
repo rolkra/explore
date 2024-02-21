@@ -878,6 +878,10 @@ count_pct <- function(data, ...)  {
 
 show_color <- function(color) {
 
+  # undefined variables to pass CRAN checks
+  color_id <- NULL
+  val <- NULL
+
   if (is.list(color))  {
     color <- unlist(color)
   }
@@ -913,9 +917,11 @@ show_color <- function(color) {
 
 #' mix_color
 #'
-#' @param color Color that is used to generate the palette
+#' @param color1 Color 1
+#' @param color2 Color 2
 #' @param n Number of different colors that should be generated
 #' @return Vector of color-codes
+#' @importFrom("grDevices", "colorRampPalette")
 #' @export
 #' @examples
 #' mix_color("blue", n = 10)
