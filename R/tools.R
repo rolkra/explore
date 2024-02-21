@@ -862,3 +862,75 @@ count_pct <- function(data, ...)  {
 
   d
 } # count_pct
+
+#' show_color
+#'
+#' @param color
+#'
+#' @return ggplot
+#' @export
+#' @importFrom magrittr "%>%"
+#' @importFrom dplyr mutate
+#' @import ggplot2
+#' @examples
+#' show_color("gold")
+#' show_color(c("blue", "red", "green"))
+
+show_color <- function(color) {
+
+  if (is.list(color))  {
+    color <- unlist(color)
+  }
+
+  if (is.null(names(color))) {
+    names(color) <- seq_len(length(color))
+  }
+
+  data <- data.frame(
+    color_id = names(color),
+    color_hex = color,
+    val = 100
+  )
+
+  data %>%
+    mutate(color_id = factor(
+      color_id,
+      levels = names(color))) %>%
+    ggplot(aes(color_id,
+               val,
+               fill = color_id)) +
+    geom_col() +
+    scale_fill_manual(values = color) +
+    coord_flip() +
+    theme_minimal() +
+    theme(legend.position = "none") +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    theme(axis.title.x = element_blank()) +
+    theme(axis.text.x = element_blank())
+
+} # show_color
+
+#' mix_color
+#'
+#' @param color Color that is used to generate the palette
+#' @param n Number of different colors that should be generated
+#' @return Vector of color-codes
+#' @export
+#' @examples
+#' mix_color("blue", n = 10)
+#' mix_color("gold", "red", n = 4)
+
+mix_color <- function(color1, color2 = NA, n = 5) {
+
+  if (is.na(color2)) {
+    colors <- colorRampPalette(c("black", color1, "white"))(n + 2)
+    colors <- colors[-1]  # drop first color (black)
+    colors <- colors[-length(colors)]  # drop last color (white)
+  } else {
+    colors <- colorRampPalette(c(color1, color2))(n)
+  }
+
+  # return colors as vector
+  colors
+} # mix_color
