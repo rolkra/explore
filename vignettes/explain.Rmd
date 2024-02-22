@@ -55,6 +55,16 @@ data %>% explain_tree(target = age)
 data %>% explain_forest(target = buy, ntree = 100)
 ```
 
+#### XGBoost
+
+As XGBoost only accepts numeric variables, we use `drop_var_not_numeric()` to drop `mobile_data_prd` as it is not a numeric variable. An alternative would be to convert the non numeric variables into numeric.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data %>%
+  drop_var_not_numeric() |> 
+  explain_xgboost(target = buy)
+```
+
 #### Logistic Regression
 
 ```{r message=FALSE, warning=FALSE}
