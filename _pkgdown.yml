@@ -34,6 +34,8 @@ reference:
   - title: Data
     contents:
     - starts_with("add_var_")
+    - starts_with("drop_obs_")
+    - starts_with("drop_var_")
     - starts_with("create_data_")
     - starts_with("use_data_")
   - title: Tools
@@ -43,8 +45,6 @@ reference:
     - count_pct
     - data_dict_md
     - decrypt
-    - starts_with("drop_obs_")
-    - starts_with("drop_var_")
     - encrypt
     - get_type
     - guess_cat_num
