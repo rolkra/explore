@@ -32,7 +32,7 @@ There are three ways to use the package:
 
   * **describe** - if you want to describe a dataset or a variable (number of na, unique values, ...) The output of these functions is a text.
 
-  * **explain** - to create a simple model that explains a target. `explain_tree()` for a decision tree, `explain_forest()` for a random forest and `explain_logreg()` for a logistic regression.
+  * **explain** - to create a simple model that explains a target. `explain_tree()` for a decision tree, `explain_forest()` for a random forest, `explain_xgboost()` for a xgboost model and `explain_logreg()` for a logistic regression.
 
   * **report** - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)
   

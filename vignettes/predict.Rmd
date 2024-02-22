@@ -20,6 +20,7 @@ The explore package offers a simplified way to use machine learning and make a p
 
 * `explain_tree()` creates a decision tree
 * `explain_forest()` creates a random forest
+* `explain_xgboost()` creates a xgboost model
 * `explain_logreg()` creates a logistic regression
 * `predict_target()` uses a model to make a prediction
 

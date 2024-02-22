@@ -11,6 +11,7 @@ reference:
     - starts_with("explore_")
   - title: Describe
     contents:
+    - describe
     - starts_with("describe_")
   - title: Explain
     contents:
@@ -24,9 +25,7 @@ reference:
     - get_var_buckets
     - total_fig_height
     - plot_legend_targetpct
-    - describe
     - create_notebook_explore
-    - starts_with("target_explore")
   - title: A/B test
     contents:
     - abtest
@@ -57,3 +56,4 @@ reference:
     - simplify_text
     - show_color
     - starts_with("format_")
+    - starts_with("target_explore")

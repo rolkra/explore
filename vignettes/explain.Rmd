@@ -65,6 +65,26 @@ data %>%
   explain_xgboost(target = buy)
 ```
 
+Use parameter `out = "all"` to get more details about the training
+
+```{r message=FALSE, warning=FALSE}
+train <- data %>%
+  drop_var_not_numeric() |> 
+  explain_xgboost(target = buy, out = "all")
+```
+
+```{r message=FALSE, warning=FALSE}
+train$importance
+```
+
+```{r message=FALSE, warning=FALSE}
+train$tune_plot
+```
+
+```{r message=FALSE, warning=FALSE}
+train$tune_data
+```
+
 #### Logistic Regression
 
 ```{r message=FALSE, warning=FALSE}
