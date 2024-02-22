@@ -34,8 +34,8 @@ library(explore)
 data <- create_data_buy(obs = 1000)
 glimpse(data)
 ```
-
-### Decision Tree
+### Explain / Model
+#### Decision Tree
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 data %>% explain_tree(target = buy)
