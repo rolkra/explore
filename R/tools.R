@@ -863,10 +863,9 @@ count_pct <- function(data, ...)  {
   d
 } # count_pct
 
-#' show_color
+#' Show color vector as ggplot
 #'
-#' @param color
-#'
+#' @param color Vector of colors
 #' @return ggplot
 #' @export
 #' @importFrom magrittr "%>%"

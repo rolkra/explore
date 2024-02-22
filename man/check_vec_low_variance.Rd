@@ -4,10 +4,10 @@
 \alias{check_vec_low_variance}
 \title{Check vector for low variance}
 \usage{
-check_vec_low_variance(vec, max_prop = 0.99)
+check_vec_low_variance(values, max_prop = 0.99)
 }
 \arguments{
-\item{vec}{Numeric vector}
+\item{values}{Vector of values}
 
 \item{max_prop}{Maximum proportion of values without variance}
 }
@@ -18,6 +18,8 @@ TRUE/FALSE (low variance)
 Check vector for low variance
 }
 \examples{
-vec <- c(1, rep(0 ,1000))
-check_vec_low_variance(vec, max_prop = 0.9)
+\dontrun{
+values <- c(1, rep(0 ,1000))
+check_vec_low_variance(values, max_prop = 0.9)
+}
 }

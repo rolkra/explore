@@ -4,7 +4,7 @@
 \alias{drop_var_low_variance}
 \title{Drop all variables with low variance}
 \usage{
-drop_var_low_variance(data, max_prop)
+drop_var_low_variance(data, max_prop = 0.99)
 }
 \arguments{
 \item{data}{Data frame}

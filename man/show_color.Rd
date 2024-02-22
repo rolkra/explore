@@ -2,18 +2,18 @@
 % Please edit documentation in R/tools.R
 \name{show_color}
 \alias{show_color}
-\title{show_color}
+\title{Show color vector as ggplot}
 \usage{
 show_color(color)
 }
 \arguments{
-\item{color}{}
+\item{color}{Vector of colors}
 }
 \value{
 ggplot
 }
 \description{
-show_color
+Show color vector as ggplot
 }
 \examples{
 show_color("gold")

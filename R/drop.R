@@ -56,17 +56,19 @@ drop_obs_with_na <- function(data) {
 
 #' Check vector for low variance
 #'
-#' @param vec Numeric vector
+#' @param values Vector of values
 #' @param max_prop Maximum proportion of values without variance
 #' @return TRUE/FALSE (low variance)
 #' @examples
-#' vec <- c(1, rep(0 ,1000))
-#' check_vec_low_variance(vec, max_prop = 0.9)
+#' \dontrun{
+#' values <- c(1, rep(0 ,1000))
+#' check_vec_low_variance(values, max_prop = 0.9)
+#' }
 
-check_vec_low_variance <- function(vec, max_prop = 0.99) {
+check_vec_low_variance <- function(values, max_prop = 0.99) {
 
   # frequency of values
-  t <- table(vec)
+  t <- table(values)
 
   # check most frequent value
   m <- max(t)
@@ -91,8 +93,8 @@ check_vec_low_variance <- function(vec, max_prop = 0.99) {
 #' drop_var_low_variance(data, max_prop = 0.9)
 #' @export
 
-drop_var_low_variance <- function(data, max_prop) {
-  check <- apply(data, 2, check_vec_low_variance, max_prop = 0.9)
+drop_var_low_variance <- function(data, max_prop = 0.99) {
+  check <- apply(data, 2, check_vec_low_variance, max_prop = max_prop)
   data[!check]
 }
 
