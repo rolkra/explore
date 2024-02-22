@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,8 +145,11 @@ tree</li>
 <span><span class="co">#&gt; $ bbi_usg_gb      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 77, 49, 53, 44, 55, 93, 50, 64, 63, 87, 45, 45, 70, 79…</span></span>
 <span><span class="co">#&gt; $ hh_single       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, …</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="decision-tree">Decision Tree<a class="anchor" aria-label="anchor" href="#decision-tree"></a>
+<h3 id="explain-model">Explain / Model<a class="anchor" aria-label="anchor" href="#explain-model"></a>
 </h3>
+<div class="section level4">
+<h4 id="decision-tree">Decision Tree<a class="anchor" aria-label="anchor" href="#decision-tree"></a>
+</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explain_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
@@ -156,6 +159,7 @@ tree</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">age</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explain_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
+</div>
 <div class="section level4">
 <h4 id="random-forrest">Random Forrest<a class="anchor" aria-label="anchor" href="#random-forrest"></a>
 </h4>
@@ -164,9 +168,54 @@ tree</li>
 <p><img src="explain_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 </div>
 <div class="section level4">
+<h4 id="xgboost">XGBoost<a class="anchor" aria-label="anchor" href="#xgboost"></a>
+</h4>
+<p>As XGBoost only accepts numeric variables, we use
+<code><a href="../reference/drop_var_not_numeric.html">drop_var_not_numeric()</a></code> to drop <code>mobile_data_prd</code>
+as it is not a numeric variable. An alternative would be to convert the
+non numeric variables into numeric.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/drop_var_not_numeric.html">drop_var_not_numeric</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/explain_xgboost.html">explain_xgboost</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
+<p><img src="explain_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p>Use parameter <code>out = "all"</code> to get more details about the
+training</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">train</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/drop_var_not_numeric.html">drop_var_not_numeric</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/explain_xgboost.html">explain_xgboost</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span>, out <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">importance</span></span>
+<span><span class="co">#&gt;           variable        gain       cover  frequency  importance</span></span>
+<span><span class="co">#&gt;             &lt;char&gt;       &lt;num&gt;       &lt;num&gt;      &lt;num&gt;       &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:             age 0.438876299 0.269718075 0.22916667 0.438876299</span></span>
+<span><span class="co">#&gt; 2:      bbi_usg_gb 0.273748159 0.309418667 0.31250000 0.273748159</span></span>
+<span><span class="co">#&gt; 3:      female_ind 0.148257511 0.145936389 0.13095238 0.148257511</span></span>
+<span><span class="co">#&gt; 4:     fixedtv_ind 0.087929677 0.126867898 0.12500000 0.087929677</span></span>
+<span><span class="co">#&gt; 5:   bbi_speed_ind 0.022082803 0.057552002 0.07440476 0.022082803</span></span>
+<span><span class="co">#&gt; 6:        city_ind 0.018582321 0.064343469 0.06845238 0.018582321</span></span>
+<span><span class="co">#&gt; 7:       hh_single 0.005310378 0.010887744 0.02083333 0.005310378</span></span>
+<span><span class="co">#&gt; 8:  fixedvoice_ind 0.003014397 0.008814722 0.02083333 0.003014397</span></span>
+<span><span class="co">#&gt; 9: mobilevoice_ind 0.002198457 0.006461034 0.01785714 0.002198457</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">tune_plot</span></span></code></pre></div>
+<p><img src="explain_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">tune_data</span></span>
+<span><span class="co">#&gt;    model_nr   eta max_depth    runtime  iter train_auc_mean test_auc_mean</span></span>
+<span><span class="co">#&gt;       &lt;int&gt; &lt;num&gt;     &lt;num&gt; &lt;difftime&gt; &lt;num&gt;          &lt;num&gt;         &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:        1  0.30         3     0 mins    21      0.9599662     0.9259773</span></span>
+<span><span class="co">#&gt; 2:        2  0.10         3     0 mins    52      0.9572578     0.9271735</span></span>
+<span><span class="co">#&gt; 3:        3  0.01         3     0 mins   551      0.9592901     0.9268295</span></span>
+<span><span class="co">#&gt; 4:        4  0.30         5     0 mins    13      0.9762086     0.9212647</span></span>
+<span><span class="co">#&gt; 5:        5  0.10         5     0 mins    38      0.9773647     0.9258133</span></span>
+<span><span class="co">#&gt; 6:        6  0.01         5     0 mins    71      0.9601223     0.9256453</span></span></code></pre></div>
+</div>
+<div class="section level4">
 <h4 id="logistic-regression">Logistic Regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_logreg.html">explain_logreg</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   term          estimate std.error statistic  p.value</span></span>
@@ -185,7 +234,7 @@ tree</li>
 <p>If you have a data set with a very unbalanced target (in this case
 only 5% of all observations have <code>buy == 1</code>) it may be
 difficult to create a decision tree.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">2000</span>, target1_prob <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">buy</span><span class="op">)</span></span>
 <span><span class="co">#&gt; variable = buy</span></span>
@@ -197,11 +246,11 @@ difficult to create a decision tree.</p>
 <p>It may help to balance the target before growing the decision tree
 (or use weighs as alternative). In this example we down sample the data
 so buy has 10% of <code>target == 1</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/balance_target.html">balance_target</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span>, min_prop <span class="op">=</span> <span class="fl">0.10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explain_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
+<p><img src="explain_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
