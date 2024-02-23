@@ -51,7 +51,11 @@ drop_var_with_na <- function(data) {
 #' @export
 
 drop_obs_with_na <- function(data) {
-  data[rowSums(is.na(data))==0 , ]
+  result <- data[rowSums(is.na(data))==0 , ]
+  if (!is.data.frame(result)) {
+    result <- data.frame()
+  }
+  result
 }
 
 #' Check vector for low variance

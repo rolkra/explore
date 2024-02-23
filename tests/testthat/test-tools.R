@@ -26,3 +26,34 @@ test_that("weight_target()", {
                c(1, 1, 1, 1, 4)
   )
 })
+
+
+# mix_color ---------------------------------------------------------------
+
+# mix 2 colors and get 3
+test_that("mix_color()", {
+  expect_equal(mix_color("black", "white", n = 3),
+               c("#000000", "#7F7F7F", "#FFFFFF")
+  )
+})
+
+# mix 1 color and get 3
+test_that("mix_color()", {
+  expect_equal(mix_color("blue", n = 3),
+               c("#00007F", "#0000FF", "#7F7FFF")
+  )
+})
+
+# mix 1 color and get 5
+test_that("mix_color()", {
+  expect_equal(length(mix_color("blue", n = 5)),
+               5
+  )
+})
+
+# mix 1 color and get 5, middle color is the same as original
+test_that("mix_color()", {
+  expect_equal(mix_color("#0000FF", n = 5)[3],
+               "#0000FF"
+  )
+})
