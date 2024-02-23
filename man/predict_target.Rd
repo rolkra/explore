@@ -20,8 +20,7 @@ data containing predicted probabilities for target values
 Predict target using a trained model.
 }
 \examples{
-\dontshow{if (rlang::is_installed(c("rpart", "randomForest"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-
+\dontshow{if (rlang::is_installed(c("rpart", "randomForest", "xgboost"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data_train <- create_data_buy(seed = 1)
 data_test <- create_data_buy(seed = 2)
 model <- explain_tree(data_train, target = buy, out = "model")

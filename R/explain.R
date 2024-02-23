@@ -228,8 +228,6 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 
 #' Explain a target using Random Forest.
 #'
-#'
-#'
 #' @param data A dataset
 #' @param target Target variable (binary)
 #' @param ntree Number of trees used for Random Forest
@@ -315,8 +313,7 @@ explain_forest <- function(data, target, ntree = 50, out = "plot", ...)  {
 #' @param model A model created with `explain_*()` function
 #' @param name Prefix of variable-name for prediction
 #' @return data containing predicted probabilities for target values
-#' @examplesIf rlang::is_installed(c("rpart", "randomForest"))
-#'
+#' @examplesIf rlang::is_installed(c("rpart", "randomForest", "xgboost"))
 #' data_train <- create_data_buy(seed = 1)
 #' data_test <- create_data_buy(seed = 2)
 #' model <- explain_tree(data_train, target = buy, out = "model")
@@ -355,6 +352,14 @@ predict_target <- function(data, model, name = "prediction") {
   } else if (inherits(model, "rpart") && model$method == "anova") {
 
     values <- stats::predict(model, newdata = data)
+    var_names <- paste0(name)
+
+  } else if (inherits(model, "xgb.Booster")) {
+
+    values <- stats::predict(
+      model,
+      newdata = as.matrix(data[ ,model$feature_names]),
+      type = "prob")
     var_names <- paste0(name)
 
   }
