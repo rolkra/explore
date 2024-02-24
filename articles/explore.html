@@ -155,10 +155,7 @@ well.</p>
 FALSE</em></strong> (or <code>targetpct = TRUE</code>) will give you a
 different view on the data.</p>
 <p><img src="../reference/figures/report-target.png" width="600"></p>
-</div>
-<div class="section level3">
-<h3 id="grow-a-decision-tree">Grow a decision tree<a class="anchor" aria-label="anchor" href="#grow-a-decision-tree"></a>
-</h3>
+<p>### Grow a decision tree</p>
 <p>Grow a decision tree with one line of code:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
@@ -174,6 +171,8 @@ different view on the data.</p>
 <p><img src="explore_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>You can control the growth of the tree using the parameters
 <code>maxdepth</code>, <code>minsplit</code> and <code>cp</code>.</p>
+<p>To create other types of models use <code><a href="../reference/explain_forest.html">explain_forest()</a></code>,
+<code><a href="../reference/explain_xgboost.html">explain_xgboost()</a></code> and <code><a href="../reference/explain_logreg.html">explain_logreg()</a></code>.</p>
 </div>
 <div class="section level3">
 <h3 id="explore-dataset">Explore dataset<a class="anchor" aria-label="anchor" href="#explore-dataset"></a>
@@ -183,8 +182,8 @@ variables it contains.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_tbl.html">explore_tbl</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explore_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
-<p>You can also use describe_tbl() if you just need the main facts
-without visualisation.</p>
+<p>You can also use <code><a href="../reference/describe_tbl.html">describe_tbl()</a></code> if you just need the
+main facts without visualization.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe_tbl.html">describe_tbl</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 150 observations with 6 variables</span></span>
@@ -256,10 +255,10 @@ categorical.</p>
 <p><img src="explore_files/figure-html/unnamed-chunk-20-1.png" width="576"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
-<p>To use a high number of variables with explore_all() in a
-RMarkdown-File, it is necessary to set a meaningful fig.width and
-fig.height in the junk. The function total_fig_height() helps to
-automatically set fig.height:
+<p>To use a high number of variables with <code><a href="../reference/explore_all.html">explore_all()</a></code> in
+a RMarkdown-File, it is necessary to set a meaningful fig.width and
+fig.height in the junk. The function <code><a href="../reference/total_fig_height.html">total_fig_height()</a></code>
+helps to automatically set fig.height:
 <code>fig.height=total_fig_height(iris)</code></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -357,7 +356,38 @@ is a text.</p>
 <span><span class="co">#&gt; mean     = 5.843333</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="create-data">Create Data<a class="anchor" aria-label="anchor" href="#create-data"></a>
+<h3 id="use-data">Use data<a class="anchor" aria-label="anchor" href="#use-data"></a>
+</h3>
+<p>Use one of the prepared datasets to explore:</p>
+<ul>
+<li><code><a href="../reference/use_data_beer.html">use_data_beer()</a></code></li>
+<li><code><a href="../reference/use_data_diamonds.html">use_data_diamonds()</a></code></li>
+<li><code><a href="../reference/use_data_iris.html">use_data_iris()</a></code></li>
+<li><code><a href="../reference/use_data_mpg.html">use_data_mpg()</a></code></li>
+<li><code><a href="../reference/use_data_mtcars.html">use_data_mtcars()</a></code></li>
+<li><code><a href="../reference/use_data_penguins.html">use_data_penguins()</a></code></li>
+<li><code><a href="../reference/use_data_starwars.html">use_data_starwars()</a></code></li>
+<li><code><a href="../reference/use_data_titanic.html">use_data_titanic()</a></code></li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 8</span></span></span>
+<span><span class="co">#&gt;    variable          type     na na_pct unique    min    mean    max</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> name              chr       0    0      161   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> brand             chr       0    0       29   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> country           chr       0    0        3   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> year              dbl       0    0        1 <span style="text-decoration: underline;">2</span>023   <span style="text-decoration: underline;">2</span>023    <span style="text-decoration: underline;">2</span>023  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> type              chr       0    0        3   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> color_dark        dbl       0    0        2    0      0.09    1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> alcohol_vol_pct   dbl       2    1.2     35    0      4.32    8.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> original_wort     dbl       5    3.1     54    5.1   11.3    18.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> energy_kcal_100ml dbl      11    6.8     34   20     39.9    62  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> carb_g_100ml      dbl      16    9.9     44    1.5    3.53    6.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> sugar_g_100ml     dbl      16    9.9     26    0      0.72    4.6</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="create-data">Create data<a class="anchor" aria-label="anchor" href="#create-data"></a>
 </h3>
 <p>Use one of the prepared datasets to explore:</p>
 <ul>
@@ -370,7 +400,7 @@ is a text.</p>
 <li><code><a href="../reference/create_data_unfair.html">create_data_unfair()</a></code></li>
 <li><code><a href="../reference/create_data_random.html">create_data_random()</a></code></li>
 </ul>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create dataset and describe it</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_app.html">create_data_app</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
@@ -384,7 +414,7 @@ is a text.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> type         chr       0      0     10    <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> updates      dbl       0      0     72     1   45.6     99</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> screen_sizes dbl       0      0      5     1    2.61     5</span></span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create dataset and describe it</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_random.html">create_data_random</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">100</span>, vars <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/describe.html">describe</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
@@ -401,7 +431,7 @@ is a text.</p>
 <p>You can build you own random dataset by using
 <code><a href="../reference/create_data_empty.html">create_data_empty()</a></code> and <code>add_var_random_*()</code>
 functions:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create dataset and describe it</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_empty.html">create_data_empty</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/add_var_random_01.html">add_var_random_01</a></span><span class="op">(</span><span class="st">"target"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -420,9 +450,9 @@ functions:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> gender          chr       0      0      3  <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> random_starsign chr       0      0     12  <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> random_moon     chr       0      0      4  <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">random_starsign</span>, <span class="va">random_moon</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-36-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-37-1.png" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="basic-data-cleaning">Basic data cleaning<a class="anchor" aria-label="anchor" href="#basic-data-cleaning"></a>
@@ -430,7 +460,7 @@ functions:</p>
 <p>To clean a variable you can use <code>clean_var</code>. With one line
 of code you can rename a variable, replace NA-values and set a minimum
 and maximum for the value.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/clean_var.html">clean_var</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, </span>
 <span>            min_val <span class="op">=</span> <span class="fl">4.5</span>, </span>
@@ -446,16 +476,16 @@ and maximum for the value.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Petal.Length dbl       0      0     43   1    3.76   6.9</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Petal.Width  dbl       0      0     22   0.1  1.2    2.5</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Species      fct       0      0      3  <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
-<p>To drop variables or observations you can use drop_var_ and drop_obs_
-functions.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<p>To drop variables or observations you can use
+<code>drop_var_*()</code> and <code>drop_obs_*()</code> functions.</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/describe_tbl.html">describe_tbl</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 344 observations with 8 variables</span></span>
 <span><span class="co">#&gt; 11 observations containing missings (NA)</span></span>
 <span><span class="co">#&gt; 5 variables containing missings (NA)</span></span>
 <span><span class="co">#&gt; 0 variables with no variance</span></span></code></pre></div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/drop_obs_with_na.html">drop_obs_with_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/describe_tbl.html">describe_tbl</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -465,11 +495,11 @@ functions.</p>
 <span><span class="co">#&gt; 0 variables with no variance</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="create-notebook">Create Notebook<a class="anchor" aria-label="anchor" href="#create-notebook"></a>
+<h3 id="create-notebook">Create notebook<a class="anchor" aria-label="anchor" href="#create-notebook"></a>
 </h3>
 <p>Create an RMarkdown template to explore your own data. Set output_dir
 (existing file may be overwritten)</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_notebook_explore.html">create_notebook_explore</a></span><span class="op">(</span></span>
 <span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  output_file <span class="op">=</span> <span class="st">"notebook-explore.Rmd"</span><span class="op">)</span></span></code></pre></div>
