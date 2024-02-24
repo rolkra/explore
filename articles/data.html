@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -355,9 +355,24 @@ websites in 2023. Some of the collected data may be incorrect.</p>
 <span><span class="co">#&gt; $ churn      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,…</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="newsletter">Newsletter<a class="anchor" aria-label="anchor" href="#newsletter"></a>
+<h3 id="esoteric">Esoteric<a class="anchor" aria-label="anchor" href="#esoteric"></a>
 </h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_esoteric.html">create_data_esoteric</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1,000</span></span>
+<span><span class="co">#&gt; Columns: 6</span></span>
+<span><span class="co">#&gt; $ starsign        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Leo", "Aquarius", "Virgo", "Pisces", "Aries", "Taurus…</span></span>
+<span><span class="co">#&gt; $ chinese         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Dragon", "Monkey", "Tiger", "Pig", "Pig", "Horse", "D…</span></span>
+<span><span class="co">#&gt; $ moon            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Waxing (+)", "Waxing (+)", "Waxing (+)", "Waning (-)"…</span></span>
+<span><span class="co">#&gt; $ blood_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "A+", "AB+", "0+", "0+", "A+", "0+", "B+", "0+", "0-",…</span></span>
+<span><span class="co">#&gt; $ fingers_crossed <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, …</span></span>
+<span><span class="co">#&gt; $ success         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, …</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="newsletter">Newsletter<a class="anchor" aria-label="anchor" href="#newsletter"></a>
+</h3>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_newsletter.html">create_data_newsletter</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -372,7 +387,7 @@ websites in 2023. Some of the collected data may be incorrect.</p>
 <div class="section level3">
 <h3 id="person">Person<a class="anchor" aria-label="anchor" href="#person"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_person.html">create_data_person</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -396,7 +411,7 @@ websites in 2023. Some of the collected data may be incorrect.</p>
 <div class="section level3">
 <h3 id="random">Random<a class="anchor" aria-label="anchor" href="#random"></a>
 </h3>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_random.html">create_data_random</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -417,7 +432,7 @@ websites in 2023. Some of the collected data may be incorrect.</p>
 <div class="section level3">
 <h3 id="unfair">Unfair<a class="anchor" aria-label="anchor" href="#unfair"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_unfair.html">create_data_unfair</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1,000</span></span>
@@ -449,7 +464,7 @@ websites in 2023. Some of the collected data may be incorrect.</p>
 <h3 id="empty">Empty<a class="anchor" aria-label="anchor" href="#empty"></a>
 </h3>
 <p>Create an empty data set and add random variables.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_data_empty.html">create_data_empty</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var_random_01.html">add_var_random_01</a></span><span class="op">(</span><span class="st">"smoking"</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_var_random_cat.html">add_var_random_cat</a></span><span class="op">(</span><span class="st">"gender"</span>, </span>
