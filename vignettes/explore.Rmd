@@ -69,7 +69,7 @@ If you use a binary target, the parameter ***split = FALSE*** (or `targetpct = T
 
 ![](../man/figures/report-target.png){width=600px}
 
-### Grow a decision tree
+ ### Grow a decision tree
 
 Grow a decision tree with one line of code:
 
@@ -91,6 +91,8 @@ iris %>% explain_tree(target = Sepal.Length)
 ```
 
 You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
+
+To create other types of models use `explain_forest()`, `explain_xgboost` and `explain_logreg`.
 
 ### Explore dataset
 
@@ -255,7 +257,24 @@ iris %>% describe(Species)
 iris %>% describe(Sepal.Length)
 ```
 
-### Create Data
+### Use data
+
+Use one of the prepared datasets to explore:
+
+* `use_data_beer()`
+* `use_data_diamonds()`
+* `use_data_iris()`
+* `use_data_mpg()`
+* `use_data_mtcars()`
+* `use_data_penguins()`
+* `use_data_starwars()`
+* `use_data_titanic()`
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+use_data_beer() %>% describe()
+```
+
+### Create data
 
 Use one of the prepared datasets to explore:
 
@@ -326,7 +345,7 @@ use_data_penguins() %>%
   describe_tbl()
 ```
 
-### Create Notebook
+### Create notebook
 
 Create an RMarkdown template to explore your own data. Set output_dir (existing file may be overwritten)
 
