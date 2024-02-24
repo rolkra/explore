@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2024-02-23</h4>
+            <h4 data-toc-skip class="date">2024-02-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/HEAD/vignettes/explain.Rmd" class="external-link"><code>vignettes/explain.Rmd</code></a></small>
       <div class="d-none name"><code>explain.Rmd</code></div>
@@ -113,6 +113,9 @@ be binary, categorical or numerical</li>
 <li>
 <code><a href="../reference/explain_forest.html">explain_forest()</a></code> creates a random forest. The target
 can be binary, categorical or numerical</li>
+<li>
+<code><a href="../reference/explain_xgboost.html">explain_xgboost()</a></code> creates a random forest. The target
+must be binary (0/1, FALSE/TRUE)</li>
 <li>
 <code><a href="../reference/explain_logreg.html">explain_logreg()</a></code> creates a logistic regression. The
 target must be binary</li>
@@ -161,11 +164,15 @@ tree</li>
 <p><img src="explain_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 </div>
 <div class="section level4">
-<h4 id="random-forrest">Random Forrest<a class="anchor" aria-label="anchor" href="#random-forrest"></a>
+<h4 id="random-forest">Random Forest<a class="anchor" aria-label="anchor" href="#random-forest"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_forest.html">explain_forest</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">buy</span>, ntree <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explain_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p>To get the model itself as output you can use the parameter
+<code>out = "model</code> or <code>out = all</code> to get all (feature
+importance as plot and table, trained model). To use the model for a
+prediction, you can use <code><a href="../reference/predict_target.html">predict_target()</a></code></p>
 </div>
 <div class="section level4">
 <h4 id="xgboost">XGBoost<a class="anchor" aria-label="anchor" href="#xgboost"></a>
@@ -211,6 +218,8 @@ training</p>
 <span><span class="co">#&gt; 4:        4  0.30         5     0 mins    13      0.9762086     0.9212647</span></span>
 <span><span class="co">#&gt; 5:        5  0.10         5     0 mins    38      0.9773647     0.9258133</span></span>
 <span><span class="co">#&gt; 6:        6  0.01         5     0 mins    71      0.9601223     0.9256453</span></span></code></pre></div>
+<p>To use the model for a prediction, you can use
+<code><a href="../reference/predict_target.html">predict_target()</a></code></p>
 </div>
 <div class="section level4">
 <h4 id="logistic-regression">Logistic Regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
