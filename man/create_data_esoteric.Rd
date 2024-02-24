@@ -23,14 +23,14 @@ Random data that can be used for unit-testing or teaching
 Variables in dataset:
 \itemize{
 \item id = Identifier
-\item var_X = variable containing values between 0 and 100
-}
-
-Target in dataset:
-\itemize{
-\item target_ind (may be renamed) = random values (1 = yes, 0 = no)
+\item starsign = random starsign
+\item chinese = random chinese zodiac
+\item moon = moon phase
+\item blood = blood type
+\item fingers_crossed = fingers crossed (1 = yes, 0 = no)
+\item success = success (1 = yes, 0 = no)
 }
 }
 \examples{
-create_data_random(obs = 100, vars = 5)
+create_data_esoteric(obs = 100)
 }

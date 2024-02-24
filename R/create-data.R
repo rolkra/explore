@@ -722,17 +722,18 @@ create_data_random = function(obs = 1000, vars = 10,
 #'
 #' Variables in dataset:
 #' * id = Identifier
-#' * var_X = variable containing values between 0 and 100
-#'
-#' Target in dataset:
-#' * target_ind (may be renamed) = random values (1 = yes, 0 = no)
-#'
+#' * starsign = random starsign
+#' * chinese = random chinese zodiac
+#' * moon = moon phase
+#' * blood = blood type
+#' * fingers_crossed = fingers crossed (1 = yes, 0 = no)
+#' * success = success (1 = yes, 0 = no)
 #' @param obs Number of observations
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
 #' @return A dataset as tibble
 #' @examples
-#' create_data_random(obs = 100, vars = 5)
+#' create_data_esoteric(obs = 100)
 #' @export
 
 create_data_esoteric = function(obs = 1000, add_id = FALSE, seed = 123) {
@@ -757,7 +758,7 @@ create_data_esoteric = function(obs = 1000, add_id = FALSE, seed = 123) {
     ) %>%
     add_var_random_moon("moon") %>%
     add_var_random_cat(
-      "blood_type",
+      "blood",
       cat = c("0+", "A+", "B+", "AB+", "A-", "0-", "B-", "AB-"),
       prob = c(0.35, 0.37, 0.09, 0.04, 0.06, 0.06, 0.02, 0.01)
     ) %>%
