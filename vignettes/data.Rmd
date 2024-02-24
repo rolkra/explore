@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 The explore package offers a simplified way to use popular data sets or to create synthetic data for experimenting/teaching/training.
 
-### Use data
+## Use data
 
-#### Penguins
+### Penguins
 
 This data set comes with the palmerpenguins package. It contains measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
 
@@ -32,7 +32,7 @@ data <- use_data_penguins()
 glimpse(data)
 ```
 
-#### Starwars
+### Starwars
 
 This data set comes with the dplyr package. It contains data of 87 star war characters.
 
@@ -41,7 +41,7 @@ data <- use_data_starwars()
 glimpse(data)
 ```
 
-#### Diamonds
+### Diamonds
 
 This data set comes with the ggplot2 package. It contains the prices and other attributes of almost 54,000 diamonds.
 
@@ -50,7 +50,7 @@ data <- use_data_diamonds()
 glimpse(data)
 ```
 
-#### Iris
+### Iris
 
 This data set comes with base R. The data set gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
 
@@ -59,7 +59,7 @@ data <- use_data_iris()
 glimpse(data)
 ```
 
-#### mpg
+### mpg
 
 This data set comes with the ggplot2 package. It contains a subset of the fuel economy data that the EPA makes available on https://fueleconomy.gov/. It contains only models which had a new release every year between 1999 and 2008 - this was used as a proxy for the popularity of the car.
 
@@ -68,7 +68,7 @@ data <- use_data_mpg()
 glimpse(data)
 ```
 
-#### mtcars
+### mtcars
 
 This data set comes with base R. The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
 
@@ -77,7 +77,7 @@ data <- use_data_mtcars()
 glimpse(data)
 ```
 
-#### Titanic
+### Titanic
 
 This data set comes with base R. Survival of passengers on the Titanic.
 
@@ -91,7 +91,7 @@ data <- use_data_titanic(count = TRUE)
 glimpse(data)
 ```
 
-#### Beer
+### Beer
 
 This data set is an incomplete collection of popular beers in Austria, Germany and Switzerland. Data are collected from various websites in 2023. Some of the collected data may be incorrect.
 
@@ -100,60 +100,60 @@ data <- use_data_beer()
 glimpse(data)
 ```
  
-### Create data
+## Create data
 
 Artificial data that can be used for unit-testing or teaching.
 
-#### App
+### App
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_app(obs = 1000)
 glimpse(data)
 ```
 
-#### Buy
+### Buy
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_buy(obs = 1000)
 glimpse(data)
 ```
 
-#### Churn
+### Churn
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_churn(obs = 1000)
 glimpse(data)
 ```
 
-#### Newsletter
+### Newsletter
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_newsletter(obs = 1000)
 glimpse(data)
 ```
 
-#### Person
+### Person
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_person(obs = 1000)
 glimpse(data)
 ```
 
-#### Random
+### Random
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_random(obs = 1000)
 glimpse(data)
 ```
 
-#### Unfair
+### Unfair
 
 ```{r message=FALSE, warning=FALSE}
 data <- create_data_unfair(obs = 1000)
 glimpse(data)
 ```
 
-#### Empty
+### Empty
 
 Create an empty data set and add random variables.
 
@@ -168,4 +168,99 @@ data <- create_data_empty(obs = 1000) %>%
   add_var_random_moon() %>%
   add_var_random_starsign()
 glimpse(data)
+```
+
+## Clean Data
+
+### Rename variable
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_titanic(count = FALSE)
+glimpse(data)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(Age, name = "age")
+glimpse(data)
+```
+
+### Replace NA values
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_beer()
+data %>% describe(energy_kcal_100ml)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(energy_kcal_100ml, na = 42)
+data %>% describe(energy_kcal_100ml)
+```
+
+### Set min max values
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- create_data_person()
+data %>% describe(age)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(age, min_val = 20, max_val = 80)
+data %>% describe(age)
+```
+
+### Rescale 0 to 1
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>% describe(income)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(income, rescale01 = TRUE)
+data %>% describe(income)
+```
+
+### Cleaning text
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data[1, "handset"] <- " android "
+data[2, "handset"] <- "ANDROID"
+data %>% describe(handset)
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- data %>% clean_var(handset, simplify_text = TRUE)
+data %>% describe(handset)
+```
+### Drop Variables
+
+* `drop_var_no_variance()` Drop all variables with no variance
+* `drop_var_not_numeric()` Drop all not numeric variables
+* `drop_var_low_variance()` Drop all variables with low variance
+* `drop_var_by_names()` Drop variables by name
+* `drop_var_with_na()` Drop all variables with NA-values
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data <- use_data_beer()
+data %>% describe_tbl()
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>%
+  drop_var_no_variance() %>%
+  describe_tbl()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>%
+  drop_var_with_na() %>%
+  describe_tbl()
+```
+
+### Drop Observations
+
+* `drop_obs_with_na()` Drop all observations with NA-values
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>%
+  drop_obs_with_na() %>%
+  describe_tbl()
 ```

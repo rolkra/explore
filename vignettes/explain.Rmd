@@ -20,6 +20,7 @@ The explore package offers a simplified way to use machine learning to understan
 
 * `explain_tree()` creates a decision tree. The target can be binary, categorical or numerical
 * `explain_forest()` creates a random forest. The target can be binary, categorical or numerical
+* `explain_xgboost()` creates a random forest. The target must be binary (0/1, FALSE/TRUE)
 * `explain_logreg()` creates a logistic regression. The target must be binary
 * `balance_target()` to balance a target
 * `weight_target()` to create weights for the decision tree
@@ -49,11 +50,13 @@ data %>% explain_tree(target = mobiledata_prd)
 data %>% explain_tree(target = age)
 ```
 
-#### Random Forrest
+#### Random Forest
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
 data %>% explain_forest(target = buy, ntree = 100)
 ```
+
+To get the model itself as output you can use the parameter `out = "model` or `out = all` to get all (feature importance as plot and table, trained model). To use the model for a prediction, you can use `predict_target()`
 
 #### XGBoost
 
@@ -84,6 +87,8 @@ train$tune_plot
 ```{r message=FALSE, warning=FALSE}
 train$tune_data
 ```
+
+To use the model for a prediction, you can use `predict_target()`
 
 #### Logistic Regression
 

@@ -79,63 +79,23 @@ data_dict_md(iris,
              output_dir = tempdir())
 ```
 
-## Basic data cleaning
-
-### Rename variable
+## Color
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- use_data_titanic(count = FALSE)
-glimpse(data)
+colors <- mix_color("blue", n = 5)
+colors
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- data %>% clean_var(Age, name = "age")
-glimpse(data)
-```
-
-### Replace NA values
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- use_data_beer()
-data %>% describe(energy_kcal_100ml)
+show_color(colors)
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- data %>% clean_var(energy_kcal_100ml, na = 42)
-data %>% describe(energy_kcal_100ml)
-```
-
-### Set min max values
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- create_data_person()
-data %>% describe(age)
+colors <- mix_color("gold", "red", n = 4)
+colors
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- data %>% clean_var(age, min_val = 20, max_val = 80)
-data %>% describe(age)
+show_color(colors)
 ```
 
-### Rescale 0 to 1
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data %>% describe(income)
-```
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- data %>% clean_var(income, rescale01 = TRUE)
-data %>% describe(income)
-```
-
-### Cleaning text
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data[1, "handset"] <- " android "
-data[2, "handset"] <- "ANDROID"
-data %>% describe(handset)
-```
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-data <- data %>% clean_var(handset, simplify_text = TRUE)
-data %>% describe(handset)
-```
