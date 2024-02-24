@@ -3,6 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   abtest: abtest.html
+  clean-drop: clean-drop.html
   data: data.html
   describe: describe.html
   explain: explain.html
@@ -15,5 +16,5 @@ articles:
   report-targetpct: report-targetpct.html
   report: report.html
   tips-tricks: tips-tricks.html
-last_built: 2024-02-24T08:54Z
+last_built: 2024-02-24T13:57Z
 
