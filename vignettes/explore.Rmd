@@ -92,7 +92,7 @@ iris %>% explain_tree(target = Sepal.Length)
 
 You can control the growth of the tree using the parameters `maxdepth`, `minsplit` and `cp`.
 
-To create other types of models use `explain_forest()`, `explain_xgboost` and `explain_logreg`.
+To create other types of models use `explain_forest()`, `explain_xgboost()` and `explain_logreg()`.
 
 ### Explore dataset
 
@@ -102,7 +102,7 @@ Explore your table with one line of code to see which type of variables it conta
 iris %>% explore_tbl()
 ```
 
-You can also use describe_tbl() if you just need the main facts without visualisation.
+You can also use `describe_tbl()` if you just need the main facts without visualization.
 
 ```{r message=FALSE, warning=FALSE}
 iris %>% describe_tbl()
@@ -182,7 +182,7 @@ iris %>%
 data(iris)
 ```
 
-To use a high number of variables with explore_all() in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function total_fig_height() helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
+To use a high number of variables with `explore_all()` in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function `total_fig_height()` helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
 
 ```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, size=2.5)}
 iris %>% 
@@ -332,7 +332,7 @@ iris %>%
   describe()
 ```
 
-To drop variables or observations you can use drop_var_ and drop_obs_ functions.
+To drop variables or observations you can use ```drop_var_*()``` and ```drop_obs_*()``` functions.
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 use_data_penguins() %>% 
