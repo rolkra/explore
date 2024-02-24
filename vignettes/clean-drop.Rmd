@@ -1,10 +1,10 @@
 ---
-title: "Clean / drop"
+title: "Clean / Drop"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Clean / drop}
+  %\VignetteIndexEntry{Clean / Drop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -80,7 +80,7 @@ data <- data %>% clean_var(handset, simplify_text = TRUE)
 data %>% describe(handset)
 ```
 
-## Drop Variables
+## Drop variables
 
 * `drop_var_no_variance()` Drop all variables with no variance
 * `drop_var_not_numeric()` Drop all not numeric variables
@@ -104,7 +104,7 @@ data %>%
   describe_tbl()
 ```
 
-## Drop Observations
+## Drop observations
 
 * `drop_obs_with_na()` Drop all observations with NA-values
 
