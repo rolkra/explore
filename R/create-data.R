@@ -724,10 +724,10 @@ create_data_random = function(obs = 1000, vars = 10,
 #' * id = Identifier
 #' * starsign = random starsign
 #' * chinese = random chinese zodiac
-#' * moon = moon phase
-#' * blood = blood type
-#' * fingers_crossed = fingers crossed (1 = yes, 0 = no)
-#' * success = success (1 = yes, 0 = no)
+#' * moon = random moon phase
+#' * blood = random blood type
+#' * fingers_crossed = random fingers crossed (1 = yes, 0 = no)
+#' * success = random success (1 = yes, 0 = no)
 #' @param obs Number of observations
 #' @param add_id Add an id-variable to data?
 #' @param seed Seed for randomization
