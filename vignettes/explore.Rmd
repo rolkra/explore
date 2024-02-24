@@ -259,12 +259,14 @@ iris %>% describe(Sepal.Length)
 
 Use one of the prepared datasets to explore:
 
-* create_data_app()
-* create_data_buy()
-* Create_data_churn()
-* create_data_person()
-* create_data_unfair()
-* create_data_random()
+* `create_data_app()`
+* `create_data_buy()`
+* `create_data_churn()`
+* `create_data_esoteric()`
+* `create_data_newsletter()`
+* `create_data_person()`
+* `create_data_unfair()`
+* `create_data_random()`
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # create dataset and describe it
@@ -278,7 +280,7 @@ data <- create_data_random(obs = 100, vars = 5)
 describe(data)
 ```
 
-You can build you own random dataset by using ```create_data_empty()``` and  ```add_var_randm_*()``` functions:
+You can build you own random dataset by using ```create_data_empty()``` and  ```add_var_random_*()``` functions:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 # create dataset and describe it
@@ -309,6 +311,19 @@ iris %>%
             na = 5.8, 
             name = "sepal_length") %>% 
   describe()
+```
+
+To drop variables or observations you can use drop_var_ and drop_obs_ functions.
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+use_data_penguins() %>% 
+  describe_tbl()
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
+use_data_penguins() %>%
+  drop_obs_with_na() %>%
+  describe_tbl()
 ```
 
 ### Create Notebook
