@@ -58,6 +58,20 @@ drop_obs_with_na <- function(data) {
   result
 }
 
+#' Drop all observations where expression is true
+#'
+#' @param data Data frame
+#' @param expr Expression
+#' @return Data frame
+#' @examples
+#' drop_obs_if(iris, Species == "setosa")
+#' drop_obs_if(iris, Sepal.Length < 5 | Sepal.Length >7)
+#' @export
+
+drop_obs_if <- function(data, expr) {
+  dplyr::filter(data, !{{ expr }})
+}
+
 #' Check vector for low variance
 #'
 #' @param values Vector of values

@@ -163,6 +163,34 @@ test_that("drop_obs_with_na()", {
   )
 })
 
+# drop_obs_if -------------------------------------------------------------
+
+# drop observations works
+test_that("drop_obs_if()", {
+
+  expect_equal(
+    nrow(drop_obs_if(iris, Species == "setosa")),
+    100
+  )
+})
+
+# drop observations works (no dropping)
+test_that("drop_obs_if()", {
+
+  expect_equal(
+    nrow(drop_obs_if(iris, Species == "not defined")),
+    nrow(iris)
+  )
+})
+
+# drop all observations is still a data.frame
+test_that("drop_obs_if()", {
+
+  expect_true(
+    is.data.frame(drop_obs_if(iris, Sepal.Length >= 0))
+  )
+})
+
 # drop_var_low_variance ---------------------------------------------------
 
 # drop reduces number of variables in data (no variance)

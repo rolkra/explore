@@ -2,16 +2,17 @@
 
 ## New features
 
-* add explain_xgboost()
-* add drop_var_by_names()
-* add drop_var_not_numeric()
-* add check_vec_low_variance() (helper function)
-* add drop_var_low_variance()
-* add drop_var_no_variance()
-* add drop_var_with_na()
-* add drop_obs_with_na()
-* mix_color()
-* show_color()
+* add `explain_xgboost()` (#42)
+* add `drop_var_by_names()` (#43)
+* add `drop_var_not_numeric()` (#43)
+* add `check_vec_low_variance()` (helper function)
+* add `drop_var_low_variance()` (#43)
+* add `drop_var_no_variance()` (#43)
+* add `drop_var_with_na()` (#43)
+* add `drop_obs_with_na()` (#43)
+* add `drop_obs_if()` (#43)
+* add `mix_color()`
+* add `show_color()` 
 
 # explore 1.1.1
 

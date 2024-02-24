@@ -113,3 +113,16 @@ data %>%
   drop_obs_with_na() %>%
   describe_tbl()
 ```
+
+* `drop_obs_if()` Drop all observations where expression is true
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>%
+  count_pct(type)
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+data %>%
+  drop_obs_if(type == "Alkoholfrei") %>%
+  count_pct(type)
+```
