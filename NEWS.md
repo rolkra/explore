@@ -13,6 +13,7 @@
 * add `drop_obs_if()` (#43)
 * add `mix_color()`
 * add `show_color()` 
+* add `create_data_esoteric()`
 
 # explore 1.1.1
 

@@ -125,6 +125,13 @@ data <- create_data_churn(obs = 1000)
 glimpse(data)
 ```
 
+### Esoteric
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_esoteric(obs = 1000)
+glimpse(data)
+```
+
 ### Newsletter
 
 ```{r message=FALSE, warning=FALSE}
