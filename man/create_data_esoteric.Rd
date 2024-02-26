@@ -25,10 +25,10 @@ Variables in dataset:
 \item id = Identifier
 \item starsign = random starsign
 \item chinese = random chinese zodiac
-\item moon = moon phase
-\item blood = blood type
-\item fingers_crossed = fingers crossed (1 = yes, 0 = no)
-\item success = success (1 = yes, 0 = no)
+\item moon = random moon phase
+\item blood = random blood type
+\item fingers_crossed = random fingers crossed (1 = yes, 0 = no)
+\item success = random success (1 = yes, 0 = no)
 }
 }
 \examples{

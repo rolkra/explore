@@ -4,14 +4,12 @@
 \alias{create_data_empty}
 \title{Create an empty dataset}
 \usage{
-create_data_empty(obs = 1000, add_id = FALSE, seed = 123)
+create_data_empty(obs = 1000, add_id = FALSE)
 }
 \arguments{
 \item{obs}{Number of observations}
 
 \item{add_id}{Add an id}
-
-\item{seed}{Seed for randomization (integer)}
 }
 \value{
 Dataset as tibble

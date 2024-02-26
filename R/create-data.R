@@ -2,22 +2,17 @@
 #'
 #' @param obs Number of observations
 #' @param add_id Add an id
-#' @param seed Seed for randomization (integer)
 #' @return Dataset as tibble
 #' @examples
 #' create_data_empty(obs = 100)
 #' create_data_empty(obs = 100, add_id = TRUE)
 #' @export
 
-create_data_empty <- function(obs = 1000, add_id = FALSE, seed = 123) {
+create_data_empty <- function(obs = 1000, add_id = FALSE) {
 
   # checks
   check_number_whole(obs, min = 1)
   check_bool(add_id)
-  check_number_decimal(seed)
-
-  # reproducible random numbers
-  set.seed(seed)
 
   # create empty data frame
   data <- data.frame(
