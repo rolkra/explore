@@ -30,10 +30,10 @@ but should not contain any customer-IDs or date/period columns}
 Plot of importance (if out = "plot")
 }
 \description{
-Based on the hyperparameters defined in the config.yml, XGBoost hyperparameter-tuning is
+Based on the hyperparameters defined in the setup parameter, XGBoost hyperparameter-tuning is
 carried out using cross-validation. The best model is chosen and returned.
-If defined/necessary, downsampling will be performed as part of the hyperparameter-tuning.
-The results of the hyperparameter will be plotted and exported as a dataframe.
+As default, the function returns the feature-importance plot.
+To get the all outputs, use parameter out = "all"
 }
 \examples{
 data <- use_data_iris()

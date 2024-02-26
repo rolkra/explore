@@ -15,6 +15,10 @@
 * add `show_color()` 
 * add `create_data_esoteric()`
 
+## Breaking changes
+
+* `create_data_empty()` has no longer a parameter `seed` 
+
 # explore 1.1.1
 
 * Fix CRAN check warning in running example `get_nrow()` (#41)
