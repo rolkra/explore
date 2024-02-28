@@ -1,4 +1,4 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
@@ -16,5 +16,5 @@ articles:
   report-targetpct: report-targetpct.html
   report: report.html
   tips-tricks: tips-tricks.html
-last_built: 2024-02-26T15:54Z
+last_built: 2024-02-28T09:57Z
 
