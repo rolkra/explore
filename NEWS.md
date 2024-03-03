@@ -5,7 +5,6 @@
 * add `explain_xgboost()` (#42)
 * add `drop_var_by_names()` (#43)
 * add `drop_var_not_numeric()` (#43)
-* add `check_vec_low_variance()` (helper function)
 * add `drop_var_low_variance()` (#43)
 * add `drop_var_no_variance()` (#43)
 * add `drop_var_with_na()` (#43)
@@ -18,6 +17,10 @@
 ## Breaking changes
 
 * `create_data_empty()` has no longer a parameter `seed` 
+
+## Bug fixes / internal
+
+* add `check_vec_low_variance()` (internal helper function)
 
 # explore 1.1.1
 

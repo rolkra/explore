@@ -42,20 +42,21 @@ reference:
     - starts_with("drop_var_")
   - title: Tools
     contents:
-    - check_vec_low_variance
     - count_pct
     - data_dict_md
     - decrypt
     - encrypt
     - get_type
     - guess_cat_num
-    - log_info_if
     - mix_color
     - plot_text
-    - plot_var_info
     - replace_na_with
     - rescale01
     - simplify_text
     - show_color
     - starts_with("format_")
     - starts_with("target_explore")
+  - title: Internal
+    - log_info_if
+    - plot_var_info
+    - check_vec_low_variance
