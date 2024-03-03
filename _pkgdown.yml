@@ -57,6 +57,7 @@ reference:
     - starts_with("format_")
     - starts_with("target_explore")
   - title: Internal
+    contents:
     - log_info_if
     - plot_var_info
     - check_vec_low_variance
