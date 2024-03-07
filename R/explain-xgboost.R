@@ -19,6 +19,7 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' but should not contain any customer-IDs or date/period columns
 #' @param target Target variable (must be binary 0/1, FALSE/TRUE, no/yes)
 #' @param log Log?
+#' @param nthread Number of threads used for training
 #' @param setup Setup of model
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
 #' @return Plot of importance (if out = "plot")
@@ -29,7 +30,7 @@ log_info_if <- function(log = TRUE, text = "log") {
 #' explain_xgboost(data, target = is_versicolor, log = FALSE)
 #' @export
 
-explain_xgboost <- function(data, target, log = TRUE,
+explain_xgboost <- function(data, target, log = TRUE, nthread = 1,
                                setup = list(
                                  cv_nfold = 2, # Nr. of folds used for cross-validation during model training
                                  max_nrounds = 1000,
@@ -127,7 +128,7 @@ explain_xgboost <- function(data, target, log = TRUE,
       data = dtrain,
       #label = ltrain,
       params = current_params,
-      nthread = 1, #setup$nthread,
+      nthread = nthread,
       nfold = setup$cv_nfold,
       nrounds = setup$max_nrounds,
       early_stopping_rounds = setup$early_stopping_rounds,

@@ -1,3 +1,7 @@
+# explore 1.2.1
+
+* add parameter `nthread` to `explain_xgboost()` (#45)
+
 # explore 1.2.0
 
 ## New features

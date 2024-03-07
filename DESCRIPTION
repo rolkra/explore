@@ -1,7 +1,7 @@
 Type: Package
 Package: explore
 Title: Simplifies Exploratory Data Analysis
-Version: 1.2.0
+Version: 1.2.1.9000
 Authors@R: 
     person("Roland", "Krasser", , "roland.krasser@gmail.com", role = c("aut", "cre"))
 Description: Interactive data exploration with one line of code, automated
