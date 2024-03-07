@@ -16,7 +16,7 @@ To get the all outputs, use parameter out = "all"'><meta property="og:image" con
     
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,6 +85,7 @@ To get the all outputs, use parameter out = "all"</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">target</span>,</span>
 <span>  log <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nthread <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  setup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cv_nfold <span class="op">=</span> <span class="fl">2</span>, max_nrounds <span class="op">=</span> <span class="fl">1000</span>, early_stopping_rounds <span class="op">=</span> <span class="fl">50</span>, grid_xgboost</span>
 <span>    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="fl">0.01</span><span class="op">)</span>, max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span>, gamma <span class="op">=</span> <span class="fl">0</span>, colsample_bytree <span class="op">=</span></span>
 <span>    <span class="fl">0.8</span>, subsample <span class="op">=</span> <span class="fl">0.8</span>, min_child_weight <span class="op">=</span> <span class="fl">1</span>, scale_pos_weight <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -105,6 +106,10 @@ but should not contain any customer-IDs or date/period columns</p></dd>
 
 <dt>log</dt>
 <dd><p>Log?</p></dd>
+
+
+<dt>nthread</dt>
+<dd><p>Number of threads used for training</p></dd>
 
 
 <dt>setup</dt>
