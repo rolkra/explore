@@ -154,14 +154,32 @@ weight_target <- function(data, target) {
 #' @param text Text as string
 #' @param size Text-size
 #' @param color Text-color
+#' @param ggplot return a ggplot-object? (or base plot)
 #' @return Plot
 #' @examples
 #' plot_text("hello", size = 2, color = "red")
 #' @export
 
-plot_text <- function(text="hello world", size=1.2, color="black")  {
+plot_text <- function(text="hello world", size=1.2, color="black", ggplot = FALSE)  {
+
+  if (ggplot) {
+
+    ggplot(NULL) +
+      geom_blank() +
+      geom_text(aes(x = 0, y = 0, label = text), size = 4 * size) +
+      theme_void()
+      #labs(title = var_txt, x = "", y = " ") +
+    #  theme(axis.title.x=element_blank(),
+    #        axis.text.x=element_blank(),
+    #        axis.ticks.x=element_blank(),
+    #        axis.title.y=element_blank(),
+    #        axis.text.y=element_blank(),
+    #        axis.ticks.y=element_blank(),
+    #        plot.margin = unit(c(0.1,0.1,0.5,1), "cm")) #t,r,b,l
+  } else {
   plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
   text(x = 0.5, y = 0.5, text, cex = size, col = color)
+  }
 }
 
 #' Plot a variable info

@@ -240,6 +240,12 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
     if (!n_text %in% names(data))  {
       stop(paste0("variable '", n_text, "' not found"))
     }
+
+    if(any(is.na(data[[n_text]]))) {
+      p <- plot_text("Undefined values", ggplot = TRUE)
+      return(p)
+    }
+
   } # if
 
   # define variables for CRAN-package check
@@ -296,6 +302,16 @@ abtest_targetpct <- function(data, expr, n, target, sign_level = 0.05, group_lab
   m <- matrix(c(
     a_grp$target1_sum, b_grp$target1_sum,
     a_grp$n - a_grp$target1_sum, b_grp$n - b_grp$target1_sum),2,2)
+
+  # check if meaningful
+  if(a_grp$n < a_grp$target1_sum) {
+    p <- plot_text("Not meaningful values", ggplot = TRUE)
+    return(p)
+  }
+  if(b_grp$n < b_grp$target1_sum) {
+    p <- plot_text("Not meaningful values", ggplot = TRUE)
+    return(p)
+  }
 
   # test for significance
   if (any(m <= 5)) {

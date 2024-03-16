@@ -4,7 +4,7 @@
 \alias{plot_text}
 \title{Plot a text}
 \usage{
-plot_text(text = "hello world", size = 1.2, color = "black")
+plot_text(text = "hello world", size = 1.2, color = "black", ggplot = FALSE)
 }
 \arguments{
 \item{text}{Text as string}
@@ -12,6 +12,8 @@ plot_text(text = "hello world", size = 1.2, color = "black")
 \item{size}{Text-size}
 
 \item{color}{Text-color}
+
+\item{ggplot}{return a ggplot-object? (or base plot)}
 }
 \value{
 Plot
