@@ -1,9 +1,15 @@
 # explore 1.2.1
 
+## New features
+
 * add parameter `nthread` to `explain_xgboost()` (#45)
-* fix undefined/not meaningful values in abtest() shiny-app
 * add interact()
 * add interactivity as default in explore shiny app
+* add create_data_abtest()
+
+## Bug fixes / internal
+
+* fix undefined/not meaningful values in abtest() shiny-app
 
 # explore 1.2.0
 

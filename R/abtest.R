@@ -24,8 +24,27 @@ abtest <- function(data, expr, n, target, sign_level = 0.05) {
   if (missing(data)) {
     abtest_shiny()
     #return("hallo welt")
-  } else {
+  } else if (all(c("group", "success", "n") %in% names(data)) & missing(expr)) {
 
+    data$nn <- data$n
+    abtest_targetpct(data = data,
+                     expr = group == "B",
+                     n = nn,
+                     target = success,
+                     sign_level = as.numeric(sign_level),
+                     group_label = "Group",
+                     ab_label = TRUE)
+
+  } else if (all(c("group", "success") %in% names(data)) & missing(expr)) {
+
+    abtest_targetpct(data = data,
+                     expr = group == "B",
+                    #n = nn,
+                     target = success,
+                     sign_level = as.numeric(sign_level),
+                     group_label = "Group",
+                     ab_label = TRUE)
+  } else {
   # check parameter
   check_data_frame_non_empty(data)
   rlang::check_required(expr)

@@ -769,3 +769,28 @@ create_data_esoteric = function(obs = 1000, add_id = FALSE, seed = 123) {
   tibble::as_tibble(data)
 
 } # create_data_esoteric
+
+create_data_abtest <- function(n_a = 100, n_b = 100,
+                               success_a = 10, success_b = 5,
+                               success_unit = "count", count = TRUE)  {
+
+  if (success_unit == "percent") {
+    success_a <- round(n_a * success_a/10, 0)
+    success_b <- round(n_b * success_b/10, 0)
+  }
+
+  data <- data.frame(
+    group = c('A', 'A', 'B', 'B'),
+    n = c(n_a - success_a, success_a, n_b - success_b, success_b),
+    success = c(0, 1, 0, 1)
+  )
+
+  if (count) {
+    data
+  } else {
+    data <- explore:::uncount_compat(data, n) %>% add_var_random_int()
+    data %>% arrange(random_int) %>% select(-random_int)
+  }
+
+} #create_data_abtest
+
