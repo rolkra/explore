@@ -1,7 +1,7 @@
 Type: Package
 Package: explore
 Title: Simplifies Exploratory Data Analysis
-Version: 1.2.1.9000
+Version: 1.2.1.9001
 Authors@R: 
     person("Roland", "Krasser", , "roland.krasser@gmail.com", role = c("aut", "cre"))
 Description: Interactive data exploration with one line of code, automated
@@ -22,6 +22,7 @@ Imports:
     gridExtra,
     magrittr,
     palmerpenguins,
+    plotly,
     rlang (>= 1.1.0),
     rmarkdown,
     rpart,

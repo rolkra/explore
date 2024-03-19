@@ -1178,8 +1178,8 @@ explore_shiny <- function(data, target)  {
         shiny::tabsetPanel(
           shiny::tabPanel("variable",
                           shiny::conditionalPanel(condition = "input.target != '<no target>'",
-                                                  shiny::plotOutput("graph_target")),
-                          shiny::plotOutput("graph", height = 300),
+                                                  plotly::plotlyOutput("graph_target")),
+                          plotly::plotlyOutput("graph", height = 300),
                           shiny::verbatimTextOutput("text")
           ),
           #textOutput("text")
@@ -1234,9 +1234,11 @@ explore_shiny <- function(data, target)  {
       utils::browseURL(paste0("file://", file.path(output_dir, output_file)), browser = NULL)
     })
 
-    output$graph_target <- shiny::renderPlot({
+    output$graph_target <- plotly::renderPlotly({
       if (input$target != "<no target>" & input$var != input$target)  {
-        data %>% explore(!!sym(input$var), target = !!sym(input$target), auto_scale = input$auto_scale, split = !input$targetpct)
+        data %>% explore(!!sym(input$var), target = !!sym(input$target),
+                         auto_scale = input$auto_scale, split = !input$targetpct,
+                         max_cat = 20, label = FALSE)
       }
     }) # renderPlot graph_target
 
@@ -1256,8 +1258,9 @@ explore_shiny <- function(data, target)  {
       } # if input$target
     }) # renderPlot graph_explain
 
-    output$graph <- shiny::renderPlot({
-      data %>% explore(!!sym(input$var), auto_scale = input$auto_scale)
+    output$graph <- plotly::renderPlotly({
+      data %>% explore(!!sym(input$var), auto_scale = input$auto_scale,
+                       max_cat = 20, label = FALSE)
     }) # renderPlot graph
 
     output$text <- shiny::renderPrint({
@@ -1842,3 +1845,48 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   #data_plot
 
 } # explore_count
+
+#' Make a explore-plot interactive
+#'
+#' @param obj A object (e.g. ggplot2-object)
+#' @param lower_title Lowering the title in ggplot2-object(`FALSE`/`TRUE`)
+#' @param hide_geom_text Hiding geom_text in ggplot2-object (`FALSE`/`TRUE`)
+#' @return Plot object
+#' @examples
+#' library(dplyr)
+#' if (interactive())  {
+#'    iris %>% explore(Sepal.Length, target = Species) %>% interact()
+#' }
+#' @export
+
+interact <- function(obj, lower_title = TRUE, hide_geom_text = TRUE) {
+
+  if("ggplot" %in% class(obj)) {
+
+    # hide geom_text (ugly tool tip)
+    if (hide_geom_text & length(obj$layers) >= 2) {
+      if ("GeomText" %in% class(obj$layers[[2]]$geom)) {
+        obj$layers[[2]] <- NULL
+      }
+    }
+
+    # lower_title (to get space for plotly-top-menu)
+    if (lower_title) {
+      obj <- obj + ggplot2::theme(plot.margin = ggplot2::unit(c(1.1,0.1,0.1,0.1), 'cm'))
+    }
+
+    # fix subtitle (if exist)
+    if (!is.null(obj$labels$subtitle) & !is.null(obj$labels$title)) {
+      obj$labels$title <- paste0(obj$labels$title,"<br><sup>", obj$labels$subtitle)
+      obj$labels$subtitle <- NULL
+    }
+
+    suppressWarnings(plotly::ggplotly(obj))
+
+  } else {
+
+    # if obj is not an ggplot-object, simply return it
+    obj
+
+  }
+} #interact

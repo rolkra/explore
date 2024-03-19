@@ -9,6 +9,7 @@ reference:
     contents:
     - explore
     - starts_with("explore_")
+    - interact
   - title: Describe
     contents:
     - describe

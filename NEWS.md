@@ -2,6 +2,8 @@
 
 * add parameter `nthread` to `explain_xgboost()` (#45)
 * fix undefined/not meaningful values in abtest() shiny-app
+* add interact()
+* add interactivity as default in explore shiny app
 
 # explore 1.2.0
 
