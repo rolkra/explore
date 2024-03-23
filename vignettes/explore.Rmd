@@ -69,7 +69,7 @@ If you use a binary target, the parameter ***split = FALSE*** (or `targetpct = T
 
 ![](../man/figures/report-target.png){width=600px}
 
- ### Grow a decision tree
+### Grow a decision tree
 
 Grow a decision tree with one line of code:
 
