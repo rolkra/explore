@@ -217,7 +217,7 @@ gears.</p>
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">gear</span>, <span class="va">mpg</span>, <span class="va">hp</span>, <span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">gear</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 <p>We see that 100% of cars with am = 0 (automatic) have 3 gears. All
 cars with am = 1 (manual) have 5 gears.</p>
 </div>
@@ -240,17 +240,17 @@ about them?</p>
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">highmpg</span>, <span class="va">cyl</span>, <span class="va">disp</span>, <span class="va">hp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">highmpg</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
+<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">highmpg</span>, <span class="va">drat</span>, <span class="va">wt</span>, <span class="va">qsec</span>, <span class="va">vs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">highmpg</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
+<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-9-1.png" width="768"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">highmpg</span>, <span class="va">am</span>, <span class="va">gear</span>, <span class="va">carb</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">highmpg</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-10-1.png" width="768"></p>
 <p>There are some strong differences between cars with / without “high
 mpg”.</p>
 <p>Now let’s grow a decision tree:</p>
@@ -317,7 +317,7 @@ the tree and hp:</p>
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">cyl</span>, <span class="va">mpg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">hp</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-18-1.png" width="576"></p>
+<p><img src="explore_mtcars_files/figure-html/unnamed-chunk-18-1.png" width="768"></p>
 <p>Cars with 8 cylinders have higher horsepower.</p>
 <p>Cars with low miles per gallon (mpg) have higher horsepower!</p>
 </div>
