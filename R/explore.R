@@ -491,7 +491,8 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     )
 
     p <- p + labs(title = var_txt, subtitle = paste0(
-      na_txt, ", unique = ", length(unique(data[[var_txt]]))))
+      na_txt, ", unique = ", length(unique(data[[var_txt]])))) +
+      theme(plot.subtitle = element_text(size = 9, color = "#707070"))
   } else {
     p <- p + ggtitle(paste0(var_txt))
   }
@@ -669,7 +670,8 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
       na_txt, ", min = ",
       format_num_auto(raw_min, digits=6), ", max = ",
       format_num_auto(raw_max, digits=6), ""
-      ))
+      )) +
+      theme(plot.subtitle = element_text(size = 9, color = "#707070"))
 
   } else {
     p <- p + ggtitle(paste0(var_txt))
