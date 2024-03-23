@@ -1,15 +1,18 @@
-# explore 1.2.1
+# explore 1.3.0
 
 ## New features
 
-* add parameter `nthread` to `explain_xgboost()` (#45)
-* add interact()
-* add interactivity as default in explore shiny app
-* add create_data_abtest()
+* add parameter `nthread` to `explain_xgboost()`. (#45)
+* add interact().
+* add interactivity as default in explore shiny app.
+* add create_data_abtest().
+* add basic color parameter to `explore()` & `abtest()` functions.
+* move NA-info in `explore()` from title to subtitle.
+* add more descriptive infos into `explore()`subtitle. 
 
 ## Bug fixes / internal
 
-* fix undefined/not meaningful values in abtest() shiny-app
+* fix undefined / not meaningful values in abtest() shiny-app
 
 # explore 1.2.0
 

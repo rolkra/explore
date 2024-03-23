@@ -4,7 +4,7 @@
 \alias{abtest_targetnum}
 \title{A/B testing comparing two mean}
 \usage{
-abtest_targetnum(data, expr, target, sign_level = 0.05)
+abtest_targetnum(data, expr, target, sign_level = 0.05, color = "grey")
 }
 \arguments{
 \item{data}{A dataset}
@@ -14,6 +14,8 @@ abtest_targetnum(data, expr, target, sign_level = 0.05)
 \item{target}{Target variable (must be numeric)}
 
 \item{sign_level}{Significance Level (typical 0.01/0.05/0.10)}
+
+\item{color}{fill color}
 }
 \value{
 Plot that shows if difference is significant

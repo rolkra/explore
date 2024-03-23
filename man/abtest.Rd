@@ -4,7 +4,7 @@
 \alias{abtest}
 \title{A/B testing}
 \usage{
-abtest(data, expr, n, target, sign_level = 0.05)
+abtest(data, expr, n, target, sign_level = 0.05, color = "grey")
 }
 \arguments{
 \item{data}{A dataset. If no data is provided, a shiny app is launched}
@@ -16,6 +16,8 @@ abtest(data, expr, n, target, sign_level = 0.05)
 \item{target}{Target variable}
 
 \item{sign_level}{Significance Level (typical 0.01/0.05/0.10)}
+
+\item{color}{Fill color of bar/violin-plot}
 }
 \value{
 Plot that shows if difference is significant

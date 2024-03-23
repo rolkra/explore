@@ -4,7 +4,7 @@
 \alias{explore_all}
 \title{Explore all variables}
 \usage{
-explore_all(data, n, target, ncol = 2, targetpct, split = TRUE)
+explore_all(data, n, target, ncol = 2, targetpct, color = "grey", split = TRUE)
 }
 \arguments{
 \item{data}{A dataset}
@@ -16,6 +16,8 @@ explore_all(data, n, target, ncol = 2, targetpct, split = TRUE)
 \item{ncol}{Layout of plots (number of columns)}
 
 \item{targetpct}{Plot variable as target\% (FALSE/TRUE)}
+
+\item{color}{Forece a default color (if possible)}
 
 \item{split}{Split by target (TRUE|FALSE)}
 }

@@ -11,7 +11,8 @@ abtest_targetpct(
   target,
   sign_level = 0.05,
   group_label,
-  ab_label = FALSE
+  ab_label = FALSE,
+  color = "grey"
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ abtest_targetpct(
 \item{group_label}{Label of groups (default = expr)}
 
 \item{ab_label}{Label Groups as A and B (default = FALSE)}
+
+\item{color}{color of bar}
 }
 \value{
 Plot that shows if difference is significant

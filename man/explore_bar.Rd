@@ -13,6 +13,7 @@ explore_bar(
   numeric = NA,
   max_cat = 30,
   max_target_cat = 5,
+  color = "lightgrey",
   legend_position = "right",
   label,
   label_size = 2.7,
@@ -35,6 +36,8 @@ explore_bar(
 \item{max_cat}{Maximum number of categories to be plotted}
 
 \item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
+
+\item{color}{Color for bar}
 
 \item{legend_position}{Position of the legend ("bottom"|"top"|"none")}
 

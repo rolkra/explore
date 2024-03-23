@@ -770,6 +770,29 @@ create_data_esoteric = function(obs = 1000, add_id = FALSE, seed = 123) {
 
 } # create_data_esoteric
 
+#' Create data of A/B testing
+#'
+#' Data that can be used for unit-testing or teaching
+#'
+#' @param n_a Total size of group A
+#' @param n_b Total size of group B
+#' @param success_a Success in group A
+#' @param success_b Success in group B
+#' @param success_unit Unit ("count"|"percent")
+#' @param count Create as count-data (FALSE|TRUE)
+#' @return A dataset as tibble
+#' @examples
+#' library(dplyr)
+#' create_data_abtest() %>% abtest()
+#' create_data_abtest(
+#'   n_a = 100,
+#'   n_b = 100,
+#'   success_a = 20,
+#'   success_b = 30,
+#'   success_unit = "count"
+#' ) %>% abtest()
+#' @export
+
 create_data_abtest <- function(n_a = 100, n_b = 100,
                                success_a = 10, success_b = 5,
                                success_unit = "count", count = TRUE)  {

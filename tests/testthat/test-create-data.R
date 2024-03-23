@@ -299,3 +299,34 @@ test_that("create_data_esoteric()", {
     ncol(create_data_esoteric(obs = 100, add_id = FALSE)) + 1
   )
 })
+
+# create_data_abtest ----------------------------------------------------
+
+# create dataset
+test_that("create_data_abtest()", {
+  expect_true(
+    is.data.frame(create_data_abtest())
+  )
+})
+
+# create dataset with variables
+test_that("create_data_abtest()", {
+  expect_true(
+    all(c("group", "success") %in% (names(create_data_abtest())))
+  )
+})
+
+# parameter count adds an extra variable
+test_that("create_data_abtest()", {
+  expect_equal(
+    ncol(create_data_abtest(count = FALSE)) + 1,
+    ncol(create_data_abtest(count = TRUE))
+  )
+})
+
+# create dataset with variables
+test_that("create_data_abtest()", {
+  expect_true(
+    all(c("group", "success", "n") %in% (names(create_data_abtest(count = TRUE))))
+  )
+})
