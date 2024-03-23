@@ -148,31 +148,31 @@ iris %>% explore(Sepal.Length, target = Petal.Length)
 
 ### Explore multiple variables
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width) %>% 
   explore_all()
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, is_versicolor) %>% 
   explore_all(target = is_versicolor, split = FALSE)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, Species) %>% 
   explore_all(target = Species)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=2.5}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=2.5}
 iris %>% 
   select(Sepal.Length, Sepal.Width, Petal.Length) %>% 
   explore_all(target = Petal.Length)
@@ -184,14 +184,14 @@ data(iris)
 
 To use a high number of variables with `explore_all()` in a RMarkdown-File, it is necessary to set a meaningful fig.width and fig.height in the junk. The function `total_fig_height()` helps to automatically set fig.height: ```fig.height=total_fig_height(iris)```
 
-```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, size=2.5)}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris, size=2.5)}
 iris %>% 
   explore_all()
 ```
 
 If you use a target: ```fig.height=total_fig_height(iris, var_name_target = "Species")```
 
-```{r message=FALSE, warning=FALSE, fig.width=7, fig.height=total_fig_height(iris, var_name_target = "Species", size=2.5)}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(iris, var_name_target = "Species", size=2.5)}
 iris %>% explore_all(target = Species)
 ```
 

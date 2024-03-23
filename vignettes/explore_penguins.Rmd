@@ -61,7 +61,7 @@ We reduced the penguins from 344 to 342.
 
 ### Explore variables
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(data, size = 2.5)}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(data, size = 2.5)}
 data %>% 
   explore_all()
 ```
@@ -70,7 +70,7 @@ data %>%
 
 What is the relationship between all the variables and species?
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(data, var_name_target = "species", size = 2.2)}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(data, var_name_target = "species", size = 2.2)}
 data %>% 
   explore_all(target = species)
 ```

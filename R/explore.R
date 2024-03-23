@@ -1862,7 +1862,16 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
   if (!is.na(title) & nchar(title) > 0)  {
     p <- p + ggtitle(title)
   } else if (missing(target)) {
-    p <- p + ggtitle(paste0(cat_txt, ", NA = ", na_cnt, " (",round(na_pct,1), "%)"))
+
+    na_txt <- ifelse(na_cnt == 0,
+                     paste0("na = ", na_cnt),
+                     paste0("na = ", na_cnt, " (", round(na_pct,1), "%)")
+    )
+
+    p <- p + labs(title = cat_txt, subtitle = paste0(
+      na_txt, ", unique = ", length(unique(data[[cat_txt]])))) +
+      theme(plot.subtitle = element_text(size = 9, color = "#707070"))
+
   } else {
     p <- p + ggtitle(cat_txt)
   }

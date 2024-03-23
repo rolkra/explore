@@ -73,7 +73,7 @@ Most of the cars in the dataset have 3 or 4 gears. 15.6% have 5 gears.
 
 Now check relation between some of the variables and gear:
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
 mtcars %>% 
   select(gear, mpg, hp, cyl, am) %>% 
   explore_all(target = gear)
@@ -99,19 +99,19 @@ data %>% explore(highmpg)
 So, about 19% of all cars have mpg > 25.
 What else is special about them?
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
 data %>% 
   select(highmpg, cyl, disp, hp) %>% 
   explore_all(target = highmpg)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
 data %>% 
   select(highmpg, drat, wt, qsec, vs) %>% 
   explore_all(target = highmpg)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
 data %>% 
   select(highmpg, am, gear, carb) %>% 
   explore_all(target = highmpg)
@@ -178,7 +178,7 @@ You see that the split for mpg is done at exactly 21.45
 
 Now let's take a look at the direct correlation the variables used in the tree and hp:
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
 mtcars %>% 
   select(hp, cyl, mpg) %>% 
   explore_all(target = hp)
