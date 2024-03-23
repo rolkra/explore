@@ -278,6 +278,7 @@ use_data_beer() %>% describe()
 
 Use one of the prepared datasets to explore:
 
+* `create_data_abtest()`
 * `create_data_app()`
 * `create_data_buy()`
 * `create_data_churn()`

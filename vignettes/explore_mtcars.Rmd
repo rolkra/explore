@@ -55,7 +55,7 @@ carb     | Number of carburetors
 
 ### Explore variables
 
-```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=total_fig_height(mtcars, size = 2.5)}
+```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(mtcars, size = 2.5)}
 mtcars %>% 
   explore_all()
 ```

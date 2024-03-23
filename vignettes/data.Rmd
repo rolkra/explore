@@ -104,6 +104,13 @@ glimpse(data)
 
 Artificial data that can be used for unit-testing or teaching.
 
+### A/B testing
+
+```{r message=FALSE, warning=FALSE}
+data <- create_data_abtest()
+glimpse(data)
+```
+
 ### App
 
 ```{r message=FALSE, warning=FALSE}
