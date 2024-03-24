@@ -271,7 +271,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @return Plot object (bar chart)
 #' @export
 
-explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = "lightgrey", legend_position = "right", label, label_size = 2.7, ...)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#7888A8"), legend_position = "right", label, label_size = 2.7, ...)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -360,7 +360,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
       data[[target_txt]] <- forcats::fct_lump_n(data[[target_txt]], n = max_target_cat, other_level = ".OTHER")
     }
     # recalculate number of levels in target
-    n_target_cat <- length(levels(data[[target_txt]]))
+    n_target_cat <- length(unique(data[[target_txt]]))
 
   }
 
@@ -418,8 +418,8 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     p <- ggplot(data_bar, aes(x = !!var_quo)) +
       geom_col(aes(y = pct),
                position = "dodge",
-               fill = color,
-               color = color) +
+               fill = color[1],
+               color = color[1]) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),
@@ -430,8 +430,9 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   }
 
   # color manual
-  if (n_target_cat == 2)  {
-    p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
+  if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
+    ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
+    p <- p + scale_fill_manual(values = color)
   }
 
   # plot labels?
@@ -528,7 +529,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = "grey", auto_scale = TRUE, max_target_cat = 5, ...)   {
+explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("lightgrey", "#7888A8"), auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -607,7 +608,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
     # plot denisity var, no target
     p <- data %>%
       ggplot(aes(!!var_quo)) +
-      geom_density(fill = color, alpha = 0.7) +
+      geom_density(fill = color[1], alpha = 0.7) +
       #ggtitle(paste0(var_txt, ", NA = ", na_cnt, " (",round(na_pct*100,1), "%)")) +
       labs(x = "", y = "") +
       theme(
@@ -651,8 +652,8 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 
 
     # target with 2 levels
-    if (n_target_cat == 2)  {
-       p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"), name = target_txt)
+    if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
+       p <- p + scale_fill_manual(values = color, name = target_txt)
     }
 
   } # if
@@ -788,11 +789,11 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = "grey", sp
 
     # no target, num
     } else if ( (var_type == "num") & (is.na(var_name_target))) {
-      plots[[i]] <- explore_density(data_tmp, !!sym(var_name), color = color)
+      plots[[i]] <- explore_density(data_tmp, !!sym(var_name), color = color[1])
 
       # no target, cat
     } else if ( (var_type == "cat") & is.na(var_name_target) ) {
-      plots[[i]] <- explore_bar(data_tmp, !!sym(var_name), color = color)
+      plots[[i]] <- explore_bar(data_tmp, !!sym(var_name), color = color[1])
 
       # num target, num -> explore_cor
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {

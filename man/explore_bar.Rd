@@ -13,7 +13,7 @@ explore_bar(
   numeric = NA,
   max_cat = 30,
   max_target_cat = 5,
-  color = "lightgrey",
+  color = c("lightgrey", "#7888A8"),
   legend_position = "right",
   label,
   label_size = 2.7,

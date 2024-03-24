@@ -1,5 +1,5 @@
 ---
-title: "Explore Titanic"
+title: "Explore titanic"
 author: "Roland Krasser"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
