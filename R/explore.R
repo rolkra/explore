@@ -702,7 +702,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, n, target, ncol = 2, targetpct, color = "grey", split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgrey", "#7888A8"), split = TRUE)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -797,11 +797,11 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = "grey", sp
 
       # num target, num -> explore_cor
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
-      plots[[i]] <- explore_cor(data_tmp, x = !!sym(var_name), y = !!target_quo, title = var_name)
+      plots[[i]] <- explore_cor(data_tmp, x = !!sym(var_name), y = !!target_quo, title = var_name, color = color)
 
       # num target, cat -> explore_cor
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (guess_target == "num"))  {
-      plots[[i]] <- explore_cor(data_tmp, y = !!sym(var_name), x = !!target_quo, title = var_name)
+      plots[[i]] <- explore_cor(data_tmp, y = !!sym(var_name), x = !!target_quo, title = var_name, color = color)
 
       # target, num
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE))  {
@@ -809,7 +809,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = "grey", sp
 
       # target, num, split
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE))  {
-      plots[[i]] <- explore_density(data_tmp, !!sym(var_name), target = !!target_quo)
+      plots[[i]] <- explore_density(data_tmp, !!sym(var_name), target = !!target_quo, color = color)
 
       # target, cat
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE)) {
@@ -817,7 +817,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = "grey", sp
 
       # target, cat, split
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE)) {
-      plots[[i]] <- explore_bar(data_tmp, !!sym(var_name), target = !!target_quo)
+      plots[[i]] <- explore_bar(data_tmp, !!sym(var_name), target = !!target_quo, color = color)
 
     } else {
       plots[[i]] <- plot_var_info(data_tmp, !!var_name, info = "can't explore\n(data type not supported)")
@@ -942,7 +942,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
       p <- data %>%
         ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-        geom_point(alpha = 0.45, size = 2.5, color = color) +
+        geom_point(alpha = 0.45, size = 2.5, color = color[1]) +
         theme(
           panel.background = element_rect("white"),
           panel.grid.major = element_line("grey85"),
@@ -958,7 +958,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     p <- data %>%
       # cut only when more then 1 different value in data
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-      geom_boxplot(aes(group = cut(!!x_quo, bins)), fill = color) +
+      geom_boxplot(aes(group = cut(!!x_quo, bins)), fill = color[1]) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),
@@ -974,7 +974,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     # boxplot (x = cat)
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-      geom_boxplot(aes(group = !!x_quo), fill = color) +
+      geom_boxplot(aes(group = !!x_quo), fill = color[1]) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),
@@ -990,7 +990,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     # boxplot (x = cat)
     p <- data %>%
       ggplot(aes(x = !!y_quo, y = !!x_quo)) +
-      geom_boxplot(aes(group = !!y_quo), fill = color) +
+      geom_boxplot(aes(group = !!y_quo), fill = color[1]) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),

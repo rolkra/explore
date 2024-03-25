@@ -4,7 +4,15 @@
 \alias{explore_all}
 \title{Explore all variables}
 \usage{
-explore_all(data, n, target, ncol = 2, targetpct, color = "grey", split = TRUE)
+explore_all(
+  data,
+  n,
+  target,
+  ncol = 2,
+  targetpct,
+  color = c("lightgrey", "#7888A8"),
+  split = TRUE
+)
 }
 \arguments{
 \item{data}{A dataset}
