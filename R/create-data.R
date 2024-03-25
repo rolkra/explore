@@ -796,22 +796,27 @@ create_data_esoteric = function(obs = 1000, add_id = FALSE, seed = 123) {
 create_data_abtest <- function(n_a = 100, n_b = 100,
                                success_a = 10, success_b = 5,
                                success_unit = "count", count = TRUE)  {
+  ## Define variables to pass CRAN check
+  random_int <- NULL
 
+  # check unit
   if (success_unit == "percent") {
     success_a <- round(n_a * success_a/10, 0)
     success_b <- round(n_b * success_b/10, 0)
   }
 
+  # create count data
   data <- data.frame(
     group = c('A', 'A', 'B', 'B'),
     n = c(n_a - success_a, success_a, n_b - success_b, success_b),
     success = c(0, 1, 0, 1)
   )
 
+  # uncount if necessary
   if (count) {
     data
   } else {
-    data <- explore:::uncount_compat(data, n) %>% add_var_random_int()
+    data <- uncount_compat(data, n) %>% add_var_random_int()
     data %>% arrange(random_int) %>% select(-random_int)
   }
 

@@ -21,6 +21,11 @@
 
 abtest <- function(data, expr, n, target, sign_level = 0.05, color = "grey") {
 
+  ## define variables to pass CRAN tests
+  group <- NULL
+  nn <- NULL
+  success <- NULL
+
   # if not data is provided, start shiny app
   if (missing(data)) {
     abtest_shiny()

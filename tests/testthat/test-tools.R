@@ -40,7 +40,7 @@ test_that("mix_color()", {
 # mix 1 color and get 3
 test_that("mix_color()", {
   expect_equal(mix_color("blue", n = 3),
-               c("#00007F", "#0000FF", "#7F7FFF")
+               c("#7F7FFF", "#0000FF", "#00007F")
   )
 })
 
