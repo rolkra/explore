@@ -14,6 +14,7 @@ target_explore_num(
   title = NA,
   auto_scale = TRUE,
   na = NA,
+  color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
   legend_position = "bottom"
 )
 }
@@ -35,6 +36,8 @@ target_explore_num(
 \item{auto_scale}{Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)}
 
 \item{na}{Value to replace NA}
+
+\item{color}{Color vector (4 colors)}
 
 \item{legend_position}{Position of legend ("right"|"bottom"|"non")}
 }

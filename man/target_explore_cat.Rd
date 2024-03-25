@@ -16,6 +16,7 @@ target_explore_cat(
   auto_scale = TRUE,
   na = NA,
   max_cat = 30,
+  color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
   legend_position = "bottom"
 )
 }
@@ -41,6 +42,8 @@ target_explore_cat(
 \item{na}{Value to replace NA}
 
 \item{max_cat}{Maximum numbers of categories to be plotted}
+
+\item{color}{Color vector (4 colors)}
 
 \item{legend_position}{Position of legend ("right"|"bottom"|"non")}
 }

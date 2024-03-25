@@ -946,7 +946,7 @@ show_color <- function(color) {
 mix_color <- function(color1, color2 = NA, n = 5) {
 
   if (is.na(color2)) {
-    colors <- grDevices::colorRampPalette(c("black", color1, "white"))(n + 2)
+    colors <- grDevices::colorRampPalette(c("white", color1, "black"))(n + 2)
     colors <- colors[-1]  # drop first color (black)
     colors <- colors[-length(colors)]  # drop last color (white)
   } else {

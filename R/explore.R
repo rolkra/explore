@@ -13,10 +13,11 @@
 #' @param auto_scale Not used, just for compatibility
 #' @param na Value to replace NA
 #' @param max_cat Maximum numbers of categories to be plotted
+#' @param color Color vector (4 colors)
 #' @param legend_position Position of legend ("right"|"bottom"|"non")
 #' @return Plot object
 
-target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, legend_position = "bottom") {
+target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
 
   rlang::check_required(data)
   # definitions for CRAN package check
@@ -40,6 +41,10 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
     target_txt <- quo_name(target_quo)[[1]]
   } else {
     target_txt = NA
+  }
+
+  if (length(color) < 4) {
+    color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE")
   }
 
   # rename variables, to use it (lazy evaluation)
@@ -85,7 +90,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
   }
 
   # define colors
-  bar_col <- c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE")
+  bar_col <- color
   names(bar_col) <- c("00-05%", "06-20%", "21-40%", "41+%")
 
 
@@ -116,7 +121,6 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
   # flip plot?
   if(flip)  {
-
       plot_bar <- plot_bar +
         geom_text(aes(x=cat, y=target_pct,
                       label = round(target_pct,1),
@@ -160,10 +164,11 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 #' @param title Title of plot
 #' @param auto_scale Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
 #' @param na Value to replace NA
+#' @param color Color vector (4 colors)
 #' @param legend_position Position of legend ("right"|"bottom"|"non")
 #' @return Plot object
 
-target_explore_num <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, legend_position = "bottom") {
+target_explore_num <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
 
   # definitions for CRAN package check
   num <- NULL
@@ -240,6 +245,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
                                target,
                                flip = FALSE,
                                num2char = FALSE,
+                               color = color,
                                legend_position = legend_position,
                                title = ifelse(is.na(title),
                                               paste0(var_txt),
@@ -271,7 +277,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @return Plot object (bar chart)
 #' @export
 
-explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#7888A8"), legend_position = "right", label, label_size = 2.7, ...)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#939FB9"), legend_position = "right", label, label_size = 2.7, ...)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -529,7 +535,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("lightgrey", "#7888A8"), auto_scale = TRUE, max_target_cat = 5, ...)   {
+explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("lightgrey", "#939FB9"), auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -702,7 +708,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgrey", "#7888A8"), split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgrey", "#939FB9"), split = TRUE)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -805,7 +811,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgr
 
       # target, num
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE))  {
-      plots[[i]] <- target_explore_num(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none")
+      plots[[i]] <- target_explore_num(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none", color = color)
 
       # target, num, split
     } else if ( (var_type == "num") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE))  {
@@ -813,7 +819,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgr
 
       # target, cat
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == FALSE)) {
-      plots[[i]] <- target_explore_cat(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none")
+      plots[[i]] <- target_explore_cat(data_tmp, !!sym(var_name), target = !!target_quo, legend_position = "none", color = color)
 
       # target, cat, split
     } else if ( (var_type == "cat") & !is.na(var_name_target) & (var_names[i] != var_name_target) & (split == TRUE)) {
@@ -1512,10 +1518,11 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
 
     # target, num
   } else if (!is.na(target_text) & (var_type == "num")) {
-    target_explore_num(data[unique(c(var_text, target_text))],
-                       !!var_quo, target = !!target_quo,
-                       min_val = min_val, max_val = max_val,
-                       auto_scale = auto_scale, na = na, ...)
+
+      target_explore_num(data[unique(c(var_text, target_text))],
+                         !!var_quo, target = !!target_quo,
+                         min_val = min_val, max_val = max_val,
+                         auto_scale = auto_scale, na = na, ...)
 
     # target, cat, split
   } else if (!is.na(target_text) && (var_type == "cat") && (split == TRUE)) {

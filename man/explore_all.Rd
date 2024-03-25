@@ -10,7 +10,7 @@ explore_all(
   target,
   ncol = 2,
   targetpct,
-  color = c("lightgrey", "#7888A8"),
+  color = c("lightgrey", "#939FB9"),
   split = TRUE
 )
 }

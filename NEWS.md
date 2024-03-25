@@ -10,6 +10,10 @@
 * move NA-info in `explore()` from title to subtitle.
 * add more descriptive infos into `explore()`subtitle. 
 
+## Breaking changes
+
+* `mix_color()` with one color as parameter generates colors from light to dark 
+
 ## Bug fixes / internal
 
 * fix undefined / not meaningful values in abtest() shiny-app
