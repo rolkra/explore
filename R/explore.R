@@ -787,11 +787,11 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgr
 
     # count data, no target
     if (!is.na(n_txt) & (is.na(var_name_target)))  {
-      plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, pct = TRUE)
+      plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, pct = TRUE, color = color[1])
 
     # count data, target
     } else if (!is.na(n_txt) & (!is.na(var_name_target)))  {
-        plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, target = !!target_quo, split = split)
+        plots[[i]] <- explore_count(data_tmp, !!sym(var_name), n = !!n_quo, target = !!target_quo, split = split, color = color)
 
     # no target, num
     } else if ( (var_type == "num") & (is.na(var_name_target))) {
@@ -1659,6 +1659,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NA, min_val = NA
 #' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted
 #' @param max_target_cat Maximum number of categories to be plotted for target (except NA)
+#' @param color Color for bar
 #' @param flip Flip plot? (for categorical variables)
 #' @return Plot object
 #' @examples
@@ -1668,7 +1669,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NA, min_val = NA
 #'   explore_count(Species)
 #' @export
 
-explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, flip = NA)  {
+explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#939FB9"), flip = NA)  {
 
   # define variables for CRAN-package check
   plot_cat <- NULL
@@ -1778,7 +1779,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
       data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
     }
     # recalculate number of levels in target
-    n_target_cat <- length(levels(data[[target_txt]]))
+    n_target_cat <- length(unique(data[[target_txt]]))
 
   }
 
@@ -1801,7 +1802,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     if(pct == FALSE)  {
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_sum)) +
-        geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
+        geom_col(position = "dodge", color = color[1], fill = color[1]) +
         theme(
           panel.background = element_rect("white"),
           panel.grid.major = element_line("grey85"),
@@ -1811,7 +1812,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     } else {
       p <- data_plot %>%
         ggplot(aes(x = plot_cat, y = plot_n_pct)) +
-        geom_col(position = "dodge", color = "lightgrey", fill = "lightgrey") +
+        geom_col(position = "dodge", color = color[1], fill = color[1]) +
         theme(
           panel.background = element_rect("white"),
           panel.grid.major = element_line("grey85"),
@@ -1858,6 +1859,13 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
           panel.border = element_rect(fill = NA, color = "lightgrey")) +
         labs(y = "count", x = "", fill = target_txt)
     }
+
+    # color manual
+    if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
+      ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
+      p <- p + scale_fill_manual(values = color)
+    }
+
   } # if target
 
 

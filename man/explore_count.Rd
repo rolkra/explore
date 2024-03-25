@@ -15,6 +15,7 @@ explore_count(
   numeric = FALSE,
   max_cat = 30,
   max_target_cat = 5,
+  color = c("lightgrey", "#939FB9"),
   flip = NA
 )
 }
@@ -38,6 +39,8 @@ explore_count(
 \item{max_cat}{Maximum number of categories to be plotted}
 
 \item{max_target_cat}{Maximum number of categories to be plotted for target (except NA)}
+
+\item{color}{Color for bar}
 
 \item{flip}{Flip plot? (for categorical variables)}
 }
