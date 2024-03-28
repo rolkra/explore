@@ -195,20 +195,32 @@ data_dict.md)</p>
 <div class="section level2">
 <h2 id="color">Color<a class="anchor" aria-label="anchor" href="#color"></a>
 </h2>
+<p>You can make your explore-plot more colorful</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">flipper_length_mm</span>, color <span class="op">=</span> <span class="st">"lightskyblue"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="tips-tricks_files/figure-html/unnamed-chunk-9-1.png" width="576"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/drop_obs_with_na.html">drop_obs_with_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">flipper_length_mm</span>, <span class="va">bill_length_mm</span>, </span>
+<span>          target <span class="op">=</span> <span class="va">sex</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"deeppink"</span>, <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="tips-tricks_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p>You can even mix your own colors</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mix_color.html">mix_color</a></span><span class="op">(</span><span class="st">"blue"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">colors</span></span>
 <span><span class="co">#&gt; [1] "#AAAAFF" "#5555FF" "#0000FF" "#0000AA" "#000055"</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tips-tricks_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mix_color.html">mix_color</a></span><span class="op">(</span><span class="st">"gold"</span>, <span class="st">"red"</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">colors</span></span>
-<span><span class="co">#&gt; [1] "#FFD700" "#FF8F00" "#FF4700" "#FF0000"</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tips-tricks_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mix_color.html">mix_color</a></span><span class="op">(</span><span class="st">"gold"</span>, <span class="st">"red"</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">colors</span></span>
+<span><span class="co">#&gt; [1] "#FFD700" "#FF8F00" "#FF4700" "#FF0000"</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
+<p><img src="tips-tricks_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
