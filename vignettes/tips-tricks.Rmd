@@ -115,3 +115,13 @@ colors
 show_color(colors)
 ```
 
+Or use some of the predefined colors in {explore}
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+get_color()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+colors <- get_color("google")
+show_color(colors)
+```
