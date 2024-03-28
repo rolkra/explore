@@ -956,3 +956,36 @@ mix_color <- function(color1, color2 = NA, n = 5) {
   # return colors as vector
   colors
 } # mix_color
+
+#' get_color
+#'
+#' @param name Name of color/color-vector
+#' @return Vector of color-codes
+#' @export
+#' @examples
+#' get_color("ferrari")
+
+get_color <- function(name) {
+
+  color <- NULL
+
+  color$a1 <- c("red" = "#d32c1c", "blue" = "#5dbcd2", "greylight" = "#a3a9b0", "greydark" = "#868e96", "black" = "#000000")
+  color$amazon <- c("orange" = "#ff9900", "blue" = "#146eb4")
+  color$android <- c("green" = "#a4c639")
+  color$ferrari <- c("red" = "#e32119")
+  color$google <- c("blue" = "#4285f4", "green" = "#34a853", "yellow"= "#fbbc05", "red" = "#ea4335")
+  color$ikea <- c("yellow" = "#ffcc00", "blue" = "#003399")
+  color$nfl <- c("blue" = "#013369", "red" = "#d50a0a")
+  color$python <- c("yellow" = "#ffde57", "blue" = "#4584b6", "grey" = "#646464")
+  color$r <- c("blue" = "#2065b8")
+  color$slack <- c("blue" = "#36c5f0", "red" = "#e01e5a", "yellow" = "#ecb22e", "green" = "#2eb67d", "violet"= "#4a154b")
+
+
+  if (missing(name)) {
+    return(color)
+  }
+
+  name <- tolower(name)
+  color[[name]]
+
+} #get_color
