@@ -81,6 +81,22 @@ data_dict_md(iris,
 
 ## Color
 
+You can make your explore-plot more colorful
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data <- use_data_penguins()
+data |> explore(flipper_length_mm, color = "lightskyblue")
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=4}
+data |>
+  drop_obs_with_na() |> 
+  explore(flipper_length_mm, bill_length_mm, 
+          target = sex, color = c("deeppink", "blue"))
+```
+
+You can even mix your own colors
+
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 colors <- mix_color("blue", n = 5)
 colors
