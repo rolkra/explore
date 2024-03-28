@@ -49,11 +49,12 @@ reference:
     - encrypt
     - get_type
     - guess_cat_num
-    - mix_color
     - plot_text
     - replace_na_with
     - rescale01
     - simplify_text
+    - get_color
+    - mix_color
     - show_color
     - starts_with("format_")
     - starts_with("target_explore")
