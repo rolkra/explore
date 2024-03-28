@@ -944,6 +944,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
         panel.grid.minor = element_line("grey85"),
         panel.border = element_rect(fill = NA, color = "lightgrey"))
 
+    if (length(color) >= nrow(unique(data[target_txt])))  {
+      ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
+      p <- p + scale_color_manual(values = color)
+    }
+
+
     } else {
 
       p <- data %>%
@@ -1270,9 +1276,12 @@ explore_shiny <- function(data, target)  {
 
     output$graph_target <- plotly::renderPlotly({
       if (input$target != "<no target>" & input$var != input$target)  {
+
+        suppressWarnings({
         data %>% explore(!!sym(input$var), target = !!sym(input$target),
                          auto_scale = input$auto_scale, split = !input$targetpct,
                          max_cat = 20, label = FALSE)
+        })
       }
     }) # renderPlot graph_target
 
@@ -1293,8 +1302,11 @@ explore_shiny <- function(data, target)  {
     }) # renderPlot graph_explain
 
     output$graph <- plotly::renderPlotly({
+
+      suppressWarnings({
       data %>% explore(!!sym(input$var), auto_scale = input$auto_scale,
                        max_cat = 20, label = FALSE)
+      })
     }) # renderPlot graph
 
     output$text <- shiny::renderPrint({
