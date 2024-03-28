@@ -221,6 +221,52 @@ data_dict.md)</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tips-tricks_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>Or use some of the predefined colors in {explore}</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_color.html">get_color</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $a1</span></span>
+<span><span class="co">#&gt;       red      blue greylight  greydark     black </span></span>
+<span><span class="co">#&gt; "#d32c1c" "#5dbcd2" "#a3a9b0" "#868e96" "#000000" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $amazon</span></span>
+<span><span class="co">#&gt;    orange      blue </span></span>
+<span><span class="co">#&gt; "#ff9900" "#146eb4" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $android</span></span>
+<span><span class="co">#&gt;     green </span></span>
+<span><span class="co">#&gt; "#a4c639" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ferrari</span></span>
+<span><span class="co">#&gt;       red </span></span>
+<span><span class="co">#&gt; "#e32119" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $google</span></span>
+<span><span class="co">#&gt;      blue     green    yellow       red </span></span>
+<span><span class="co">#&gt; "#4285f4" "#34a853" "#fbbc05" "#ea4335" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ikea</span></span>
+<span><span class="co">#&gt;    yellow      blue </span></span>
+<span><span class="co">#&gt; "#ffcc00" "#003399" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $nfl</span></span>
+<span><span class="co">#&gt;      blue       red </span></span>
+<span><span class="co">#&gt; "#013369" "#d50a0a" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $python</span></span>
+<span><span class="co">#&gt;    yellow      blue      grey </span></span>
+<span><span class="co">#&gt; "#ffde57" "#4584b6" "#646464" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $r</span></span>
+<span><span class="co">#&gt;      blue </span></span>
+<span><span class="co">#&gt; "#2065b8" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $slack</span></span>
+<span><span class="co">#&gt;      blue       red    yellow     green    violet </span></span>
+<span><span class="co">#&gt; "#36c5f0" "#e01e5a" "#ecb22e" "#2eb67d" "#4a154b"</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_color.html">get_color</a></span><span class="op">(</span><span class="st">"google"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
+<p><img src="tips-tricks_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
