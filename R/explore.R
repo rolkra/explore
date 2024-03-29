@@ -357,8 +357,10 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   } # if
 
   # use a factor for target so that fill works
-  if (n_target_cat > 1 && !is.factor(data[[target_txt]]))  {
-    data[[target_txt]] <- factor(data[[target_txt]])
+  if (n_target_cat > 1) {
+    if (!is.factor(data[[target_txt]]))  {
+      data[[target_txt]] <- factor(data[[target_txt]])
+    }
     data[[target_txt]] <- forcats::fct_na_value_to_level(data[[target_txt]], level = ".NA")
 
     # keep max. different levels
@@ -438,7 +440,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
   # color manual
   if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
     ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
-    p <- p + scale_fill_manual(values = color)
+    p <- p + scale_fill_manual(values = as.vector(color))
   }
 
   # plot labels?
@@ -634,14 +636,14 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
   } else {
 
     # factorise target
-    if (!is.factor(data[[target_txt]]))  {
-      data[[target_txt]] <- factor(data[[target_txt]])
+      if (!is.factor(data[[target_txt]]))  {
+        data[[target_txt]] <- factor(data[[target_txt]])
+      }
       data[[target_txt]] <- forcats::fct_na_value_to_level(data[[target_txt]], level = ".NA")
       # keep max. different levels
       if (n_target_cat > max_target_cat)  {
         data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
       }
-    }
 
     # create plot var + target
     p <- data %>%
@@ -659,7 +661,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 
     # target with 2 levels
     if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
-       p <- p + scale_fill_manual(values = color, name = target_txt)
+       p <- p + scale_fill_manual(values = as.vector(color), name = target_txt)
     }
 
   } # if
@@ -935,6 +937,13 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
     if (!is.na(target_txt)) {
 
+    # use a factor for target so that fill works
+    if (!is.factor(data[[target_txt]]))  {
+      data[[target_txt]] <- factor(data[[target_txt]])
+    }
+    data[[target_txt]] <- forcats::fct_na_value_to_level(data[[target_txt]], level = ".NA")
+
+
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
       geom_point(alpha = 0.45, size = 2.5) +
@@ -946,7 +955,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
     if (length(color) >= nrow(unique(data[target_txt])))  {
       ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
-      p <- p + scale_color_manual(values = color)
+      p <- p + scale_color_manual(values = as.vector(color))
     }
 
 
@@ -1875,7 +1884,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     # color manual
     if (n_target_cat >= 2 & length(color) >= n_target_cat)  {
       ##p <- p + scale_fill_manual(values = c("#CFD8DC","#90A4AE"))
-      p <- p + scale_fill_manual(values = color)
+      p <- p + scale_fill_manual(values = as.vector(color))
     }
 
   } # if target
