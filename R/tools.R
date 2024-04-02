@@ -960,32 +960,52 @@ mix_color <- function(color1, color2 = NA, n = 5) {
 #' get_color
 #'
 #' @param name Name of color/color-vector
+#' @param fill Fill color vector?
+#' @param fill_color Color to use to fill color vector
+#' @param fill_n Number of color codes to return
 #' @return Vector of color-codes
 #' @export
 #' @examples
 #' get_color("ferrari")
 
-get_color <- function(name) {
+get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
 
   color <- NULL
 
   color$a1 <- c("red" = "#d32c1c", "blue" = "#5dbcd2", "greylight" = "#a3a9b0", "greydark" = "#868e96", "black" = "#000000")
-  color$amazon <- c("orange" = "#ff9900", "blue" = "#146eb4")
-  color$android <- c("green" = "#a4c639")
-  color$ferrari <- c("red" = "#e32119")
+#  color$amazon <- c("orange" = "#ff9900", "blue" = "#146eb4")
+  color$apple <- c("green" = "#61bb46", "yellow" = "#fdb827", "orange"= "#f5821f", "red" = "#e03a3e", "violet" = "#963d97", "blue" = "#009ddc")
+#  color$android <- c("green" = "#a4c639")
+#  color$ferrari <- c("red" = "#e32119")
   color$google <- c("blue" = "#4285f4", "green" = "#34a853", "yellow"= "#fbbc05", "red" = "#ea4335")
-  color$ikea <- c("yellow" = "#ffcc00", "blue" = "#003399")
-  color$nfl <- c("blue" = "#013369", "red" = "#d50a0a")
+#  color$ikea <- c("yellow" = "#ffcc00", "blue" = "#003399")
+  color$mario <- c("mario" = "#e0102f", "luigi" = "#08a936", "peach" = "#f096be", "toad" = "#17419a", "bowser" = "#f8be10", "donkeykong" = "#742607")
+#  color$nfl <- c("blue" = "#013369", "red" = "#d50a0a")
   color$python <- c("yellow" = "#ffde57", "blue" = "#4584b6", "grey" = "#646464")
   color$r <- c("blue" = "#2065b8")
+  color$redbull <- c("yellow" = "#ffc906", "red" = "#cc1e4a", "blue" = "#223971", "bluedark" = "#121f45")
   color$slack <- c("blue" = "#36c5f0", "red" = "#e01e5a", "yellow" = "#ecb22e", "green" = "#2eb67d", "violet"= "#4a154b")
-
+  color$ubuntu <- c("orange" = "#dd4814", "greydark" = "#333333", "greylight" = "#aea79f", "violet" = "#77216f")
 
   if (missing(name)) {
     return(color)
   }
 
   name <- tolower(name)
-  color[[name]]
+  color_vctr <- color[[name]]
+
+  if (fill) {
+
+    n_colors <- length(color_vctr)
+    if (n_colors < fill_n) {
+      color_add <- rep(fill_color, fill_n - n_colors)
+      names(color_add) <- paste0("undef-", seq_along(color_add))
+    }
+
+    color_vctr <- c(color_vctr, color_add)
+
+  }
+
+  color_vctr
 
 } #get_color

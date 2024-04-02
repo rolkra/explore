@@ -4,10 +4,16 @@
 \alias{get_color}
 \title{get_color}
 \usage{
-get_color(name)
+get_color(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10)
 }
 \arguments{
 \item{name}{Name of color/color-vector}
+
+\item{fill}{Fill color vector?}
+
+\item{fill_color}{Color to use to fill color vector}
+
+\item{fill_n}{Number of color codes to return}
 }
 \value{
 Vector of color-codes

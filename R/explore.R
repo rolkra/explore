@@ -645,6 +645,9 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
         data[[target_txt]] <- forcats::fct_lump(data[[target_txt]],max_target_cat, other_level = ".OTHER")
       }
 
+      # recalculate levels of target cat
+      n_target_cat <- length(unique(data[[target_txt]]))
+
     # create plot var + target
     p <- data %>%
       ggplot(aes(!!var_quo, fill = !!target_quo)) +
