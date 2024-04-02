@@ -97,7 +97,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2024-03-29</h4>
+            <h4 data-toc-skip class="date">2024-04-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/HEAD/vignettes/tips-tricks.Rmd" class="external-link"><code>vignettes/tips-tricks.Rmd</code></a></small>
       <div class="d-none name"><code>tips-tricks.Rmd</code></div>
@@ -228,29 +228,17 @@ data_dict.md)</p>
 <span><span class="co">#&gt;       red      blue greylight  greydark     black </span></span>
 <span><span class="co">#&gt; "#d32c1c" "#5dbcd2" "#a3a9b0" "#868e96" "#000000" </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $amazon</span></span>
-<span><span class="co">#&gt;    orange      blue </span></span>
-<span><span class="co">#&gt; "#ff9900" "#146eb4" </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $android</span></span>
-<span><span class="co">#&gt;     green </span></span>
-<span><span class="co">#&gt; "#a4c639" </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $ferrari</span></span>
-<span><span class="co">#&gt;       red </span></span>
-<span><span class="co">#&gt; "#e32119" </span></span>
+<span><span class="co">#&gt; $apple</span></span>
+<span><span class="co">#&gt;     green    yellow    orange       red    violet      blue </span></span>
+<span><span class="co">#&gt; "#61bb46" "#fdb827" "#f5821f" "#e03a3e" "#963d97" "#009ddc" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $google</span></span>
 <span><span class="co">#&gt;      blue     green    yellow       red </span></span>
 <span><span class="co">#&gt; "#4285f4" "#34a853" "#fbbc05" "#ea4335" </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $ikea</span></span>
-<span><span class="co">#&gt;    yellow      blue </span></span>
-<span><span class="co">#&gt; "#ffcc00" "#003399" </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $nfl</span></span>
-<span><span class="co">#&gt;      blue       red </span></span>
-<span><span class="co">#&gt; "#013369" "#d50a0a" </span></span>
+<span><span class="co">#&gt; $mario</span></span>
+<span><span class="co">#&gt;      mario      luigi      peach       toad     bowser donkeykong </span></span>
+<span><span class="co">#&gt;  "#e0102f"  "#08a936"  "#f096be"  "#17419a"  "#f8be10"  "#742607" </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $python</span></span>
 <span><span class="co">#&gt;    yellow      blue      grey </span></span>
@@ -260,9 +248,17 @@ data_dict.md)</p>
 <span><span class="co">#&gt;      blue </span></span>
 <span><span class="co">#&gt; "#2065b8" </span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $redbull</span></span>
+<span><span class="co">#&gt;    yellow       red      blue  bluedark </span></span>
+<span><span class="co">#&gt; "#ffc906" "#cc1e4a" "#223971" "#121f45" </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $slack</span></span>
 <span><span class="co">#&gt;      blue       red    yellow     green    violet </span></span>
-<span><span class="co">#&gt; "#36c5f0" "#e01e5a" "#ecb22e" "#2eb67d" "#4a154b"</span></span></code></pre></div>
+<span><span class="co">#&gt; "#36c5f0" "#e01e5a" "#ecb22e" "#2eb67d" "#4a154b" </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ubuntu</span></span>
+<span><span class="co">#&gt;    orange  greydark greylight    violet </span></span>
+<span><span class="co">#&gt; "#dd4814" "#333333" "#aea79f" "#77216f"</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_color.html">get_color</a></span><span class="op">(</span><span class="st">"google"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
