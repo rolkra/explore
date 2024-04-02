@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{mix_color}
 \alias{mix_color}
-\title{mix_color}
+\title{Mix colors}
 \usage{
 mix_color(color1, color2 = NA, n = 5)
 }
@@ -17,7 +17,7 @@ mix_color(color1, color2 = NA, n = 5)
 Vector of color-codes
 }
 \description{
-mix_color
+Mix colors
 }
 \examples{
 mix_color("blue", n = 10)

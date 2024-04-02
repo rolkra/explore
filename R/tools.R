@@ -932,7 +932,7 @@ show_color <- function(color) {
 
 } # show_color
 
-#' mix_color
+#' Mix colors
 #'
 #' @param color1 Color 1
 #' @param color2 Color 2
@@ -957,7 +957,7 @@ mix_color <- function(color1, color2 = NA, n = 5) {
   colors
 } # mix_color
 
-#' get_color
+#' Get predefined colors
 #'
 #' @param name Name of color/color-vector
 #' @param fill Fill color vector?
@@ -966,7 +966,17 @@ mix_color <- function(color1, color2 = NA, n = 5) {
 #' @return Vector of color-codes
 #' @export
 #' @examples
-#' get_color("ferrari")
+#' get_color("mario")
+#'
+#' get_color("mario")
+#' show_color(get_color("mario"))
+#' show_color(get_color("mario", fill = TRUE, fill_n = 10))
+#'
+#' col <- get_color("mario")
+#' explore(iris, Sepal.Length, target = Species,
+#'   color = col)
+#' explore(iris, Sepal.Length, target = Species,
+#'   color = c(col["peach"], col["bowser"], col["donkeykong"]))
 
 get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
 

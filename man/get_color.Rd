@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{get_color}
 \alias{get_color}
-\title{get_color}
+\title{Get predefined colors}
 \usage{
 get_color(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10)
 }
@@ -19,8 +19,18 @@ get_color(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10)
 Vector of color-codes
 }
 \description{
-get_color
+Get predefined colors
 }
 \examples{
-get_color("ferrari")
+get_color("mario")
+
+get_color("mario")
+show_color(get_color("mario"))
+show_color(get_color("mario", fill = TRUE, fill_n = 10))
+
+col <- get_color("mario")
+explore(iris, Sepal.Length, target = Species,
+  color = col)
+explore(iris, Sepal.Length, target = Species,
+  color = c(col["peach"], col["bowser"], col["donkeykong"]))
 }
