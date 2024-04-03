@@ -10,6 +10,7 @@
 * add `get_color()`
 * move NA-info in `explore()` from title to subtitle.
 * add more descriptive infos into `explore()`subtitle. 
+* add color parameter for `explore()`, `explore_*()`, `report()`
 
 ## Breaking changes
 

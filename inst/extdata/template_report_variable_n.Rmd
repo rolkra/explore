@@ -39,6 +39,6 @@ fig_height <- data[buckets[[1]]] %>%
 ```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
 for (i in seq_along(buckets)) {
   data[buckets[[i]]] %>% 
-    explore_all(ncol = 2, n = !!sym(var_name_n))
+    explore_all(ncol = 2, n = !!sym(var_name_n), color = color_report_plot)
 }
 ```

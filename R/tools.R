@@ -982,7 +982,7 @@ get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
 
   color <- NULL
 
-  color$a1 <- c("red" = "#d32c1c", "blue" = "#5dbcd2", "greylight" = "#a3a9b0", "greydark" = "#868e96", "black" = "#000000")
+  color$a1 <- c("greylight" = "#a3a9b0", "red" = "#d32c1c", "blue" = "#5dbcd2",  "black" = "#000000", "greydark" = "#868e96")
 #  color$amazon <- c("orange" = "#ff9900", "blue" = "#146eb4")
   color$apple <- c("green" = "#61bb46", "yellow" = "#fdb827", "orange"= "#f5821f", "red" = "#e03a3e", "violet" = "#963d97", "blue" = "#009ddc")
 #  color$android <- c("green" = "#a4c639")

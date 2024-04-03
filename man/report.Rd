@@ -4,7 +4,7 @@
 \alias{report}
 \title{Generate a report of all variables}
 \usage{
-report(data, n, target, targetpct, split, output_file, output_dir)
+report(data, n, target, targetpct, split, color, output_file, output_dir)
 }
 \arguments{
 \item{data}{A dataset}
@@ -16,6 +16,8 @@ report(data, n, target, targetpct, split, output_file, output_dir)
 \item{targetpct}{Plot variable as target\% (\code{FALSE}/\code{TRUE})}
 
 \item{split}{Alternative to targetpct (split = !targetpct)}
+
+\item{color}{User defined colors for plots (vector)}
 
 \item{output_file}{Filename of the html report}
 

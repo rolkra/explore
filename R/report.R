@@ -8,6 +8,7 @@
 #' @param target Target variable (0/1 or `FALSE`/`TRUE`)
 #' @param targetpct Plot variable as target% (`FALSE`/`TRUE`)
 #' @param split Alternative to targetpct (split = !targetpct)
+#' @param color User defined colors for plots (vector)
 #' @param output_file Filename of the html report
 #' @param output_dir Directory where to save the html report
 #' @examples
@@ -16,7 +17,7 @@
 #'  }
 #' @export
 
-report <- function(data, n, target, targetpct, split, output_file, output_dir)  {
+report <- function(data, n, target, targetpct, split, color, output_file, output_dir)  {
 
   check_data_frame_non_empty(data)
   # pandoc must be available to generate report
@@ -51,6 +52,12 @@ report <- function(data, n, target, targetpct, split, output_file, output_dir)  
   } else {
     n_txt = NA
   }
+
+  # parameter color
+  if(missing(color)) {
+    color <- c("lightgrey", "#939FB9")
+  }
+  color_report_plot <- color   ## used in markdown-files
 
   # check if output-file has .html extension
   # if not, add it!

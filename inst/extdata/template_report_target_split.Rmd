@@ -18,7 +18,7 @@ knitr::kable(d)
 ## Describe Target
 
 ```{r fig.height=3, echo=FALSE, fig.height=3, fig.width=5, message=FALSE, warning=FALSE}
-data %>% explore(!!sym(var_name_target))
+data %>% explore(!!sym(var_name_target), color = color_report_plot)
 ```
 
 ## Explore Variables
@@ -39,7 +39,10 @@ fig_height <- data[buckets[[1]]] %>%
 
 ```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
 for (i in seq_along(buckets)) {
-  data[buckets[[i]]] %>% 
-    explore_all(ncol = 2, target = !!sym(var_name_target), split = TRUE)
+  suppressWarnings({
+    data[buckets[[i]]] %>% 
+      explore_all(ncol = 2, target = !!sym(var_name_target), 
+                  split = TRUE, color = color_report_plot)
+  })
 }
 ```

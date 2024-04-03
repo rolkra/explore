@@ -43,7 +43,10 @@ plot_legend_targetpct()
 
 ```{r echo=FALSE, fig.height=fig_height, fig.width=10, message=FALSE, warning=FALSE}
 for (i in seq_along(buckets)) {
-  data[buckets[[i]]] %>% 
-    explore_all(ncol = 2, target = !!sym(var_name_target), split = FALSE)
+  suppressWarnings({
+    data[buckets[[i]]] %>% 
+      explore_all(ncol = 2, target = !!sym(var_name_target), 
+                  split = FALSE)
+  })
 }
 ```

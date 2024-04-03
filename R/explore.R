@@ -17,7 +17,7 @@
 #' @param legend_position Position of legend ("right"|"bottom"|"non")
 #' @return Plot object
 
-target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 30, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
+target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, num2char = TRUE, title = NA, auto_scale = TRUE, na = NA, max_cat = 25, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
 
   rlang::check_required(data)
   # definitions for CRAN package check
@@ -1164,7 +1164,7 @@ explore_tbl <- function(data, n)  {
 #' }
 #' @export
 
-explore_shiny <- function(data, target)  {
+explore_shiny <- function(data, target, color = c("lightgrey", "#939FB9"))  {
 
   # check if interactive session
   if (!interactive()) {
@@ -1266,16 +1266,19 @@ explore_shiny <- function(data, target)  {
       # report only variables
       if(input$target == "<no target>")  {
         input_file <- system.file("extdata", "template_report_variable.Rmd", package="explore")
+        color_report_plot <- color
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with split
       } else if(input$targetpct == FALSE)  {
         input_file <- system.file("extdata", "template_report_target_split.Rmd", package="explore")
+        color_report_plot <- color
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
 
         # report target with percent
       } else {
         input_file <- system.file("extdata", "template_report_target_pct.Rmd", package="explore")
+        color_report_plot <- color
         rmarkdown::render(input = input_file, output_file = output_file, output_dir = output_dir)
       }
 
@@ -1287,13 +1290,26 @@ explore_shiny <- function(data, target)  {
     })
 
     output$graph_target <- plotly::renderPlotly({
-      if (input$target != "<no target>" & input$var != input$target)  {
 
-        suppressWarnings({
-        data %>% explore(!!sym(input$var), target = !!sym(input$target),
-                         auto_scale = input$auto_scale, split = !input$targetpct,
-                         max_cat = 20, label = FALSE)
-        })
+      if (input$target != "<no target>" & input$var != input$target &
+          input$targetpct)  {
+
+        # target with targetpct
+        suppressWarnings(interact(
+         explore(data, !!sym(input$var), target = !!sym(input$target),
+                         auto_scale = input$auto_scale, split = !input$targetpct)
+       ))
+
+      } else if (input$target != "<no target>" & input$var != input$target &
+                 !input$targetpct)  {
+
+        # target, split
+        suppressWarnings(interact(
+          explore(data, !!sym(input$var), target = !!sym(input$target),
+                  auto_scale = input$auto_scale, split = !input$targetpct,
+                  color = color)
+        ))
+
       }
     }) # renderPlot graph_target
 
@@ -1315,10 +1331,10 @@ explore_shiny <- function(data, target)  {
 
     output$graph <- plotly::renderPlotly({
 
-      suppressWarnings({
-      data %>% explore(!!sym(input$var), auto_scale = input$auto_scale,
-                       max_cat = 20, label = FALSE)
-      })
+      suppressWarnings(interact(
+        explore(data, !!sym(input$var), auto_scale = input$auto_scale,
+                color = color, max_cat = 20, label = FALSE)
+      ))
     }) # renderPlot graph
 
     output$text <- shiny::renderPrint({
@@ -1476,7 +1492,7 @@ explore <- function(data, var, var2, n, target, targetpct, split, min_val = NA, 
 
   # interactive (shiny)
   if (is.na(var_text))  {
-    explore_shiny(data)
+    explore_shiny(data, ...)
 
     # count data
   } else if (!is.na(n_text) && is.na(target_text))  {

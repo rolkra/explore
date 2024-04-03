@@ -15,7 +15,7 @@ target_explore_cat(
   title = NA,
   auto_scale = TRUE,
   na = NA,
-  max_cat = 30,
+  max_cat = 25,
   color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"),
   legend_position = "bottom"
 )
