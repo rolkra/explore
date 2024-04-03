@@ -1156,6 +1156,7 @@ explore_tbl <- function(data, n)  {
 #'
 #' @param data A dataset
 #' @param target Target variable (0/1 or FALSE/TRUE)
+#' @param color Color for plots (vector)
 #' @examples
 #'
 #' # Only run examples in interactive R sessions
