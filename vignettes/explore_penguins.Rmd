@@ -36,7 +36,7 @@ Furthermore, we use the packages {dplyr} for `filter()` and `%>%` and {explore} 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(explore)
-penguins <- explore::use_data_penguins()
+penguins <- use_data_penguins()
 # equivalent to 
 # penguins <- palmerpenguins::penguins
 ```
@@ -63,7 +63,7 @@ We reduced the penguins from 344 to 342.
 
 ```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(data, size = 2.5)}
 data %>% 
-  explore_all()
+  explore_all(color = "skyblue")
 ```
 
 ### Which species?
@@ -72,7 +72,9 @@ What is the relationship between all the variables and species?
 
 ```{r message=FALSE, warning=FALSE, fig.width=8, fig.height=total_fig_height(data, var_name_target = "species", size = 2.2)}
 data %>% 
-  explore_all(target = species)
+  explore_all(
+    target = species,
+    color = c("darkorange", "purple", "lightseagreen"))
 ```
 
 We already see some strong patterns in the data. `flipper_length_mm` separates species Gentoo, `bill_length_mm` separates species Adelie from Chinstrap. And we see that Chinstrap and Gentoo are located on separate islands.
@@ -92,7 +94,12 @@ We found an easy explanation how to find out the species by just using flipper_l
 Now let's take a closer look to these variables:
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
-data %>% explore(flipper_length_mm, bill_length_mm, target = species)
+data %>% 
+  explore(
+    flipper_length_mm, bill_length_mm, 
+    target = species,
+    color = c("darkorange", "purple", "lightseagreen")
+    )
 ```
 
 The plot shows a not perfect but good separation between the 3 species!
