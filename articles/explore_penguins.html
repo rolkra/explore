@@ -97,7 +97,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2024-04-03</h4>
+            <h4 data-toc-skip class="date">2024-04-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/HEAD/vignettes/explore_penguins.Rmd" class="external-link"><code>vignettes/explore_penguins.Rmd</code></a></small>
       <div class="d-none name"><code>explore_penguins.Rmd</code></div>
@@ -162,7 +162,7 @@ and <code>%&gt;%</code> and {explore} for data exploration.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
-<span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="fu">explore</span><span class="fu">::</span><span class="fu"><a href="../reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">penguins</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># equivalent to </span></span>
 <span><span class="co"># penguins &lt;- palmerpenguins::penguins</span></span></code></pre></div>
 <div class="section level3">
@@ -200,7 +200,7 @@ exploration!</p>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"skyblue"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explore_penguins_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
 </div>
 <div class="section level3">
@@ -209,7 +209,9 @@ exploration!</p>
 <p>What is the relationship between all the variables and species?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span></span>
+<span>    target <span class="op">=</span> <span class="va">species</span>,</span>
+<span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"lightseagreen"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="explore_penguins_files/figure-html/unnamed-chunk-5-1.png" width="768"></p>
 <p>We already see some strong patterns in the data.
 <code>flipper_length_mm</code> separates species Gentoo,
@@ -233,7 +235,12 @@ right)</li>
 </ul>
 <p>Now let’s take a closer look to these variables:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">flipper_length_mm</span>, <span class="va">bill_length_mm</span>, target <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span></span>
+<span>    <span class="va">flipper_length_mm</span>, <span class="va">bill_length_mm</span>, </span>
+<span>    target <span class="op">=</span> <span class="va">species</span>,</span>
+<span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"lightseagreen"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <p><img src="explore_penguins_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>The plot shows a not perfect but good separation between the 3
 species!</p>
