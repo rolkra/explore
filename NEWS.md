@@ -3,12 +3,12 @@
 ## New features
 
 * add parameter `nthread` to `explain_xgboost()`. (#45)
-* add `interact()`.
-* add interactivity as default in explore shiny app.
+* add `interact()`. (#47)
+* add interactivity as default in explore shiny app. (#47)
 * add `create_data_abtest()`.
 * add basic color parameter to `explore()` & `abtest()` functions.
 * add `get_color()`
-* move NA-info in `explore()` from title to subtitle.
+* move NA-info in `explore()` from title to subtitle. (#48)
 * add more descriptive infos into `explore()`subtitle. 
 * add color parameter for `explore()`, `explore_*()`, `report()`
 

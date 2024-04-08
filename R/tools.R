@@ -1019,3 +1019,75 @@ get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
   color_vctr
 
 } #get_color
+
+#' Cut a variable
+#'
+#' @param data Data frame
+#' @param var Variable
+#' @param bins Number of bins
+#' @param auto_scale Use auto scaling (2%-98%)
+#' @param name Name of variable containing bins
+#' @return Data frame
+
+cut_var <- function(data, var, bins = 8, auto_scale = FALSE, name = NA)  {
+
+  # define variables to pass CRAN checks
+  grp_ <- NULL
+  min_ <- NULL
+  max_ <- NULL
+  avg_ <- NULL
+
+  # check if var is missing
+  if (missing(var)){
+    warning("no variable defined, call function with variable that you want to clean!")
+    return(data)
+  }
+
+  # variable var
+  var_quo <- enquo(var)
+  var_txt <- quo_name(var_quo)[[1]]
+
+  # check if var exists
+  if (sum(colnames(data) == var_txt) == 0){
+    warning("can't find variable " ,var_txt, " in data, check variable name!")
+    return(data)
+  }
+
+  # name missing? then overwrite var
+  if (is.na(name)) {
+    name <- var_txt
+  }
+
+  # auto scale
+  if (auto_scale == TRUE)  {
+    r <- quantile(data[[var_txt]], c(0.02, 0.98), na.rm = TRUE)
+    min_val = r[1]
+    max_val = r[2]
+    data <- data %>% filter(!!var_quo >= min_val)
+    data <- data %>% filter(!!var_quo <= max_val)
+  }
+
+  ## create bins
+  data_boxplot <- data %>%
+    mutate(grp_ = cut({{ var }}, bins, labels = FALSE))
+
+  data_boxplot_cut <- data_boxplot %>%
+    select({{ var }}, {{ grp_ }})
+    group_by(grp_) |>
+    summarize(min_ = min({{ var }}), max_ = max({{ var }})) |>
+    ungroup()
+
+  data_boxplot_cut$avg_ <- (data_boxplot_cut$min_ + data_boxplot_cut$max_) / 2
+  data_boxplot_cut$min_ <- NULL
+  data_boxplot_cut$max_ <- NULL
+
+  data_boxplot <- data_boxplot |> inner_join(data_boxplot_cut, by = "grp_")
+  data_boxplot[[name]] <- data_boxplot$avg_
+
+  if (name != "avg_") {
+    data_boxplot$avg_ <- NULL
+  }
+
+  data_boxplot
+
+} ## cut_var
