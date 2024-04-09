@@ -1022,8 +1022,7 @@ get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
 
 #' Cut a variable
 #'
-#' @param data Data frame
-#' @param var Variable
+#' @param values Variable
 #' @param bins Number of bins
 #' @return Data frame
 

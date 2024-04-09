@@ -7,11 +7,9 @@
 cut_vec_num_avg(values, bins = 8)
 }
 \arguments{
+\item{values}{Variable}
+
 \item{bins}{Number of bins}
-
-\item{data}{Data frame}
-
-\item{var}{Variable}
 }
 \value{
 Data frame
