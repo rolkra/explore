@@ -10,11 +10,13 @@
 * add `get_color()`
 * move NA-info in `explore()` from title to subtitle. (#48)
 * add more descriptive infos into `explore()`subtitle. 
-* add color parameter for `explore()`, `explore_*()`, `report()`
+* add `color` parameter for `explore()`, `explore_*()`, `report()`
+* add `bins` parameter to `target_explore_num()`
 
 ## Breaking changes
 
 * `mix_color()` with one color as parameter generates colors from light to dark 
+* `target_explore_num()` bar positioning changes from max to mean value
 
 ## Bug fixes / internal
 

@@ -1025,11 +1025,9 @@ get_color <- function(name, fill = FALSE, fill_color = "#DDDDDD", fill_n = 10) {
 #' @param data Data frame
 #' @param var Variable
 #' @param bins Number of bins
-#' @param auto_scale Use auto scaling (2%-98%)
-#' @param name Name of variable containing bins
 #' @return Data frame
 
-cut_var <- function(data, var, bins = 8, auto_scale = FALSE, name = NA)  {
+cut_vec_num_avg <- function(values, bins = 8)  {
 
   # define variables to pass CRAN checks
   grp_ <- NULL
@@ -1037,57 +1035,24 @@ cut_var <- function(data, var, bins = 8, auto_scale = FALSE, name = NA)  {
   max_ <- NULL
   avg_ <- NULL
 
-  # check if var is missing
-  if (missing(var)){
-    warning("no variable defined, call function with variable that you want to clean!")
-    return(data)
-  }
+  # create bins
+  cut_values <- cut(values, bins, labels = FALSE)
 
-  # variable var
-  var_quo <- enquo(var)
-  var_txt <- quo_name(var_quo)[[1]]
+  # calc average
+  data_cut <- data.frame(
+    val = values,
+    grp_ = cut_values)
 
-  # check if var exists
-  if (sum(colnames(data) == var_txt) == 0){
-    warning("can't find variable " ,var_txt, " in data, check variable name!")
-    return(data)
-  }
+  data_cut_avg <- data_cut %>%
+    group_by(grp_) %>%
+    summarize(min_ = min(val), max_ = max(val)) %>%
+    ungroup() %>%
+    mutate(avg_ = (max_ + min_)/2)
 
-  # name missing? then overwrite var
-  if (is.na(name)) {
-    name <- var_txt
-  }
+  data_cut <- data_cut %>%
+    inner_join(data_cut_avg, by = "grp_")
 
-  # auto scale
-  if (auto_scale == TRUE)  {
-    r <- quantile(data[[var_txt]], c(0.02, 0.98), na.rm = TRUE)
-    min_val = r[1]
-    max_val = r[2]
-    data <- data %>% filter(!!var_quo >= min_val)
-    data <- data %>% filter(!!var_quo <= max_val)
-  }
-
-  ## create bins
-  data_boxplot <- data %>%
-    mutate(grp_ = cut({{ var }}, bins, labels = FALSE))
-
-  data_boxplot_cut <- data_boxplot %>%
-    select({{ var }}, {{ grp_ }})
-    group_by(grp_) |>
-    summarize(min_ = min({{ var }}), max_ = max({{ var }})) |>
-    ungroup()
-
-  data_boxplot_cut$avg_ <- (data_boxplot_cut$min_ + data_boxplot_cut$max_) / 2
-  data_boxplot_cut$min_ <- NULL
-  data_boxplot_cut$max_ <- NULL
-
-  data_boxplot <- data_boxplot |> inner_join(data_boxplot_cut, by = "grp_")
-  data_boxplot[[name]] <- data_boxplot$avg_
-
-  if (name != "avg_") {
-    data_boxplot$avg_ <- NULL
-  }
-
-  data_boxplot
+  # return result
+  data_cut[["avg_"]]
 
 } ## cut_var

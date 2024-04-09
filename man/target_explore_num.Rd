@@ -2,7 +2,7 @@
 % Please edit documentation in R/explore.R
 \name{target_explore_num}
 \alias{target_explore_num}
-\title{Explore categorical variable + target}
+\title{Explore Nuberical variable + target}
 \usage{
 target_explore_num(
   data,
@@ -10,6 +10,7 @@ target_explore_num(
   target = "target_ind",
   min_val = NA,
   max_val = NA,
+  bins = 10,
   flip = TRUE,
   title = NA,
   auto_scale = TRUE,
@@ -28,6 +29,8 @@ target_explore_num(
 \item{min_val}{All values < min_val are converted to min_val}
 
 \item{max_val}{All values > max_val are converted to max_val}
+
+\item{bins}{Nuber of bins}
 
 \item{flip}{Should plot be flipped? (change of x and y)}
 

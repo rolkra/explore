@@ -63,4 +63,4 @@ reference:
     - log_info_if
     - plot_var_info
     - check_vec_low_variance
-    - cut_var
+    - cut_vec_num_avg

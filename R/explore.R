@@ -151,7 +151,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 
 } # target_explore_cat
 
-#' Explore categorical variable + target
+#' Explore Nuberical variable + target
 #'
 #' Create a plot to explore relation between numerical variable and a binary target
 #'
@@ -160,6 +160,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 #' @param target Target variable (0/1 or FALSE/TRUE)
 #' @param min_val All values < min_val are converted to min_val
 #' @param max_val All values > max_val are converted to max_val
+#' @param bins Nuber of bins
 #' @param flip Should plot be flipped? (change of x and y)
 #' @param title Title of plot
 #' @param auto_scale Use 0.02 and 0.98 quantile for min_val and max_val (if min_val and max_val are not defined)
@@ -168,7 +169,7 @@ target_explore_cat <- function(data, var, target = "target_ind", min_val = NA, m
 #' @param legend_position Position of legend ("right"|"bottom"|"non")
 #' @return Plot object
 
-target_explore_num <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
+target_explore_num <- function(data, var, target = "target_ind", min_val = NA, max_val = NA, bins = 10, flip = TRUE, title = NA, auto_scale = TRUE, na = NA, color = c("#ECEFF1", "#CFD8DC", "#B0BEC5", "#90A4AE"), legend_position = "bottom") {
 
   # definitions for CRAN package check
   num <- NULL
@@ -226,14 +227,14 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 
   # cut only when more then 1 different value in data
   if (min_val != max_val)  {
-    data_bar <- dplyr::mutate(data_bar, explore_cat = cut(num, 10))
+    data_bar <- dplyr::mutate(data_bar, explore_cat = cut(num, bins))
   } else {
     data_bar <- data_bar %>% mutate(explore_cat = min_val)
   }
 
   cat_labels <- data_bar %>%
     dplyr::group_by(explore_cat) %>%
-    dplyr::summarize(cat_label = max(num), n = n())
+    dplyr::summarize(cat_label = mean(num), n = n())
 
   data_bar <- data_bar %>%
     dplyr::inner_join(y = cat_labels, by = "explore_cat")
@@ -978,10 +979,10 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   else if(x_type == "num" & y_type == "num" & !use_points)  {
 
+    data[[x_txt]] <- cut_vec_num_avg(data[[x_txt]], bins = bins)
+
     # boxplot (x = num, y = num)
     p <- data %>%
-      cut_var(!!x_quo, bins = bins) %>%
-      # cut only when more then 1 different value in data
       ggplot(aes(x = !!x_quo, y = !!y_quo)) +
       geom_boxplot(aes(group = !!x_quo), fill = color[1]) +
       theme(
