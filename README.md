@@ -82,9 +82,11 @@ beer |> explore(sugar_g_100ml, color = "gold") |> interact()
 ## Get started
 
 * [Get started with {explore}](https://rolkra.github.io/explore/articles/explore.html)
-* [{explore} penguins (tidy-data)](https://rolkra.github.io/explore/articles/explore-penguins.html)
-* [{explore} titanic (count-data)](https://rolkra.github.io/explore/articles/explore-penguins.html)
+* [{explore} penguins (tidy-data)](https://rolkra.github.io/explore/articles/explore_penguins.html)
+* [{explore} titanic (count-data)](https://rolkra.github.io/explore/articles/explore_titanic.html)
 * [Explain a target using machine learning](https://rolkra.github.io/explore/articles/explain.html)
 * [Generate a report of all variables in the  data](https://rolkra.github.io/explore/articles/report.html)
 * [Generate a report of all patterns in the  data](https://rolkra.github.io/explore/articles/report-target.html)
+* [Data in {explore}](https://rolkra.github.io/explore/articles/data.html)
 * [A/B testing](https://rolkra.github.io/explore/articles/abtest.html)
+* and more ...
