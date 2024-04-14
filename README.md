@@ -29,6 +29,7 @@ devtools::install_github("rolkra/explore")
 ## Examples
 
 ``` r
+# interactive data exploration
 library(explore)
 beer <- use_data_beer()
 beer |> explore()
@@ -39,6 +40,7 @@ beer |> explore()
 <img src="man/figures/explore-beer-tree.png" alt="explore target using a decisoion tree" width="600"/>
 
 ``` r
+# describe data
 beer |> describe()
 ```
 
@@ -60,6 +62,7 @@ beer |> describe()
 ```
 
 ``` r
+# explore data manually
 beer |> explore(type)
 beer |> explore(energy_kcal_100ml)
 beer |> explore(energy_kcal_100ml, target = type)
@@ -67,6 +70,14 @@ beer |> explore(alcohol_vol_pct, energy_kcal_100ml, target = type)
 ```
 
 <img src="man/figures/explore-beer-plots.png" alt="explore data manual" width="600"/>
+
+``` r
+# explore manually with color and interactive
+beer |> explore(sugar_g_100ml, color = "gold") |> interact()
+```
+
+<img src="man/figures/explore-beer-interact.png" alt="explore with color and interactive" width="400"/>
+
 
 ## Get started
 
