@@ -122,13 +122,15 @@
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># interactive data exploration</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
 <span><span class="va">beer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/explore-beer-target.png" alt="explore variable + target" width="600"></p>
 <p><img src="reference/figures/explore-beer-tree.png" alt="explore target using a decisoion tree" width="600"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># describe data</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code># A tibble: 11 × 8
    variable          type     na na_pct unique    min    mean    max
    &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -144,11 +146,16 @@
 10 carb_g_100ml      dbl      16    9.9     44    1.5    3.53    6.7
 11 sugar_g_100ml     dbl      16    9.9     26    0      0.72    4.6</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># explore data manually</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
 <span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span><span class="op">)</span></span>
 <span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span>, target <span class="op">=</span> <span class="va">type</span><span class="op">)</span></span>
 <span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">alcohol_vol_pct</span>, <span class="va">energy_kcal_100ml</span>, target <span class="op">=</span> <span class="va">type</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/explore-beer-plots.png" alt="explore data manual" width="600"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># explore manually with color and interactive</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">sugar_g_100ml</span>, color <span class="op">=</span> <span class="st">"gold"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/interact.html">interact</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/explore-beer-interact.png" alt="explore with color and interactive" width="400"></p>
 </div>
 <div class="section level2">
 <h2 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
