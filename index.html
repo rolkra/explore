@@ -5,9 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Interactive data exploration with one line of code, automated
-    reporting or use an easy to remember set of tidy functions for low
-    code exploratory data analysis.">
+<meta name="description" content="Interactive data exploration with one line of code, automated reporting or use an easy to remember set of tidy functions for low code exploratory data analysis.">
 <title>Simplifies Exploratory Data Analysis • explore</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -20,9 +18,7 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Simplifies Exploratory Data Analysis">
-<meta property="og:description" content="Interactive data exploration with one line of code, automated
-    reporting or use an easy to remember set of tidy functions for low
-    code exploratory data analysis.">
+<meta property="og:description" content="Interactive data exploration with one line of code, automated reporting or use an easy to remember set of tidy functions for low code exploratory data analysis.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -33,7 +29,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">explore</a>
 
@@ -102,227 +98,70 @@
 <!-- badges: end -->
 <p>Simplifies Exploratory Data Analysis.</p>
 <div class="section level2">
-<h2 id="why-this-package">Why this package?<a class="anchor" aria-label="anchor" href="#why-this-package"></a>
-</h2>
-<ul>
-<li><p><strong>Faster insights with less code</strong> for experienced R users. Exploring a fresh new dataset is exciting. Instead of searching for syntax, use all your attention searching for interesting patterns in your data, using just a handful easy to remember functions. Your code is easy to understand - even for non R users.</p></li>
-<li><p><strong>Instant success</strong> for new R users. It is said that R has a steep learning curve, especially if you come from a GUI for your statistical analysis. Instead of learning a lot of R syntax before you can explore data, the explore package enables you to have instant success. You can start with just one function - explore() - and learn other R syntax later step by step.</p></li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="how-to-use-it">How to use it<a class="anchor" aria-label="anchor" href="#how-to-use-it"></a>
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p>There are three ways to use the package:</p>
 <ul>
-<li><p><strong>Interactive data exploration</strong> (univariate, bivariate, multivariate). A target can be defined (binary / categorical / numerical).</p></li>
-<li><p>Generate an <strong>automated report</strong> with one line of code. The target can be binary, categorical or numeric.</p></li>
 <li>
-<p><strong>Manual exploration</strong> using a easy to remember set of tidy functions. There are basically five “verbs” to remember:</p>
-<ul>
-<li><p><strong>explore</strong> - if you want to explore a table, a variable or the relationship between a variable and a target (binary, categorical or numeric). The output of these functions is a plot (automatically checks if an attribute is categorical or numerical, chooses the best plot-type and handles outliers).</p></li>
-<li><p><strong>describe</strong> - if you want to describe a dataset or a variable (number of na, unique values, …) The output of these functions is a text.</p></li>
-<li><p><strong>explain</strong> - to create a simple model that explains a target. <code><a href="reference/explain_tree.html">explain_tree()</a></code> for a decision tree, <code><a href="reference/explain_forest.html">explain_forest()</a></code> for a random forest, <code><a href="reference/explain_xgboost.html">explain_xgboost()</a></code> for a xgboost model and <code><a href="reference/explain_logreg.html">explain_logreg()</a></code> for a logistic regression.</p></li>
-<li><p><strong>report</strong> - to generate an automated report of all variables. A target can be defined (binary, categorical or numeric)</p></li>
-<li><p><strong>abtest</strong> - to test if a difference is statistically significant</p></li>
-</ul>
+<strong>Interactive data exploration</strong> using <code><a href="reference/explore.html">explore()</a></code>
 </li>
+<li>Generate an <strong>automated report</strong> of your data (or patterns in your data) using <code><a href="reference/report.html">report()</a></code>
+</li>
+<li>
+<strong>Manual exploration</strong> using a easy to remember set of functions: <code><a href="reference/explore.html">explore()</a></code>, <code><a href="reference/describe.html">describe()</a></code>, <code>explain_*()</code>, <code><a href="reference/abtest.html">abtest()</a></code>.</li>
 </ul>
-<p>You can use {explore} with <strong>tidy data</strong> (each row is an observation) or with <strong>count data</strong> (each row is a group of observations with same attributes, one variable stores the number of observations). To use count data, you need to add the n parameter (variable containing the number of observations). Not all functions support count data.</p>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<div class="section level3">
-<h3 id="cran">CRAN<a class="anchor" aria-label="anchor" href="#cran"></a>
-</h3>
+<p>You can use {explore} with <strong>tidy data</strong> (each row is an observation) or with <strong>count data</strong> (each row is a group of observations with same attributes, one variable stores the number of observations, typically <code>n</code>)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"explore"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="dev-version-github">DEV version (github)<a class="anchor" aria-label="anchor" href="#dev-version-github"></a>
-</h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install from github</span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># install from CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"explore"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># install DEV version (github)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"rolkra/explore"</span><span class="op">)</span></span></code></pre></div>
-<p>if you are behind a firewall, you may want to:</p>
-<ul>
-<li>Download and unzip the explore package</li>
-<li>Then install it with devtools::install_local</li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># install local</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(devtools)) <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_local</span>(<span class="at">path =</span> <span class="sc">&lt;</span>path of local package<span class="sc">&gt;</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<div class="section level3">
-<h3 id="interactive-data-exploration">Interactive data exploration<a class="anchor" aria-label="anchor" href="#interactive-data-exploration"></a>
-</h3>
-<p>Example how to use the explore package to explore the iris dataset</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore interactive</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="explore-variables">Explore variables<a class="anchor" aria-label="anchor" href="#explore-variables"></a>
-</h4>
-<p><img src="reference/figures/explore-shiny-iris.png" alt="example interactive exploration" width="600"></p>
-</div>
-<div class="section level4">
-<h4 id="explore-variables-with-target">Explore variables with target<a class="anchor" aria-label="anchor" href="#explore-variables-with-target"></a>
-</h4>
-<p><img src="reference/figures/explore-shiny-iris-target-species.png" alt="example interactive exploration" width="600"></p>
-</div>
-<div class="section level4">
-<h4 id="explain-target-decision-tree">Explain target (Decision Tree)<a class="anchor" aria-label="anchor" href="#explain-target-decision-tree"></a>
-</h4>
-<p><img src="reference/figures/explore-shiny-iris-tree.png" alt="example interactive exploration" width="600"></p>
-</div>
-</div>
-<div class="section level3">
-<h3 id="automated-report">Automated Report<a class="anchor" aria-label="anchor" href="#automated-report"></a>
-</h3>
-<p>Create a report by clicking the “report all” button or use the report() function. If no target is defined, the report shows all variables. If a target is defined, the report shows the relation between all variables and the target.</p>
-<p>Report of all variables</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
+<span><span class="va">beer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/explore-beer-target.png" alt="explore variable + target" width="600"></p>
+<p><img src="reference/figures/explore-beer-tree.png" alt="explore target using a decisoion tree" width="600"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code># A tibble: 11 × 8
+   variable          type     na na_pct unique    min    mean    max
+   &lt;chr&gt;             &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1 name              chr       0    0      161   NA     NA      NA  
+ 2 brand             chr       0    0       29   NA     NA      NA  
+ 3 country           chr       0    0        3   NA     NA      NA  
+ 4 year              dbl       0    0        1 2023   2023    2023  
+ 5 type              chr       0    0        3   NA     NA      NA  
+ 6 color_dark        dbl       0    0        2    0      0.09    1  
+ 7 alcohol_vol_pct   dbl       2    1.2     35    0      4.32    8.4
+ 8 original_wort     dbl       5    3.1     54    5.1   11.3    18.3
+ 9 energy_kcal_100ml dbl      11    6.8     34   20     39.9    62  
+10 carb_g_100ml      dbl      16    9.9     44    1.5    3.53    6.7
+11 sugar_g_100ml     dbl      16    9.9     26    0      0.72    4.6</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/report.html">report</a></span><span class="op">(</span>output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/report-attributes.png" alt="example report attributes" width="400"></p>
-<p>To create a report that shows all variables in relation to a target, just add the target parameter</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/report.html">report</a></span><span class="op">(</span>output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/report-target-split.png" alt="example report attributes" width="400"></p>
-<p>To create a report with a binary target you can use the parameter targetpct = TRUE (or split = FALSE)</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># define a target (is Species versicolor?)</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">is_versicolor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span></span>
-<span><span class="co"># create report</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/report.html">report</a></span><span class="op">(</span>output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                target <span class="op">=</span> <span class="va">is_versicolor</span>,</span>
-<span>                targetpct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/report-target.png" alt="example report attributes" width="400"></p>
+<code class="sourceCode R"><span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span><span class="op">)</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">energy_kcal_100ml</span>, target <span class="op">=</span> <span class="va">type</span><span class="op">)</span></span>
+<span><span class="va">beer</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">alcohol_vol_pct</span>, <span class="va">energy_kcal_100ml</span>, target <span class="op">=</span> <span class="va">type</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/explore-beer-plots.png" alt="explore data manual" width="600"></p>
 </div>
-<div class="section level3">
-<h3 id="manual-exploration">Manual exploration<a class="anchor" aria-label="anchor" href="#manual-exploration"></a>
-</h3>
-<p>Example how to use the functions of the explore package to explore tidy data (each row is an observation) like the iris dataset:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load packages</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># use iris dataset</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore Species</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore Sepal.Length</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># define a target (is Species versicolor?)</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">is_versicolor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore relationship between Sepal.Length and the target</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore relationship between all variables and the target</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore correlation between Sepal.Length and Petal.Length</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore correlation between Sepal.Length, Petal.Length and a target</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span>, target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># describe dataset</span></span>
-<span><span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># describe Species</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explain target using a decision tree</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explain target using a logistic regression</span></span>
-<span><span class="va">iris</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explain_logreg.html">explain_logreg</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span></code></pre></div>
-<p>Example how to use the functions of the explore package to explore count-data (each row is a group of observations):</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load packages</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rolkra.github.io/explore/" class="external-link">explore</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># use titanic dataset</span></span>
-<span><span class="co"># n = number of observations</span></span>
-<span><span class="va">titanic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">Titanic</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># describe data</span></span>
-<span><span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="va">titanic</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># describe Class</span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/describe.html">describe</a></span><span class="op">(</span><span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore Class</span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore relationship between Class and the target</span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span>, target <span class="op">=</span> <span class="va">Survived</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explore relationship between all variables and the target</span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore_all.html">explore_all</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, target <span class="op">=</span> <span class="va">Survived</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># explain target using a decision tree</span></span>
-<span><span class="va">titanic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, target <span class="op">=</span> <span class="va">Survived</span><span class="op">)</span></span></code></pre></div>
-<p>Some other useful functions:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># use data set and explore it</span></span>
-<span><span class="fu"><a href="reference/use_data_penguins.html">use_data_penguins</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_starwars.html">use_data_starwars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_diamonds.html">use_data_diamonds</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_iris.html">use_data_iris</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_mpg.html">use_data_mpg</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_mtcars.html">use_data_mtcars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_titanic.html">use_data_titanic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/use_data_beer.html">use_data_beer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create data set and explore it</span></span>
-<span><span class="fu"><a href="reference/create_data_app.html">create_data_app</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_buy.html">create_data_buy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_churn.html">create_data_churn</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_esoteric.html">create_data_esoteric</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_newsletter.html">create_data_newsletter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_person.html">create_data_person</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/create_data_unfair.html">create_data_unfair</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create random dataset with 100 observarions and 5 random variables</span></span>
-<span><span class="co"># and explore it</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_random.html">create_data_random</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">100</span>, vars <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create your own random dataset and explore it</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_data_empty.html">create_data_empty</a></span><span class="op">(</span>obs <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/add_var_random_01.html">add_var_random_01</a></span><span class="op">(</span><span class="st">"target"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/add_var_random_dbl.html">add_var_random_dbl</a></span><span class="op">(</span><span class="st">"age"</span>, min_val <span class="op">=</span> <span class="fl">18</span>, max_val <span class="op">=</span> <span class="fl">80</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/add_var_random_cat.html">add_var_random_cat</a></span><span class="op">(</span><span class="st">"gender"</span>, </span>
-<span>                     cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"other"</span><span class="op">)</span>, </span>
-<span>                     prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/add_var_random_starsign.html">add_var_random_starsign</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/add_var_random_moon.html">add_var_random_moon</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  </span>
-<span><span class="fu"><a href="reference/explore.html">explore</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create an RMarkdown template to explore your own data</span></span>
-<span><span class="co"># set output_dir (existing file may be overwritten)</span></span>
-<span><span class="fu"><a href="reference/create_notebook_explore.html">create_notebook_explore</a></span><span class="op">(</span></span>
-<span>  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  output_file <span class="op">=</span> <span class="st">"notebook-explore.Rmd"</span><span class="op">)</span></span></code></pre></div>
-</div>
+<div class="section level2">
+<h2 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
+</h2>
+<ul>
+<li><a href="https://rolkra.github.io/explore/articles/explore.html" class="external-link">Get started with {explore}</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/explore-penguins.html" class="external-link">{explore} penguins (tidy-data)</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/explore-penguins.html" class="external-link">{explore} titanic (count-data)</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/explain.html" class="external-link">Explain a target using machine learning</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/report.html" class="external-link">Generate a report of all variables in the data</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/report-target.html" class="external-link">Generate a report of all patterns in the data</a></li>
+<li><a href="https://rolkra.github.io/explore/articles/abtest.html" class="external-link">A/B testing</a></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -378,7 +217,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

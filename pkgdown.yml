@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
   abtest: abtest.html
@@ -7,14 +7,14 @@ articles:
   data: data.html
   describe: describe.html
   explain: explain.html
-  explore: explore.html
   explore_mtcars: explore_mtcars.html
   explore_penguins: explore_penguins.html
   explore_titanic: explore_titanic.html
+  explore: explore.html
   predict: predict.html
   report-target: report-target.html
   report-targetpct: report-targetpct.html
   report: report.html
   tips-tricks: tips-tricks.html
-last_built: 2024-04-09T13:07Z
+last_built: 2024-04-14T20:08Z
 
