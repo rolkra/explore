@@ -232,7 +232,7 @@ explain_logreg <- function(data, target, out = "tibble", ...)  {
 #' @param target Target variable (binary)
 #' @param ntree Number of trees used for Random Forest
 #' @param out Output of the function: "plot" | "model" | "importance" | all"
-#' @inheritDotParams randomForest::randomForest
+#' @param ... Further arguments
 #' @return Plot of importance (if out = "plot")
 #' @examplesIf rlang::is_installed("randomForest")
 #' data <- create_data_buy()

@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! There are three ways to use the package: **interactive data exploration**, generate an **automated report** or use low code for **manual exploration** (`explore()`, `describe()`, `explain_*()`, `report()` , `abtest()`, ...)  
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code! 
 
 explore package on Github: [https://github.com/rolkra/explore](https://github.com/rolkra/explore)
 

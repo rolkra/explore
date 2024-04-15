@@ -1033,18 +1033,19 @@ cut_vec_num_avg <- function(values, bins = 8)  {
   min_ <- NULL
   max_ <- NULL
   avg_ <- NULL
+  val_ <- NULL
 
   # create bins
   cut_values <- cut(values, bins, labels = FALSE)
 
   # calc average
   data_cut <- data.frame(
-    val = values,
+    val_ = values,
     grp_ = cut_values)
 
   data_cut_avg <- data_cut %>%
     group_by(grp_) %>%
-    summarize(min_ = min(val), max_ = max(val)) %>%
+    summarize(min_ = min(val_), max_ = max(val_)) %>%
     ungroup() %>%
     mutate(avg_ = (max_ + min_)/2)
 

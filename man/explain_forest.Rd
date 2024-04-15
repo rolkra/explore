@@ -15,11 +15,7 @@ explain_forest(data, target, ntree = 50, out = "plot", ...)
 
 \item{out}{Output of the function: "plot" | "model" | "importance" | all"}
 
-\item{...}{
-  Arguments passed on to \code{\link[randomForest:randomForest]{randomForest::randomForest}}
-  \describe{
-    \item{\code{}}{}
-  }}
+\item{...}{Further arguments}
 }
 \value{
 Plot of importance (if out = "plot")
