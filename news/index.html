@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,9 +32,9 @@
     <a class="dropdown-item" href="../articles/data.html">Data</a>
     <a class="dropdown-item" href="../articles/describe.html">Describe</a>
     <a class="dropdown-item" href="../articles/explain.html">Explain</a>
-    <a class="dropdown-item" href="../articles/explore_mtcars.html">Explore mtcars</a>
-    <a class="dropdown-item" href="../articles/explore_penguins.html">Explore penguins</a>
-    <a class="dropdown-item" href="../articles/explore_titanic.html">Explore titanic</a>
+    <a class="dropdown-item" href="../articles/explore-mtcars.html">Explore mtcars</a>
+    <a class="dropdown-item" href="../articles/explore-penguins.html">Explore penguins</a>
+    <a class="dropdown-item" href="../articles/explore-titanic.html">Explore titanic</a>
     <a class="dropdown-item" href="../articles/predict.html">Predict</a>
     <a class="dropdown-item" href="../articles/report-target.html">Report target</a>
     <a class="dropdown-item" href="../articles/report-targetpct.html">Report targetpct</a>
@@ -93,6 +93,8 @@
 <div class="section level3">
 <h3 id="bug-fixes--internal-1-3-0">Bug fixes / internal<a class="anchor" aria-label="anchor" href="#bug-fixes--internal-1-3-0"></a></h3>
 <ul><li>fix undefined / not meaningful values in abtest() shiny-app</li>
+<li>rename vignettes <code>explore_*.Rmd</code> to <code>explore-*.Rmd</code>
+</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -288,9 +290,9 @@
 <li>
 <code><a href="../reference/explain_logreg.html">explain_logreg()</a></code>: parameter out (“tibble” | “model”)</li>
 <li>
-<code><a href="../articles/explore_titanic.html">vignette("explore_titanic")</a></code>: change to tibble</li>
+<code>vignette("explore_titanic")</code>: change to tibble</li>
 <li>
-<code><a href="../articles/explore_mtcars.html">vignette("explore_mtcars")</a></code>: add explanations</li>
+<code>vignette("explore_mtcars")</code>: add explanations</li>
 <li>change theme_minimal to theme_light</li>
 <li>dwh_fastload(): add parameters overwrite and append</li>
 <li>update README.md</li>
@@ -298,9 +300,9 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="explore-061-2020-09-04">explore 0.6.1 (2020-09-04)<a class="anchor" aria-label="anchor" href="#explore-061-2020-09-04"></a></h2><p class="text-muted">CRAN release: 2020-09-04</p>
 <ul><li>Fix Github URL</li>
-<li>new Vignette <code><a href="../articles/explore_penguins.html">vignette("explore_penguins")</a></code>
+<li>new Vignette <code>vignette("explore_penguins")</code>
 </li>
-<li>new Vignette <code><a href="../articles/explore_titanic.html">vignette("explore_titanic")</a></code> (count data)</li>
+<li>new Vignette <code>vignette("explore_titanic")</code> (count data)</li>
 <li>
 <code><a href="../reference/explore_count.html">explore_count()</a></code>: plot count() output</li>
 <li>add default parameter <code>n</code> for count data: <code><a href="../reference/explore.html">explore()</a></code>, <code><a href="../reference/explore_all.html">explore_all()</a></code>, <code><a href="../reference/explore_tbl.html">explore_tbl()</a></code>, <code><a href="../reference/explain_tree.html">explain_tree()</a></code>, <code><a href="../reference/report.html">report()</a></code>, <code><a href="../reference/describe.html">describe()</a></code>, <code><a href="../reference/describe_cat.html">describe_cat()</a></code>, <code><a href="../reference/describe_num.html">describe_num()</a></code>, <code><a href="../reference/describe_tbl.html">describe_tbl()</a></code>, <code><a href="../reference/total_fig_height.html">total_fig_height()</a></code>

@@ -25,16 +25,16 @@
     <loc>/articles/explain.html</loc>
   </url>
   <url>
+    <loc>/articles/explore-mtcars.html</loc>
+  </url>
+  <url>
+    <loc>/articles/explore-penguins.html</loc>
+  </url>
+  <url>
+    <loc>/articles/explore-titanic.html</loc>
+  </url>
+  <url>
     <loc>/articles/explore.html</loc>
-  </url>
-  <url>
-    <loc>/articles/explore_mtcars.html</loc>
-  </url>
-  <url>
-    <loc>/articles/explore_penguins.html</loc>
-  </url>
-  <url>
-    <loc>/articles/explore_titanic.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
