@@ -21,6 +21,7 @@
 ## Bug fixes / internal
 
 * fix undefined / not meaningful values in abtest() shiny-app
+* rename vignettes `explore_*.Rmd` to `explore-*.Rmd`
 
 # explore 1.2.0
 

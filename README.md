@@ -73,7 +73,9 @@ beer |> explore(alcohol_vol_pct, energy_kcal_100ml, target = type)
 
 ``` r
 # explore manually with color and interactive
-beer |> explore(sugar_g_100ml, color = "gold") |> interact()
+beer |> 
+  explore(sugar_g_100ml, color = "gold") |> 
+  interact()
 ```
 
 <img src="man/figures/explore-beer-interact.png" alt="explore with color and interactive" width="400"/>
@@ -82,8 +84,8 @@ beer |> explore(sugar_g_100ml, color = "gold") |> interact()
 ## Get started
 
 * [Get started with {explore}](https://rolkra.github.io/explore/articles/explore.html)
-* [{explore} penguins (tidy-data)](https://rolkra.github.io/explore/articles/explore_penguins.html)
-* [{explore} titanic (count-data)](https://rolkra.github.io/explore/articles/explore_titanic.html)
+* [Explore penguins (tidy-data)](https://rolkra.github.io/explore/articles/explore_penguins.html)
+* [Explore titanic (count-data)](https://rolkra.github.io/explore/articles/explore_titanic.html)
 * [Explain a target using machine learning](https://rolkra.github.io/explore/articles/explain.html)
 * [Generate a report of all variables in the  data](https://rolkra.github.io/explore/articles/report.html)
 * [Generate a report of all patterns in the  data](https://rolkra.github.io/explore/articles/report-target.html)

@@ -24,9 +24,8 @@ The titanic dataset is available in base R. The data has 5 variables and only 32
 
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
-library(tibble)
 library(explore)
-titanic <- as_tibble(Titanic)
+titanic <- use_data_titanic(count = TRUE)
 ```
 
 ### Explore dataset

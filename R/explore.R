@@ -950,7 +950,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
-      geom_point(alpha = 0.45, size = 2.5) +
+      geom_point(alpha = 0.60, size = 2.5) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),
