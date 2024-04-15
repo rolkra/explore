@@ -10,7 +10,7 @@ Simplifies Exploratory Data Analysis:
 
 -   **Interactive data exploration** using `explore()`
 -   Generate an **automated report** of your data (or patterns in your data) using `report()`
--   **Manual exploration** using a easy to remember set of functions: `explore()`, `describe()`, `explain_*()`, `abtest()`, ...
+-   **Manual exploration** using `explore()`, `describe()`, `explain_*()`, `abtest()`, ...
 
 ``` r
 # install from CRAN
