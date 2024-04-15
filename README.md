@@ -6,24 +6,15 @@
 
 <!-- badges: end -->
 
-Simplifies Exploratory Data Analysis.
-
-## Overview
-
-There are three ways to use the package:
+Simplifies Exploratory Data Analysis:
 
 -   **Interactive data exploration** using `explore()`
 -   Generate an **automated report** of your data (or patterns in your data) using `report()`
--   **Manual exploration** using a easy to remember set of functions: `explore()`, `describe()`, `explain_*()`, `abtest()`.
-
-You can use {explore} with **tidy data** (each row is an observation) or with **count data** (each row is a group of observations with same attributes, one variable stores the number of observations, typically `n`)
+-   **Manual exploration** using a easy to remember set of functions: `explore()`, `describe()`, `explain_*()`, `abtest()`, ...
 
 ``` r
 # install from CRAN
 install.packages("explore")
-
-# install DEV version (github)
-devtools::install_github("rolkra/explore")
 ```
 
 ## Examples
@@ -89,6 +80,6 @@ beer |>
 * [Explain a target using machine learning](https://rolkra.github.io/explore/articles/explain.html)
 * [Generate a report of all variables in the  data](https://rolkra.github.io/explore/articles/report.html)
 * [Generate a report of all patterns in the  data](https://rolkra.github.io/explore/articles/report-target.html)
-* [Data in {explore}](https://rolkra.github.io/explore/articles/data.html)
+* [Datasets in {explore}](https://rolkra.github.io/explore/articles/data.html)
 * [A/B testing](https://rolkra.github.io/explore/articles/abtest.html)
 * and more ...
