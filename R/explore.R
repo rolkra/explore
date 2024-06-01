@@ -911,6 +911,26 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     target_type = "oth"
   }
 
+  # use geom_point?
+  use_points <- ifelse(
+    x_type == "num" & y_type == "num" &
+      nrow(data) <= 500 &
+      x_descr$unique / nrow(data) >= 0.1 &
+      y_descr$unique / nrow(data) >= 0.1,
+    TRUE,
+    FALSE
+  )
+
+  # correlation for geom_point
+  if (use_points) {
+    reg_line <- lm(data[[y_txt]] ~ data[[x_txt]])
+    reg_intercept <- reg_line$coefficients[1]
+    reg_slope <- reg_line$coefficients[2]
+    reg_data <- data[, c(x_txt, y_txt)] %>%
+      dplyr::filter(!is.na(!!x_quo) & !is.na(!!y_quo))
+    reg_corr <- cor(reg_data[[y_txt]], reg_data[[x_txt]])
+  }
+
   # auto_scale?
   if(x_type == "num")  {
 
@@ -927,16 +947,6 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   } # if num
 
-  # use geom_point?
-  use_points <- ifelse(
-      x_type == "num" & y_type == "num" &
-      nrow(data) <= 500 &
-      x_descr$unique / nrow(data) >= 0.1 &
-      y_descr$unique / nrow(data) >= 0.1,
-      TRUE,
-      FALSE
-  )
-
   if(x_type == "num" & y_type == "num" & use_points)  {
 
     if (!is.na(target_txt)) {
@@ -947,7 +957,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     }
     data[[target_txt]] <- forcats::fct_na_value_to_level(data[[target_txt]], level = ".NA")
 
-
+    ## points x,y + color by target
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
       geom_point(alpha = 0.60, size = 2.5) +
@@ -965,14 +975,23 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
     } else {
 
+      ## points x,y
       p <- data %>%
         ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-        geom_point(alpha = 0.45, size = 2.5, color = color[1]) +
+        geom_point(alpha = 0.6, size = 2.5, color = color[1]) +
+        geom_abline(intercept = reg_intercept, slope = reg_slope,
+                    color = "#7f7f7f", alpha = 0.5,
+                    linetype = "solid", size = 1) +
         theme(
           panel.background = element_rect("white"),
           panel.grid.major = element_line("grey85"),
           panel.grid.minor = element_line("grey85"),
-          panel.border = element_rect(fill = NA, color = "lightgrey"))
+          panel.border = element_rect(fill = NA, color = "lightgrey")) +
+        labs(subtitle = paste("Correlation =", round(reg_corr,2)))
+
+      if (is.na(title)) {
+        p <- p + ggtitle(" ")
+      }
 
     }
   }
