@@ -11,7 +11,7 @@ explore_density(
   title = "",
   min_val = NA,
   max_val = NA,
-  color = c("lightgrey", "#939FB9"),
+  color = c("#C1D5E6", "#939FB9"),
   auto_scale = TRUE,
   max_target_cat = 5,
   ...

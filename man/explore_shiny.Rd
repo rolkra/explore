@@ -4,7 +4,7 @@
 \alias{explore_shiny}
 \title{Explore dataset interactive}
 \usage{
-explore_shiny(data, target, color = c("lightgrey", "#939FB9"))
+explore_shiny(data, target, color = c("#C1D5E6", "#939FB9"))
 }
 \arguments{
 \item{data}{A dataset}

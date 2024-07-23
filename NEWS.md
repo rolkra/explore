@@ -1,3 +1,7 @@
+# explore 1.3.2
+
+* change default color from grey to #C1D5E6 (grey/blue)
+
 # explore 1.3.1
 
 ## New features

@@ -278,7 +278,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @return Plot object (bar chart)
 #' @export
 
-explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#939FB9"), legend_position = "right", label, label_size = 2.7, ...)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("#C1D5E6", "#939FB9"), legend_position = "right", label, label_size = 2.7, ...)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -538,7 +538,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("lightgrey", "#939FB9"), auto_scale = TRUE, max_target_cat = 5, ...)   {
+explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("#C1D5E6", "#939FB9"), auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -1186,7 +1186,7 @@ explore_tbl <- function(data, n)  {
 #' }
 #' @export
 
-explore_shiny <- function(data, target, color = c("lightgrey", "#939FB9"))  {
+explore_shiny <- function(data, target, color = c("#C1D5E6", "#939FB9"))  {
 
   # check if interactive session
   if (!interactive()) {
