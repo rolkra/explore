@@ -714,7 +714,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgrey", "#939FB9"), split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("#C1D5E6", "#939FB9"), split = TRUE)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
