@@ -1731,7 +1731,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NA, min_val = NA
 #'   explore_count(Species)
 #' @export
 
-explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, color = c("lightgrey", "#939FB9"), flip = NA)  {
+explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, color = c("#C1D5E6", "#939FB9"), flip = NA)  {
 
   # define variables for CRAN-package check
   plot_cat <- NULL
