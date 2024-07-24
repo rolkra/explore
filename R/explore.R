@@ -859,7 +859,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("lightgr
 #' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
 #' @export
 
-explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "grey", ...)  {
+explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "#C1D5E6", ...)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -960,7 +960,7 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     ## points x,y + color by target
     p <- data %>%
       ggplot(aes(x = !!x_quo, y = !!y_quo, color = !!target_quo)) +
-      geom_point(alpha = 0.60, size = 2.5) +
+      geom_point(alpha = 0.75, size = 2.5) +
       theme(
         panel.background = element_rect("white"),
         panel.grid.major = element_line("grey85"),
