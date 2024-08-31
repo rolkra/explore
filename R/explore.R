@@ -859,7 +859,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("#ADD8E6
 #' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
 #' @export
 
-explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = "#ADD8E6", ...)  {
+explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = c("#ADD8E6", "#939FB9"), ...)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -978,7 +978,8 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
       ## points x,y
       p <- data %>%
         ggplot(aes(x = !!x_quo, y = !!y_quo)) +
-        geom_point(alpha = 0.6, size = 2.5, color = color[1]) +
+        geom_point(alpha = 0.6, size = 2.5, shape = 21,
+                   color = color[2], fill = color[1]) +
         geom_abline(intercept = reg_intercept, slope = reg_slope,
                     color = "#7f7f7f", alpha = 0.5,
                     linetype = "solid", size = 1) +

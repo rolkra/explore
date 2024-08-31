@@ -1,6 +1,7 @@
 # explore 1.3.2
 
 * change default color from grey to "#ADD8E6" (grey/blue)
+* add border color to geom_point plots (correlation x,y)
 
 # explore 1.3.1
 
