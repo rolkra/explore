@@ -15,7 +15,7 @@ explore_count(
   numeric = FALSE,
   max_cat = 30,
   max_target_cat = 5,
-  color = c("#C1D5E6", "#939FB9"),
+  color = c("#ADD8E6", "#939FB9"),
   flip = NA
 )
 }
