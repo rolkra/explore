@@ -629,8 +629,9 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
     if (show_mean_var) {
       if ((auto_scale == FALSE) | (mean_var <= max_val)) {
         p <- p + geom_vline(xintercept = mean_var,
-                            color = "#7f7f7f", alpha = 0.5,
-                            linetype = "dashed", lwd = 1)
+                            #color = "#7f7f7f", alpha = 0.5,
+                            color = mix_color(color[1], "black", n = 5)[2],
+                            alpha = 0.75, linetype = "dashed", lwd = 1)
       }
     }
 
@@ -976,13 +977,15 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
     } else {
 
       ## points x,y
+      color_dark <- mix_color(color[1], "black", n = 5)[2]
       p <- data %>%
         ggplot(aes(x = !!x_quo, y = !!y_quo)) +
         geom_point(alpha = 0.6, size = 2.5, shape = 21,
-                   color = color[2], fill = color[1]) +
+                   color = color_dark, fill = color[1]) +
         geom_abline(intercept = reg_intercept, slope = reg_slope,
-                    color = "#7f7f7f", alpha = 0.5,
-                    linetype = "solid", size = 1) +
+                    #color = "#7f7f7f", alpha = 0.5,
+                    color = color_dark,
+                    alpha = 0.75, linetype = "solid", size = 1) +
         theme(
           panel.background = element_rect("white"),
           panel.grid.major = element_line("grey85"),
