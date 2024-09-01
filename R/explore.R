@@ -1,3 +1,6 @@
+## default color "#ADD8E6", #6BAED6 (original)
+## default color "#ADD8E6", "#6BAED6" (actual)
+
 #' Explore categorical variable + target
 #'
 #' Create a plot to explore relation between categorical variable and a binary target
@@ -278,7 +281,7 @@ target_explore_num <- function(data, var, target = "target_ind", min_val = NA, m
 #' @return Plot object (bar chart)
 #' @export
 
-explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("#ADD8E6", "#939FB9"), legend_position = "right", label, label_size = 2.7, ...)  {
+explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, max_cat = 30, max_target_cat = 5, color = c("#ADD8E6", "#6BAED6"), legend_position = "right", label, label_size = 2.7, ...)  {
 
   # define variables for CRAN-package check
   na_ind <- NULL
@@ -538,7 +541,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
 
-explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("#ADD8E6", "#939FB9"), auto_scale = TRUE, max_target_cat = 5, ...)   {
+explore_density <- function(data, var, target, title = "", min_val = NA, max_val = NA, color = c("#ADD8E6", "#6BAED6"), auto_scale = TRUE, max_target_cat = 5, ...)   {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -715,7 +718,7 @@ explore_density <- function(data, var, target, title = "", min_val = NA, max_val
 #' explore_all(iris, target = is_virginica)
 #' @export
 
-explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("#ADD8E6", "#939FB9"), split = TRUE)  {
+explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("#ADD8E6", "#6BAED6"), split = TRUE)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -860,7 +863,7 @@ explore_all <- function(data, n, target, ncol = 2, targetpct, color = c("#ADD8E6
 #' explore_cor(iris, x = Sepal.Length, y = Sepal.Width)
 #' @export
 
-explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = c("#ADD8E6", "#939FB9"), ...)  {
+explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA, auto_scale = TRUE, title = NA, color = c("#ADD8E6", "#6BAED6"), ...)  {
 
   # check parameter data
   check_data_frame_non_empty(data)
@@ -1190,7 +1193,7 @@ explore_tbl <- function(data, n)  {
 #' }
 #' @export
 
-explore_shiny <- function(data, target, color = c("#ADD8E6", "#939FB9"))  {
+explore_shiny <- function(data, target, color = c("#ADD8E6", "#6BAED6"))  {
 
   # check if interactive session
   if (!interactive()) {
@@ -1735,7 +1738,7 @@ explore_targetpct <- function(data, var, target = NULL, title = NA, min_val = NA
 #'   explore_count(Species)
 #' @export
 
-explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, color = c("#ADD8E6", "#939FB9"), flip = NA)  {
+explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title = NA, numeric = FALSE, max_cat = 30, max_target_cat = 5, color = c("#ADD8E6", "#6BAED6"), flip = NA)  {
 
   # define variables for CRAN-package check
   plot_cat <- NULL
