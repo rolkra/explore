@@ -928,12 +928,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   # correlation for geom_point
   if (use_points) {
-    reg_line <- lm(data[[y_txt]] ~ data[[x_txt]])
+    reg_line <- stats::lm(data[[y_txt]] ~ data[[x_txt]])
     reg_intercept <- reg_line$coefficients[1]
     reg_slope <- reg_line$coefficients[2]
     reg_data <- data[, c(x_txt, y_txt)] %>%
       dplyr::filter(!is.na(!!x_quo) & !is.na(!!y_quo))
-    reg_corr <- cor(reg_data[[y_txt]], reg_data[[x_txt]])
+    reg_corr <- stats::cor(reg_data[[y_txt]], reg_data[[x_txt]])
   }
 
   # auto_scale?
