@@ -3,7 +3,7 @@
 ## New features
 
 * change default color from grey to "#ADD8E6", "#6BAED6"
-* add border color to geom_point plots (correlation x,y)
+* add adaptive border color to geom_point plots (correlation x,y)
 * new adaptive color for mean & regression line
 
 # explore 1.3.1
