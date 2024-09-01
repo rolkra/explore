@@ -14,7 +14,7 @@ explore_cor(
   max_val = NA,
   auto_scale = TRUE,
   title = NA,
-  color = c("#ADD8E6", "#6BAED6"),
+  color = c("#ADD8E6", "#7BB8DA"),
   ...
 )
 }

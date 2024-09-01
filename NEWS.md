@@ -2,9 +2,13 @@
 
 ## New features
 
-* change default color from grey to "#ADD8E6", "#6BAED6"
+* change default color from grey to "#ADD8E6", "#7BB8DA"
 * add adaptive border color to geom_point plots (correlation x,y)
 * new adaptive color for mean & regression line
+
+## Bug fixes / internal
+
+* drop CRAN download statistics
 
 # explore 1.3.1
 
