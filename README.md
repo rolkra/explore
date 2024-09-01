@@ -2,8 +2,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml) [![CRAN Version](http://www.r-pkg.org/badges/version/explore)](https://cran.r-project.org/package=explore)
-
+[![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml) 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tidymodels)](https://CRAN.r-project.org/package=explore)
+[![Downloads](https://cranlogs.r-pkg.org/badges/tidymodels)](https://CRAN.r-project.org/package=explore)
 <!-- badges: end -->
 
 Simplifies Exploratory Data Analysis:
