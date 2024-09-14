@@ -1976,10 +1976,10 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 #' @param data A dataset (categories + frequency)
 #' @param var_label Variable containing the label
 #' @param var_value Variable containing the value
+#' @param lab_label Label of label variable
+#' @param lab_value Label of value variable
 #' @param title Title of the plot
 #' @param subtitle Subtitle of the plot
-#' @param xlab Label x-axis
-#' @param ylab Label y-axis
 #' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted
 #' @param color Color for bar
@@ -1993,8 +1993,8 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 #' @export
 
 explore_col <- function(data, var_label, var_value,
-                        title = NA, subtitle = "",
                         lab_label = "", lab_value = "",
+                        title = NA, subtitle = "",
                         numeric = FALSE,
                         max_cat = 30,
                         flip = NA,

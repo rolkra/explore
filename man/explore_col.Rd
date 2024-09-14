@@ -8,10 +8,10 @@ explore_col(
   data,
   var_label,
   var_value,
-  title = NA,
-  subtitle = "",
   lab_label = "",
   lab_value = "",
+  title = NA,
+  subtitle = "",
   numeric = FALSE,
   max_cat = 30,
   flip = NA,
@@ -26,6 +26,10 @@ explore_col(
 
 \item{var_value}{Variable containing the value}
 
+\item{lab_label}{Label of label variable}
+
+\item{lab_value}{Label of value variable}
+
 \item{title}{Title of the plot}
 
 \item{subtitle}{Subtitle of the plot}
@@ -37,10 +41,6 @@ explore_col(
 \item{flip}{Flip plot? (for categorical variables)}
 
 \item{color}{Color for bar}
-
-\item{xlab}{Label x-axis}
-
-\item{ylab}{Label y-axis}
 }
 \value{
 Plot object
