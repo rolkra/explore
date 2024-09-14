@@ -8,15 +8,12 @@ explore_col(
   data,
   var_label,
   var_value,
-  lab_label = "",
-  lab_value = "",
   title = NA,
   subtitle = "",
   numeric = FALSE,
   max_cat = 30,
   flip = NA,
-  color = "#ADD8E6",
-  ...
+  color = "#ADD8E6"
 )
 }
 \arguments{
@@ -25,10 +22,6 @@ explore_col(
 \item{var_label}{Variable containing the label}
 
 \item{var_value}{Variable containing the value}
-
-\item{lab_label}{Label of label variable}
-
-\item{lab_value}{Label of value variable}
 
 \item{title}{Title of the plot}
 

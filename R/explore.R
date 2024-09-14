@@ -1976,14 +1976,12 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 #' @param data A dataset (categories + frequency)
 #' @param var_label Variable containing the label
 #' @param var_value Variable containing the value
-#' @param lab_label Label of label variable
-#' @param lab_value Label of value variable
 #' @param title Title of the plot
 #' @param subtitle Subtitle of the plot
 #' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted
-#' @param color Color for bar
 #' @param flip Flip plot? (for categorical variables)
+#' @param color Color for bar
 #' @return Plot object
 #' @examples
 #' library(magrittr)
@@ -1993,19 +1991,53 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 #' @export
 
 explore_col <- function(data, var_label, var_value,
-                        lab_label = "", lab_value = "",
                         title = NA, subtitle = "",
                         numeric = FALSE,
                         max_cat = 30,
                         flip = NA,
-                        color = "#ADD8E6",
-                        ...) {
+                        color = "#ADD8E6") {
 
-  explore_count(data, {{ var_label }}, n = {{ var_value }},
+  # check parameters
+  check_data_frame_non_empty(data)
+  if (ncol(data) < 2) {
+    stop("data must contain at least 2 variables.")
+  }
+
+  # parameter var_label
+  if (!missing(var_label))  {
+    lab_quo <- enquo(var_label)
+    lab_txt <- quo_name(lab_quo)[[1]]
+    if (!lab_txt %in% names(data)) {
+      stop(paste0("variable '", lab_txt, "' not found"))
+    }
+  } else {
+    lab_txt <- names(data)[1]
+  }
+
+  # parameter var_value
+  if (!missing(var_value))  {
+    val_quo <- enquo(var_value)
+    val_txt <- quo_name(val_quo)[[1]]
+    if (!val_txt %in% names(data)) {
+      stop(paste0("variable '", val_txt, "' not found"))
+    }
+  } else {
+    val_txt <- names(data)[2]
+  }
+
+  if (!is.numeric(data[[val_txt]])) {
+    stop("var_value must be a numeric variable")
+  }
+
+  data_plot <- data[ , c(lab_txt, val_txt)]
+  names(data_plot) <- c("label", "value")
+
+  explore_count(data_plot, label, n = value,
                 title = title, numeric = numeric, max_cat = max_cat,
-                flip = flip, color = color,
-                ...) +
-    labs(subtitle = subtitle) + xlab(lab_label) + ylab(lab_value)
+                flip = flip, color = color) +
+    ggplot2::labs(subtitle = subtitle) +
+    # ggplot2::xlab(lab_txt) +
+    ggplot2::ylab(val_txt)
 
 } # explore_col
 
