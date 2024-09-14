@@ -1,3 +1,9 @@
+# explore 1.3.3
+
+## New features
+
+* add `explore_col()` for simple bar plots without aggregation
+
 # explore 1.3.2
 
 ## New features
