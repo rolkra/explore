@@ -1020,6 +1020,12 @@ explore_cor <- function(data, x, y, target, bins = 8, min_val = NA, max_val = NA
 
   }
 
+  else if(x_type == "cat" & is.numeric(data[[y_txt]]) & (x_descr$unique == nrow(data))) {
+
+     p <- explore_col(data, !!x_quo, !!y_quo, ...)
+
+  }
+
   else if(x_type == "cat" & y_type == "num") {
 
     data[[x_txt]] <- as.factor(data[[x_txt]])
@@ -1980,6 +1986,7 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
 #' @param subtitle Subtitle of the plot
 #' @param numeric Display variable as numeric (not category)
 #' @param max_cat Maximum number of categories to be plotted
+#' @param na Value to use for NA
 #' @param flip Flip plot? (for categorical variables)
 #' @param color Color for bar
 #' @return Plot object
@@ -1994,6 +2001,7 @@ explore_col <- function(data, var_label, var_value,
                         title = NA, subtitle = "",
                         numeric = FALSE,
                         max_cat = 30,
+                        na = 0,
                         flip = NA,
                         color = "#ADD8E6") {
 
@@ -2027,6 +2035,11 @@ explore_col <- function(data, var_label, var_value,
 
   if (!is.numeric(data[[val_txt]])) {
     stop("var_value must be a numeric variable")
+  }
+
+  # replance NA values (is wanted)
+  if (!is.na(na)) {
+    data[val_txt] <- ifelse(is.na(data[[val_txt]]), na, data[[val_txt]])
   }
 
   data_plot <- data[ , c(lab_txt, val_txt)]

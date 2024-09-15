@@ -12,6 +12,7 @@ explore_col(
   subtitle = "",
   numeric = FALSE,
   max_cat = 30,
+  na = 0,
   flip = NA,
   color = "#ADD8E6"
 )
@@ -30,6 +31,8 @@ explore_col(
 \item{numeric}{Display variable as numeric (not category)}
 
 \item{max_cat}{Maximum number of categories to be plotted}
+
+\item{na}{Value to use for NA}
 
 \item{flip}{Flip plot? (for categorical variables)}
 
