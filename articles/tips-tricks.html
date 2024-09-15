@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.3.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -244,6 +244,17 @@ data_dict.md)</p>
 <code class="sourceCode R"><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_color.html">get_color</a></span><span class="op">(</span><span class="st">"google"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/show_color.html">show_color</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tips-tricks_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="period-yyyymm">Period yyyymm<a class="anchor" aria-label="anchor" href="#period-yyyymm"></a>
+</h2>
+<p>This is how to calculate with periods (format yyyymm)</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yyyymm_calc.html">yyyymm_calc</a></span><span class="op">(</span><span class="fl">202410</span>, add_month <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 202501</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/yyyymm_calc.html">yyyymm_calc</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">202408</span>, <span class="fl">202409</span>, <span class="fl">202410</span><span class="op">)</span>, add_month <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, add_year <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 202307 202308 202309</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
