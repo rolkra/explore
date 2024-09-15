@@ -57,3 +57,40 @@ test_that("mix_color()", {
                "#0000FF"
   )
 })
+
+# yyyymm_calc -------------------------------------------------------------
+
+# add month
+test_that("yyyymm_calc", {
+  expect_equal(yyyymm_calc(202410, add_month = 1),
+               202411
+  )
+})
+
+# add month
+test_that("yyyymm_calc", {
+  expect_equal(yyyymm_calc(202410, add_month = 3),
+               202501
+  )
+})
+
+# add year
+test_that("yyyymm_calc", {
+  expect_equal(yyyymm_calc(202410, add_year = 1),
+               202510
+  )
+})
+
+# add month & year
+test_that("yyyymm_calc", {
+  expect_equal(yyyymm_calc(202410, add_month = 3, add_year = 1),
+               202601
+  )
+})
+
+# add month & year (negative)
+test_that("yyyymm_calc", {
+  expect_equal(yyyymm_calc(202401, add_month = -3, add_year = -1),
+               202210
+  )
+})

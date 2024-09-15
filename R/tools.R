@@ -1056,3 +1056,48 @@ cut_vec_num_avg <- function(values, bins = 8)  {
   data_cut[["avg_"]]
 
 } ## cut_var
+
+#' Calculate with periods (format yyyymm)
+#'
+#' @param yyyymm Input vector of periods (format yyyymm)
+#' @param add_month How many months to add (can be negative too)
+#' @param add_year How many years to add (can be negative too)
+#' @return Vector of periods (format yyyymm)
+#' @export
+#' @examples
+#' yyyymm_calc(202412, add_month = 1)
+#' yyyymm_calc(c(202411,202412,202501), add_month = -1, add_year = 1)
+
+yyyymm_calc <- function(yyyymm, add_month = 0, add_year = 0) {
+
+  yyyymm_is_num <- ifelse(is.numeric(yyyymm), TRUE, FALSE)
+  if(!yyyymm_is_num) {
+    yyyymm <- as.numeric(yyyymm)
+  }
+
+  # split yyyymm into year and month
+  year <- floor(yyyymm / 100)
+  month <- floor(yyyymm - year*100)
+
+  # add all month (from add_month and add_year)
+  month_added <- month + add_month + add_year * 12
+
+  # if month > 12 adapt year and month
+  year_diff <- floor(month_added / 12)
+  year_new <- year + year_diff
+  month_new <- month_added - year_diff*12
+
+  # if month == 0, adapt year and month
+  year_new <- ifelse(month_new == 0, year_new - 1, year_new)
+  month_new <- ifelse(month_new == 0, 12, month_new)
+
+  # calculate new yyyymm
+  yyyymm_new <- year_new * 100 + month_new
+
+  if (yyyymm_is_num) {
+    yyyymm_new
+  } else {
+    as.character(yyyymm_new)
+  }
+
+} # yyyymm_calc
