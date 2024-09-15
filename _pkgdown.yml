@@ -56,6 +56,7 @@ reference:
     - get_color
     - mix_color
     - show_color
+    - yyyymm_calc
     - starts_with("format_")
     - starts_with("target_explore")
   - title: Internal
