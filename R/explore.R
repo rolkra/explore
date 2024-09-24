@@ -2045,6 +2045,11 @@ explore_col <- function(data, var_label, var_value,
   data_plot <- data[ , c(lab_txt, val_txt)]
   names(data_plot) <- c("label", "value")
 
+  #- if no title is provided, use default
+  if (is.na(title) | nchar(title == 0)) {
+    title <- lab_txt
+  }
+
   explore_count(data_plot, label, n = value,
                 title = title, numeric = numeric, max_cat = max_cat,
                 flip = flip, color = color) +
