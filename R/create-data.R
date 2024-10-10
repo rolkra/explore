@@ -801,8 +801,8 @@ create_data_abtest <- function(n_a = 100, n_b = 100,
 
   # check unit
   if (success_unit == "percent") {
-    success_a <- round(n_a * success_a/10, 0)
-    success_b <- round(n_b * success_b/10, 0)
+    success_a <- round(n_a * success_a/100, 0)
+    success_b <- round(n_b * success_b/100, 0)
   }
 
   # create count data
