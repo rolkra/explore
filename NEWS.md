@@ -5,6 +5,11 @@
 * add `explore_col()` for simple bar plots without aggregation
 * add `yyyymm_calc()` for calculation with periods (format yyyymm)
 
+## Bug fixes / internal
+
+* fix create_data_abtest() with success_unit = "percent"
+
+
 # explore 1.3.2
 
 ## New features
