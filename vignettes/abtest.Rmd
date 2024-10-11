@@ -108,3 +108,23 @@ data %>% abtest(Sex == "Female", target = Survived, n = n, sign_level = 0.05)
 ```
 
 The A/B test shows a statistically significant difference!
+
+### A/B testing manual
+
+Let's say you have the results of an experiment and you want to test for statistical significance using code:
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+create_data_abtest(
+  n_a = 1000, n_b = 1000,
+  success_a = 120, success_b = 210,
+  success_unit = "count") %>% 
+abtest(sign_level = 0.05)
+```
+
+```{r message=FALSE, warning=FALSE, fig.width=5}
+create_data_abtest(
+  n_a = 1000, n_b = 1000,
+  success_a = 12, success_b = 21,
+  success_unit = "percent") %>% 
+abtest(sign_level = 0.05)
+```

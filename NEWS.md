@@ -4,6 +4,7 @@
 
 * add `explore_col()` for simple bar plots without aggregation
 * add `yyyymm_calc()` for calculation with periods (format yyyymm)
+* update vignette `abtest.Rmd`
 
 ## Bug fixes / internal
 
