@@ -78,7 +78,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2024-10-10</h4>
+            <h4 data-toc-skip class="date">2024-10-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/abtest.Rmd" class="external-link"><code>vignettes/abtest.Rmd</code></a></small>
       <div class="d-none name"><code>abtest.Rmd</code></div>
@@ -203,6 +203,26 @@ significant?</p>
 <p><img src="abtest_files/figure-html/unnamed-chunk-10-1.png" width="480"></p>
 <p>The A/B test shows a statistically significant difference!</p>
 </div>
+</div>
+<div class="section level3">
+<h3 id="ab-testing-manual">A/B testing manual<a class="anchor" aria-label="anchor" href="#ab-testing-manual"></a>
+</h3>
+<p>Let’s say you have the results of an experiment and you want to test
+for statistical significance using code:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_data_abtest.html">create_data_abtest</a></span><span class="op">(</span></span>
+<span>  n_a <span class="op">=</span> <span class="fl">1000</span>, n_b <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  success_a <span class="op">=</span> <span class="fl">120</span>, success_b <span class="op">=</span> <span class="fl">210</span>,</span>
+<span>  success_unit <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span>sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+<p><img src="abtest_files/figure-html/unnamed-chunk-11-1.png" width="480"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/create_data_abtest.html">create_data_abtest</a></span><span class="op">(</span></span>
+<span>  n_a <span class="op">=</span> <span class="fl">1000</span>, n_b <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  success_a <span class="op">=</span> <span class="fl">12</span>, success_b <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>  success_unit <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span>sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+<p><img src="abtest_files/figure-html/unnamed-chunk-12-1.png" width="480"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
