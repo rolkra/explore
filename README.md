@@ -10,8 +10,10 @@
 Simplifies Exploratory Data Analysis:
 
 -   **Interactive data exploration** using `explore()`
+-   Use **AI** to unveil hidden patterns in your data (xgboost, RF, logreg, DT)
 -   Generate an **automated report** of your data (or patterns in your data) using `report()`
 -   **Manual exploration** using `explore()`, `describe()`, `explain_*()`, `abtest()`, ...
+-   Ready to use **Datasets for teaching & testing**
 
 ``` r
 # install from CRAN

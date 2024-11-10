@@ -142,3 +142,21 @@ use_data_beer <- function() {
   # return data as tibble
   tibble::as_tibble(data)
 }
+
+#' Use the wordle data set
+#'
+#' This data set contains the result of a real wordle challange (in german language)
+#' between tow players. Wordle is a game where a player guesses a five-letter
+#' word in six tries. The variable "try" reflects the success of player A and B.
+#' Other variables like "noun", "aeiou", "unique", "common" and "rare" reflect
+#' the properties of the word.
+#' @return Dataset
+#' @examples
+#' use_data_wordle()
+#' @export
+
+use_data_wordle <- function() {
+  file <- system.file("extdata", "wordle.rds", package="explore")
+  data <- readRDS(file = file)
+  return(tibble::as_tibble(data))
+}

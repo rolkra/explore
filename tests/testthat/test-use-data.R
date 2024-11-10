@@ -8,6 +8,7 @@ test_that("use_data returns a data frame.", {
   expect_s3_class(use_data_penguins(), "data.frame")
   expect_s3_class(use_data_titanic(), "data.frame")
   expect_s3_class(use_data_beer(), "data.frame")
+  expect_s3_class(use_data_wordle(), "data.frame")
 })
 
 # use_data returns data.frame with >0 rows ----------
@@ -20,6 +21,7 @@ test_that("use_data returns data frames with >0 rows", {
   expect_gt(nrow(use_data_penguins()), 0)
   expect_gt(nrow(use_data_titanic()), 0)
   expect_gt(nrow(use_data_beer()), 0)
+  expect_gt(nrow(use_data_wordle()), 0)
 })
 
 # use_data returns data.frame with >0 rows

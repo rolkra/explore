@@ -269,6 +269,7 @@ Use one of the prepared datasets to explore:
 * `use_data_penguins()`
 * `use_data_starwars()`
 * `use_data_titanic()`
+* `use_data_wordle()`
 
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=3}
 use_data_beer() %>% describe()
