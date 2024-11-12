@@ -2005,6 +2005,10 @@ explore_col <- function(data, var_label, var_value,
                         flip = NA,
                         color = "#ADD8E6") {
 
+  # define variables for CRAN-package check
+  label <- NULL
+  value <- NULL
+
   # check parameters
   check_data_frame_non_empty(data)
   if (ncol(data) < 2) {
@@ -2037,7 +2041,7 @@ explore_col <- function(data, var_label, var_value,
     stop("var_value must be a numeric variable")
   }
 
-  # replance NA values (is wanted)
+  # replace NA values (if wanted)
   if (!is.na(na)) {
     data[val_txt] <- ifelse(is.na(data[[val_txt]]), na, data[[val_txt]])
   }
@@ -2045,7 +2049,7 @@ explore_col <- function(data, var_label, var_value,
   data_plot <- data[ , c(lab_txt, val_txt)]
   names(data_plot) <- c("label", "value")
 
-  #- if no title is provided, use default
+  # if no title is provided, use default
   if (is.na(title) | nchar(title == 0)) {
     title <- lab_txt
   }
