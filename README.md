@@ -5,6 +5,7 @@
 [![R-CMD-check](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rolkra/explore/actions/workflows/R-CMD-check.yaml) 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/explore)](https://CRAN.r-project.org/package=explore)
 [![Downloads](https://cranlogs.r-pkg.org/badges/explore)](https://CRAN.r-project.org/package=explore)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/explore?color=green)](https://r-pkg.org/pkg/explore)
 <!-- badges: end -->
 
 Simplifies Exploratory Data Analysis:
