@@ -501,8 +501,8 @@ abtest_shiny <- function(size_a = 100, size_b = 100,
     output$graph <- shiny::renderPlot({
 
       if(input$success_unit == "percent") {
-        success_a <- input$size_a * input$success_a / 100
-        success_b <- input$size_b * input$success_b / 100
+        success_a <- round(input$size_a * input$success_a / 100)
+        success_b <- round(input$size_b * input$success_b / 100)
       } else {
         success_a <- input$success_a
         success_b <- input$success_b

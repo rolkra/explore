@@ -4,6 +4,10 @@
 
 * add new data for `use_data_wordle()`
 
+## Bug fixes / internal
+
+* round absolute numbers if `abtest()` is used with percentage
+
 # explore 1.3.3
 
 ## New features
