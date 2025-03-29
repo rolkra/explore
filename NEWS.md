@@ -7,6 +7,8 @@
 ## Bug fixes / internal
 
 * round absolute numbers if `abtest()` is used with percentage
+* accept vector as input for `mix_color()`, but only use first element
+* `geom_abline()`: switch from `size` to `linewidth` 
 
 # explore 1.3.3
 

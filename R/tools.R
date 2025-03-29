@@ -945,6 +945,10 @@ show_color <- function(color) {
 
 mix_color <- function(color1, color2 = NA, n = 5) {
 
+  # only use first element if it is a list
+  color1 <- color1[1]
+  color2 <- color2[1]
+
   if (is.na(color2)) {
     colors <- grDevices::colorRampPalette(c("white", color1, "black"))(n + 2)
     colors <- colors[-1]  # drop first color (black)
