@@ -1,3 +1,9 @@
+# explore 1.3.4
+
+## New features
+
+* add new data for `use_data_wordle()`
+
 # explore 1.3.3
 
 ## New features
@@ -10,7 +16,6 @@
 ## Bug fixes / internal
 
 * fix create_data_abtest() with success_unit = "percent"
-
 
 # explore 1.3.2
 
