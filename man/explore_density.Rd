@@ -45,7 +45,7 @@ Plot object (density plot)
 Create a density plot to explore numerical variable
 }
 \examples{
-explore_density(iris, "Sepal.Length")
+explore_density(iris, Sepal.Length)
 iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 explore_density(iris, Sepal.Length, target = is_virginica)
 }

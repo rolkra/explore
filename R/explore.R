@@ -537,7 +537,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 #' @param ... Further arguments
 #' @return Plot object (density plot)
 #' @examples
-#' explore_density(iris, "Sepal.Length")
+#' explore_density(iris, Sepal.Length)
 #' iris$is_virginica <- ifelse(iris$Species == "virginica", 1, 0)
 #' explore_density(iris, Sepal.Length, target = is_virginica)
 #' @export
