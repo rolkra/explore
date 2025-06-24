@@ -87,10 +87,19 @@ use_data_starwars <- function() {
 #' @seealso [`palmerpenguins::penguins`]
 #' @examples
 #' use_data_penguins()
+#' use_data_penguins(short_names = TRUE)
 #' @export
 
-use_data_penguins <- function() {
-  return(palmerpenguins::penguins)
+use_data_penguins <- function(short_names = FALSE) {
+
+  penguins_data <- palmerpenguins::penguins
+
+  if(short_names) {
+    col_names_vec <- c("species", "island", "bill_len", "bill_dep",
+                       "flipper_len", "body_mass", "sex", "year")
+    colnames(penguins_data) <- col_names_vec
+  }
+  return(tibble::as_tibble(penguins_data))
 }
 
 #' Use the titanic data set

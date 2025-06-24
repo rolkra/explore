@@ -3,6 +3,7 @@
 \docType{package}
 \name{explore-package}
 \alias{explore-package}
+\alias{_PACKAGE}
 \title{explore: Simplifies Exploratory Data Analysis}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

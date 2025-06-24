@@ -32,6 +32,11 @@ data <- use_data_penguins()
 glimpse(data)
 ```
 
+```{r message=FALSE, warning=FALSE}
+data <- use_data_penguins(short_names = TRUE)
+glimpse(data)
+```
+
 ### Starwars
 
 This data set comes with the dplyr package. It contains data of 87 star war characters.
