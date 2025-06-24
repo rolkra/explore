@@ -1066,28 +1066,52 @@ cut_vec_num_avg <- function(values, bins = 8)  {
 #' @param yyyymm Input vector of periods (format yyyymm)
 #' @param add_month How many months to add (can be negative too)
 #' @param add_year How many years to add (can be negative too)
-#' @return Vector of periods (format yyyymm)
+#' @param diff_to Difference between date and yyyymm (format yyyymm)
+#' @return Vector of periods (format yyyymm) or number of months
 #' @export
 #' @examples
 #' yyyymm_calc(202412, add_month = 1)
 #' yyyymm_calc(c(202411,202412,202501), add_month = -1, add_year = 1)
+#' yyyymm_calc(202410, diff_to = 202501)
+#' yyyymm_calc(c(202411,202412,202501,202502), diff_to = 202501)
 
-yyyymm_calc <- function(yyyymm, add_month = 0, add_year = 0) {
+yyyymm_calc <- function(yyyymm, add_month = 0, add_year = 0, diff_to = NA) {
 
   yyyymm_is_num <- ifelse(is.numeric(yyyymm), TRUE, FALSE)
+  diff_to_is_num <- ifelse(is.numeric(diff_to), TRUE, FALSE)
+
   if(!yyyymm_is_num) {
     yyyymm <- as.numeric(yyyymm)
+  } else if(!diff_to_is_num){
+    diff_to <- as.numeric(diff_to)
   }
 
   # split yyyymm into year and month
   year <- floor(yyyymm / 100)
   month <- floor(yyyymm - year*100)
 
+  if (!is.na(diff_to)) {
+    # sum all months of yyyymm
+    all_month <- year * 12 + month
+
+    # extract number of years and months from diff_to
+    year_diff_to <- floor(diff_to / 100)
+    month_diff_to <- floor(diff_to - year_diff_to * 100)
+
+    # sum all years and months of diff_to
+    all_month_diff_to <- year_diff_to * 12 + month_diff_to
+
+    # calculate actual difference of months between diff_to & yyyymm
+    difference <- all_month_diff_to - all_month
+
+    return(difference)
+  }
+
   # add all month (from add_month and add_year)
   month_added <- month + add_month + add_year * 12
 
   # if month > 12 adapt year and month
-  year_diff <- floor(month_added / 12)
+  year_diff <- floor((month_added-1) / 12)
   year_new <- year + year_diff
   month_new <- month_added - year_diff*12
 

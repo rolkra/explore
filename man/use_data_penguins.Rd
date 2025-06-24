@@ -4,7 +4,7 @@
 \alias{use_data_penguins}
 \title{Use the penguins data set}
 \usage{
-use_data_penguins()
+use_data_penguins(short_names = FALSE)
 }
 \value{
 Dataset
@@ -16,6 +16,7 @@ size (flipper length, body mass, bill dimensions), and sex.
 }
 \examples{
 use_data_penguins()
+use_data_penguins(short_names = TRUE)
 }
 \seealso{
 \code{\link[palmerpenguins:penguins]{palmerpenguins::penguins}}

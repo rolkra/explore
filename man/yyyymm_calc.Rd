@@ -4,7 +4,7 @@
 \alias{yyyymm_calc}
 \title{Calculate with periods (format yyyymm)}
 \usage{
-yyyymm_calc(yyyymm, add_month = 0, add_year = 0)
+yyyymm_calc(yyyymm, add_month = 0, add_year = 0, diff_to = NA)
 }
 \arguments{
 \item{yyyymm}{Input vector of periods (format yyyymm)}
@@ -12,9 +12,11 @@ yyyymm_calc(yyyymm, add_month = 0, add_year = 0)
 \item{add_month}{How many months to add (can be negative too)}
 
 \item{add_year}{How many years to add (can be negative too)}
+
+\item{diff_to}{Difference between date and yyyymm (format yyyymm)}
 }
 \value{
-Vector of periods (format yyyymm)
+Vector of periods (format yyyymm) or number of months
 }
 \description{
 Calculate with periods (format yyyymm)
@@ -22,4 +24,6 @@ Calculate with periods (format yyyymm)
 \examples{
 yyyymm_calc(202412, add_month = 1)
 yyyymm_calc(c(202411,202412,202501), add_month = -1, add_year = 1)
+yyyymm_calc(202410, diff_to = 202501)
+yyyymm_calc(c(202411,202412,202501,202502), diff_to = 202501)
 }
