@@ -6,6 +6,9 @@
 \usage{
 use_data_penguins(short_names = FALSE)
 }
+\arguments{
+\item{short_names}{Use short variable names}
+}
 \value{
 Dataset
 }

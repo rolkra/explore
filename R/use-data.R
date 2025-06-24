@@ -83,6 +83,7 @@ use_data_starwars <- function() {
 #' It contains measurements for penguin species, island in Palmer Archipelago,
 #' size (flipper length, body mass, bill dimensions), and sex.
 #'
+#' @param short_names Use short variable names
 #' @return Dataset
 #' @seealso [`palmerpenguins::penguins`]
 #' @examples
