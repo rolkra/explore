@@ -1,3 +1,10 @@
+# explore 1.3.5
+
+## New features
+
+* add new parameter `short_names` for `use_data_penguins()`
+* add new parameter `diff_to` for `yyyymm_calc()`
+
 # explore 1.3.4
 
 ## New features
