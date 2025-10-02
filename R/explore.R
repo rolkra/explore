@@ -1172,8 +1172,9 @@ explore_tbl <- function(data, n)  {
     geom_col() +
     scale_fill_manual(values = color_mapping) +
     #geom_text(aes(measure, n, group = type, label = as.character(n)), size = 2.5) +
-    geom_text(aes(label = dplyr::na_if(n, 0)),na.rm = TRUE,
-              position = "stack"
+    geom_text(aes(label = dplyr::na_if(n, 0)), na.rm = TRUE,
+              position = position_stack(vjust = 0.5),
+              size = 3
               ) +
     labs(title = paste(ncol(data), "variables"),
          subtitle = info_obs,
