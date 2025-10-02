@@ -340,6 +340,8 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
 
   # number of levels of var (if not numeric)
   var_cat <- data %>% count(!!var_quo) %>% pull(!!var_quo)
+  n_cat <- length(var_cat)
+
   if ( (missing(numeric) | (!missing(numeric) & (numeric == FALSE))) &
       length(var_cat) > max_cat)  {
     data <- data %>% filter(!!var_quo %in% var_cat[1:max_cat])
@@ -505,7 +507,7 @@ explore_bar <- function(data, var, target, flip = NA, title = "", numeric = NA, 
     )
 
     p <- p + labs(title = var_txt, subtitle = paste0(
-      na_txt, ", unique = ", length(unique(data[[var_txt]])))) +
+      na_txt, ", unique = ", n_cat)) +
       theme(plot.subtitle = element_text(size = 9, color = "#707070"))
   } else {
     p <- p + ggtitle(paste0(var_txt))
@@ -1805,6 +1807,9 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     n_target_cat <- length(unique(data[[target_txt]]))
   }
 
+  # number of categories in var cat
+  n_cat <- length(unique(data[[cat_txt]]))
+
   # guess flip
   if (missing(flip)) {
     if(is.numeric(data[[cat_txt]])) {
@@ -1961,7 +1966,8 @@ explore_count <- function(data, cat, n, target, pct = FALSE, split = TRUE, title
     )
 
     p <- p + labs(title = cat_txt, subtitle = paste0(
-      na_txt, ", unique = ", length(unique(data[[cat_txt]])))) +
+      #na_txt, ", unique = ", length(unique(data[[cat_txt]])))) +
+      na_txt, ", unique = ", n_cat)) +
       theme(plot.subtitle = element_text(size = 9, color = "#707070"))
 
   } else {

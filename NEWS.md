@@ -1,3 +1,10 @@
+# explore 1.3.6
+
+## new features
+
+* fix unique values in subheader of plot `explore_bar()` (not limited by max_cat) 
+* fix unique values in subheader of plot `explore_count()` (not limited by max_cat) 
+
 # explore 1.3.5
 
 ## New features
