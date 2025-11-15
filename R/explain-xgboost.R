@@ -122,23 +122,65 @@ explain_xgboost <- function(data, target, log = TRUE, nthread = 1,
 
     # training
     set.seed(42)
-    cv <- xgboost::xgb.cv(
-      objective = "binary:logistic",
-      eval_metric = "auc",
-      data = dtrain,
-      #label = ltrain,
-      params = current_params,
-      nthread = nthread,
-      nfold = setup$cv_nfold,
-      nrounds = setup$max_nrounds,
-      early_stopping_rounds = setup$early_stopping_rounds,
-      maximize = TRUE,
-      verbose = FALSE, #verbose,     #log details?
-      print_every_n = 100
-    )
+
+    if (utils::packageVersion("xgboost") < "3.0.0.0") {
+
+      ## xgboost before version 3.0.0.0
+
+      cv <- xgboost::xgb.cv(
+        objective = "binary:logistic",
+        eval_metric = "auc",
+        data = dtrain,
+        #label = ltrain,
+        params = current_params,
+        nthread = nthread,
+        nfold = setup$cv_nfold,
+        nrounds = setup$max_nrounds,
+        early_stopping_rounds = setup$early_stopping_rounds,
+        maximize = TRUE,
+        verbose = FALSE, #verbose,     #log details?
+        print_every_n = 100
+      )
+
+      best <- cv$best_iteration
+
+    } else {
+
+      ## xgboost after version 3.0.0.0
+
+      params <- xgboost::xgb.params(
+        objective = "binary:logistic",
+        verbosity = 0,    ## silent (no logging)
+        nthread = nthread,
+        eta = current_params$eta,
+        max_depth = current_params$max_depth,
+        gamma = current_params$gamma,
+        colsample_bytree = current_params$colsample_bytree,
+        subsample = current_params$subsample,
+        min_child_weight = current_params$min_child_weight,
+        scale_pos_weight = current_params$scale_pos_weight
+      )
+
+      cv <- xgboost::xgb.cv(
+        params = params,
+        metrics = "auc",
+        data = dtrain,
+        #label = ltrain,
+        nfold = setup$cv_nfold,
+        nrounds = setup$max_nrounds,
+        early_stopping_rounds = setup$early_stopping_rounds,
+        maximize = TRUE,
+        verbose = FALSE, #verbose,     #log details?
+        print_every_n = 100
+      )
+
+      best <- cv$early_stop$best_iteration
+
+    }
+
     #log_info_if(log, paste("xgboost nr", k, "training finished"))
-    all_nrounds[k] <- cv$best_iteration
-    model_log <- cv$evaluation_log[cv$evaluation_log$iter == cv$best_iteration, ]
+    all_nrounds[k] <- best
+    model_log <- cv$evaluation_log[cv$evaluation_log$iter == best, ]
     all_auc[k] <- model_log$test_auc_mean
 
     t2 <- Sys.time()
@@ -156,7 +198,7 @@ explain_xgboost <- function(data, target, log = TRUE, nthread = 1,
                     subsample = current_params$subsample,
                     colsample_bytree = current_params$colsample_bytree,
                     scale_pos_weight = current_params$scale_pos_weight,
-                    best_iter_ind = ifelse(iter == cv$best_iteration, 1, 0),
+                    best_iter_ind = ifelse(iter == best, 1, 0),
                     runtime = runtime_curr,
                     .before = iter)
     hp_tuning_log <- rbind(hp_tuning_log, hp_tuning_log_curr)
@@ -217,16 +259,50 @@ explain_xgboost <- function(data, target, log = TRUE, nthread = 1,
 
   # train final model, no cross validation
   t1 <- Sys.time()
-  model <- xgboost::xgb.train(
-    data = dtrain,
-    nrounds = best_nrounds,
-    nthread = 1, #setup$nthread,
-    booster = "gbtree",
-    objective = "binary:logistic",
-    params = best_params,
-    verbose = verbose,
-    print_every_n = 100
-  )
+
+  if (utils::packageVersion("xgboost") < "3.0.0.0") {
+
+    ## xgboost before version 3.0.0.0
+
+    model <- xgboost::xgb.train(
+      data = dtrain,
+      nrounds = best_nrounds,
+      nthread = 1, #setup$nthread,
+      booster = "gbtree",
+      objective = "binary:logistic",
+      params = best_params,
+      verbose = verbose,
+      print_every_n = 100
+    )
+
+  } else {
+
+    ## xgboost after version 3.0.0.0
+
+    params <- xgboost::xgb.params(
+      objective = "binary:logistic",
+      booster = "gbtree",
+      verbosity = 0,    ## silent (no logging)
+      nthread = nthread,
+      eta = best_params$eta,
+      max_depth = best_params$max_depth,
+      gamma = best_params$gamma,
+      colsample_bytree = best_params$colsample_bytree,
+      subsample = best_params$subsample,
+      min_child_weight = best_params$min_child_weight,
+      scale_pos_weight = best_params$scale_pos_weight
+    )
+
+    model <- xgboost::xgb.train(
+      data = dtrain,
+      nrounds = best_nrounds,
+      params = params,
+      verbose = FALSE,
+      print_every_n = 100
+    )
+
+  }
+
   t2 <- Sys.time()
   runtime_curr <- round(difftime(t2, t1, units = "mins"), 1)
 

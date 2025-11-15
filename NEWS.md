@@ -6,6 +6,12 @@
 * fix unique values in subheader of plot `explore_count()` (not limited by max_cat)
 * `explore_tbl()` now has centered labels
 
+# explore 1.4.0
+
+## Bug fixes / internal
+
+* prepare for breaking changes in {xgboost} 3.x
+
 # explore 1.3.5
 
 ## New features

@@ -356,11 +356,25 @@ predict_target <- function(data, model, name = "prediction") {
 
   } else if (inherits(model, "xgb.Booster")) {
 
-    values <- stats::predict(
-      model,
-      newdata = as.matrix(data[ ,model$feature_names]),
-      type = "prob")
-    var_names <- paste0(name)
+    if (utils::packageVersion("xgboost") < "3.0.0.0") {
+
+      values <- stats::predict(
+        model,
+        newdata = as.matrix(data[ ,model$feature_names]),
+        #newdata = as.matrix(data[ , c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")]),
+        type = "prob")
+      var_names <- paste0(name)
+
+    } else {
+
+      values <- stats::predict(
+        model,
+        #newdata = as.matrix(data[ ,model$feature_names]),
+        newdata = as.matrix(data),
+        type = "prob")
+      var_names <- paste0(name)
+
+    }
 
   }
 
