@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2025-10-02</h4>
+            <h4 data-toc-skip class="date">2025-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/explore-titanic.Rmd" class="external-link"><code>vignettes/explore-titanic.Rmd</code></a></small>
       <div class="d-none name"><code>explore-titanic.Rmd</code></div>
@@ -144,7 +144,7 @@ tidy dataset (each row is an observation), we need add the parameter n
 (number of observations)</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-5-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="384"></p>
 <p>We get the exact numbers by using describe() together with the
 n-parameter (weight)</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -163,7 +163,7 @@ automatically fit the height of the plot using
 the code chunk header.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="survived">Survived?<a class="anchor" aria-label="anchor" href="#survived"></a>
@@ -172,30 +172,30 @@ the code chunk header.</p>
 can use the explore() function with Survived as target.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Class</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span>, split <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-8-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="384"></p>
 <p>To get a better feeling of the relationship between Class and
 Survived, we switch to percentage and split the target into sperate
 bars. We can do that by using split = TRUE (which is default).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Class</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span>, split <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-9-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="384"></p>
 <p>Now we get a plot, where each color sum to 100%. So a big difference
 in bar length indicates an important relationship between the two
 variables. In this case, passengers of 1st Class had the highest
 probability to survive.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sex</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-10-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="384"></p>
 <p>Female are much more likely to survive!</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Age</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-11-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="384"></p>
 <p>Child had an advantage to survive.</p>
 <p>Now we can create a simple decision tree. As we have count-data we
 need to pass parameter n.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="700"></p>
 <p>We see that Sex and Class can give a good explanation who are more
 likely to survive.</p>
 <ul>
@@ -212,12 +212,12 @@ all observations)</li>
 </h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Age</span>, target <span class="op">=</span> <span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-13-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="384"></p>
 <p>Child are unlikely in the 1st class! And all Crew members are adult
 as expected.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">titanic</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sex</span>, target <span class="op">=</span> <span class="va">Class</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-titanic_files/figure-html/unnamed-chunk-14-1.png" width="384"></p>
+<p><img src="explore-titanic_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="384"></p>
 <p>Almost no female Crew members! Female tend to have better Class!</p>
 </div>
 </div>
@@ -232,7 +232,7 @@ as expected.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

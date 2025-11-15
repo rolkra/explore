@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2025-10-02</h4>
+            <h4 data-toc-skip class="date">2025-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/explore.Rmd" class="external-link"><code>vignettes/explore.Rmd</code></a></small>
       <div class="d-none name"><code>explore.Rmd</code></div>
@@ -137,16 +137,16 @@ different view on the data.</p>
 <p>Grow a decision tree with one line of code:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="576"></p>
 <p>You can grow a decision tree with a binary target too.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span><span class="op">$</span><span class="va">is_versicolor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="576"></p>
 <p>Or using a numerical target. The syntax stays the same.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="576"></p>
 <p>You can control the growth of the tree using the parameters
 <code>maxdepth</code>, <code>minsplit</code> and <code>cp</code>.</p>
 <p>To create other types of models use <code><a href="../reference/explain_forest.html">explain_forest()</a></code>,
@@ -159,7 +159,7 @@ different view on the data.</p>
 variables it contains.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_tbl.html">explore_tbl</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-8-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="576"></p>
 <p>You can also use <code><a href="../reference/describe_tbl.html">describe_tbl()</a></code> if you just need the
 main facts without visualization.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -176,10 +176,10 @@ main facts without visualization.</p>
 variable is numerical or categorical.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="576"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="explore-variables-with-a-target">Explore variables with a target<a class="anchor" aria-label="anchor" href="#explore-variables-with-a-target"></a>
@@ -189,19 +189,19 @@ line of code. You don’t have to care if a variable is numerical or
 categorical.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="576"></p>
 <p>Using split = FALSE will change the plot to %target:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, target <span class="op">=</span> <span class="va">is_versicolor</span>, split <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="576"></p>
 <p>The target can have more than two levels:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-14-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="576"></p>
 <p>Or the target can even be numeric:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, target <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="explore-multiple-variables">Explore multiple variables<a class="anchor" aria-label="anchor" href="#explore-multiple-variables"></a>
@@ -210,27 +210,27 @@ categorical.</p>
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-16-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" width="768"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">is_versicolor</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-17-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" width="768"></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">is_versicolor</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">is_versicolor</span>, split <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-18-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" width="768"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-19-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" width="768"></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Width</span>, <span class="va">Petal.Length</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-20-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" width="768"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p>To use a high number of variables with <code><a href="../reference/explore_all.html">explore_all()</a></code> in
@@ -241,12 +241,12 @@ helps to automatically set fig.height:
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-22-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" width="768"></p>
 <p>If you use a target:
 <code>fig.height=total_fig_height(iris, var_name_target = "Species")</code></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-23-1.png" width="768"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" width="768"></p>
 <p>You can control total_fig_height() by parameters ncols (number of
 columns of the plots) and size (height of 1 plot)</p>
 </div>
@@ -256,11 +256,11 @@ columns of the plots) and size (height of 1 plot)</p>
 <p>Explore correlation between two variables with one line of code:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-24-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" width="576"></p>
 <p>You can add a target too:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Petal.Length</span>, target <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-25-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="explore-options">Explore options<a class="anchor" aria-label="anchor" href="#explore-options"></a>
@@ -271,12 +271,12 @@ upper limits for values, you can use the <code>min_val</code> and
 min_val. All values above max_val will be set to max_val.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, min_val <span class="op">=</span> <span class="fl">4.5</span>, max_val <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-26-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" width="576"></p>
 <p><code>explore</code> uses auto-scale by default. To deactivate it use
 the parameter <code>auto_scale = FALSE</code></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, auto_scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-27-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="describing-data">Describing data<a class="anchor" aria-label="anchor" href="#describing-data"></a>
@@ -432,7 +432,7 @@ functions:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> random_moon     chr       0      0      4  <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">random_starsign</span>, <span class="va">random_moon</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore_files/figure-html/unnamed-chunk-37-1.png" width="576"></p>
+<p><img src="explore_files/figure-html/unnamed-chunk-37-1.png" class="r-plt" width="576"></p>
 </div>
 <div class="section level3">
 <h3 id="basic-data-cleaning">Basic data cleaning<a class="anchor" aria-label="anchor" href="#basic-data-cleaning"></a>
@@ -496,7 +496,7 @@ and maximum for the value.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

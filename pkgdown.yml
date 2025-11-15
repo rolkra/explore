@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   abtest: abtest.html
@@ -16,4 +16,4 @@ articles:
   report-targetpct: report-targetpct.html
   report: report.html
   tips-tricks: tips-tricks.html
-last_built: 2025-10-02T10:08Z
+last_built: 2025-11-15T11:34Z

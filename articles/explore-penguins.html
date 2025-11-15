@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2025-10-02</h4>
+            <h4 data-toc-skip class="date">2025-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/explore-penguins.Rmd" class="external-link"><code>vignettes/explore-penguins.Rmd</code></a></small>
       <div class="d-none name"><code>explore-penguins.Rmd</code></div>
@@ -181,7 +181,7 @@ exploration!</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"skyblue"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-penguins_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
+<p><img src="explore-penguins_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="768"></p>
 </div>
 <div class="section level3">
 <h3 id="which-species">Which species?<a class="anchor" aria-label="anchor" href="#which-species"></a>
@@ -192,7 +192,7 @@ exploration!</p>
 <span>  <span class="fu"><a href="../reference/explore_all.html">explore_all</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="va">species</span>,</span>
 <span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"lightseagreen"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-penguins_files/figure-html/unnamed-chunk-5-1.png" width="768"></p>
+<p><img src="explore-penguins_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="768"></p>
 <p>We already see some strong patterns in the data.
 <code>flipper_length_mm</code> separates species Gentoo,
 <code>bill_length_mm</code> separates species Adelie from Chinstrap. And
@@ -200,7 +200,7 @@ we see that Chinstrap and Gentoo are located on separate islands.</p>
 <p>Now we explain species using a decision tree:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explain_tree.html">explain_tree</a></span><span class="op">(</span>target <span class="op">=</span> <span class="va">species</span><span class="op">)</span></span></code></pre></div>
-<p><img src="explore-penguins_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p><img src="explore-penguins_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="576"></p>
 <p>We found an easy explanation how to find out the species by just
 using flipper_length_mm and bill_length_mm.</p>
 <ul>
@@ -221,7 +221,7 @@ right)</li>
 <span>    target <span class="op">=</span> <span class="va">species</span>,</span>
 <span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"lightseagreen"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<p><img src="explore-penguins_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<p><img src="explore-penguins_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="576"></p>
 <p>The plot shows a not perfect but good separation between the 3
 species!</p>
 </div>
@@ -237,7 +237,7 @@ species!</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

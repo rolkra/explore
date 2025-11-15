@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">explore</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2025-10-02</h4>
+            <h4 data-toc-skip class="date">2025-11-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/abtest.Rmd" class="external-link"><code>vignettes/abtest.Rmd</code></a></small>
       <div class="d-none name"><code>abtest.Rmd</code></div>
@@ -135,12 +135,12 @@ values (1 = the customer did buy a product)</p>
 different buying behavior.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">age</span>, target <span class="op">=</span> <span class="va">buy</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>We see a clear pattern, that people who buy differ in age from people
 who don´t buy. But is this difference statistically significant?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;</span> <span class="fl">50</span>, target <span class="op">=</span> <span class="va">buy</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="480"></p>
 <p>The A/B test shows a statistically significant difference!</p>
 </div>
 <div class="section level4">
@@ -151,13 +151,13 @@ voice product (mobilevoice_ind == 1) have different bbi_usg_gb
 (broadband usage in GB)</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">mobilevoice_ind</span>, target <span class="op">=</span> <span class="va">bbi_usg_gb</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="480"></p>
 <p>The boxplot shows a small difference in Broadband Usage between
 customers with/without Mobile Voice product. But is this difference
 statistically significant?</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span><span class="va">mobilevoice_ind</span> <span class="op">==</span> <span class="fl">1</span>, target <span class="op">=</span> <span class="va">bbi_usg_gb</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="480"></p>
 <p>The A/B test shows a NOT statistically significant difference! The
 p-value is 0.09, but should be max. 0.05 (as we defined sign_level =
 0.05)</p>
@@ -194,12 +194,12 @@ that makes it easier to use popular example datasets.</p>
 chance to survive.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/explore.html">explore</a></span><span class="op">(</span><span class="va">Sex</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-9-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="480"></p>
 <p>We see a clear pattern, but is it difference statistically
 significant?</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span><span class="va">Sex</span> <span class="op">==</span> <span class="st">"Female"</span>, target <span class="op">=</span> <span class="va">Survived</span>, n <span class="op">=</span> <span class="va">n</span>, sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-10-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="480"></p>
 <p>The A/B test shows a statistically significant difference!</p>
 </div>
 </div>
@@ -214,14 +214,14 @@ for statistical significance using code:</p>
 <span>  success_a <span class="op">=</span> <span class="fl">120</span>, success_b <span class="op">=</span> <span class="fl">210</span>,</span>
 <span>  success_unit <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span><span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span>sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-11-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="480"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_data_abtest.html">create_data_abtest</a></span><span class="op">(</span></span>
 <span>  n_a <span class="op">=</span> <span class="fl">1000</span>, n_b <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  success_a <span class="op">=</span> <span class="fl">12</span>, success_b <span class="op">=</span> <span class="fl">21</span>,</span>
 <span>  success_unit <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span><span class="fu"><a href="../reference/abtest.html">abtest</a></span><span class="op">(</span>sign_level <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
-<p><img src="abtest_files/figure-html/unnamed-chunk-12-1.png" width="480"></p>
+<p><img src="abtest_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="480"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -234,7 +234,7 @@ for statistical significance using code:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
