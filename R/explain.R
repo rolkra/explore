@@ -371,7 +371,8 @@ predict_target <- function(data, model, name = "prediction") {
         model,
         #newdata = as.matrix(data[ ,model$feature_names]),
         newdata = as.matrix(data),
-        type = "prob")
+        type = "prob",
+        validate_features = TRUE)
       var_names <- paste0(name)
 
     }
