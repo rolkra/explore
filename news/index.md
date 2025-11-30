@@ -1,5 +1,11 @@
 # Changelog
 
+## explore 1.4.0
+
+### Bug fixes / internal
+
+- prepare for breaking changes in {xgboost} 3.x
+
 ## explore 1.3.6
 
 CRAN release: 2025-10-02
@@ -13,12 +19,6 @@ CRAN release: 2025-10-02
   [`explore_count()`](../reference/explore_count.md) (not limited by
   max_cat)
 - [`explore_tbl()`](../reference/explore_tbl.md) now has centered labels
-
-## explore 1.4.0
-
-### Bug fixes / internal
-
-- prepare for breaking changes in {xgboost} 3.x
 
 ## explore 1.3.5
 

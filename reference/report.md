@@ -50,5 +50,5 @@ if (rmarkdown::pandoc_available("1.12.3")) {
  report(iris, output_dir = tempdir())
  }
 #> ℹ Processing template: "template_report_variable.Rmd"
-#> ✔ Report created at file:///tmp/RtmpyvqPrd/report_variable.html
+#> ✔ Report created at file:///tmp/RtmpLkI3wQ/report_variable.html
 ```
