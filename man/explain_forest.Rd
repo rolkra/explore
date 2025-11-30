@@ -24,7 +24,7 @@ Plot of importance (if out = "plot")
 Explain a target using Random Forest.
 }
 \examples{
-\dontshow{if (rlang::is_installed("randomForest")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("randomForest")) withAutoprint(\{ # examplesIf}
 data <- create_data_buy()
 explain_forest(data, target = buy)
 \dontshow{\}) # examplesIf}

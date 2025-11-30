@@ -24,7 +24,7 @@ Explain a binary target using a logistic regression (glm).
 Model chosen by AIC in a Stepwise Algorithm (\code{MASS::stepAIC()}).
 }
 \examples{
-\dontshow{if (rlang::is_installed("MASS")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("MASS")) withAutoprint(\{ # examplesIf}
 data <- iris
 data$is_versicolor <- ifelse(iris$Species == "versicolor", 1, 0)
 data$Species <- NULL
