@@ -47,8 +47,8 @@ explain_tree(
 - maxdepth:
 
   Set the maximum depth of any node of the final tree, with the root
-  node counted as depth 0. Values greater than 30 `rpart` will give
-  nonsense results on 32-bit machines.
+  node counted as depth 0. Maximum value 30 (as node numbers have to be
+  stored in 32-bit signed integer types).
 
 - minsplit:
 
