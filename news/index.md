@@ -4,7 +4,8 @@
 
 ### Bug fixes / internal
 
-- prepare for breaking changes in {xgboost} 3.x
+- prepare for breaking changes in {xgboost} 3.1.2.1 (CRAN release
+  2025-12-03)
 
 ## explore 1.3.6
 

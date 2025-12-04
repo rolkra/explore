@@ -24,5 +24,5 @@ create_notebook_explore(output_file = "notebook-explore.Rmd", output_dir)
 
 ``` r
 create_notebook_explore(output_file = "explore.Rmd", output_dir = tempdir())
-#> Notebook /tmp/Rtmp4TDToQ/explore.Rmd generated
+#> Notebook /tmp/RtmpjSW6YR/explore.Rmd generated
 ```
