@@ -77,7 +77,7 @@
                         <h4 data-toc-skip class="author">Roland
 Krasser</h4>
             
-            <h4 data-toc-skip class="date">2025-12-04</h4>
+            <h4 data-toc-skip class="date">2025-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rolkra/explore/blob/master/vignettes/explain.Rmd" class="external-link"><code>vignettes/explain.Rmd</code></a></small>
       <div class="d-none name"><code>explain.Rmd</code></div>
@@ -177,28 +177,28 @@ training</p>
 <code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">importance</span></span>
 <span><span class="co">#&gt;           variable        gain       cover  frequency  importance</span></span>
 <span><span class="co">#&gt;             &lt;char&gt;       &lt;num&gt;       &lt;num&gt;      &lt;num&gt;       &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:             age 0.438876299 0.269718075 0.22916667 0.438876299</span></span>
-<span><span class="co">#&gt; 2:      bbi_usg_gb 0.273748159 0.309418667 0.31250000 0.273748159</span></span>
-<span><span class="co">#&gt; 3:      female_ind 0.148257511 0.145936389 0.13095238 0.148257511</span></span>
-<span><span class="co">#&gt; 4:     fixedtv_ind 0.087929677 0.126867898 0.12500000 0.087929677</span></span>
-<span><span class="co">#&gt; 5:   bbi_speed_ind 0.022082803 0.057552002 0.07440476 0.022082803</span></span>
-<span><span class="co">#&gt; 6:        city_ind 0.018582321 0.064343469 0.06845238 0.018582321</span></span>
-<span><span class="co">#&gt; 7:       hh_single 0.005310378 0.010887744 0.02083333 0.005310378</span></span>
-<span><span class="co">#&gt; 8:  fixedvoice_ind 0.003014397 0.008814722 0.02083333 0.003014397</span></span>
-<span><span class="co">#&gt; 9: mobilevoice_ind 0.002198457 0.006461034 0.01785714 0.002198457</span></span></code></pre></div>
+<span><span class="co">#&gt; 1:             age 0.480076565 0.346517287 0.30325098 0.480076565</span></span>
+<span><span class="co">#&gt; 2:      bbi_usg_gb 0.263936257 0.306661425 0.31781534 0.263936257</span></span>
+<span><span class="co">#&gt; 3:      female_ind 0.133861444 0.138796555 0.12197659 0.133861444</span></span>
+<span><span class="co">#&gt; 4:     fixedtv_ind 0.082409865 0.106854333 0.10221066 0.082409865</span></span>
+<span><span class="co">#&gt; 5:        city_ind 0.020369882 0.051517918 0.05539662 0.020369882</span></span>
+<span><span class="co">#&gt; 6:   bbi_speed_ind 0.010279095 0.020894635 0.03276983 0.010279095</span></span>
+<span><span class="co">#&gt; 7:       hh_single 0.005200283 0.014226769 0.03250975 0.005200283</span></span>
+<span><span class="co">#&gt; 8: mobilevoice_ind 0.002025957 0.006488770 0.01742523 0.002025957</span></span>
+<span><span class="co">#&gt; 9:  fixedvoice_ind 0.001840650 0.008042308 0.01664499 0.001840650</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">tune_plot</span></span></code></pre></div>
 <p><img src="explain_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">train</span><span class="op">$</span><span class="va">tune_data</span></span>
 <span><span class="co">#&gt;    model_nr   eta max_depth    runtime  iter train_auc_mean test_auc_mean</span></span>
-<span><span class="co">#&gt;       &lt;int&gt; &lt;num&gt;     &lt;num&gt; &lt;difftime&gt; &lt;num&gt;          &lt;num&gt;         &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:        1  0.30         3     0 mins    21      0.9599662     0.9259773</span></span>
-<span><span class="co">#&gt; 2:        2  0.10         3     0 mins    52      0.9572578     0.9271735</span></span>
-<span><span class="co">#&gt; 3:        3  0.01         3     0 mins   551      0.9592901     0.9268295</span></span>
-<span><span class="co">#&gt; 4:        4  0.30         5     0 mins    13      0.9762086     0.9212647</span></span>
-<span><span class="co">#&gt; 5:        5  0.10         5     0 mins    38      0.9773647     0.9258133</span></span>
-<span><span class="co">#&gt; 6:        6  0.01         5     0 mins    71      0.9601223     0.9256453</span></span></code></pre></div>
+<span><span class="co">#&gt;       &lt;int&gt; &lt;num&gt;     &lt;num&gt; &lt;difftime&gt; &lt;int&gt;          &lt;num&gt;         &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:        1  0.30         3     0 mins    29      0.9670353     0.9229369</span></span>
+<span><span class="co">#&gt; 2:        2  0.10         3     0 mins    54      0.9585660     0.9259053</span></span>
+<span><span class="co">#&gt; 3:        3  0.01         3     0 mins   591      0.9602903     0.9265414</span></span>
+<span><span class="co">#&gt; 4:        4  0.30         5     0 mins    12      0.9738282     0.9218968</span></span>
+<span><span class="co">#&gt; 5:        5  0.10         5     0 mins    21      0.9674193     0.9250532</span></span>
+<span><span class="co">#&gt; 6:        6  0.01         5     0 mins    25      0.9535213     0.9242371</span></span></code></pre></div>
 <p>To use the model for a prediction, you can use
 <code><a href="../reference/predict_target.html">predict_target()</a></code></p>
 </div>
